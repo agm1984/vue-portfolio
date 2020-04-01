@@ -1,1 +1,41 @@
-//
+/**
+ * First, inject Tailwind's base styles, which are a combination of
+ * Normalize.css and some additional base styles.
+ */
+
+@tailwind base;
+
+
+/**
+ * Next, instruct Webpack to preserve the PurgeCSS ignore command
+ * in the `production` environment.
+ */
+
+/*! purgecss start ignore */
+
+/**
+ * Next, install the Bulma base styles.
+ */
+
+// @import 'bulma.scss';
+
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+
+@tailwind components;
+
+@tailwind utilities;

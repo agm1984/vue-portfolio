@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import router from '@/js/routes.js';
-import App from '@/js/views/App';
+import App from '@/js/layouts/App';
 
 const app = new Vue({
-    el: '#app',
+    el: '#root',
     router,
     render: h => h(App),
 });

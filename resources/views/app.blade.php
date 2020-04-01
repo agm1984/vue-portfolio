@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <title>
+            Adam Mackintosh's portfolio @yield('title', 'test0r')
+        </title>
+
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link href="{{ asset('css/app.css') }}">
-
-        <!-- Styles -->
-        <style></style>
-
         <meta name="theme-color" content="#000000">
-        <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-        <link href="https://fonts.googleapis.com/css?family=Oswald:200,400" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
-
         <meta name="ROBOTS" content="INDEX, FOLLOW">
         <meta name="description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
         <meta name="twitter:card" content="summary">
@@ -67,53 +63,14 @@
             }
         </script>
 
-        <title>
-            Adam Mackintosh's portfolio
-        </title>
-
     </head>
 
     <body>
-        {{-- <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <p>Radical sampler</p>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div> --}}
-
         <noscript>
             You need to enable JavaScript to sample this portfolio.
         </noscript>
 
-        <div id="app"></div>
+        <div id="root"></div>
 
         <script src="{{ asset('js/app.js') }}"></script>
 

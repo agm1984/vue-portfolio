@@ -213,6 +213,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app',
   components: {// TopNavBar:
@@ -1498,10 +1503,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {},
+    { staticClass: "bg-blue-400" },
     [
-      _c("div", { attrs: { role: "navigation" } }, [
-        _c("div", { attrs: { id: "Nav_brand" } }),
+      _c("div", { staticClass: "Nav", attrs: { role: "navigation" } }, [
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { attrs: { id: "Nav_pages" } }, [
           _vm._v("\n            {this.props.children}\n        ")
@@ -1645,7 +1650,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "Nav_brand" } }, [
+      _c("div", [
+        _c("div", { staticClass: "nav_adamLogo" }),
+        _vm._v(" "),
+        _c("span", { attrs: { id: "Nav_brand-adam" } }, [_vm._v("ADAM")]),
+        _vm._v(" "),
+        _c("span", { attrs: { id: "Nav_brand-mackintosh" } }, [
+          _vm._v("MACKINTOSH")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

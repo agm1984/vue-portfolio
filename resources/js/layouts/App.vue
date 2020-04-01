@@ -1,26 +1,31 @@
 <template>
-    <div class="">
-        <div role="navigation">
+    <div class="bg-blue-400">
+        <div class="Nav" role="navigation">
             <!-- {(pathname === '/skills') && (
-                <div id="Nav_brand" className="Nav_brand-skillsPageOnly" />
+            <div id="Nav_brand" class="Nav_brand-skillsPageOnly" />
             )} -->
             <div id="Nav_brand">
                 <!-- <NavLink
-                    to="/"
-                    className="Nav_brand-logo"
-                    activeClassName={(isScrolling)
-                    ? 'activeRoute isScrolling'
-                    : 'activeRoute'}
-                    activeStyle={activeStyle}
-                    title="View Home"
-                    tabIndex={0}
-                    role="banner"
-                    exact
+                to="/"
+                class="Nav_brand-logo"
+                activeclass={(isScrolling)
+                ? 'activeRoute isScrolling'
+                : 'activeRoute'}
+                activeStyle={activeStyle}
+                title="View Home"
+                tabIndex={0}
+                role="banner"
+                exact
                 >
-                    <div className="nav_adamLogo" />
+                <div class="nav_adamLogo" />
+                <span id="Nav_brand-adam">ADAM</span>
+                <span id="Nav_brand-mackintosh">MACKINTOSH</span>
+                </NavLink> -->
+                <div>
+                    <div class="nav_adamLogo" />
                     <span id="Nav_brand-adam">ADAM</span>
                     <span id="Nav_brand-mackintosh">MACKINTOSH</span>
-                </NavLink> -->
+                </div>
             </div>
 
             <div id="Nav_pages">
@@ -29,7 +34,7 @@
 
             <div id="Nav_social">
                 <a
-                    className="Nav_icon"
+                    class="Nav_icon"
                     href="https://www.twitter.com/agm1984"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -55,10 +60,10 @@
                 </a>
 
                 <a
-                    className="Nav_icon"
+                    class="Nav_icon"
                     href="https://www.medium.com/@agm1984"
                     rel="noopener noreferrer"
-                target="_blank"
+                    target="_blank"
                 >
                     <svg
                         x="0px"
@@ -81,7 +86,7 @@
                 </a>
 
                 <a
-                    className="Nav_icon"
+                    class="Nav_icon"
                     href="https://www.github.com/agm1984"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -107,8 +112,8 @@
                 </a>
             </div>
             <!-- <Notifications
-                notifications={this.props.notifications}
-                removeFunc={this.props.removeNotification}
+            notifications={this.props.notifications}
+            removeFunc={this.props.removeNotification}
             /> -->
         </div>
 
@@ -119,22 +124,212 @@
 <script>
 
 export default {
-    name: 'app',
+name: 'app',
 
-    components: {
-        // TopNavBar:
-    },
+components: {
+// TopNavBar:
+},
 
-    props: {},
+props: {},
 
-    data() {
-        return {};
-    },
+data() {
+return {};
+},
 
-    computed: {},
+computed: {},
 
-    mounted() {},
+mounted() {},
 
-    methods: {},
+methods: {},
 };
 </script>
+
+<style>
+.Nav {
+position: fixed;
+top: 0;
+display: flex;
+flex-direction: row;
+align-content: center;
+width: 100%;
+z-index: 1; }
+
+.isScrolling {
+background: rgba(0, 0, 0, 0.85); }
+
+#Nav_brand {
+flex: 0;
+width: 19.2rem;
+padding: 3.2rem 9.6rem 3.2rem 3.2rem; }
+
+.Nav_brand-skillsPageOnly {
+margin-left: 6.4rem; }
+
+.nav_adamLogo {
+position: relative;
+min-width: 2.0rem;
+min-height: 2.0rem;
+border-radius: 50%;
+background-image: url("/adam.png");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+margin-right: 0.4rem; }
+
+.Nav_brand-logo:link {
+display: flex;
+flex-direction: row;
+align-items: center;
+color: #fff;
+text-decoration: none;
+white-space: nowrap;
+cursor: pointer;
+transition: all 250ms ease-in-out; }
+
+.Nav_brand-logo:visited {
+color: #fff;
+transition: all 250ms ease-in-out; }
+
+.Nav_brand-logo:hover {
+color: #66FCF1; }
+
+.Nav_brand-logo:active {
+color: #45A29E;
+font-size: 2.0rem; }
+
+#Nav_brand-adam {
+font-family: 'Oswald', sans-serif;
+font-weight: 200;
+font-size: 2.0rem;
+line-height: 2.0rem;
+letter-spacing: 0.001em;
+color: #fff; }
+
+#Nav_brand-mackintosh {
+font-family: 'Oswald', sans-serif;
+font-weight: 400;
+font-size: 2.0rem;
+line-height: 2.0rem;
+letter-spacing: 0.001em;
+color: #45A29E; }
+
+#Nav_pages {
+flex: 1;
+display: flex;
+flex-direction: row;
+align-content: center;
+justify-content: center;
+max-width: 100%;
+transition: all 250ms ease-in-out; }
+
+.Nav_link:link {
+display: flex;
+flex-direction: row;
+align-content: center;
+justify-content: center;
+color: #fff;
+padding: 3.2rem 1.6rem 0 1.6rem;
+font-family: 'AROLY', sans-serif;
+font-size: 1.6rem;
+line-height: 1.6rem;
+letter-spacing: 0.1em;
+text-decoration: none;
+transition: all 250ms ease-in-out; }
+
+.Nav_link:visited {
+color: #fff;
+transition: all 250ms ease-in-out; }
+
+.Nav_link:hover {
+color: #66FCF1; }
+
+.Nav_link:active {
+color: #45A29E;
+font-size: 2.0rem; }
+
+.activeRoute {
+cursor: default; }
+
+.Nav_link-isContact:link {
+display: flex;
+flex-direction: row;
+align-content: center;
+justify-content: center;
+color: #F7C53E;
+padding: 3.2rem 1.6rem 0 1.6rem;
+font-family: 'AROLY', sans-serif;
+font-size: 1.6rem;
+line-height: 1.6rem;
+letter-spacing: 0.1em;
+text-decoration: none;
+transition: all 250ms ease-in-out; }
+
+.Nav_link-isContact:visited {
+color: #F7C53E;
+transition: all 250ms ease-in-out; }
+
+.Nav_link-isContact:hover {
+color: #FF5043; }
+
+.Nav_link-isContact:active {
+color: #45A29E;
+font-size: 2.0rem; }
+
+.isScrolling .activeRoute {
+border-bottom: 0.4rem solid #fff; }
+
+#Nav_social {
+flex: 0;
+display: flex;
+flex-direction: row;
+width: 19.2rem;
+padding: 3.2rem 3.2rem 3.2rem 0; }
+
+.Nav_icon {
+padding-left: 3.2rem; }
+
+#Nav_social svg #twitter-icon,
+#Nav_social svg #medium-icon,
+#Nav_social svg #github-icon {
+transition: all 200ms ease-in-out; }
+
+#Nav_social svg:hover #twitter-icon,
+#Nav_social svg:hover #medium-icon,
+#Nav_social svg:hover #github-icon {
+fill: #66FCF1;
+transition: all 250ms ease-in-out; }
+
+#Nav_social svg:active #twitter-icon,
+#Nav_social svg:active #medium-icon,
+#Nav_social svg:active #github-icon {
+fill: #45A29E;
+width: 50px;
+height: 100px; }
+
+@media (max-width: 1024px) {
+.Nav {
+position: absolute;
+flex-direction: column;
+align-items: center;
+padding-bottom: 3.2rem; }
+.isScrolling {
+background: none; }
+#Nav_brand {
+width: auto;
+padding: 3.2rem 0 0 0; }
+.Nav_brand-skillsPageOnly {
+display: none; }
+#Nav_social {
+padding: 3.2rem 0 0 0;
+display: flex;
+justify-content: center; }
+.Nav_icon {
+padding: 0 1.6rem 0 1.6rem; }
+.isScrolling .activeRoute {
+border-bottom: none; } }
+
+@media (max-width: 600px) {
+#Nav_pages {
+width: 400px;
+flex-wrap: wrap; } }
+</style>
