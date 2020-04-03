@@ -1,10 +1,11 @@
 <template>
-    <div>
+    <div class="bg-green-400">
         Examples
     </div>
 </template>
 
 <script>
+// https://github.com/nicolasbeauvais/vue-social-sharing
 export default {
     name: 'examples',
 
@@ -19,5 +20,6 @@ export default {
     mounted() {},
 
     methods: {},
+
 };
 </script>

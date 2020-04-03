@@ -17,7 +17,7 @@
  * Next, install the Bulma base styles.
  */
 
-// @import 'bulma.scss';
+@import 'bulma.scss';
 
 
 /**
@@ -35,6 +35,32 @@
  * @import "components/buttons";
  * @import "components/forms";
  */
+
+@font-face {
+    font-family: AROLY;
+    src: url('/AROLY.ttf');
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+// brand
+.adam-logo {
+    border-radius: 50%;
+    background-image: url('/adam.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+// typography
+.nav-link-white {
+    @apply text-white font-aroly text-base leading-none tracking-wide;
+    transition: all 250ms ease-in-out;
+}
+.nav-link-white:hover { @apply text-primary-200; }
+.nav-link-white:active { @apply text-primary-100; }
 
 @tailwind components;
 

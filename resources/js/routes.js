@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/js/pages/Home.vue';
-import Skills from '@/js/pages/Skills.vue';
+import Skills from '@/js/components/skills/Skills.vue';
 import Examples from '@/js/pages/Examples.vue';
 import Story from '@/js/pages/Story.vue';
 import Contact from '@/js/pages/Contact.vue';
@@ -17,9 +17,16 @@ const router = new VueRouter({
             component: Home,
         },
         {
+            path: '/story',
+            name: 'story',
+            component: Story,
+            // An approximate history and story about Adam Mackintosh
+        },
+        {
             path: '/skills',
             name: 'skills',
             component: Skills,
+            // See some of Adam's skills
         },
         {
             path: '/examples',
@@ -27,14 +34,10 @@ const router = new VueRouter({
             component: Examples,
         },
         {
-            path: '/story',
-            name: 'story',
-            component: Story,
-        },
-        {
             path: '/contact',
             name: 'contact',
             component: Contact,
+            // Start a conversation with Adam
         },
     ],
 });

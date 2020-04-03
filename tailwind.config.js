@@ -85,22 +85,11 @@ module.exports = {
             black: '#000000',
             white: '#ffffff',
 
-            // old
-            // grey: {
-            //     100: '#F6F6F9',
-            //     200: '#ECEDF2',
-            //     300: '#DBDBDB',
-            //     350: '#BDBDBD',
-            //     400: '#B9BCC5',
-            //     500: '#9F9F9F',
-            //     600: '#656565',
-            //     650: '#5B5C5F',
-            //     700: '#4a5568',
-            //     800: '#2d3748',
-            //     900: '#1a202c',
-            //     1000: '#231f20',
-            // },
-            // new
+            primary: {
+                100: '#45A29E',
+                200: '#66FCF1',
+            },
+
             grey: {
                 100: '#f5f5f5',
                 200: '#EAEAEA',
@@ -268,6 +257,7 @@ module.exports = {
             xl: '1140px',
         },
         fontFamily: {
+            aroly: ['AROLY'],
             sans: [
                 'Roboto',
                 'Arial',
@@ -304,7 +294,6 @@ module.exports = {
             '3xl': '6.4rem',
             '4xl': '1.6rem',
             '5xl': '1.6rem',
-            'side-nav': '1.8rem',
             10: '1.0rem',
             11: '1.1rem',
             12: '1.2rem',
@@ -340,13 +329,9 @@ module.exports = {
             loose: 2,
         },
         letterSpacing: {
-            // these extra options are new and need to be setup before use
-            // tighter: '-.05em',
-            tight: '-.0618px',
+            tight: '-.0618em',
             normal: '0',
-            wide: '.0618px',
-            // wider: '.05em',
-            // widest: '.1em',
+            wide: '0.1em',
         },
         textColor: theme => theme('colors'),
         backgroundColor: theme => theme('colors'),

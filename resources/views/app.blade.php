@@ -12,6 +12,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="theme-color" content="#000000">
         <meta name="ROBOTS" content="INDEX, FOLLOW">
         <meta name="description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
@@ -65,7 +66,7 @@
 
     </head>
 
-    <body>
+    <body class="antialiased">
         <noscript>
             You need to enable JavaScript to sample this portfolio.
         </noscript>
