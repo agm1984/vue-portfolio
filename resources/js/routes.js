@@ -32,6 +32,7 @@ const router = new VueRouter({
             path: '/examples',
             name: 'examples',
             component: Examples,
+            // Examples from Adam Mackintosh
         },
         {
             path: '/contact',

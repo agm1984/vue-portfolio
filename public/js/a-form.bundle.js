@@ -402,7 +402,7 @@ var csrfToken = {
 /*!******************************************!*\
   !*** ./resources/js/globalStateTypes.js ***!
   \******************************************/
-/*! exports provided: FormMethod, InputContext, InputSize */
+/*! exports provided: FormMethod, InputContext, InputSize, Category, Example */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -410,6 +410,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormMethod", function() { return FormMethod; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputContext", function() { return InputContext; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputSize", function() { return InputSize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Category", function() { return Category; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Example", function() { return Example; });
 // form actions
 var FormMethod = {
   GET: 'get',
@@ -431,6 +433,14 @@ var InputSize = {
   DEFAULT: 'is-default',
   MEDIUM: 'is-medium',
   LARGE: 'is-large'
+};
+var Category = {
+  STATUS_INACTIVE: 0,
+  STATUS_ACTIVE: 1
+};
+var Example = {
+  STATUS_INACTIVE: 0,
+  STATUS_ACTIVE: 1
 };
 
 /***/ })
