@@ -124,32 +124,24 @@ export default {
             return (this.state === SHOW_SINGLE_CATEGORY);
         },
 
-        filteredExamples() {
-            // if (this.isShowingAllCategories)
-            return this.examples;
-        },
     },
 
     watch: {
         $route(to, from) {
-            console.log('ROUTE CHANGE');
             this.setActiveCategory();
         },
     },
 
     mounted() {
-        console.log('mounted');
         this.fetchData();
     },
 
     methods: {
         setActiveCategory() {
             if (this.$route.params.categorySlug) {
-                console.log('active slug', this.$route.params.categorySlug);
                 this.activeCategorySlug = this.$route.params.categorySlug;
                 this.state = SHOW_SINGLE_CATEGORY;
             } else {
-                console.log('no active slug');
                 this.activeCategorySlug = '';
                 this.state = SHOW_ALL_CATEGORIES;
             }
@@ -157,15 +149,17 @@ export default {
 
         async fetchData() {
             try {
-                const categories = await axios.get('/api/categories');
-                const examples = await axios.get('/api/examples', {
-                    params: {
-                        'filter[category.slug]': this.$route.params.categorySlug,
-                    },
-                });
+                const [categories, examples] = await Promise.all([
+                    axios.get('/api/categories'),
+                    axios.get('/api/examples', {
+                        params: {
+                            'filter[category.slug]': this.$route.params.categorySlug,
+                        },
+                    }),
+                ]);
 
-                console.log('categories', categories.data);
-                console.log('examples', examples.data);
+                // console.log('categories', categories.data);
+                // console.log('examples', examples.data);
 
                 this.categories = categories.data;
                 this.examples = examples.data;
