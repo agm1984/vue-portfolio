@@ -2,7 +2,9 @@
     <div class="flex flex-col w-full min-h-screen p-32 bg-black">
         <top-nav-bar></top-nav-bar>
 
-        <router-view></router-view>
+        <transition name="fade" appear @after-enter="afterEnter">
+            <router-view :key="$route.fullPath"></router-view>
+        </transition>
 
     </div>
 </template>
@@ -27,7 +29,12 @@ export default {
 
     mounted() {},
 
-    methods: {},
+    methods: {
+        afterEnter() {
+            return this.$root.$emit('scrollAfterEnter');
+        },
+
+    },
 
 };
 </script>

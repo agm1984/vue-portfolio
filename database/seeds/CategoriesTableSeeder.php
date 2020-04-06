@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Category;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -27,7 +28,9 @@ class CategoriesTableSeeder extends Seeder
             $exists = Category::query()->where('name', $category['name'])->first();
 
             if (!$exists) {
-                factory(Category::class, 1)->create($category);
+                factory(Category::class, 1)->create(array_merge($category, [
+                    'slug' => Str::slug($category['name']),
+                ]));
             }
         }
 

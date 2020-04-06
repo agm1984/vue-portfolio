@@ -18,11 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('categories', 'CategoryController@index');
-Route::get('examples', 'ExampleController@index');
-// Route::group(['prefix' => 'book'], function () {
-//     Route::post('add', 'BookController@add');
-//     Route::get('edit/{id}', 'BookController@edit');
-//     Route::post('update/{id}', 'BookController@update');
-//     Route::delete('delete/{id}', 'BookController@delete');
+Route::get('/categories', 'CategoryController@index');
+Route::get('/examples', 'ExampleController@index');
+
+Route::get('/example/{example}', 'ExampleController@show');
+
+// Route::group(['prefix' => 'example'], function () {
+//     Route::post('add', 'ExampleController@add');
+//     Route::get('edit/{id}', 'ExampleController@edit');
+//     Route::post('update/{id}', 'ExampleController@update');
+//     Route::delete('delete/{id}', 'ExampleController@delete');
 // });

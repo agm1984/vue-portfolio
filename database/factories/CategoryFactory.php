@@ -4,10 +4,14 @@
 
 use App\Category;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
+    $name = $faker->bs;
+
     return [
         'status' => Category::STATUS_ACTIVE,
-        'name' => $faker->bs,
+        'slug' => Str::slug($name),
+        'name' => $name,
     ];
 });

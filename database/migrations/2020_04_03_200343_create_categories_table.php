@@ -18,8 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedTinyInteger('status')->default(Category::STATUS_ACTIVE);
 
-            $table->string('name', 255)->unique();
-            
+            $table->string('slug', 255)->unique();
+            $table->string('name', 255);
 
             $table->timestamps();
         });

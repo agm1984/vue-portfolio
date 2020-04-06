@@ -4,5 +4,6 @@
     "/js/a-form.bundle.js": "/js/a-form.bundle.js",
     "/js/a-sacred-geometry.bundle.js": "/js/a-sacred-geometry.bundle.js",
     "/js/a-text-input.bundle.js": "/js/a-text-input.bundle.js",
-    "/js/a-tilt.bundle.js": "/js/a-tilt.bundle.js"
+    "/js/a-tilt.bundle.js": "/js/a-tilt.bundle.js",
+    "/js/vendors~a-form.bundle.js": "/js/vendors~a-form.bundle.js"
 }

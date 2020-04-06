@@ -21,6 +21,7 @@ class CreateExamplesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
 
+            $table->string('slug', 255)->unique();
             $table->string('name', 255);
             $table->string('image_url', 255);
             $table->text('summary')->nullable();

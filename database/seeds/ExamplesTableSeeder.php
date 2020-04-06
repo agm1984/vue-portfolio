@@ -3,6 +3,7 @@
 use App\Category;
 use App\Example;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ExamplesTableSeeder extends Seeder
 {
@@ -30,7 +31,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
-                'name' => 'Mackintosh Windows',
+                'name' => 'mackintosh windows',
             ],
             [
                 'status' => Example::STATUS_ACTIVE,
@@ -78,7 +79,9 @@ class ExamplesTableSeeder extends Seeder
             $exists = Example::query()->where('name', $example['name'])->first();
 
             if (!$exists) {
-                factory(Example::class, 1)->create($example);
+                factory(Example::class, 1)->create(array_merge($example, [
+                    'slug' => Str::slug($example['name']),
+                ]));
             }
         }
     }
