@@ -127,8 +127,8 @@ export default {
     },
 
     watch: {
-        $route(to, from) {
-            this.setActiveCategory();
+        $route(to, from) { // eslint-disable-line no-unused-vars
+            return this.setActiveCategory();
         },
     },
 
@@ -164,7 +164,7 @@ export default {
                 this.categories = categories.data;
                 this.examples = examples.data;
 
-                this.setActiveCategory();
+                return this.setActiveCategory();
             } catch (err) {
                 throw new Error(`list-examples# Problem fetching data: ${err}`);
             }

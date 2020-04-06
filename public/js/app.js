@@ -3405,7 +3405,8 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
   },
   watch: {
     $route: function $route(to, from) {
-      this.setActiveCategory();
+      // eslint-disable-line no-unused-vars
+      return this.setActiveCategory();
     }
   },
   mounted: function mounted() {
@@ -3448,11 +3449,7 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
                 // console.log('examples', examples.data);
                 _this.categories = categories.data;
                 _this.examples = examples.data;
-
-                _this.setActiveCategory();
-
-                _context.next = 15;
-                break;
+                return _context.abrupt("return", _this.setActiveCategory());
 
               case 12:
                 _context.prev = 12;
