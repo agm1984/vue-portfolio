@@ -3364,15 +3364,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-var INITIAL = 0;
-var SHOW_ALL_CATEGORIES = 1; // https://github.com/nicolasbeauvais/vue-social-sharing
+//
+var LOADING = 0;
+var SHOW_ALL_CATEGORIES = 1;
+var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-sharing
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'list-examples',
   props: {},
   data: function data() {
     return {
-      state: INITIAL,
+      state: LOADING,
       categories: [],
       examples: [],
       activeCategorySlug: ''
@@ -3380,12 +3382,14 @@ var SHOW_ALL_CATEGORIES = 1; // https://github.com/nicolasbeauvais/vue-social-sh
   },
   computed: {
     isInitializing: function isInitializing() {
-      return this.state === INITIAL;
+      return this.state === LOADING;
     },
     isShowingAllCategories: function isShowingAllCategories() {
       return this.state === SHOW_ALL_CATEGORIES;
     },
-    isShowingSingleCategory: function isShowingSingleCategory() {},
+    isShowingSingleCategory: function isShowingSingleCategory() {
+      return this.state === SHOW_SINGLE_CATEGORY;
+    },
     filteredExamples: function filteredExamples() {
       // if (this.isShowingAllCategories)
       return this.examples;
@@ -3406,6 +3410,7 @@ var SHOW_ALL_CATEGORIES = 1; // https://github.com/nicolasbeauvais/vue-social-sh
       if (this.$route.params.categorySlug) {
         console.log('active slug', this.$route.params.categorySlug);
         this.activeCategorySlug = this.$route.params.categorySlug;
+        this.state = SHOW_SINGLE_CATEGORY;
       } else {
         console.log('no active slug');
         this.activeCategorySlug = '';
@@ -3428,7 +3433,11 @@ var SHOW_ALL_CATEGORIES = 1; // https://github.com/nicolasbeauvais/vue-social-sh
               case 3:
                 categories = _context.sent;
                 _context.next = 6;
-                return axios.get('/api/examples');
+                return axios.get('/api/examples', {
+                  params: {
+                    'filter[category.slug]': _this.$route.params.categorySlug
+                  }
+                });
 
               case 6:
                 examples = _context.sent;
@@ -3677,7 +3686,7 @@ var IS_LOADED = 1;
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get("/api/example/".concat(_this.$route.params.exampleSlug));
+                return axios.get("/api/examples/".concat(_this.$route.params.exampleSlug));
 
               case 3:
                 example = _context.sent;
@@ -72421,6 +72430,8 @@ var render = function() {
           _vm._v(
             "\n        active category: " + _vm._s(_vm.activeCategorySlug)
           ),
+          _c("br"),
+          _vm._v("\n        state: " + _vm._s(_vm.state)),
           _c("br"),
           _vm._v(" "),
           _c(

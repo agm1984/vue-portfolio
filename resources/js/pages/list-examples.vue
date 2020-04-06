@@ -7,6 +7,7 @@
             description="Examples from Adam Mackintosh"
         >
             active category: {{ activeCategorySlug }}<br>
+            state: {{ state }}<br>
 
             <div id="examples_categories">
                 <router-link
@@ -91,8 +92,10 @@
 </template>
 
 <script>
-const INITIAL = 0;
+const LOADING = 0;
 const SHOW_ALL_CATEGORIES = 1;
+const SHOW_SINGLE_CATEGORY = 2;
+
 // https://github.com/nicolasbeauvais/vue-social-sharing
 export default {
     name: 'list-examples',
@@ -101,7 +104,7 @@ export default {
 
     data() {
         return {
-            state: INITIAL,
+            state: LOADING,
             categories: [],
             examples: [],
             activeCategorySlug: '',
@@ -110,14 +113,16 @@ export default {
 
     computed: {
         isInitializing() {
-            return (this.state === INITIAL);
+            return (this.state === LOADING);
         },
 
         isShowingAllCategories() {
             return (this.state === SHOW_ALL_CATEGORIES);
         },
 
-        isShowingSingleCategory() {},
+        isShowingSingleCategory() {
+            return (this.state === SHOW_SINGLE_CATEGORY);
+        },
 
         filteredExamples() {
             // if (this.isShowingAllCategories)
@@ -142,6 +147,7 @@ export default {
             if (this.$route.params.categorySlug) {
                 console.log('active slug', this.$route.params.categorySlug);
                 this.activeCategorySlug = this.$route.params.categorySlug;
+                this.state = SHOW_SINGLE_CATEGORY;
             } else {
                 console.log('no active slug');
                 this.activeCategorySlug = '';
@@ -152,7 +158,11 @@ export default {
         async fetchData() {
             try {
                 const categories = await axios.get('/api/categories');
-                const examples = await axios.get('/api/examples');
+                const examples = await axios.get('/api/examples', {
+                    params: {
+                        'filter[category.slug]': this.$route.params.categorySlug,
+                    },
+                });
 
                 console.log('categories', categories.data);
                 console.log('examples', examples.data);

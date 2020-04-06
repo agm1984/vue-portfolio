@@ -199,7 +199,7 @@ export default {
 
         async fetchExample() {
             try {
-                const example = await axios.get(`/api/example/${this.$route.params.exampleSlug}`);
+                const example = await axios.get(`/api/examples/${this.$route.params.exampleSlug}`);
 
                 console.log('example', example.data);
 

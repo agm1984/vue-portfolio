@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/categories', 'CategoryController@index');
 Route::get('/examples', 'ExampleController@index');
 
-Route::get('/example/{example}', 'ExampleController@show');
+Route::get('/examples/{example}', 'ExampleController@show');
 
 // Route::group(['prefix' => 'example'], function () {
 //     Route::post('add', 'ExampleController@add');
