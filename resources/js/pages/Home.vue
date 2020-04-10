@@ -1,10 +1,14 @@
 <template>
-    <div class="flex flex-col items-center justify-end flex-1">
+    <a-page v-title="'Home'">
         <div id="home_avatar" style="background-image: url('/adam.png')"></div>
+
         <h2 id="home_leadIn">THE PORTFOLIO OF</h2>
+
         <h1 class="home_name">adam</h1>
+
         <h1 class="home_name">mackintosh</h1>
-    </div>
+
+    </a-page>
 </template>
 
 <script>

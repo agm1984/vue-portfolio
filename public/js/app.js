@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"a-form":"a-form","a-sacred-geometry":"a-sacred-geometry","a-text-input":"a-text-input","a-tilt":"a-tilt"}[chunkId]||chunkId) + ".bundle.js"
+/******/ 		return __webpack_require__.p + "js/" + ({"a-form":"a-form","a-page":"a-page","a-sacred-geometry":"a-sacred-geometry","a-text-input":"a-text-input","a-tilt":"a-tilt"}[chunkId]||chunkId) + ".bundle.js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -2026,6 +2026,36 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'admin-dashboard',
+  props: {},
+  data: function data() {
+    return {};
+  },
+  computed: {},
+  mounted: function mounted() {},
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/skills/Skills.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/skills/Skills.vue?vue&type=script&lang=js& ***!
@@ -2039,11 +2069,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scene_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scene.vue */ "./resources/js/components/skills/scene.vue");
 /* harmony import */ var _stat_cluster_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stat-cluster.vue */ "./resources/js/components/skills/stat-cluster.vue");
 /* harmony import */ var _stat_bar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stat-bar.vue */ "./resources/js/components/skills/stat-bar.vue");
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2807,10 +2832,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 var INITIAL = 0;
 var IS_DISPLAYING_SUCCESS_MESSAGE = 1;
 /**
@@ -2906,6 +2927,10 @@ var generateRandom = function generateRandom() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -3368,18 +3393,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var LOADING = 0;
 var SHOW_ALL_CATEGORIES = 1;
-var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-sharing
+var SHOW_SINGLE_CATEGORY = 2;
+var SHOW_NETWORK_ERRORS = 3; // https://github.com/nicolasbeauvais/vue-social-sharing
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'list-examples',
@@ -3389,7 +3406,7 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
       state: LOADING,
       categories: [],
       examples: [],
-      activeCategorySlug: ''
+      activeCategory: {}
     };
   },
   computed: {
@@ -3401,6 +3418,12 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
     },
     isShowingSingleCategory: function isShowingSingleCategory() {
       return this.state === SHOW_SINGLE_CATEGORY;
+    },
+    isFetchError: function isFetchError() {
+      return this.state === SHOW_NETWORK_ERRORS;
+    },
+    title: function title() {
+      return this.isShowingSingleCategory ? this.activeCategory.name : 'Examples';
     }
   },
   watch: {
@@ -3414,16 +3437,20 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
   },
   methods: {
     setActiveCategory: function setActiveCategory() {
+      var _this = this;
+
       if (this.$route.params.categorySlug) {
-        this.activeCategorySlug = this.$route.params.categorySlug;
+        this.activeCategory = this.categories.find(function (category) {
+          return category.slug === _this.$route.params.categorySlug;
+        });
         this.state = SHOW_SINGLE_CATEGORY;
       } else {
-        this.activeCategorySlug = '';
+        this.activeCategory = {};
         this.state = SHOW_ALL_CATEGORIES;
       }
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _yield$Promise$all, _yield$Promise$all2, categories, examples;
@@ -3436,7 +3463,7 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
                 _context.next = 3;
                 return Promise.all([axios.get('/api/categories'), axios.get('/api/examples', {
                   params: {
-                    'filter[category.slug]': _this.$route.params.categorySlug
+                    'filter[category.slug]': _this2.$route.params.categorySlug
                   }
                 })]);
 
@@ -3447,16 +3474,17 @@ var SHOW_SINGLE_CATEGORY = 2; // https://github.com/nicolasbeauvais/vue-social-s
                 examples = _yield$Promise$all2[1];
                 // console.log('categories', categories.data);
                 // console.log('examples', examples.data);
-                _this.categories = categories.data;
-                _this.examples = examples.data;
-                return _context.abrupt("return", _this.setActiveCategory());
+                _this2.categories = categories.data;
+                _this2.examples = examples.data;
+                return _context.abrupt("return", _this2.setActiveCategory());
 
               case 12:
                 _context.prev = 12;
                 _context.t0 = _context["catch"](0);
+                _this2.state = SHOW_NETWORK_ERRORS;
                 throw new Error("list-examples# Problem fetching data: ".concat(_context.t0));
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -3656,7 +3684,9 @@ var IS_LOADED = 1;
       category_id: 1,
       feature_id: 2,
       image: {},
-      example: {}
+      example: {
+        category: {}
+      }
     };
   },
   computed: {
@@ -3665,11 +3695,13 @@ var IS_LOADED = 1;
     },
     isLoaded: function isLoaded() {
       return this.state === IS_LOADED;
+    },
+    title: function title() {
+      return this.example.name;
     }
   },
   mounted: function mounted() {
-    console.log('example slug', this.$route.params.exampleSlug);
-    this.fetchExample();
+    return this.fetchExample();
   },
   methods: {
     goBack: function goBack() {
@@ -3690,11 +3722,10 @@ var IS_LOADED = 1;
 
               case 3:
                 example = _context.sent;
-                console.log('example', example.data);
+                // console.log('example', example.data);
                 _this.example = example.data;
                 _this.state = IS_LOADED;
-                _context.next = 12;
-                break;
+                return _context.abrupt("return", undefined);
 
               case 9:
                 _context.prev = 9;
@@ -18881,7 +18912,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding-top: 12.8rem;\n  width: 100%;\n  max-width: 1100px;\n  height: 100%;\n  margin: 0 auto;\n}\n.timeline-title {\n  position: relative;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  margin: 0;\n  margin-bottom: 3.2rem;\n}\n.timeline-title:after {\n  border-bottom: 1px solid #618396;\n  display: block;\n  height: 1px;\n  margin: 0.625em auto 1.375em;\n  max-width: 80px;\n}\n.timeline-bonusPadding {\n  padding: 3.2rem 0 0 0;\n}\n#story-wrapper {\n  position: relative;\n  width: 100%;\n  height: 100vh;\n}\n#timeline .timeline-item:after,\n#timeline .timeline-item:before {\n  content: '';\n  display: block;\n  width: 100%;\n  clear: both;\n}\n#timeline {\n  width: 100%;\n  position: relative;\n  transition: all 0.4s ease;\n}\n#timeline:before {\n  content: '';\n  position: absolute;\n  width: 0.2rem;\n  height: 100%;\n  background: #8B4513;\n  left: 50%;\n  top: 0;\n}\n#timeline:after {\n  content: '';\n  clear: both;\n  display: table;\n  width: 100%;\n}\n#timeline .timeline-item {\n  position: relative;\n}\n#timeline .timeline-item .timeline-icon {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 6.4rem;\n  height: 6.4rem;\n  overflow: hidden;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 400;\n  letter-spacing: 0.2em;\n  color: #fff;\n  background: #014420;\n  margin-left: -3.0rem;\n  border-radius: 50%;\n}\n#timeline .timeline-item .timeline-content {\n  width: 45%;\n  font-family: 'Roboto', sans-serif;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  letter-spacing: 0.1em;\n  text-align: center;\n  background: none;\n  padding: 3.2rem;\n  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);\n  transition: all 250ms ease;\n}\n#timeline .timeline-item .timeline-content h2 {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.8rem;\n  line-height: 2.8rem;\n  letter-spacing: 0.1em;\n  text-align: center;\n  padding: 1.6rem;\n  margin: -3.2rem -2.0rem 0 -1.6rem;\n  color: #CCCCCC;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n}\n#timeline .timeline-item .timeline-content:before {\n  content: '';\n  position: absolute;\n  left: calc(45% - 1.2rem);\n  top: 3.0rem;\n  width: 4.0rem;\n  height: 0;\n  border-bottom: 0.4rem solid #8B4513;\n  z-index: -1;\n}\n#timeline .timeline-item .timeline-content.right {\n  float: right;\n}\n#timeline .timeline-item .timeline-content.right:before {\n  content: '';\n  right: calc(45% - 1.6rem);\n  left: inherit;\n  top: 3.0rem;\n  width: 3.6rem;\n  height: 0;\n  border-bottom: 0.4rem solid #8B4513;\n}\n.btn {\n  display: inline-block;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  text-decoration: none;\n  text-align: center;\n  color: #fff;\n  background: none;\n  margin-bottom: 3.2rem;\n  padding: 1.6rem;\n  border: 0.1rem solid #fff;\n  transition: all 250ms ease-in-out;\n}\n.btn:hover {\n  color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n.btn:active {\n  color: #FF5043;\n  border: 0.1rem solid #FF5043;\n  transition: all 125ms ease-in-out;\n}\n@media (max-width: 768px) {\n#timeline {\n    margin: 3.2rem;\n    padding: 0px;\n    width: 90%;\n}\n#timeline:before {\n    left: 0;\n}\n#timeline .timeline-item .timeline-content {\n    width: 90%;\n    float: right;\n}\n#timeline .timeline-item .timeline-content:before,\n  #timeline .timeline-item .timeline-content.right:before {\n    left: -1.6rem;\n    margin-left: 4.0rem;\n    width: 6.0rem;\n    border-left: 0;\n}\n#timeline .timeline-item .timeline-icon {\n    left: 0;\n}\n}\n@media (max-width: 668px) {\n#timeline .timeline-item .timeline-content:before,\n  #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 3.2rem;\n}\n}\n@media (max-width: 568px) {\n#timeline .timeline-item .timeline-content:before,\n  #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 2.2rem;\n}\n}\n@media (max-width: 468px) {\n#timeline .timeline-item .timeline-content:before,\n  #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 1.6rem;\n}\n}\n@media (max-width: 368px) {\n#timeline .timeline-item .timeline-content:before,\n  #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 0.4rem;\n}\n}\n.story_paragraph {\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n}\n#team-intro {\n  max-width: 80.0rem;\n  height: 80rem;\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  text-align: center;\n}\n#team-container-wrapper {\n  width: 140.0rem;\n}\n#team-container {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n  height: 100%;\n  padding-top: 3.2rem;\n}\n.team_person {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  width: 33.333%;\n}\n.team_person-avatar {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center center;\n  width: 9.6rem;\n  height: 9.6rem;\n  border: 0.1rem solid #000;\n  border-radius: 50%;\n  box-shadow: -8px 14px 40px 0px black;\n  margin-bottom: 3.2rem;\n  opacity: 0.9;\n}\n.team_person-title {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.0rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #FF5043;\n  margin: 0;\n}\n.team_person-blurb {\n  text-align: center;\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  margin-top: 0.8rem;\n  margin-bottom: 6.4rem;\n  padding: 0 3.2rem 0 3.2rem;\n}\n#info-wrapper {\n  display: block;\n  padding: 0 3.2rem 3.2rem 3.2rem;\n  overflow: none;\n}\n#info-specialWrapper {\n  width: 160.0rem;\n}\n#info-container {\n  display: flex;\n}\n#info_split-container {\n  display: flex;\n  background-color: #004040;\n  box-shadow: -8px 14px 40px 0px black;\n  padding-bottom: 1.6rem;\n}\n.info_split {\n  width: 50%;\n  padding: 0;\n}\n#info_split-divider {\n  width: 6.4rem;\n  height: 1.6rem;\n}\n.info_split-title {\n  text-align: center;\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.0rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #fff;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  margin: 3.2rem 0 0 0;\n  padding: 1.6rem;\n}\n.info_split-column {\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n  padding: 1.6rem;\n}\n.info_split-heading {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.8rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #45A29E;\n  margin: 0;\n  padding: 0;\n}\n.info_split-content {\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  margin: 0;\n}\n#programmers-container {\n  padding: 0 0 0 0.4rem;\n}\n#path-wrapper {\n  position: relative;\n  display: block;\n  width: calc(100vw - 3.2rem);\n}\n\n/*\n  1.9rem is needed to maintain horizontal alignment\n  with adjacent elements.\n*/\n#path-container {\n  display: flex;\n  justify-content: center;\n  padding: 3.2rem 1.9rem 3.2rem 0;\n}\n.path-divider {\n  width: 6.4rem;\n  height: 6.4rem;\n}\n#story-footer {\n  position: relative;\n  display: flex;\n  width: 100%;\n  white-space: nowrap;\n  padding: 3.2rem 0 3.2rem 0;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  z-index: 9999;\n}\n#story-left {\n  position: relative;\n  display: flex;\n  align-items: center;\n  width: 19.2rem;\n  padding-left: 3.2rem;\n  z-index: 9999;\n}\n#story-center {\n  flex: 1;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n#story-conclusion {\n  font-family: 'Oswald', sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  letter-spacing: 0.2em;\n  color: #8B4513;\n}\n#story-right {\n  width: 19.2rem;\n  height: 100%;\n}\n@media (max-width: 1664px) {\n#info-specialWrapper {\n    width: 128.0rem;\n}\n}\n@media (max-width: 1400px) {\n#team-container-wrapper {\n    width: 100%;\n}\n#team-container {\n    flex-direction: column;\n    align-items: center;\n}\n.team_person {\n    width: 100%;\n    max-width: 450px;\n}\n.btn {\n    margin-bottom: 6.4rem;\n}\n#info-specialWrapper {\n    width: 96.0rem;\n}\n#info_split-container {\n    flex-direction: column;\n}\n}\n@media (max-width: 1024px) {\n#story {\n    padding-top: 22.4rem;\n    align-items: initial;\n}\n.timeline-title {\n    text-align: center;\n}\n#info-specialWrapper {\n    width: 100%;\n}\n#info-container {\n    flex-direction: column;\n    align-items: center;\n}\n.info_split {\n    width: 100%;\n    padding: 0 1.6rem 0 1.6rem;\n}\n#info_split-container {\n    margin-bottom: 1.6rem;\n}\n#path-container {\n    padding: 3.2rem 0 3.2rem 0;\n}\n.story_paragraph {\n    text-align: center;\n}\n}\n@media (max-width: 600px) {\n#story {\n    padding-top: 25.6rem;\n}\n.team_person {\n    padding: 0 3.2rem 0 3.2rem;\n}\n#info-wrapper {\n    padding: 0;\n}\n#story-conclusion {\n    display: none;\n}\n}\n", ""]);
+exports.push([module.i, "#story {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding-top: 12.8rem;\n  width: 100%;\n  max-width: 1100px;\n  height: 100%;\n  margin: 0 auto;\n}\n.timeline-title {\n  position: relative;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  margin: 0;\n  margin-bottom: 3.2rem;\n}\n.timeline-title:after {\n  border-bottom: 1px solid #618396;\n  display: block;\n  height: 1px;\n  margin: 0.625em auto 1.375em;\n  max-width: 80px;\n}\n.timeline-bonusPadding {\n  padding: 3.2rem 0 0 0;\n}\n#story-wrapper {\n  position: relative;\n  width: 100%;\n  height: 100vh;\n}\n#timeline .timeline-item:after,\n#timeline .timeline-item:before {\n  content: '';\n  display: block;\n  width: 100%;\n  clear: both;\n}\n#timeline {\n  width: 100%;\n  position: relative;\n  transition: all 0.4s ease;\n}\n#timeline:before {\n  content: '';\n  position: absolute;\n  width: 0.2rem;\n  height: 100%;\n  background: #8B4513;\n  left: 50%;\n  top: 0;\n}\n#timeline:after {\n  content: '';\n  clear: both;\n  display: table;\n  width: 100%;\n}\n#timeline .timeline-item {\n  position: relative;\n}\n#timeline .timeline-item .timeline-icon {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 6.4rem;\n  height: 6.4rem;\n  overflow: hidden;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 400;\n  letter-spacing: 0.2em;\n  color: #fff;\n  background: #014420;\n  margin-left: -3.0rem;\n  border-radius: 50%;\n}\n#timeline .timeline-item .timeline-content {\n  width: 45%;\n  font-family: 'Roboto', sans-serif;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  letter-spacing: 0.1em;\n  text-align: center;\n  background: none;\n  padding: 3.2rem;\n  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);\n  transition: all 250ms ease;\n}\n#timeline .timeline-item .timeline-content h2 {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.8rem;\n  line-height: 2.8rem;\n  letter-spacing: 0.1em;\n  text-align: center;\n  padding: 1.6rem;\n  margin: -3.2rem -2.0rem 0 -1.6rem;\n  color: #CCCCCC;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n}\n#timeline .timeline-item .timeline-content:before {\n  content: '';\n  position: absolute;\n  left: calc(45% - 1.2rem);\n  top: 3.0rem;\n  width: 4.0rem;\n  height: 0;\n  border-bottom: 0.4rem solid #8B4513;\n  z-index: -1;\n}\n#timeline .timeline-item .timeline-content.right {\n  float: right;\n}\n#timeline .timeline-item .timeline-content.right:before {\n  content: '';\n  right: calc(45% - 1.6rem);\n  left: inherit;\n  top: 3.0rem;\n  width: 3.6rem;\n  height: 0;\n  border-bottom: 0.4rem solid #8B4513;\n}\n.btn {\n  display: inline-block;\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  text-decoration: none;\n  text-align: center;\n  color: #fff;\n  background: none;\n  margin-bottom: 3.2rem;\n  padding: 1.6rem;\n  border: 0.1rem solid #fff;\n  transition: all 250ms ease-in-out;\n}\n.btn:hover {\n  color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n.btn:active {\n  color: #FF5043;\n  border: 0.1rem solid #FF5043;\n  transition: all 125ms ease-in-out;\n}\n@media (max-width: 768px) {\n#timeline {\n    margin: 3.2rem;\n    padding: 0px;\n    width: 90%;\n}\n#timeline:before {\n    left: 0;\n}\n#timeline .timeline-item .timeline-content {\n    width: 90%;\n    float: right;\n}\n#timeline .timeline-item .timeline-content:before,\n    #timeline .timeline-item .timeline-content.right:before {\n    left: -1.6rem;\n    margin-left: 4.0rem;\n    width: 6.0rem;\n    border-left: 0;\n}\n#timeline .timeline-item .timeline-icon {\n    left: 0;\n}\n}\n@media (max-width: 668px) {\n#timeline .timeline-item .timeline-content:before,\n    #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 3.2rem;\n}\n}\n@media (max-width: 568px) {\n#timeline .timeline-item .timeline-content:before,\n    #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 2.2rem;\n}\n}\n@media (max-width: 468px) {\n#timeline .timeline-item .timeline-content:before,\n    #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 1.6rem;\n}\n}\n@media (max-width: 368px) {\n#timeline .timeline-item .timeline-content:before,\n    #timeline .timeline-item .timeline-content.right:before {\n    margin-left: 0.4rem;\n}\n}\n.story_paragraph {\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n}\n#team-intro {\n  max-width: 80.0rem;\n  height: 80rem;\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  text-align: center;\n}\n#team-container-wrapper {\n  width: 140.0rem;\n}\n#team-container {\n  display: flex;\n  flex-direction: row;\n  width: 100%;\n  height: 100%;\n  padding-top: 3.2rem;\n}\n.team_person {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  width: 33.333%;\n}\n.team_person-avatar {\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: center center;\n  width: 9.6rem;\n  height: 9.6rem;\n  border: 0.1rem solid #000;\n  border-radius: 50%;\n  box-shadow: -8px 14px 40px 0px black;\n  margin-bottom: 3.2rem;\n  opacity: 0.9;\n}\n.team_person-title {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.0rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #FF5043;\n  margin: 0;\n}\n.team_person-blurb {\n  text-align: center;\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  margin-top: 0.8rem;\n  margin-bottom: 6.4rem;\n  padding: 0 3.2rem 0 3.2rem;\n}\n#info-wrapper {\n  display: block;\n  padding: 0 3.2rem 3.2rem 3.2rem;\n  overflow: none;\n}\n#info-specialWrapper {\n  width: 160.0rem;\n}\n#info-container {\n  display: flex;\n}\n#info_split-container {\n  display: flex;\n  background-color: #004040;\n  box-shadow: -8px 14px 40px 0px black;\n  padding-bottom: 1.6rem;\n}\n.info_split {\n  width: 50%;\n  padding: 0;\n}\n#info_split-divider {\n  width: 6.4rem;\n  height: 1.6rem;\n}\n.info_split-title {\n  text-align: center;\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.0rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #fff;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  margin: 3.2rem 0 0 0;\n  padding: 1.6rem;\n}\n.info_split-column {\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n  padding: 1.6rem;\n}\n.info_split-heading {\n  font-family: 'AROLY', sans-serif;\n  font-size: 2.0rem;\n  line-height: 2.8rem;\n  font-weight: 200;\n  letter-spacing: 0.1em;\n  color: #45A29E;\n  margin: 0;\n  padding: 0;\n}\n.info_split-content {\n  font-family: 'Roboto', sans-serif;\n  letter-spacing: 0.1rem;\n  font-weight: 300;\n  font-size: 1.6rem;\n  line-height: 2.4rem;\n  margin: 0;\n}\n#programmers-container {\n  padding: 0 0 0 0.4rem;\n}\n#path-wrapper {\n  position: relative;\n  display: block;\n  width: calc(100vw - 3.2rem);\n}\n\n/*\n  1.9rem is needed to maintain horizontal alignment\n  with adjacent elements.\n*/\n#path-container {\n  display: flex;\n  justify-content: center;\n  padding: 3.2rem 1.9rem 3.2rem 0;\n}\n.path-divider {\n  width: 6.4rem;\n  height: 6.4rem;\n}\n#story-footer {\n  position: relative;\n  display: flex;\n  width: 100%;\n  white-space: nowrap;\n  padding: 3.2rem 0 3.2rem 0;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  z-index: 9999;\n}\n#story-left {\n  position: relative;\n  display: flex;\n  align-items: center;\n  width: 19.2rem;\n  padding-left: 3.2rem;\n  z-index: 9999;\n}\n#story-center {\n  flex: 1;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n#story-conclusion {\n  font-family: 'Oswald', sans-serif;\n  font-weight: 400;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  letter-spacing: 0.2em;\n  color: #8B4513;\n}\n#story-right {\n  width: 19.2rem;\n  height: 100%;\n}\n@media (max-width: 1664px) {\n#info-specialWrapper {\n    width: 128.0rem;\n}\n}\n@media (max-width: 1400px) {\n#team-container-wrapper {\n    width: 100%;\n}\n#team-container {\n    flex-direction: column;\n    align-items: center;\n}\n.team_person {\n    width: 100%;\n    max-width: 450px;\n}\n.btn {\n    margin-bottom: 6.4rem;\n}\n#info-specialWrapper {\n    width: 96.0rem;\n}\n#info_split-container {\n    flex-direction: column;\n}\n}\n@media (max-width: 1024px) {\n#story {\n    padding-top: 22.4rem;\n    align-items: initial;\n}\n.timeline-title {\n    text-align: center;\n}\n#info-specialWrapper {\n    width: 100%;\n}\n#info-container {\n    flex-direction: column;\n    align-items: center;\n}\n.info_split {\n    width: 100%;\n    padding: 0 1.6rem 0 1.6rem;\n}\n#info_split-container {\n    margin-bottom: 1.6rem;\n}\n#path-container {\n    padding: 3.2rem 0 3.2rem 0;\n}\n.story_paragraph {\n    text-align: center;\n}\n}\n@media (max-width: 600px) {\n#story {\n    padding-top: 25.6rem;\n}\n.team_person {\n    padding: 0 3.2rem 0 3.2rem;\n}\n#info-wrapper {\n    padding: 0;\n}\n#story-conclusion {\n    display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -18919,7 +18950,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "#examples {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding-top: 12.8rem;\n  width: 100%;\n  z-index: 0;\n}\n#examples-downScroller {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  width: 6.4rem;\n  height: 6.4rem;\n  font-size: 3.2rem;\n  margin: 0 3.2rem 3.2rem 0;\n  color: #8B4513;\n  border: 0.2rem solid #8B4513;\n  background: none;\n  outline: #212121;\n  transition: all 250ms ease-in-out;\n  z-index: 1;\n}\n#examples-downScroller:hover {\n  color: #66FCF1;\n  border: 0.2rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n#examples-downScroller:active {\n  color: #FF5043;\n  border: 0.2rem solid #FF5043;\n}\n#examples_grid {\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  flex-wrap: wrap;\n  max-width: 140.0rem;\n  height: 100%;\n}\n#examples_categories {\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  flex-wrap: wrap;\n  max-width: 53.0rem;\n  padding-bottom: 3.2rem;\n}\n.examples_categories-button {\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  text-align: center;\n  text-decoration: none;\n  background: none;\n  color: #fff;\n  border: 0.1rem solid #fff;\n  padding: 1.6rem;\n  margin: 0 0.8rem 1.6rem 0.8rem;\n  transition: all 200ms ease-in-out;\n}\n.examples_categories-button:hover {\n  color: #212121;\n  background-color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n.examples_categories-button:active {\n  background-color: #45A29E;\n  border: 0.1rem solid #45A29E;\n}\n.isActiveCategory {\n  font-weight: 400;\n  color: #212121;\n  background-color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n}\n.examples_grid_feature-button {\n  width: 48.0rem;\n  height: 27.0rem;\n  padding: 0;\n  margin: 0;\n  border: none;\n  margin: 3.2rem;\n}\n.examples_grid_feature-photo {\n  position: relative;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: left top;\n  width: 48.0rem;\n  height: 27.0rem;\n  border: 0.2rem solid #000;\n  box-shadow: -8px 14px 40px 0px black;\n}\n.examples_grid_feature-photo:active {\n  border: 0.2rem solid #66FCF1;\n}\n.examples_grid_feature-overlay {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n.examples_grid_feature-caption {\n  position: absolute;\n  top: 0;\n  left: 0;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  width: 100%;\n  text-align: center;\n  font-family: 'Oswald', sans-serif;\n  font-weight: 200;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  letter-spacing: 0.2em;\n  color: #fff;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  padding: 1.6rem;\n}\n.examples_grid_feature-unseen {\n  display: none;\n}\n.examples_grid_feature-seen {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n.examples_grid_feature-seen span {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  height: 100%;\n  text-align: center;\n  font-family: 'Oswald', sans-serif;\n  font-size: 4.8rem;\n  line-height: 1.6rem;\n  color: green;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  padding: 1.6rem;\n}\n@media (max-width: 1337px) {\n#examples_grid {\n    flex-direction: column;\n}\n}\n@media (max-width: 1024px) {\n#examples {\n    padding-top: 22.4rem;\n}\n}\n@media (max-width: 600px) {\n#examples {\n    padding-top: 27.2rem;\n}\n.examples_grid_feature-button {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n.examples_grid_feature-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n#examples-conclusion {\n    display: none;\n}\n}\n@media (max-width: 1650px) {\n#example_heading {\n    font-size: 4.8rem;\n    line-height: 6.4rem;\n}\n.example_header-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n.example_content-paragraph {\n    max-width: 64.0rem;\n}\n}\n@media (max-width: 1337px) {\n#example-wrapper {\n    padding: 12.8rem;\n}\n#example_header {\n    flex-direction: column;\n    align-items: center;\n}\n#example_header-left {\n    width: 100%;\n    padding-right: 6.4rem;\n}\n#example_heading {\n    text-align: center;\n    font-size: 4.8rem;\n    line-height: 6.4rem;\n}\n#example_links {\n    justify-content: center;\n    margin-left: 0.8rem;\n}\n#example_header-right {\n    width: 100%;\n    justify-content: center;\n    padding-left: 6.4rem;\n}\n.example_header-photo {\n    width: 48.0rem;\n    height: 27.0rem;\n    margin-left: 0;\n}\n}\n@media (max-width: 1200px) {\n.example_content-half {\n    flex-direction: column;\n}\n.example_content-split {\n    width: 100%;\n    align-items: center;\n}\n.example_content-subheading {\n    text-align: center;\n}\n.example_content-paragraph {\n    text-align: center;\n}\n#example_images {\n    justify-content: center;\n}\n.example_content-full {\n    align-items: center;\n}\n}\n@media (max-width: 1024px) {\n#example-wrapper {\n    padding: 22.4rem 6.4rem 6.4rem 6.4rem;\n}\n}\n@media (max-width: 800px) {\n#example_header-left {\n    padding: 3.2rem;\n}\n#example_header-right {\n    padding: 3.2rem;\n}\n#example_heading {\n    font-size: 4.0rem;\n    line-height: 6.4rem;\n}\n.example_header-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n}\n@media (max-width: 650px) {\n#example_links {\n    flex-direction: column;\n    align-items: center;\n}\n.example_links-link {\n    margin-top: 1.6rem;\n}\n}\n@media (max-width: 600px) {\n#example-wrapper {\n    padding: 28.8rem 3.2rem 3.2rem 3.2rem;\n}\n}\n@media (max-width: 500px) {\n.examples_grid_feature-button {\n    margin: 1.6rem 0 1.6rem 0;\n}\n#example-wrapper {\n    padding: 28.8rem 1.6rem 1.6rem 1.6rem;\n}\n#example_header-left {\n    padding: 1.6rem;\n    padding-top: 4.0rem;\n}\n#example_header-right {\n    padding: 1.6rem;\n}\n.example_content-subheading {\n    padding: 6.4rem 1.6rem 3.2rem 1.6rem;\n}\n.example_content-paragraph {\n    padding: 0 3.2rem 0 3.2rem;\n}\n#example_images {\n    padding: 0;\n}\n}\n", ""]);
+exports.push([module.i, "#examples-downScroller {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  width: 6.4rem;\n  height: 6.4rem;\n  font-size: 3.2rem;\n  margin: 0 3.2rem 3.2rem 0;\n  color: #8B4513;\n  border: 0.2rem solid #8B4513;\n  background: none;\n  outline: #212121;\n  transition: all 250ms ease-in-out;\n  z-index: 1;\n}\n#examples-downScroller:hover {\n  color: #66FCF1;\n  border: 0.2rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n#examples-downScroller:active {\n  color: #FF5043;\n  border: 0.2rem solid #FF5043;\n}\n#examples_grid {\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  flex-wrap: wrap;\n  max-width: 140.0rem;\n  height: 100%;\n}\n#examples_categories {\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  flex-wrap: wrap;\n  max-width: 53.0rem;\n  padding-bottom: 3.2rem;\n}\n.examples_categories-button {\n  font-family: 'Oswald', sans-serif;\n  font-size: 1.6rem;\n  line-height: 1.6rem;\n  font-weight: 200;\n  letter-spacing: 0.2em;\n  text-align: center;\n  text-decoration: none;\n  background: none;\n  color: #fff;\n  border: 0.1rem solid #fff;\n  padding: 1.6rem;\n  margin: 0 0.8rem 1.6rem 0.8rem;\n  transition: all 200ms ease-in-out;\n}\n.examples_categories-button:hover {\n  color: #212121;\n  background-color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n  transition: all 250ms ease-in-out;\n}\n.examples_categories-button:active {\n  background-color: #45A29E;\n  border: 0.1rem solid #45A29E;\n}\n.isActiveCategory {\n  font-weight: 400;\n  color: #212121;\n  background-color: #66FCF1;\n  border: 0.1rem solid #66FCF1;\n}\n.examples_grid_feature-button {\n  width: 48.0rem;\n  height: 27.0rem;\n  padding: 0;\n  margin: 0;\n  border: none;\n  margin: 3.2rem;\n}\n.examples_grid_feature-photo {\n  position: relative;\n  background-repeat: no-repeat;\n  background-size: cover;\n  background-position: left top;\n  width: 48.0rem;\n  height: 27.0rem;\n  border: 0.2rem solid #000;\n  box-shadow: -8px 14px 40px 0px black;\n}\n.examples_grid_feature-photo:active {\n  border: 0.2rem solid #66FCF1;\n}\n.examples_grid_feature-overlay {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n.examples_grid_feature-caption {\n  position: absolute;\n  top: 0;\n  left: 0;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  width: 100%;\n  text-align: center;\n  font-family: 'Oswald', sans-serif;\n  font-weight: 200;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  letter-spacing: 0.2em;\n  color: #fff;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  padding: 1.6rem;\n}\n.examples_grid_feature-unseen {\n  display: none;\n}\n.examples_grid_feature-seen {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n.examples_grid_feature-seen span {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  height: 100%;\n  text-align: center;\n  font-family: 'Oswald', sans-serif;\n  font-size: 4.8rem;\n  line-height: 1.6rem;\n  color: green;\n  background-color: rgba(51, 51, 51, 0.8);\n  border: 0.1rem solid green;\n  padding: 1.6rem;\n}\n@media (max-width: 1337px) {\n#examples_grid {\n    flex-direction: column;\n}\n}\n@media (max-width: 1024px) {\n#examples {\n    padding-top: 22.4rem;\n}\n}\n@media (max-width: 600px) {\n#examples {\n    padding-top: 27.2rem;\n}\n.examples_grid_feature-button {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n.examples_grid_feature-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n#examples-conclusion {\n    display: none;\n}\n}\n@media (max-width: 1650px) {\n#example_heading {\n    font-size: 4.8rem;\n    line-height: 6.4rem;\n}\n.example_header-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n.example_content-paragraph {\n    max-width: 64.0rem;\n}\n}\n@media (max-width: 1337px) {\n#example-wrapper {\n    padding: 12.8rem;\n}\n#example_header {\n    flex-direction: column;\n    align-items: center;\n}\n#example_header-left {\n    width: 100%;\n    padding-right: 6.4rem;\n}\n#example_heading {\n    text-align: center;\n    font-size: 4.8rem;\n    line-height: 6.4rem;\n}\n#example_links {\n    justify-content: center;\n    margin-left: 0.8rem;\n}\n#example_header-right {\n    width: 100%;\n    justify-content: center;\n    padding-left: 6.4rem;\n}\n.example_header-photo {\n    width: 48.0rem;\n    height: 27.0rem;\n    margin-left: 0;\n}\n}\n@media (max-width: 1200px) {\n.example_content-half {\n    flex-direction: column;\n}\n.example_content-split {\n    width: 100%;\n    align-items: center;\n}\n.example_content-subheading {\n    text-align: center;\n}\n.example_content-paragraph {\n    text-align: center;\n}\n#example_images {\n    justify-content: center;\n}\n.example_content-full {\n    align-items: center;\n}\n}\n@media (max-width: 1024px) {\n#example-wrapper {\n    padding: 22.4rem 6.4rem 6.4rem 6.4rem;\n}\n}\n@media (max-width: 800px) {\n#example_header-left {\n    padding: 3.2rem;\n}\n#example_header-right {\n    padding: 3.2rem;\n}\n#example_heading {\n    font-size: 4.0rem;\n    line-height: 6.4rem;\n}\n.example_header-photo {\n    width: 32.0rem;\n    height: 18.0rem;\n}\n}\n@media (max-width: 650px) {\n#example_links {\n    flex-direction: column;\n    align-items: center;\n}\n.example_links-link {\n    margin-top: 1.6rem;\n}\n}\n@media (max-width: 600px) {\n#example-wrapper {\n    padding: 28.8rem 3.2rem 3.2rem 3.2rem;\n}\n}\n@media (max-width: 500px) {\n.examples_grid_feature-button {\n    margin: 1.6rem 0 1.6rem 0;\n}\n#example-wrapper {\n    padding: 28.8rem 1.6rem 1.6rem 1.6rem;\n}\n#example_header-left {\n    padding: 1.6rem;\n    padding-top: 4.0rem;\n}\n#example_header-right {\n    padding: 1.6rem;\n}\n.example_content-subheading {\n    padding: 6.4rem 1.6rem 3.2rem 1.6rem;\n}\n.example_content-paragraph {\n    padding: 0 3.2rem 0 3.2rem;\n}\n#example_images {\n    padding: 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -71126,6 +71157,44 @@ var version = '3.2.5';
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "a-page",
+    {
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: "Admin",
+          expression: "'Admin'"
+        }
+      ]
+    },
+    [_vm._v("\n\n    page\n    "), _vm._t("default")],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/skills/Skills.vue?vue&type=template&id=1f0989d8&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/skills/Skills.vue?vue&type=template&id=1f0989d8& ***!
@@ -71142,13 +71211,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "a-page",
     {
-      attrs: {
-        id: "skills",
-        title: "Skills",
-        description: "See some of Adam's skills"
-      }
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: "Skills",
+          expression: "'Skills'"
+        }
+      ]
     },
     [
       _c("user-details"),
@@ -71683,13 +71755,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "a-page",
     {
-      attrs: {
-        id: "contact",
-        title: "Contact",
-        description: "Start a conversation with Adam"
-      }
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: "Contact",
+          expression: "'Contact'"
+        }
+      ]
     },
     [
       _c("div", { attrs: { id: "contact_form-wrapper" } }, [
@@ -71745,7 +71820,19 @@ var render = function() {
                     ]
                   ),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { attrs: { id: "contact_reasons-wrapper" } }, [
+                _c("p", [
+                  _vm._v("I especially enjoy working with people who:")
+                ]),
+                _vm._v(" "),
+                _c("ul", { attrs: { id: "contact_reasons" } }, [
+                  _c("li", [_vm._v("have clear goals")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("maintain a growth mindset")]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("value precision & thoroughness")])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { attrs: { id: "contact_form-line" } })
             ],
@@ -71929,24 +72016,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "contact_reasons-wrapper" } }, [
-      _c("p", [_vm._v("I especially enjoy working with people who:")]),
-      _vm._v(" "),
-      _c("ul", { attrs: { id: "contact_reasons" } }, [
-        _c("li", [_vm._v("have clear goals")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("maintain a growth mindset")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("value precision & thoroughness")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -71968,33 +72038,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "flex flex-col items-center justify-end flex-1" },
-      [
-        _c("div", {
-          staticStyle: { "background-image": "url('/adam.png')" },
-          attrs: { id: "home_avatar" }
-        }),
-        _vm._v(" "),
-        _c("h2", { attrs: { id: "home_leadIn" } }, [
-          _vm._v("THE PORTFOLIO OF")
-        ]),
-        _vm._v(" "),
-        _c("h1", { staticClass: "home_name" }, [_vm._v("adam")]),
-        _vm._v(" "),
-        _c("h1", { staticClass: "home_name" }, [_vm._v("mackintosh")])
+  return _c(
+    "a-page",
+    {
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: "Home",
+          expression: "'Home'"
+        }
       ]
-    )
-  }
-]
+    },
+    [
+      _c("div", {
+        staticStyle: { "background-image": "url('/adam.png')" },
+        attrs: { id: "home_avatar" }
+      }),
+      _vm._v(" "),
+      _c("h2", { attrs: { id: "home_leadIn" } }, [_vm._v("THE PORTFOLIO OF")]),
+      _vm._v(" "),
+      _c("h1", { staticClass: "home_name" }, [_vm._v("adam")]),
+      _vm._v(" "),
+      _c("h1", { staticClass: "home_name" }, [_vm._v("mackintosh")])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -72017,8 +72087,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "relative flex flex-col items-center justify-end flex-1" },
+    "a-page",
+    {
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: "Story",
+          expression: "'Story'"
+        }
+      ]
+    },
     [
       true
         ? _c(
@@ -72050,19 +72129,214 @@ var render = function() {
             _vm._v("A MACKINTOSH TREE")
           ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { attrs: { id: "timeline" } }, [
+            _c("div", { staticClass: "timeline-item" }, [
+              _c("div", { staticClass: "timeline-icon" }, [
+                _vm._v("\n                    API\n                ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "timeline-content" }, [
+                _c("h2", [_vm._v("backend developer")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                        Since 2002, I have helped build, maintain, and promote products & services\n                        from various perspectives.\n                        I have been programming off and on since before then. Since the\n                        emergence of React, I have settled as a fullstack web and mobile developer.\n                        I advocate Functional Programming techniques, and I prefer to use GraphQL,\n                        node.js, React, and React Native.\n                    "
+                  )
+                ]),
+                _vm._v(
+                  "\n                    {this.renderContactButton()}\n                "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "timeline-item" }, [
+              _c("div", { staticClass: "timeline-icon" }, [
+                _vm._v("\n                    APP\n                ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "timeline-content right" }, [
+                _c("h2", [_vm._v("frontend developer")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                        I am comfortable working in the DOM.\n                        I enjoy the science behind building performant, fluid interfaces.\n                        I can implement virtually anything that can be described on paper.\n                    "
+                  )
+                ]),
+                _vm._v(
+                  "\n                    {this.renderContactButton()}\n                "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "timeline-item" }, [
+              _c("div", { staticClass: "timeline-icon" }, [
+                _vm._v("\n                    QA\n                ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "timeline-content" }, [
+                _c("h2", [_vm._v("quality assurance")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                        After years of hands-on QA experience helping optimize pre-production\n                        software and print materials against business objectives,\n                        I appreciate Test-Driven Development (TDD). I know the\n                        most about affected logic and features while I am working on them.\n                        Memory fades—this is also why readable code and verbose documentation\n                        are valuable. I appreciate a build-measure-learn\n                        feedback loop because it describes the scientific method.\n                    "
+                  )
+                ]),
+                _vm._v(
+                  "\n                    {this.renderContactButton()}\n                "
+                )
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("h1", { staticClass: "timeline-title timeline-bonusPadding" }, [
             _vm._v("A TEAM")
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _c("div", { attrs: { id: "team-container-wrapper" } }, [
+            _c("div", { attrs: { id: "team-container" } }, [
+              _c("div", { staticClass: "team_person" }, [
+                _c("div", {
+                  staticClass: "team_person-avatar",
+                  staticStyle: { "background-image": "url('/adam-left.png')" }
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "team_person-title" }, [
+                  _vm._v("adam backend")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "team_person-blurb" }, [
+                  _vm._v(
+                    "\n                        I compose functions in node.js.\n                        I like polyglot microservices, graph database paired with GraphQL, and websockets.\n                        I strive to make easy to maintain, extend, and test APIs.\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "team_person" }, [
+                _c("div", {
+                  staticClass: "team_person-avatar",
+                  staticStyle: { "background-image": "url('/adam-center.png')" }
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "team_person-title" }, [
+                  _vm._v("adam qa")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "team_person-blurb" }, [
+                  _vm._v(
+                    "\n                        A good QA effort allows implementation details to change with\n                        minimal to no effect on the existing test suite.\n                        I prefer continuous integration and testing in multiple environments.\n                    "
+                  )
+                ]),
+                _vm._v(
+                  "\n                    {this.renderContactButton()}\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "team_person" }, [
+                _c("div", {
+                  staticClass: "team_person-avatar",
+                  staticStyle: { "background-image": "url('/adam-right.png')" }
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "team_person-title" }, [
+                  _vm._v("adam frontend")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "team_person-blurb" }, [
+                  _vm._v(
+                    "\n                        Designing UIs can be easy.\n                        Take a constraint, and use it to implement a ruleset that\n                        communicates effectively in a riveting manner.\n                        Maximizing UX is a different story.\n                    "
+                  )
+                ])
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("h1", { staticClass: "timeline-title timeline-bonusPadding" }, [
             _vm._v("A BRIEF WORD")
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { attrs: { id: "info-wrapper" } }, [
+            _c("div", { attrs: { id: "info-specialWrapper" } }, [
+              _c("div", { attrs: { id: "info-container" } }, [
+                _c("div", { staticClass: "info_split" }, [
+                  _c("h3", { staticClass: "info_split-title" }, [
+                    _vm._v("to non-programmers")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "info_split-container" } }, [
+                    _c("div", { staticClass: "info_split-column" }, [
+                      _c("h4", { staticClass: "info_split-heading" }, [
+                        _vm._v("work")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "info_split-content" }, [
+                        _vm._v(
+                          "\n                                    As a developer, I aim to write not only pragmatic and UX-enriched\n                                    code but also empathetic and thorough technical documentation.\n                                    I am always curious to learn new tools and techniques.\n                                "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info_split-column" }, [
+                      _c("h4", { staticClass: "info_split-heading" }, [
+                        _vm._v("life")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "info_split-content" }, [
+                        _vm._v(
+                          "\n                                    I am introverted and creative and known for being light hearted,\n                                    precise, and thorough. I decompress from work by going to\n                                    the gym and cooking nice meals for other people.\n                                    I like the chemistry behind balancing salty, sweet, sour, and hot.\n                                "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "info_split-column" }, [
+                      _c("h4", { staticClass: "info_split-heading" }, [
+                        _vm._v("balance")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "info_split-content" }, [
+                        _vm._v(
+                          "\n                                    Fitness & nutrition has been a way of life for me for the past ten years.\n                                    A healthy mind and optimized metabolic processes both start with\n                                    optimized nutrient-intake.\n                                "
+                        )
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "info_split-divider" } }),
+                _vm._v(" "),
+                _c("div", { staticClass: "info_split" }, [
+                  _c("h3", { staticClass: "info_split-title" }, [
+                    _vm._v("to programmers")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "programmers-container" } }, [
+                    _c("p", { staticClass: "story_paragraph" }, [
+                      _vm._v(
+                        "\n                                I like JavaScript (JS) because it is a language made of atomic building blocks.\n                                A Function is a place to do work, like in Mathematics.\n                                This is fundamentally why I am passionate about deterministic transformations;\n                                they create predictable movement from point A to B like a math formula.\n                                Immutable Functional Programming allows a person to compose\n                                Functions together with minimized time and complexity\n                                provided the person follows some strict rules.\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "story_paragraph" }, [
+                      _vm._v(
+                        "\n                                The declarative-nature of Functional Programming\n                                matches up well with Objects, event streams, and state;\n                                immutability is important because shared state and side\n                                effects are very dangerous. Understanding the event loop and garbage\n                                collection helps a lot. Aiming for referential transparency helps even more.\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "story_paragraph" }, [
+                      _vm._v(
+                        "\n                                Some consider JS loose, and they are correct,\n                                but dynamic typing allows one to rapidly spool out logic\n                                in any desired direction.\n                                JS is a language of great productivity towards both APIs and apps.\n                                It is an isomorphic dominator. Reach out to me on Twitter if you want\n                                to pick up the conversation.\n                                I'd love to hear your thoughts or provide additional context.\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "story_paragraph" }, [
+                      _vm._v(
+                        "\n                                I would need more time to explain, but JS is great at managing streams\n                                of concurrent, potentially-unrelated actions and events\n                                while maximizing what I would call lossless IOPs (Input/Outputs per second).\n                                JS has everything I need to quickly create scalable,\n                                performant applications.\n                            "
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("h1", { staticClass: "timeline-title timeline-bonusPadding" }, [
             _vm._v("A COUPLE PATHS")
@@ -72079,7 +72353,7 @@ var render = function() {
                     staticClass: "btn",
                     attrs: { to: "/skills", title: "See Adam's skills" }
                   },
-                  [_vm._v("\n                SEE SKILLS\n            ")]
+                  [_vm._v("\n                    SEE SKILLS\n                ")]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "path-divider" }),
@@ -72093,13 +72367,33 @@ var render = function() {
                       title: "Start a conversation with Adam"
                     }
                   },
-                  [_vm._v("\n                CONTACT\n            ")]
+                  [_vm._v("\n                    CONTACT\n                ")]
                 )
               ],
               1
             ),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { attrs: { id: "story-footer" } }, [
+              _c("div", { attrs: { id: "story-left" } }, [
+                _c("div", { staticClass: "nav_adamLogo" }),
+                _vm._v(" "),
+                _c("span", { attrs: { id: "Nav_brand-adam" } }, [
+                  _vm._v("ADAM")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { id: "Nav_brand-mackintosh" } }, [
+                  _vm._v("MACKINTOSH")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "story-center" } }, [
+                _c("span", { attrs: { id: "story-conclusion" } }, [
+                  _vm._v("△△△")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "story-right" } })
+            ]),
             _vm._v(" "),
             _c(
               "button",
@@ -72107,7 +72401,7 @@ var render = function() {
                 attrs: { id: "backToTopScroller", title: "Back to top?" },
                 on: { click: _vm.handleScrollBackToTop }
               },
-              [_vm._v("\n            ⇧\n        ")]
+              [_vm._v("\n                ⇧\n            ")]
             )
           ])
         ]
@@ -72115,239 +72409,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "timeline" } }, [
-      _c("div", { staticClass: "timeline-item" }, [
-        _c("div", { staticClass: "timeline-icon" }, [
-          _vm._v("\n                API\n                ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "timeline-content" }, [
-          _c("h2", [_vm._v("backend developer")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                    Since 2002, I have helped build, maintain, and promote products & services\n                    from various perspectives.\n                    I have been programming off and on since before then. Since the\n                    emergence of React, I have settled as a fullstack web and mobile developer.\n                    I advocate Functional Programming techniques, and I prefer to use GraphQL,\n                    node.js, React, and React Native.\n                "
-            )
-          ]),
-          _vm._v(
-            "\n                {this.renderContactButton()}\n                "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "timeline-item" }, [
-        _c("div", { staticClass: "timeline-icon" }, [
-          _vm._v("\n                APP\n                ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "timeline-content right" }, [
-          _c("h2", [_vm._v("frontend developer")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                    I am comfortable working in the DOM.\n                    I enjoy the science behind building performant, fluid interfaces.\n                    I can implement virtually anything that can be described on paper.\n                "
-            )
-          ]),
-          _vm._v(
-            "\n                {this.renderContactButton()}\n                "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "timeline-item" }, [
-        _c("div", { staticClass: "timeline-icon" }, [
-          _vm._v("\n                QA\n                ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "timeline-content" }, [
-          _c("h2", [_vm._v("quality assurance")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                    After years of hands-on QA experience helping optimize pre-production\n                    software and print materials against business objectives,\n                    I appreciate Test-Driven Development (TDD). I know the\n                    most about affected logic and features while I am working on them.\n                    Memory fades—this is also why readable code and verbose documentation\n                    are valuable. I appreciate a build-measure-learn\n                    feedback loop because it describes the scientific method.\n                "
-            )
-          ]),
-          _vm._v(
-            "\n                {this.renderContactButton()}\n                "
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "team-container-wrapper" } }, [
-      _c("div", { attrs: { id: "team-container" } }, [
-        _c("div", { staticClass: "team_person" }, [
-          _c("div", {
-            staticClass: "team_person-avatar",
-            staticStyle: { "background-image": "url('/adam-left.png')" }
-          }),
-          _vm._v(" "),
-          _c("h1", { staticClass: "team_person-title" }, [
-            _vm._v("adam backend")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "team_person-blurb" }, [
-            _vm._v(
-              "\n                I compose functions in node.js.\n                I like polyglot microservices, graph database paired with GraphQL, and websockets.\n                I strive to make easy to maintain, extend, and test APIs.\n            "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "team_person" }, [
-          _c("div", {
-            staticClass: "team_person-avatar",
-            staticStyle: { "background-image": "url('/adam-center.png')" }
-          }),
-          _vm._v(" "),
-          _c("h1", { staticClass: "team_person-title" }, [_vm._v("adam qa")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "team_person-blurb" }, [
-            _vm._v(
-              "\n                A good QA effort allows implementation details to change with\n                minimal to no effect on the existing test suite.\n                I prefer continuous integration and testing in multiple environments.\n            "
-            )
-          ]),
-          _vm._v("\n            {this.renderContactButton()}\n          ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "team_person" }, [
-          _c("div", {
-            staticClass: "team_person-avatar",
-            staticStyle: { "background-image": "url('/adam-right.png')" }
-          }),
-          _vm._v(" "),
-          _c("h1", { staticClass: "team_person-title" }, [
-            _vm._v("adam frontend")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "team_person-blurb" }, [
-            _vm._v(
-              "\n                Designing UIs can be easy.\n                Take a constraint, and use it to implement a ruleset that\n                communicates effectively in a riveting manner.\n                Maximizing UX is a different story.\n            "
-            )
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "info-wrapper" } }, [
-      _c("div", { attrs: { id: "info-specialWrapper" } }, [
-        _c("div", { attrs: { id: "info-container" } }, [
-          _c("div", { staticClass: "info_split" }, [
-            _c("h3", { staticClass: "info_split-title" }, [
-              _vm._v("to non-programmers")
-            ]),
-            _vm._v(" "),
-            _c("div", { attrs: { id: "info_split-container" } }, [
-              _c("div", { staticClass: "info_split-column" }, [
-                _c("h4", { staticClass: "info_split-heading" }, [
-                  _vm._v("work")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "info_split-content" }, [
-                  _vm._v(
-                    "\n                        As a developer, I aim to write not only pragmatic and UX-enriched\n                        code but also empathetic and thorough technical documentation.\n                        I am always curious to learn new tools and techniques.\n                    "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "info_split-column" }, [
-                _c("h4", { staticClass: "info_split-heading" }, [
-                  _vm._v("life")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "info_split-content" }, [
-                  _vm._v(
-                    "\n                        I am introverted and creative and known for being light hearted,\n                        precise, and thorough. I decompress from work by going to\n                        the gym and cooking nice meals for other people.\n                        I like the chemistry behind balancing salty, sweet, sour, and hot.\n                    "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "info_split-column" }, [
-                _c("h4", { staticClass: "info_split-heading" }, [
-                  _vm._v("balance")
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "info_split-content" }, [
-                  _vm._v(
-                    "\n                        Fitness & nutrition has been a way of life for me for the past ten years.\n                        A healthy mind and optimized metabolic processes both start with\n                        optimized nutrient-intake.\n                    "
-                  )
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "info_split-divider" } }),
-          _vm._v(" "),
-          _c("div", { staticClass: "info_split" }, [
-            _c("h3", { staticClass: "info_split-title" }, [
-              _vm._v("to programmers")
-            ]),
-            _vm._v(" "),
-            _c("div", { attrs: { id: "programmers-container" } }, [
-              _c("p", { staticClass: "story_paragraph" }, [
-                _vm._v(
-                  "\n                    I like JavaScript (JS) because it is a language made of atomic building blocks.\n                    A Function is a place to do work, like in Mathematics.\n                    This is fundamentally why I am passionate about deterministic transformations;\n                    they create predictable movement from point A to B like a math formula.\n                    Immutable Functional Programming allows a person to compose\n                    Functions together with minimized time and complexity\n                    provided the person follows some strict rules.\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "story_paragraph" }, [
-                _vm._v(
-                  "\n                    The declarative-nature of Functional Programming\n                    matches up well with Objects, event streams, and state;\n                    immutability is important because shared state and side\n                    effects are very dangerous. Understanding the event loop and garbage\n                    collection helps a lot. Aiming for referential transparency helps even more.\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "story_paragraph" }, [
-                _vm._v(
-                  "\n                    Some consider JS loose, and they are correct,\n                    but dynamic typing allows one to rapidly spool out logic\n                    in any desired direction.\n                    JS is a language of great productivity towards both APIs and apps.\n                    It is an isomorphic dominator. Reach out to me on Twitter if you want\n                    to pick up the conversation.\n                    I'd love to hear your thoughts or provide additional context.\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "story_paragraph" }, [
-                _vm._v(
-                  "\n                    I would need more time to explain, but JS is great at managing streams\n                    of concurrent, potentially-unrelated actions and events\n                    while maximizing what I would call lossless IOPs (Input/Outputs per second).\n                    JS has everything I need to quickly create scalable,\n                    performant applications.\n                "
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "story-footer" } }, [
-      _c("div", { attrs: { id: "story-left" } }, [
-        _c("div", { staticClass: "nav_adamLogo" }),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "Nav_brand-adam" } }, [_vm._v("ADAM")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "Nav_brand-mackintosh" } }, [
-          _vm._v("MACKINTOSH")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "story-center" } }, [
-        _c("span", { attrs: { id: "story-conclusion" } }, [_vm._v("△△△")])
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "story-right" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -72414,196 +72476,184 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "relative flex flex-col items-center justify-end flex-1" },
+    "a-page",
+    {
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: _vm.title,
+          expression: "title"
+        }
+      ]
+    },
     [
       _c(
         "div",
-        {
-          attrs: {
-            id: "examples",
-            title: "Examples",
-            description: "Examples from Adam Mackintosh"
-          }
-        },
+        { attrs: { id: "examples_categories" } },
         [
-          _vm._v(
-            "\n        active category: " + _vm._s(_vm.activeCategorySlug)
-          ),
-          _c("br"),
-          _vm._v("\n        state: " + _vm._s(_vm.state)),
-          _c("br"),
-          _vm._v(" "),
           _c(
-            "div",
-            { attrs: { id: "examples_categories" } },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "examples_categories-button",
-                  attrs: {
-                    to: "/examples",
-                    activeClassName: "isActiveCategory",
-                    tabindex: "0",
-                    title: "Show everything",
-                    exact: ""
-                  },
-                  on: {
-                    click: function() {
-                      return this$1.handleSetActiveCategory("viewAll")
-                    }
-                  }
+            "router-link",
+            {
+              staticClass: "examples_categories-button",
+              attrs: {
+                to: "/examples",
+                activeClassName: "isActiveCategory",
+                tabindex: "0",
+                title: "Show everything",
+                exact: ""
+              },
+              on: {
+                click: function() {
+                  return this$1.handleSetActiveCategory("viewAll")
+                }
+              }
+            },
+            [_vm._v("\n            VIEW ALL\n        ")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(category) {
+            var this$1 = this
+            return _c(
+              "router-link",
+              {
+                key: category.slug,
+                staticClass: "examples_categories-button",
+                attrs: {
+                  to: "/examples/" + category.slug,
+                  activeClassName: "isActiveCategory",
+                  tabindex: "0",
+                  title: "Show only " + category.name
                 },
-                [_vm._v("\n                VIEW ALL\n            ")]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.categories, function(category) {
-                var this$1 = this
-                return _c(
-                  "router-link",
+                on: {
+                  click: function() {
+                    return this$1.handleSetActiveCategory(category.slug)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(category.name.toUpperCase()) +
+                    "\n        "
+                )
+              ]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { attrs: { id: "examples_grid" } },
+        _vm._l(_vm.examples, function(example) {
+          var this$1 = this
+          return _c(
+            "router-link",
+            {
+              key: example.slug,
+              staticClass: "examples_grid_feature-button",
+              attrs: {
+                to: "/examples/" + example.category.slug + "/" + example.slug
+              },
+              on: {
+                click: function() {
+                  return this$1.props.markExampleSeen(example.slug)
+                }
+              }
+            },
+            [
+              _c("a-tilt", [
+                _c(
+                  "div",
                   {
-                    key: category.slug,
-                    staticClass: "examples_categories-button",
-                    attrs: {
-                      to: "/examples/" + category.slug,
-                      activeClassName: "isActiveCategory",
-                      tabindex: "0",
-                      title: "Show only " + category.name
-                    },
-                    on: {
-                      click: function() {
-                        return this$1.handleSetActiveCategory(category.slug)
-                      }
-                    }
+                    staticClass: "examples_grid_feature-photo",
+                    style: { backgroundImage: "url(" + example.image_url + ")" }
                   },
                   [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(category.name.toUpperCase()) +
-                        "\n            "
-                    )
-                  ]
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { attrs: { id: "examples_grid" } },
-            _vm._l(_vm.examples, function(example) {
-              var this$1 = this
-              return _c(
-                "router-link",
-                {
-                  key: example.slug,
-                  staticClass: "examples_grid_feature-button",
-                  attrs: {
-                    to:
-                      "/examples/" + example.category.slug + "/" + example.slug
-                  },
-                  on: {
-                    click: function() {
-                      return this$1.props.markExampleSeen(example.slug)
-                    }
-                  }
-                },
-                [
-                  _c("a-tilt", [
                     _c(
                       "div",
-                      {
-                        staticClass: "examples_grid_feature-photo",
-                        style: {
-                          backgroundImage: "url(" + example.image_url + ")"
-                        }
-                      },
+                      { staticClass: "examples_grid_feature-overlay" },
                       [
                         _c(
-                          "div",
-                          { staticClass: "examples_grid_feature-overlay" },
+                          "span",
+                          { staticClass: "examples_grid_feature-caption" },
                           [
-                            _c(
-                              "span",
-                              { staticClass: "examples_grid_feature-caption" },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(example.name.toUpperCase()) +
-                                    "\n                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                class:
-                                  example.feature_seen === true
-                                    ? "examples_grid_feature-seen"
-                                    : "examples_grid_feature-unseen"
-                              },
-                              [_c("span", [_vm._v("✓")])]
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(example.name.toUpperCase()) +
+                                "\n                        "
                             )
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            class:
+                              example.feature_seen === true
+                                ? "examples_grid_feature-seen"
+                                : "examples_grid_feature-unseen"
+                          },
+                          [_c("span", [_vm._v("✓")])]
                         )
                       ]
                     )
-                  ])
-                ],
-                1
-              )
-            }),
+                  ]
+                )
+              ])
+            ],
             1
-          ),
-          _vm._v(" "),
-          true ? [_vm._m(0)] : undefined,
-          _vm._v(" "),
-          true
-            ? _c(
-                "button",
-                {
-                  attrs: {
-                    id: "backToTopScroller",
-                    onClick: "{this.handleScrollBackToTop}",
-                    title: "Back to top?"
-                  }
-                },
-                [_vm._v("\n            ⇧\n        ")]
-              )
-            : undefined
-        ],
-        2
-      )
-    ]
+          )
+        }),
+        1
+      ),
+      _vm._v(" "),
+      true
+        ? [
+            _c("div", { attrs: { id: "examples-footer" } }, [
+              _c("div", { attrs: { id: "examples-left" } }, [
+                _c("div", { staticClass: "nav_adamLogo" }),
+                _vm._v(" "),
+                _c("span", { attrs: { id: "Nav_brand-adam" } }, [
+                  _vm._v("ADAM")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { id: "Nav_brand-mackintosh" } }, [
+                  _vm._v("MACKINTOSH")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "examples-center" } }, [
+                _c("span", { attrs: { id: "examples-conclusion" } }, [
+                  _vm._v("△△△")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "examples-right" } })
+            ])
+          ]
+        : undefined,
+      _vm._v(" "),
+      true
+        ? _c(
+            "button",
+            {
+              attrs: {
+                id: "backToTopScroller",
+                onClick: "{this.handleScrollBackToTop}",
+                title: "Back to top?"
+              }
+            },
+            [_vm._v("\n        ⇧\n    ")]
+          )
+        : undefined
+    ],
+    2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "examples-footer" } }, [
-      _c("div", { attrs: { id: "examples-left" } }, [
-        _c("div", { staticClass: "nav_adamLogo" }),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "Nav_brand-adam" } }, [_vm._v("ADAM")]),
-        _vm._v(" "),
-        _c("span", { attrs: { id: "Nav_brand-mackintosh" } }, [
-          _vm._v("MACKINTOSH")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "examples-center" } }, [
-        _c("span", { attrs: { id: "examples-conclusion" } }, [_vm._v("△△△")])
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "examples-right" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -72626,8 +72676,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "flex flex-col items-center flex-1 py-64 px-128" },
+    "a-page",
+    {
+      directives: [
+        {
+          name: "title",
+          rawName: "v-title",
+          value: _vm.title,
+          expression: "title"
+        }
+      ]
+    },
     [
       _c(
         "div",
@@ -72658,7 +72717,69 @@ var render = function() {
                 _vm._v(_vm._s(_vm.example.name))
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("div", { attrs: { id: "example_links" } }, [
+                _vm._v(
+                  "\n                    {feature_URL_primary.enabled && (\n                    "
+                ),
+                _c(
+                  "a",
+                  {
+                    staticClass: "example_links-link",
+                    attrs: {
+                      href: "{feature_URL_primary.url}",
+                      rel: "noopener noreferrer",
+                      title: "{feature_URL_primary.tooltip}",
+                      target: "_blank"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        {feature_URL_primary.label}\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(
+                  "\n                    )}\n                    {feature_URL_secondary.enabled && (\n                    "
+                ),
+                _c(
+                  "a",
+                  {
+                    staticClass: "example_links-link",
+                    attrs: {
+                      href: "{feature_URL_secondary.url}",
+                      rel: "noopener noreferrer",
+                      title: "{feature_URL_secondary.tooltip}",
+                      target: "_blank"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        {feature_URL_secondary.label}\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(
+                  "\n                    )}\n                    {feature_URL_tertiary.enabled && (\n                    "
+                ),
+                _c(
+                  "a",
+                  {
+                    staticClass: "example_links-link",
+                    attrs: {
+                      href: "{feature_URL_tertiary.url}",
+                      rel: "noopener noreferrer",
+                      title: "{feature_URL_tertiary.tooltip}",
+                      target: "_blank"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        {feature_URL_tertiary.label}\n                    "
+                    )
+                  ]
+                ),
+                _vm._v("\n                    )}\n                ")
+              ])
             ]),
             _vm._v(" "),
             _c("div", { attrs: { id: "example_header-right" } }, [
@@ -72839,76 +72960,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "example_links" } }, [
-      _vm._v(
-        "\n                    {feature_URL_primary.enabled && (\n                    "
-      ),
-      _c(
-        "a",
-        {
-          staticClass: "example_links-link",
-          attrs: {
-            href: "{feature_URL_primary.url}",
-            rel: "noopener noreferrer",
-            title: "{feature_URL_primary.tooltip}",
-            target: "_blank"
-          }
-        },
-        [
-          _vm._v(
-            "\n                        {feature_URL_primary.label}\n                    "
-          )
-        ]
-      ),
-      _vm._v(
-        "\n                    )}\n                    {feature_URL_secondary.enabled && (\n                    "
-      ),
-      _c(
-        "a",
-        {
-          staticClass: "example_links-link",
-          attrs: {
-            href: "{feature_URL_secondary.url}",
-            rel: "noopener noreferrer",
-            title: "{feature_URL_secondary.tooltip}",
-            target: "_blank"
-          }
-        },
-        [
-          _vm._v(
-            "\n                        {feature_URL_secondary.label}\n                    "
-          )
-        ]
-      ),
-      _vm._v(
-        "\n                    )}\n                    {feature_URL_tertiary.enabled && (\n                    "
-      ),
-      _c(
-        "a",
-        {
-          staticClass: "example_links-link",
-          attrs: {
-            href: "{feature_URL_tertiary.url}",
-            rel: "noopener noreferrer",
-            title: "{feature_URL_tertiary.tooltip}",
-            target: "_blank"
-          }
-        },
-        [
-          _vm._v(
-            "\n                        {feature_URL_tertiary.label}\n                    "
-          )
-        ]
-      ),
-      _vm._v("\n                    )}\n                ")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -88001,13 +88053,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(buefy__WEBPACK_IMPORTED_MODULE_1_
   defaultIconPack: 'fas'
 });
 Object(_inputValidationMessages__WEBPACK_IMPORTED_MODULE_5__["default"])(vee_validate__WEBPACK_IMPORTED_MODULE_2__["extend"]);
-/**
- * Global event bus
- * this.$eventHub.$on('some-event-type', data => this.handleEvent(data));
- * this.$eventHub.$emit('some-event-type', data);
- */
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$eventHub = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
   router: _js_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -88038,6 +88083,75 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/admin-dashboard.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/admin/admin-dashboard.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./admin-dashboard.vue?vue&type=template&id=1a4f7e9b& */ "./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b&");
+/* harmony import */ var _admin_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./admin-dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _admin_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/admin-dashboard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/admin-dashboard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./admin-dashboard.vue?vue&type=template&id=1a4f7e9b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/admin-dashboard.vue?vue&type=template&id=1a4f7e9b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_admin_dashboard_vue_vue_type_template_id_1a4f7e9b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/index.js":
 /*!******************************************!*\
   !*** ./resources/js/components/index.js ***!
@@ -88061,6 +88175,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('a-text-input', function ()
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('a-tilt', function () {
   return __webpack_require__.e(/*! import() | a-tilt */ "a-tilt").then(__webpack_require__.bind(null, /*! ./a-tilt.vue */ "./resources/js/components/a-tilt.vue"));
+}); // pages
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('a-page', function () {
+  return __webpack_require__.e(/*! import() | a-page */ "a-page").then(__webpack_require__.bind(null, /*! @/js/pages/a-page.vue */ "./resources/js/pages/a-page.vue"));
 });
 
 /***/ }),
@@ -89245,13 +89363,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _js_pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/pages/Home.vue */ "./resources/js/pages/Home.vue");
-/* harmony import */ var _js_components_skills_Skills_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/components/skills/Skills.vue */ "./resources/js/components/skills/Skills.vue");
-/* harmony import */ var _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/pages/list-examples.vue */ "./resources/js/pages/list-examples.vue");
-/* harmony import */ var _js_pages_show_example_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/pages/show-example.vue */ "./resources/js/pages/show-example.vue");
-/* harmony import */ var _js_pages_Story_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/pages/Story.vue */ "./resources/js/pages/Story.vue");
-/* harmony import */ var _js_pages_Contact_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/js/pages/Contact.vue */ "./resources/js/pages/Contact.vue");
-/* harmony import */ var _js_pages_a_404_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/js/pages/a-404.vue */ "./resources/js/pages/a-404.vue");
+/* harmony import */ var _js_components_admin_admin_dashboard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/components/admin/admin-dashboard.vue */ "./resources/js/components/admin/admin-dashboard.vue");
+/* harmony import */ var _js_pages_Home_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/pages/Home.vue */ "./resources/js/pages/Home.vue");
+/* harmony import */ var _js_components_skills_Skills_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/components/skills/Skills.vue */ "./resources/js/components/skills/Skills.vue");
+/* harmony import */ var _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/pages/list-examples.vue */ "./resources/js/pages/list-examples.vue");
+/* harmony import */ var _js_pages_show_example_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/pages/show-example.vue */ "./resources/js/pages/show-example.vue");
+/* harmony import */ var _js_pages_Story_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/js/pages/Story.vue */ "./resources/js/pages/Story.vue");
+/* harmony import */ var _js_pages_Contact_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/js/pages/Contact.vue */ "./resources/js/pages/Contact.vue");
+/* harmony import */ var _js_pages_a_404_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/js/pages/a-404.vue */ "./resources/js/pages/a-404.vue");
+
 
 
 
@@ -89265,44 +89385,50 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: [{
+  routes: [// admin routes
+  {
+    path: '/admin',
+    name: 'admin',
+    component: _js_components_admin_admin_dashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }, // public routes
+  {
     path: '/',
     name: 'home',
-    component: _js_pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _js_pages_Home_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     // An approximate history and story about Adam Mackintosh
     path: '/story',
     name: 'story',
-    component: _js_pages_Story_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _js_pages_Story_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, {
     // See some of Adam's skills
     path: '/skills',
     name: 'skills',
-    component: _js_components_skills_Skills_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _js_components_skills_Skills_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     // Examples from Adam Mackintosh
     path: '/examples',
     name: 'examples1',
-    component: _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    component: _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     children: [{
       path: '/examples/:categorySlug',
       name: 'examples2',
-      component: _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+      component: _js_pages_list_examples_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
     }]
   }, {
     path: '/examples/:categorySlug/:exampleSlug',
     name: 'examples3',
-    component: _js_pages_show_example_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _js_pages_show_example_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, {
     // Start a conversation with Adam
     path: '/contact',
     name: 'contact',
-    component: _js_pages_Contact_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _js_pages_Contact_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, {
     // splat route
     path: '*',
     name: '404',
-    component: _js_pages_a_404_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _js_pages_a_404_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   }],
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
     var _this = this;
@@ -89320,6 +89446,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         });
       });
     });
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('title', {
+  inserted: function inserted(el, binding) {
+    // eslint-disable-line no-unused-vars
+    if (!binding.value) return;
+    document.title = "".concat(binding.value, " | Adam Mackintosh's portfolio");
+  },
+  update: function update(el, binding) {
+    // eslint-disable-line no-unused-vars
+    if (!binding.value) return;
+    document.title = "".concat(binding.value, " | Adam Mackintosh's portfolio");
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);

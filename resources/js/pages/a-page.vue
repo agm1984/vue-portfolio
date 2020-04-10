@@ -1,13 +1,15 @@
 <template>
-    <a-page v-title="'Blog'">
-        BLOG TBD
-    </a-page>
+    <div class="flex flex-col items-center flex-1 py-64 px-128">
+
+        <!-- page -->
+        <slot></slot>
+
+    </div>
 </template>
 
 <script>
-// https://github.com/gluons/vue-highlight.js/
 export default {
-    name: 'blog',
+    name: 'a-page',
 
     props: {},
 

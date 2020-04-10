@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <title>
-            Adam Mackintosh's portfolio @yield('title', 'test0r')
+            Adam Mackintosh's portfolio @yield('title')
         </title>
 
         <link rel="shortcut icon" href="/favicon.ico">
@@ -111,5 +111,6 @@
                 c6
             );
         </script>
+
     </body>
 </html>

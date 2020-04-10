@@ -1,10 +1,5 @@
 <template>
-    <div
-        id="contact"
-        class=""
-        title="Contact"
-        description="Start a conversation with Adam"
-    >
+    <a-page v-title="'Contact'">
         <div id="contact_form-wrapper">
             <div id="contact_form">
                 <div id="contact_left">
@@ -130,7 +125,8 @@
                 </div>
             </div>
         </div>
-    </div>
+
+    </a-page>
 </template>
 
 <script>

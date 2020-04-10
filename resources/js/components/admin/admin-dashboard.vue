@@ -1,13 +1,14 @@
 <template>
-    <a-page v-title="'Blog'">
-        BLOG TBD
+    <a-page v-title="'Admin'">
+
+        page
+        <slot></slot>
     </a-page>
 </template>
 
 <script>
-// https://github.com/gluons/vue-highlight.js/
 export default {
-    name: 'blog',
+    name: 'admin-dashboard',
 
     props: {},
 

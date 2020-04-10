@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center flex-1 py-64 px-128">
+    <a-page v-title="title">
         <div id="example">
 
             <div id="example_line"></div>
@@ -154,7 +154,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </a-page>
 </template>
 
 <script>
@@ -172,7 +172,9 @@ export default {
             category_id: 1,
             feature_id: 2,
             image: {},
-            example: {},
+            example: {
+                category: {},
+            },
         };
     },
 
@@ -185,11 +187,14 @@ export default {
             return (this.state === IS_LOADED);
         },
 
+        title() {
+            return this.example.name;
+        },
+
     },
 
     mounted() {
-        console.log('example slug', this.$route.params.exampleSlug);
-        this.fetchExample();
+        return this.fetchExample();
     },
 
     methods: {
@@ -201,11 +206,13 @@ export default {
             try {
                 const example = await axios.get(`/api/examples/${this.$route.params.exampleSlug}`);
 
-                console.log('example', example.data);
+                // console.log('example', example.data);
 
                 this.example = example.data;
 
                 this.state = IS_LOADED;
+
+                return undefined; // resolve promise, and do nothing
             } catch (err) {
                 throw new Error(`show-example# Problem fetching example: ${err}`);
             }

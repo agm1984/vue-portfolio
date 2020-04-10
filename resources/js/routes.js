@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import AdminDashboard from '@/js/components/admin/admin-dashboard.vue';
 import Home from '@/js/pages/Home.vue';
 import Skills from '@/js/components/skills/Skills.vue';
 import ListExamples from '@/js/pages/list-examples.vue';
@@ -16,6 +17,14 @@ const router = new VueRouter({
     mode: 'history',
 
     routes: [
+        // admin routes
+        {
+            path: '/admin',
+            name: 'admin',
+            component: AdminDashboard,
+        },
+
+        // public routes
         {
             path: '/',
             name: 'home',
@@ -75,6 +84,18 @@ const router = new VueRouter({
         }));
     },
 
+});
+
+Vue.directive('title', {
+    inserted(el, binding) { // eslint-disable-line no-unused-vars
+        if (!binding.value) return;
+        document.title = `${binding.value} | Adam Mackintosh's portfolio`;
+    },
+
+    update(el, binding) { // eslint-disable-line no-unused-vars
+        if (!binding.value) return;
+        document.title = `${binding.value} | Adam Mackintosh's portfolio`;
+    },
 });
 
 export default router;

@@ -13,14 +13,6 @@ Vue.use(Buefy, {
 
 loadInputValidationMessages(extend);
 
-/**
- * Global event bus
- * this.$eventHub.$on('some-event-type', data => this.handleEvent(data));
- * this.$eventHub.$emit('some-event-type', data);
- */
-
-Vue.prototype.$eventHub = new Vue();
-
 const app = new Vue({
     el: '#root',
     router,

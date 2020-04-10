@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Example;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class ExampleController extends Controller
+class AdminExampleController extends Controller
 {
     public function index(Request $request)
     {
@@ -25,7 +26,7 @@ class ExampleController extends Controller
     {
         \Log::debug($request->all());
 
-        return response()->json($example->load('category'));
+        return response()->json($example);
     }
 
 }

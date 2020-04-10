@@ -29,3 +29,9 @@ Route::get('/examples/{example}', 'ExampleController@show');
 //     Route::post('update/{id}', 'ExampleController@update');
 //     Route::delete('delete/{id}', 'ExampleController@delete');
 // });
+
+// admin
+Route::prefix('admin')->group(function () {
+    Route::get('/examples', 'Admin/AdminExampleController@index')->name('admin.examples.index');
+    // Route::get('/examples/', 'AdminExampleController@index')->name('admin.examples.index');
+});

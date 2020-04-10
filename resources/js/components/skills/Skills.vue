@@ -1,10 +1,5 @@
 <template>
-    <div
-        id="skills"
-        class=""
-        title="Skills"
-        description="See some of Adam's skills"
-    >
+    <a-page v-title="'Skills'">
         <user-details></user-details>
 
         <scene></scene>
@@ -42,7 +37,7 @@
         >
             DOWNLOAD RESUME
         </a>
-    </div>
+    </a-page>
 </template>
 
 <script>
@@ -78,74 +73,93 @@ export default {
 
 <style>
 #skills {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 6.4rem;
-  width: 100%;
-  min-height: 100vh;
-  z-index: 0; }
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 6.4rem;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 0;
+}
 
 #cluster_javascript {
-  display: flex;
-  transition: all 250ms ease-in-out; }
+    display: flex;
+    transition: all 250ms ease-in-out;
+}
 
 .resumeButton {
-  position: absolute;
-  left: 3.2rem;
-  bottom: 0; }
+    position: absolute;
+    left: 3.2rem;
+    bottom: 0;
+}
 
 #skills-leftScrollZone {
-  display: none; }
+    display: none;
+}
 
 #skills-rightScrollZone {
-  display: none; }
+    display: none;
+}
 
 @media (max-width: 1400px) {
-  #skills {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 11.2rem; }
-  #nav_left_user-container {
-    position: relative;
-    justify-content: center;
-    margin-left: -6.4rem;
-    width: 100%; }
-  .statCluster-wrapper {
-    margin: 32.0rem 0 0 0; }
-  .resumeButton {
-    position: relative;
-    left: initial;
-    margin-top: 6.4rem; }
-  #skills-leftScrollZone {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 30%; }
-  #skills-rightScrollZone {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 30%; } }
+    #skills {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 11.2rem;
+    }
+    #nav_left_user-container {
+        position: relative;
+        justify-content: center;
+        margin-left: -6.4rem;
+        width: 100%;
+    }
+    .statCluster-wrapper {
+        margin: 32.0rem 0 0 0;
+    }
+    .resumeButton {
+        position: relative;
+        left: initial;
+        margin-top: 6.4rem;
+    }
+    #skills-leftScrollZone {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 30%;
+    }
+    #skills-rightScrollZone {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 30%;
+    }
+}
 
 @media (max-width: 600px) {
-  #skills {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 16.0rem; }
-  .statCluster-wrapper {
-    margin: 16.0rem 0 0 0; }
-  .statCluster {
-    width: 32.0rem; }
-  .statBar_points-container {
-    width: 20.0rem;
-    height: 3.2rem; }
-  .statBar_label {
-    margin-top: 1.6rem; }
-  #skills_scene {
-    margin-top: 16.0rem; } }
+    #skills {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 16.0rem;
+    }
+    .statCluster-wrapper {
+        margin: 16.0rem 0 0 0;
+    }
+    .statCluster {
+        width: 32.0rem;
+    }
+    .statBar_points-container {
+        width: 20.0rem;
+        height: 3.2rem;
+    }
+    .statBar_label {
+        margin-top: 1.6rem;
+    }
+    #skills_scene {
+        margin-top: 16.0rem;
+    }
+}
 </style>
