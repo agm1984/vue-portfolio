@@ -13,6 +13,6 @@ npm-debug.log
 yarn-error.log
 
 # build-generated files
-public/css/*
-public/js/*
-public/mix-manifest.json
+# public/css/*
+# public/js/*
+# public/mix-manifest.json
