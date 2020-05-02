@@ -7,6 +7,7 @@ import ListExamples from '@/js/pages/list-examples.vue';
 import ShowExample from '@/js/pages/show-example.vue';
 import Story from '@/js/pages/Story.vue';
 import Contact from '@/js/pages/Contact.vue';
+import DesignSystem from '@/js/components/designSystem/design-system.vue';
 import Error404 from '@/js/pages/a-404.vue';
 
 // https://markus.oberlehner.net/blog/vue-router-page-transitions/
@@ -23,6 +24,11 @@ const router = new VueRouter({
             name: 'admin',
             component: AdminDashboard,
         },
+        {
+            path: '/admin/categories',
+            name: 'list-categories',
+            component: AdminDashboard,
+        },
 
         // public routes
         {
@@ -31,26 +37,23 @@ const router = new VueRouter({
             component: Home,
         },
         {
-            // An approximate history and story about Adam Mackintosh
             path: '/story',
             name: 'story',
             component: Story,
         },
         {
-            // See some of Adam's skills
             path: '/skills',
             name: 'skills',
             component: Skills,
         },
         {
-            // Examples from Adam Mackintosh
             path: '/examples',
-            name: 'examples1',
+            name: 'list-examples',
             component: ListExamples,
             children: [
                 {
                     path: '/examples/:categorySlug',
-                    name: 'examples2',
+                    name: 'list-examples-for-category',
                     component: ListExamples,
                 },
             ],
@@ -61,11 +64,16 @@ const router = new VueRouter({
             component: ShowExample,
         },
         {
-            // Start a conversation with Adam
             path: '/contact',
             name: 'contact',
             component: Contact,
         },
+        {
+            path: '/design',
+            name: 'designSystem',
+            component: DesignSystem,
+        },
+
         {
             // splat route
             path: '*',

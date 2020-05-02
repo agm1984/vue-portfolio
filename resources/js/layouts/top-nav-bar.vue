@@ -13,6 +13,8 @@
             <router-link to="/skills" class="ml-16 nav-link-white">Skills</router-link>
             <router-link to="/examples" class="ml-16 nav-link-white">Examples</router-link>
             <router-link to="/contact" class="ml-16 nav-link-white">Contact</router-link>
+            <router-link to="/admin" class="ml-16 nav-link-white">Admin</router-link>
+            <router-link to="/design" class="ml-16 nav-link-white">Design</router-link>
         </div>
 
         <div class="flex items-center w-192 flex-0">
