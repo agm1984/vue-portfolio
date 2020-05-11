@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import tailwind from '../../../tailwind.config';
-import generate from './utils/geometryLogic';
+import tailwind from '../../../../tailwind.config';
+import generate from '../utils/geometryLogic';
 
 // const testsample = tailwind.theme.colors.green[100];
 

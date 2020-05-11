@@ -14,24 +14,79 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'guest:api'], function () {
+    Route::post('register', 'Auth\RegisterController@register')->name('register');
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+    Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::post('email/resend', 'Auth\VerificationController@resend');
+
+    Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider')->name('oauth.redirect');
+    Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-Route::get('/categories', 'CategoryController@index');
-Route::get('/examples', 'ExampleController@index');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/examples/{example}', 'ExampleController@show');
+    Route::get('/user', 'Auth\UserController@me')->name('me');
 
-// Route::group(['prefix' => 'example'], function () {
-//     Route::post('add', 'ExampleController@add');
-//     Route::get('edit/{id}', 'ExampleController@edit');
-//     Route::post('update/{id}', 'ExampleController@update');
-//     Route::delete('delete/{id}', 'ExampleController@delete');
+    Route::patch('settings/profile', 'Settings\ProfileController@update');
+    Route::patch('settings/password', 'Settings\PasswordController@update');
+});
+
+Route::group(['middleware' => ['admin:api', 'role:admin']], function () {
+    Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
+    Route::get('/categories/{category}', 'Admin\CategoryController@show')->name('admin.categories.show');
+
+    Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.list');
+    Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');
+
+    Route::get('/users', 'Admin\UserController@index')->name('admin.users.list');
+    Route::get('/users/{user}', 'Admin\UserController@show')->name('admin.users.show');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Route::get('/categories', 'CategoryController@index');
+// Route::get('/examples', 'ExampleController@index');
+
+// Route::get('/examples/{example}', 'ExampleController@show');
+
+// // Route::group(['prefix' => 'example'], function () {
+// //     Route::post('add', 'ExampleController@add');
+// //     Route::get('edit/{id}', 'ExampleController@edit');
+// //     Route::post('update/{id}', 'ExampleController@update');
+// //     Route::delete('delete/{id}', 'ExampleController@delete');
+// // });
+
+// // admin
+// Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
+//     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.index');
+//     Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.index');
 // });
-
-// admin
-Route::prefix('admin')->group(function () {
-    Route::get('/examples', 'Admin/AdminExampleController@index')->name('admin.examples.index');
-    // Route::get('/examples/', 'AdminExampleController@index')->name('admin.examples.index');
-});

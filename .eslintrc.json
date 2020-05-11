@@ -112,9 +112,11 @@
         "import/resolver": {
             "alias": {
                 "map": [
-                    ["@", "./resources"]
+                    ["@", "./resources"],
+                    ["~", "./resources/js"],
+                    ["ziggy", "./vendor/tightenco/ziggy/dist/js/route.js"]
                 ],
-                "extensions": [".vue"]
+                "extensions": [".js", ".json", ".vue"]
             }
         }
     }

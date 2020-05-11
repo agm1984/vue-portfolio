@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class AdminExampleController extends Controller
+class ExampleController extends Controller
 {
     public function index(Request $request)
     {

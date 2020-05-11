@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Buefy from 'buefy';
 import { extend } from 'vee-validate';
-import router from '@/js/routes.js';
-import App from '@/js/layouts/App';
+import route from 'ziggy';
+import store from '~/store/index';
+import router from '~/router';
+import App from '~/components/App.vue';
 import loadInputValidationMessages from './inputValidationMessages';
 import './axios';
 import './components';
+import './components/common';
 
 Vue.use(Buefy, {
     defaultIconPack: 'fas',
@@ -13,10 +16,17 @@ Vue.use(Buefy, {
 
 loadInputValidationMessages(extend);
 
+Vue.mixin({
+    methods: {
+        route,
+    },
+});
+
 const app = new Vue({
-    el: '#root',
+    el: '#app',
     router,
-    render: h => h(App),
+    store,
+    ...App,
 });
 
 export default app;

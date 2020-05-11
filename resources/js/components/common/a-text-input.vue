@@ -46,7 +46,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate';
-import { InputContext, InputSize } from '../globalStateTypes';
+import { InputContext, InputSize } from '~/globalStateTypes';
 
 const SUPPORTED_INPUT_SIZES = Object.values(InputSize);
 

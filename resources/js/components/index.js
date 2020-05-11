@@ -1,10 +1,19 @@
 import Vue from 'vue';
+import { HasError, AlertError, AlertSuccess } from 'vform';
+import Card from './Card.vue';
+import child from './child.vue';
+import Button from './Button.vue';
+import Checkbox from './Checkbox.vue';
 
-Vue.component('a-form', () => import(/* webpackChunkName: 'a-form' */ './a-form.vue'));
-Vue.component('a-heading', () => import(/* webpackChunkName: 'a-heading' */ './a-heading.vue'));
-Vue.component('a-sacred-geometry', () => import(/* webpackChunkName: 'a-sacred-geometry' */ './a-sacred-geometry.vue'));
-Vue.component('a-text-input', () => import(/* webpackChunkName: 'a-text-input' */ './a-text-input.vue'));
-Vue.component('a-tilt', () => import(/* webpackChunkName: 'a-tilt' */ './a-tilt.vue'));
-
-// pages
-Vue.component('a-page', () => import(/* webpackChunkName: 'a-page' */ '@/js/pages/a-page.vue'));
+// Components that are registered globaly.
+[
+    Card,
+    child,
+    Button,
+    Checkbox,
+    HasError,
+    AlertError,
+    AlertSuccess,
+].forEach((Component) => {
+    Vue.component(Component.name, Component);
+});

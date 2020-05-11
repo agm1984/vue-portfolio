@@ -1,14 +1,6 @@
 <template>
     <validation-observer
         ref="observer"
-        tag="form"
-        :action="action"
-        :enctype="formEncType"
-        :method="computedMethod"
-        :name="name"
-        @submit="onSubmit"
-        v-bind="$attrs"
-        v-on="$listeners"
         v-slot="{
             dirty,
             pristine,
@@ -22,12 +14,15 @@
             reset,
             handleSubmit,
         }"
+        tag="form"
+        :action="action"
+        :enctype="formEncType"
+        :method="computedMethod"
+        :name="name"
+        v-bind="$attrs"
+        v-on="$listeners"
+        @submit="onSubmit"
     >
-        <!-- only include the CSRF token if we are using the native form submit -->
-        <input :value="csrf" name="_token" type="hidden" v-if="hasAction">
-        <input :value="FormMethod.PUT" name="_method" type="hidden" v-if="hasAction && isMethodPut">
-        <input :value="FormMethod.DELETE" name="_method" type="hidden" v-if="hasAction && isMethodDelete">
-
         <!-- form fields -->
         <slot
             :dirty="dirty"
@@ -47,8 +42,7 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate';
-import csrfToken from './mixins/csrfToken';
-import { FormMethod } from '../globalStateTypes';
+import { FormMethod } from '~/globalStateTypes';
 
 const SUPPORTED_FORM_METHODS = Object.values(FormMethod);
 
@@ -56,8 +50,6 @@ export default {
     name: 'a-form',
 
     components: { ValidationObserver },
-
-    mixins: [csrfToken],
 
     props: {
         method: {

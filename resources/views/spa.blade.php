@@ -1,3 +1,19 @@
+@php
+$config = [
+    'appName' => config('app.name'),
+    'github' => [
+        'client_id' => config('services.github.client_id'),
+        'callback_url' => config('services.github.callback_url'),
+        'provider_name' => config('services.github.provider_name'),
+    ],
+    'twitter' => [
+        'client_id' => config('services.twitter.client_id'),
+        'callback_url' => config('services.twitter.callback_url'),
+        'provider_name' => config('services.twitter.provider_name'),
+    ],
+];
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -6,13 +22,10 @@
         </title>
 
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,400">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+        <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="theme-color" content="#000000">
         <meta name="ROBOTS" content="INDEX, FOLLOW">
         <meta name="description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
@@ -71,12 +84,12 @@
             You need to enable JavaScript to sample this portfolio.
         </noscript>
 
-        <div id="root"></div>
-
-        <script src="{{ asset('js/app.js') }}"></script>
+        <div id="app"></div>
 
         <script>
             'use strict';
+
+            window.config = @json($config);
 
             const c1 = 'color:#1B85B8';
             const c2 = 'color:#826F8B';
@@ -112,5 +125,9 @@
             );
         </script>
 
+        @routes
+
+        <script src="{{ mix('dist/js/app.js') }}"></script>
     </body>
+
 </html>

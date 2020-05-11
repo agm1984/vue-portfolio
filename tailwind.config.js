@@ -209,6 +209,7 @@ module.exports = {
             twitter: '#24AAE1',
             instagram: '#D43281',
             youtube: '#CE3334',
+            github: '#333333',
         },
         spacing: {
             px: '1px',

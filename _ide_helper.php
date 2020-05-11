@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.3.0 on 2020-05-05 06:13:38.
+ * Generated for Laravel 7.3.0 on 2020-05-08 19:11:55.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -11978,6 +11978,26 @@ namespace Illuminate\Support\Facades {
         public static function emailVerification()
         {
                         return \Illuminate\Routing\Router::emailVerification();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function blacklist($group = null)
+        {
+                        return \Illuminate\Routing\Router::blacklist($group);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function whitelist($group = null)
+        {
+                        return \Illuminate\Routing\Router::whitelist($group);
         }
          
     }
