@@ -14,6 +14,13 @@ export default {
             type: String,
             required: true,
         },
+
+        intendedUrl: {
+            type: String,
+            required: false,
+            default: () => '',
+        },
+
     },
 
     computed: {
@@ -23,7 +30,6 @@ export default {
 
         url() {
             return route('oauth.redirect', this.provider);
-            // return `/api/oauth/${this.provider}`;
         },
 
         actionLabel() {
@@ -47,23 +53,32 @@ export default {
 
     methods: {
         /**
-        * @param {MessageEvent} e
-        * @return {Void}
-        */
+         * Upon successful authentication, `onMessage` will be called by `./resources/views/oauth/callback.blade.php`,
+         * so any extra parameters can be added there.
+         *
+         * @param {MessageEvent} e
+         * @return {Void}
+         */
         onMessage(e) {
             if ((e.origin !== window.origin) || !e.data.token) {
-                return;
+                return undefined;
             }
 
             this.$store.dispatch('auth/saveToken', {
                 token: e.data.token,
             });
 
-            this.$router.push({ name: 'home' });
+            if (this.intendedUrl) {
+                return this.$router.push(this.intendedUrl);
+            }
+
+            return this.$router.push({ name: 'home' });
         },
 
         /**
-         * @param  {Object} options
+         * Load the Oauth window.
+         *
+         * @param {Object} options
          * @return {Window}
          */
         openWindow(url, title, options = {}) {
@@ -95,7 +110,7 @@ export default {
         },
 
         /**
-         *
+         * Initiate register or login via OAuth.
          */
         async login() {
             try {

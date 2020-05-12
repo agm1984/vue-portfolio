@@ -38,12 +38,13 @@ class RegisterController extends Controller
         }
 
         $token = $this->guard()->login($user);
+        $expiration = $this->guard()->getPayload()->get('exp');
 
         return response()->json([
             'user' => $user,
             'token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => $expiration - time(),
         ]);
     }
 

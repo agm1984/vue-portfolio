@@ -4,7 +4,7 @@
 
         <a-form v-slot="{ handleSubmit }">
             <a-text-input
-                v-model="fields.name"
+                v-model="newUser.name"
                 vid="name"
                 rules="required|max:255"
                 placeholder="Name"
@@ -12,7 +12,7 @@
             ></a-text-input>
 
             <a-text-input
-                v-model="fields.email"
+                v-model="newUser.email"
                 vid="email"
                 rules="required|email|max:255"
                 placeholder="Email"
@@ -20,7 +20,7 @@
             ></a-text-input>
 
             <a-text-input
-                v-model="fields.password"
+                v-model="newUser.password"
                 vid="password"
                 rules="required|min:8"
                 placeholder="Password"
@@ -29,7 +29,7 @@
             ></a-text-input>
 
             <div class="flex items-center">
-                <checkbox v-model="fields.remember" name="remember">
+                <checkbox v-model="newUser.remember" name="remember">
                     Remember me
                 </checkbox>
 
@@ -39,7 +39,7 @@
             </div>
 
             <div class="flex flex-col">
-                <a-button @click="handleSubmit(register)">
+                <a-button :loading="isAuthenticating" @click="handleSubmit(register)">
                     Register
                 </a-button>
 
@@ -52,9 +52,11 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Form from 'vform';
 import LoginWithOauth from '~/components/login-with-oauth.vue';
+
+const INITIAL = 'INITIAL';
+const AUTHENTICATING = 'AUTHENTICATING';
 
 export default {
     middleware: 'guest',
@@ -69,7 +71,8 @@ export default {
 
     data() {
         return {
-            fields: {
+            state: INITIAL,
+            newUser: {
                 email: '',
                 password: '',
                 remember: true,
@@ -84,19 +87,28 @@ export default {
         };
     },
 
+    computed: {
+        isInitial() {
+            return (this.state === INITIAL);
+        },
+
+        isAuthenticating() {
+            return (this.state === AUTHENTICATING);
+        },
+
+    },
+
     methods: {
         async register() {
             try {
-                const { data } = await axios.post(route('register'), this.fields);
-                const { user, token } = data;
+                this.state = AUTHENTICATING;
 
-                this.$store.dispatch('auth/saveToken', { token });
+                await this.$store.dispatch('auth/register', this.newUser);
 
-                await this.$store.dispatch('auth/updateUser', { user });
-
-                this.$router.push({ name: 'home' });
+                return this.$router.push({ name: 'home' });
             } catch (err) {
-                console.log('err', err.response);
+                this.state = INITIAL;
+
                 throw new Error(`register# Problem registering new user: ${err}.`);
             }
         },

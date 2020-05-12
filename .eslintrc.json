@@ -32,6 +32,15 @@
             "functions": "always-multiline"
         }],
         "import/first": 0,
+        "import/no-anonymous-default-export": ["error", {
+            "allowArray": false,
+            "allowArrowFunction": false,
+            "allowAnonymousClass": false,
+            "allowAnonymousFunction": false,
+            "allowCallExpression": true,
+            "allowLiteral": false,
+            "allowObject": true
+        }],
         "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "max-len": 0,

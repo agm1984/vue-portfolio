@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $examples = Category::query()->get();
+        \Log::debug($request->all());
 
-        return response()->json($examples);
+        $examples = QueryBuilder::for(Example::class)
+                ->allowedFilters('category.slug')
+                ->get();
+
+        return response()->json($examples->load('category'));
     }
 }

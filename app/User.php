@@ -30,10 +30,11 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 
     protected $appends = [
         'photo_url',
+        'roles_list',
     ];
 
     /**
-     * Spatie Roles & Permissions will use this guard, as originally defined in `./config/auth.php`
+     * Spatie Roles & Permissions will use this guard, as originally defined in `./config/auth.php`.
      *
      * @var string
      */
@@ -47,6 +48,16 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function getPhotoUrlAttribute()
     {
         return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    /**
+     * Get a simple enum list of the user's roles.
+     *
+     * @return array
+     */
+    public function getRolesListAttribute()
+    {
+        return $this->roles->pluck('name')->toArray();
     }
 
     /**

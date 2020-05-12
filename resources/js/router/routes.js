@@ -1,3 +1,9 @@
+/**
+ * This utility transforms a Vue component's relative file path into a dynamic-imported component.
+ *
+ * @param {String} path
+ * @returns {Function}
+ */
 function page(path) {
     return () => import(/* webpackChunkName: '' */ '~/pages/' + path).then(m => m.default || m); // eslint-disable-line prefer-template
 }
@@ -20,16 +26,19 @@ const router = [
         component: page('settings/index.vue'),
         children: [
             { path: '', redirect: { name: 'settings.profile' } },
-            { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') },
+            { path: 'profile', name: 'profile', component: page('profile/profile.vue') },
             { path: 'password', name: 'settings.password', component: page('settings/password.vue') },
         ],
     },
 
     { path: '/admin', name: 'admin', component: page('admin/admin-dashboard.vue') },
+    { path: '/admin/categories', name: 'admin.categories.list', component: page('admin/categories/list-categories.vue') },
+    { path: '/admin/examples', name: 'admin.examples.list', component: page('admin/examples/list-examples.vue') },
+    { path: '/admin/users', name: 'admin.users.list', component: page('admin/users/list-users.vue') },
 
     { path: '/design', name: 'design', component: page('design/design-system.vue') },
 
-    { path: '*', component: page('errors/404.vue') },
+    { path: '*', name: 'splat', component: page('errors/404.vue') },
 ];
 
 export default router;

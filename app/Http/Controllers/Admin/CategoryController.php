@@ -15,11 +15,13 @@ class CategoryController extends Controller
     {
         \Log::debug($request->all());
 
-        $examples = QueryBuilder::for(Example::class)
-                ->allowedFilters('category.slug')
-                ->get();
+        $categories = Category::query()->get();
 
-        return response()->json($examples->load('category'));
+        \Log::debug($categories);
+
+        return response()->json([
+            'categories' => $categories,
+        ]);
     }
 
     public function show(Request $request, Example $example)

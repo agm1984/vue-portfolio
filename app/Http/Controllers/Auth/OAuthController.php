@@ -25,7 +25,6 @@ class OAuthController extends Controller
     {
         config([
             'services.github.redirect' => route('oauth.callback', 'github'),
-            // 'services.twitter.redirect' => route('oauth.callback', 'twitter'),
         ]);
     }
 
@@ -84,6 +83,7 @@ class OAuthController extends Controller
         );
 
         return view('oauth/callback', [
+            'user' => $user,
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
@@ -91,7 +91,8 @@ class OAuthController extends Controller
     }
 
     /**
-     * When the oauth provider calls back, update provider's access token
+     * When the oauth provider calls back, update provider's access token.
+     *
      * @param string $provider
      * @param \Laravel\Socialite\Contracts\User $sUser
      * @return \App\User|false
@@ -133,6 +134,7 @@ class OAuthController extends Controller
 
     /**
      * Adds a new oauth provider to an existing user.
+     *
      * @param string $provider
      * @param \Laravel\Socialite\Contracts\User $sUser
      * @param \App\User $user

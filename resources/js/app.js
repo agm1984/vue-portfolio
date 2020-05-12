@@ -6,7 +6,7 @@ import store from '~/store/index';
 import router from '~/router';
 import App from '~/components/App.vue';
 import loadInputValidationMessages from './inputValidationMessages';
-import './axios';
+import '~/plugins';
 import './components';
 import './components/common';
 
@@ -21,6 +21,8 @@ Vue.mixin({
         route,
     },
 });
+
+Vue.config.productionTip = false;
 
 const app = new Vue({
     el: '#app',

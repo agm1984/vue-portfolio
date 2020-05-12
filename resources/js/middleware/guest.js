@@ -1,9 +1,11 @@
 import store from '~/store/index';
 
-export default (to, from, next) => {
+const guest = (to, from, next) => {
     if (store.getters['auth/check']) {
         return next({ name: 'home' });
     }
 
     return next();
 };
+
+export default guest;

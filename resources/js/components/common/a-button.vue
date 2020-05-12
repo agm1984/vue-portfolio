@@ -1,22 +1,25 @@
 <template>
-    <b-button
-        :type="type"
-        :size="size"
-        :disabled="disabled"
-        :loading="loading"
-        :rounded="rounded"
-        :outlined="outlined"
-        :icon-pack="iconPack"
-        :icon-left="iconLeft"
-        :icon-right="iconRight"
-        :native-type="nativeType"
-        :tag="tag"
-        :href="href"
-        @click="handleButtonClick"
-    >
-        <slot></slot>
+    <div>
+        <b-button
+            ref="button"
+            :type="type"
+            :size="size"
+            :disabled="disabled"
+            :loading="loading"
+            :rounded="rounded"
+            :outlined="outlined"
+            :icon-pack="iconPack"
+            :icon-left="iconLeft"
+            :icon-right="iconRight"
+            :native-type="nativeType"
+            :tag="tag"
+            :href="href"
+            @click="handleButtonClick"
+        >
+            <slot></slot>
 
-    </b-button>
+        </b-button>
+    </div>
 </template>
 
 <script>
