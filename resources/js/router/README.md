@@ -28,7 +28,7 @@ export default {
 </script>
 ```
 
-The `middleware` Vue instance property can also accept an array of middlewares:
+*Note:* The `middleware` Vue instance property can also accept an array of middlewares:
 
 ```vue
 middleware: ['role-admin', 'role-manager'],
@@ -56,3 +56,31 @@ export default {
 };
 </script>
 ```
+
+## Component page titles
+
+The plugin `vue-meta` is used primarily to drive HTML page titles from the perspective of any Vue component.
+
+Check out their docs: https://vue-meta.nuxtjs.org/
+
+``` vue
+<script>
+export default {
+    name: 'list-admin-stuff',
+
+    metaInfo() {
+        return { title: 'List admin stuff' };
+    },
+
+    data() {
+        return {};
+    },
+
+    computed: {},
+
+    methods: {},
+};
+</script>
+```
+
+*Note:* There is an important relationship between `title` and `titleTemplate`.
