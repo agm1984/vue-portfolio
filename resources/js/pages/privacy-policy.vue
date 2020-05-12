@@ -98,6 +98,10 @@ By using this Site or any other The Company Site or interactive banner ads, you 
 export default {
     name: 'privacy-policy',
 
+    metaInfo() {
+        return { title: 'Privacy Policy' };
+    },
+
     data() {
         return {};
     },

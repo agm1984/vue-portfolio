@@ -6,6 +6,10 @@
 export default {
     name: 'list-users',
 
+    metaInfo() {
+        return { title: 'List users' };
+    },
+
     data() {
         return {};
     },

@@ -8,6 +8,10 @@
 export default {
     name: 'examples',
 
+    metaInfo() {
+        return { title: 'Examples' };
+    },
+
     data() {
         return {};
     },

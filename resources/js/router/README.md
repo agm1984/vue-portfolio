@@ -6,7 +6,7 @@
 
 If you need to add global middleware, add them to `globalMiddleware` in `index.js`.
 
-## Component/page middleware
+## Component middleware
 
 If you need to add a middleware to any Vue component, you can add the `middleware` property, for example:
 
@@ -32,4 +32,27 @@ The `middleware` Vue instance property can also accept an array of middlewares:
 
 ```vue
 middleware: ['role-admin', 'role-manager'],
+```
+
+## Component ScrollToTop
+
+A `scrollToTop` Vue instance prop can be declared to disable scrollToTop in cases where `vue-router` may
+do that, such as when pressing the browser back button while scrolled down.
+
+``` vue
+<script>
+export default {
+    name: 'list-admin-stuff',
+
+    scrollToTop: false,
+
+    data() {
+        return {};
+    },
+
+    computed: {},
+
+    methods: {},
+};
+</script>
 ```

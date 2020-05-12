@@ -8,6 +8,10 @@
 export default {
     name: 'design-system',
 
+    metaInfo() {
+        return { title: 'Design system' };
+    },
+
     data() {
         return {};
     },

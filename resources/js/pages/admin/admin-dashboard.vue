@@ -27,6 +27,10 @@
 export default {
     name: 'admin-dashboard',
 
+    metaInfo() {
+        return { title: 'Dashboard' };
+    },
+
     data() {
         return {};
     },

@@ -86,6 +86,10 @@
 export default {
     name: 'contact',
 
+    metaInfo() {
+        return { title: 'Contact' };
+    },
+
     data() {
         return {};
     },

@@ -71,6 +71,10 @@ If any provision of these Terms shall be deemed unlawful, void or for any reason
 export default {
     name: 'terms-of-use',
 
+    metaInfo() {
+        return { title: 'Terms of Use' };
+    },
+
     data() {
         return {};
     },

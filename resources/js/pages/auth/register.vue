@@ -43,8 +43,8 @@
                     Register
                 </a-button>
 
-                <login-with-oauth provider="github"></login-with-oauth>
-                <login-with-oauth provider="twitter"></login-with-oauth>
+                <login-with-oauth provider="github" :intended-url="intendedUrl"></login-with-oauth>
+                <login-with-oauth provider="twitter" :intended-url="intendedUrl"></login-with-oauth>
             </div>
         </a-form>
 
@@ -96,14 +96,27 @@ export default {
             return (this.state === AUTHENTICATING);
         },
 
+        intendedUrl() {
+            return this.$route.query.redirect;
+        },
+
     },
 
     methods: {
+        /**
+         * Register a new user.
+         *
+         * @return {Function} Navigation event
+         */
         async register() {
             try {
                 this.state = AUTHENTICATING;
 
                 await this.$store.dispatch('auth/register', this.newUser);
+
+                if (this.intendedUrl) {
+                    return this.$router.push(this.intendedUrl);
+                }
 
                 return this.$router.push({ name: 'home' });
             } catch (err) {

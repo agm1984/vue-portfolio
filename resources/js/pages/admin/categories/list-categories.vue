@@ -50,6 +50,10 @@ export default {
 
     middleware: 'role-admin',
 
+    metaInfo() {
+        return { title: 'List categories' };
+    },
+
     data() {
         return {
             state: SHOW,
@@ -69,7 +73,6 @@ export default {
     },
 
     mounted() {
-        console.log('store', this.$store.state);
         return this.fetchData();
     },
 

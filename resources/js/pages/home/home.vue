@@ -15,6 +15,8 @@
 import { mapGetters } from 'vuex';
 
 export default {
+    name: 'home',
+
     metaInfo() {
         return { title: 'Home' };
     },

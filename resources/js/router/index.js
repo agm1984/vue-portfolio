@@ -1,11 +1,12 @@
 import Vue from 'vue';
-// import Meta from 'vue-meta';
+import Meta from 'vue-meta';
 import Router from 'vue-router';
 import { sync } from 'vuex-router-sync';
 import store from '~/store/index';
 import routes from './routes';
 
-// Vue.use(Meta);
+Vue.use(Meta);
+
 Vue.use(Router);
 
 // define middleware for every page of the application
@@ -85,7 +86,7 @@ function scrollBehavior(to, from, savedPosition) {
     const [component] = router.getMatchedComponents({ ...to }).slice(-1);
 
     if (component && component.scrollToTop === false) {
-        return {};
+        return {}; // no scrolling will occur
     }
 
     return { x: 0, y: 0 };

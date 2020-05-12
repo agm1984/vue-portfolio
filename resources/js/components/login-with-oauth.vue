@@ -122,7 +122,7 @@ export default {
 
                 newWindow.location.href = url;
             } catch (err) {
-                throw new Error(`login-with-oauth# Problem logging in: ${err}.`);
+                throw new Error(`login-with-oauth# Problem logging in via OAuth through '${this.provider}': ${err}.`);
             }
         },
 

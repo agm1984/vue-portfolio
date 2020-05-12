@@ -8,6 +8,10 @@
 export default {
     name: 'about-me',
 
+    metaInfo() {
+        return { title: 'About me' };
+    },
+
     data() {
         return {};
     },

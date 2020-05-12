@@ -6,6 +6,10 @@
 export default {
     name: 'list-examples',
 
+    metaInfo() {
+        return { title: 'List examples' };
+    },
+
     data() {
         return {};
     },

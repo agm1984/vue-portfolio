@@ -13,7 +13,7 @@
 <script>
 import Loading from './Loading.vue';
 
-// Load layout components dynamically.
+// load layout components dynamically
 const requireContext = require.context('~/layouts', false, /.*\.vue$/);
 
 const layouts = requireContext.keys()
@@ -38,10 +38,10 @@ export default {
     },
 
     metaInfo() {
-        const { appName } = window.config;
-
         return {
-            title: appName,
+            titleTemplate(titleChunk) {
+                return titleChunk ? `${titleChunk} - Adam Mackintosh's Portfolio` : 'Adam Mackintosh\'s Portfolio';
+            },
         };
     },
 
@@ -54,6 +54,7 @@ export default {
          * Set the application layout.
          *
          * @param {String} layout
+         * @return {Void}
          */
         setLayout(layout) {
             if (!layout || !layouts[layout]) {

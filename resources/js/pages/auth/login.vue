@@ -92,6 +92,11 @@ export default {
     },
 
     methods: {
+        /**
+         * Authenticate an existing user.
+         *
+         * @return {Function} Navigation event
+         */
         async login() {
             try {
                 this.state = AUTHENTICATING;
