@@ -36,41 +36,27 @@ axios.interceptors.response.use(response => response, (error) => {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong! Please try again.',
-            reverseButtons: true,
             confirmButtonText: 'Ok',
-            cancelButtonText: 'Cancel',
         });
     }
 
-    if (status === 401 && store.getters['auth/check']) {
-        console.log('error 401 server session expired but client session exists');
-        Swal.fire({
+    if (status === 401) {
+        const dialog = store.getters['auth/check'] ? {
             icon: 'warning',
             title: 'Session expired!',
             text: 'Please log in again to continue',
             confirmButtonText: 'Ok',
-        }).then(() => {
-            const intended = window.location.pathname;
-
-            store.commit('auth/LOGOUT');
-
-            router.push({ name: 'login', query: { redirect: intended } });
-        });
-    }
-
-    if (status === 401 && !store.getters['auth/check']) {
-        console.log('error 401 server session expired and no client session');
-        Swal.fire({
+        } : {
             icon: 'warning',
             title: 'Unauthenticated!',
             text: 'Please log in to continue',
             confirmButtonText: 'Ok',
-        }).then(() => {
-            const intended = window.location.pathname;
+        };
 
+        Swal.fire(dialog).then(() => {
+            const intendedUrl = `${window.location.pathname}${window.location.search}`;
             store.commit('auth/LOGOUT');
-
-            router.push({ name: 'login', query: { redirect: intended } });
+            return router.push({ name: 'login', query: { redirect: intendedUrl } });
         });
     }
 

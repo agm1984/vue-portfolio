@@ -76,7 +76,7 @@ export default {
         },
 
         /**
-         * Load the Oauth window.
+         * Load the OAuth window.
          *
          * @param {Object} options
          * @return {Window}
@@ -111,6 +111,8 @@ export default {
 
         /**
          * Initiate register or login via OAuth.
+         *
+         * @return {Void}
          */
         async login() {
             try {

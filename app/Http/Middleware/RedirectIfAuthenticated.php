@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class RedirectIfAuthenticated
 {
     /**
-     * Handle an incoming request.
+     * Checks if a guest is authenticated, and halts the request if so.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
@@ -17,7 +17,6 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        \Log::debug('running RedirectIfAuthenticated middleware');
         if (Auth::guard($guard)->check()) {
             return response()->json(['error' => 'Already authenticated.'], 400);
         }

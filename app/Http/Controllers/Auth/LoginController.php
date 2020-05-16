@@ -24,9 +24,9 @@ class LoginController extends Controller
     }
 
     /**
-     * Attempt to log the user into the application.
+     * Authenticate the user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -50,7 +50,7 @@ class LoginController extends Controller
     /**
      * Send the token to Vue after the user authenticates.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     protected function sendLoginResponse(Request $request)
@@ -72,7 +72,7 @@ class LoginController extends Controller
     /**
      * Get the failed login response instance.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -92,11 +92,12 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {
         $this->guard()->logout();
+        return response()->json(['success' => 'Logged out.'], 200);
     }
 }

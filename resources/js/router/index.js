@@ -6,7 +6,6 @@ import store from '~/store/index';
 import routes from './routes';
 
 Vue.use(Meta);
-
 Vue.use(Router);
 
 // define middleware for every page of the application
@@ -30,7 +29,7 @@ const routeMiddleware = resolveMiddleware(require.context('~/middleware', false,
 /**
  * Resolve async components.
  *
- * @param  {Array} components
+ * @param {Array} components
  * @return {Array}
  */
 function resolveComponents(components) {

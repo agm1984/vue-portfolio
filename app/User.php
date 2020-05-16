@@ -41,6 +41,45 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     protected $guard_name = 'api';
 
     /**
+     * Create a new user.
+     *
+     * @param string $name
+     * @param string $email
+     * @param string|null $password
+     * @param array $attributes
+     *
+     * @return self
+     */
+    public static function generate(
+        string $name,
+        string $email,
+        ?string $password,
+        ?array $attributes = []
+    ) : self
+    {
+        if (isset($attributes['id']) && $attributes['id']) {
+            $user = self::query()->firstOrNew([ 'id' => $attributes['id'] ]);
+            $user->email = $email;
+        } else {
+            $user = self::query()->firstOrNew([ 'email' => $email ]);
+        }
+
+        $user->fill([
+            'status' => User::STATUS_ACTIVE,
+            'name' => $name,
+            'password' => bcrypt($password),
+        ]);
+
+        foreach ($attributes as $key => $attribute) {
+            $user->{$key} = $attribute;
+        }
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
      * Get the profile photo URL attribute.
      *
      * @return string

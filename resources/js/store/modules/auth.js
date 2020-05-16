@@ -65,7 +65,7 @@ export const actions = {
             return commit(SAVE_TOKEN, { token: data.token, remember: data.remember });
         } catch (err) {
             commit(LOGOUT);
-            throw new Error(`auth/register# Problem registering: ${err}.`);
+            throw new Error(`auth/register# Problem registering new user: ${err}.`);
         }
     },
 
@@ -96,7 +96,7 @@ export const actions = {
             return commit(SAVE_TOKEN, { token: data.token, remember: data.remember });
         } catch (err) {
             commit(LOGOUT);
-            throw new Error(`auth/login# Problem logging in: ${err}.`);
+            throw new Error(`auth/login# Problem logging user in: ${err}.`);
         }
     },
 
@@ -108,7 +108,7 @@ export const actions = {
         } catch (err) {
             commit(LOGOUT);
 
-            throw new Error(`auth/logout# Problem logging out: ${err}.`);
+            throw new Error(`auth/logout# Problem logging user out: ${err}.`);
         }
     },
 
@@ -118,7 +118,7 @@ export const actions = {
 
             return data.url;
         } catch (err) {
-            throw new Error(`auth/fetchOauthUrl# Problem redirecting to provider '${provider}': ${err}.`);
+            throw new Error(`auth/fetchOauthUrl# Problem redirecting to OAuth provider '${provider}': ${err}.`);
         }
     },
 };

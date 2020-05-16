@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Exceptions\EmailTakenException;
 use App\Http\Controllers\Controller;
 use App\OAuthProvider;
@@ -11,21 +10,24 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\TwitterClient;
 
 class OAuthController extends Controller
 {
     use AuthenticatesUsers;
 
     /**
-     * Create a new controller instance.
+     * Create a new OAuth controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TwitterClient $twitterApi)
     {
         config([
             'services.github.redirect' => route('oauth.callback', 'github'),
         ]);
+
+        $this->twitterApi = $twitterApi; // TwitterClient is injected for unit test mocking
     }
 
     /**
@@ -38,14 +40,7 @@ class OAuthController extends Controller
     public function redirectToProvider($provider)
     {
         if ($provider === 'twitter') {
-            $tempId = Str::random(40);
-
-            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'));
-            $requestToken = $connection->oauth('oauth/request_token', array('oauth_callback' => config('services.twitter.callback_url').'?user='.$tempId));
-
-            \Cache::put($tempId, $requestToken['oauth_token_secret'], 86400); // 86400 seconds = 1 day
-
-            $url = $connection->url('oauth/authorize', array('oauth_token' => $requestToken['oauth_token']));
+            $url = $this->twitterApi->getUrl();
         } else {
             $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
         }
@@ -65,13 +60,7 @@ class OAuthController extends Controller
     public function handleProviderCallback(Request $request, $provider)
     {
         if ($provider === 'twitter') {
-            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), $request->oauth_token, \Cache::get($request->user));
-            $access_token = $connection->oauth('oauth/access_token', ['oauth_verifier' => $request->oauth_verifier]);
-
-            $connection = new TwitterOAuth(config('services.twitter.client_id'), config('services.twitter.client_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
-            $user = $connection->get('account/verify_credentials', ['include_email' => 'true']);
-
-            $user->token = $access_token['oauth_token'];
+            $user = (object)$this->twitterApi->getUser($request);
         } else {
             $user = Socialite::driver($provider)->stateless()->user();
         }
@@ -94,10 +83,10 @@ class OAuthController extends Controller
      * When the oauth provider calls back, update provider's access token.
      *
      * @param string $provider
-     * @param \Laravel\Socialite\Contracts\User $sUser
+     * @param \Laravel\Socialite\Contracts\User|object $sUser
      * @return \App\User|false
      */
-    protected function findOrCreateUser($provider, $sUser)
+    protected function findOrCreateUser($provider, $sUser) : User
     {
         $oauthProvider = OAuthProvider::where('provider', $provider)
             ->where('provider_user_id', $sUser->id)
@@ -115,15 +104,11 @@ class OAuthController extends Controller
         $user = User::firstWhere('email', $sUser->email);
 
         if (!$user) {
-            $user = User::create([
-                'name' => $sUser->name,
-                'email' => $sUser->email,
-                'email_verified_at' => now(),
-            ]);
+            $user = User::generate($sUser->name, $sUser->email, null);
         }
 
         // if the user registered via email/password but didn't verify their email yet,
-        // we can mark it as verified because oauth provider already validated their email.
+        // we can mark it as verified via oauth provider trust.
         if ($user->email_verified_at === null) {
             $user->email_verified_at = now();
             $user->save();
@@ -136,11 +121,11 @@ class OAuthController extends Controller
      * Adds a new oauth provider to an existing user.
      *
      * @param string $provider
-     * @param \Laravel\Socialite\Contracts\User $sUser
+     * @param \Laravel\Socialite\Contracts\User|object $sUser
      * @param \App\User $user
      * @return \App\User
      */
-    protected function addProvider($provider, $sUser, User $user)
+    protected function addProvider($provider, $sUser, User $user) : User
     {
         $user->oauthProviders()->create([
             'provider' => $provider,
