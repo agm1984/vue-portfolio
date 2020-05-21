@@ -9,5 +9,16 @@
 <script>
 export default {
     name: 'child',
+
+    data() {
+        return {};
+    },
+
+    computed: {},
+
+    mounted() {},
+
+    methods: {},
+
 };
 </script>
