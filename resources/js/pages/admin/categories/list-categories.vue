@@ -63,11 +63,11 @@ export default {
 
     computed: {
         isShowing() {
-            return this.state === SHOW;
+            return (this.state === SHOW);
         },
 
         isCreating() {
-            return this.state === CREATE;
+            return (this.state === CREATE);
         },
 
     },

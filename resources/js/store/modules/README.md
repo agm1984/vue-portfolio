@@ -27,5 +27,4 @@ export const actions = {};
 
 // state
 export const state = {};
-
 ```

@@ -34,7 +34,7 @@ class OAuthController extends Controller
      * Redirect the user to the provider authentication page. Twitter uses OAuth1.0a, and does not support
      * Socialite::driver($provider)->stateless(), so library `abraham/twitteroauth` is used to handle everything.
      *
-     * @param  string $provider
+     * @param string $provider
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToProvider($provider)

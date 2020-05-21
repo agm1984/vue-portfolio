@@ -11,7 +11,7 @@ class TwitterClient {
     /**
      * Get the callback URL for Twitter OAuth.
      *
-     * @return void
+     * @return string
      */
     public static function getUrl()
     {
