@@ -54,7 +54,7 @@ class OAuthTwitterTest extends TestCase
     {
         $this->mockTwitterOAuth();
 
-        $this->postJson('/api/oauth/twitter')
+        $this->postJson(route('oauth.redirect', 'twitter'))
             ->assertStatus(200)
             ->assertJson(['url' => 'https://url-to-provider']);
     }
@@ -74,7 +74,7 @@ class OAuthTwitterTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/twitter/callback')
+        $this->get(route('oauth.callback', 'twitter'))
             ->assertText('token')
             ->assertSuccessful();
 
@@ -116,7 +116,7 @@ class OAuthTwitterTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/twitter/callback')
+        $this->get(route('oauth.callback', 'twitter'))
             ->assertText('token')
             ->assertSuccessful();
 
@@ -146,7 +146,7 @@ class OAuthTwitterTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/twitter/callback')
+        $this->get(route('oauth.callback', 'twitter'))
             ->assertText('token')
             ->assertSuccessful();
 

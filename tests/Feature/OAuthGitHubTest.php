@@ -63,7 +63,7 @@ class OAuthGitHubTest extends TestCase
     {
         $this->mockSocialite('github');
 
-        $this->postJson('/api/oauth/github')
+        $this->postJson(route('oauth.redirect', 'github'))
             ->assertStatus(200)
             ->assertJson(['url' => 'https://url-to-provider']);
     }
@@ -83,7 +83,7 @@ class OAuthGitHubTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/github/callback')
+        $this->get(route('oauth.callback', 'github'))
             ->assertText('token')
             ->assertSuccessful();
 
@@ -125,7 +125,7 @@ class OAuthGitHubTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/github/callback')
+        $this->get(route('oauth.callback', 'github'))
             ->assertText('token')
             ->assertSuccessful();
 
@@ -155,7 +155,7 @@ class OAuthGitHubTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $this->get('/api/oauth/github/callback')
+        $this->get(route('oauth.callback', 'github'))
             ->assertText('token')
             ->assertSuccessful();
 
