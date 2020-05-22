@@ -78,6 +78,8 @@ export default {
         /**
          * Load the OAuth window.
          *
+         * @param {String} url
+         * @param {String} title
          * @param {Object} options
          * @return {Window}
          */
@@ -124,7 +126,7 @@ export default {
 
                 newWindow.location.href = url;
             } catch (err) {
-                throw new Error(`login-with-oauth# Problem logging in via OAuth through '${this.provider}': ${err}.`);
+                throw new Error(`login-with-oauth# Problem authenticating via '${this.provider}': ${err}.`);
             }
         },
 
