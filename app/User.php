@@ -43,6 +43,9 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     /**
      * Create a new user.
      *
+     * If the `id` prop is passed in the `$attributes` array, a user can be
+     * created with a specific ID.
+     *
      * @param string $name
      * @param string $email
      * @param string|null $password
@@ -65,7 +68,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         }
 
         $user->fill([
-            'status' => User::STATUS_ACTIVE,
+            'status' => self::STATUS_ACTIVE,
             'name' => $name,
             'password' => bcrypt($password),
         ]);
