@@ -3,11 +3,11 @@
         <validation-provider
             v-slot="{ errors, valid }"
             :vid="vid"
-            :name="vid"
+            :name="$attrs.name || $attrs.label"
             :rules="rules"
         >
             <b-field
-                v-bind="$attrs"
+                :label="label"
                 :type="{
                     [InputContext.DEFAULT]: false,
                     [InputContext.NEGATIVE]: errors[0],
@@ -35,8 +35,6 @@
                     :has-counter="hasCounter"
                     :custom-class="customClass"
                     :rounded="rounded"
-                    v-bind="$attrs"
-                    v-on="$listeners"
                 ></b-input>
 
             </b-field>
@@ -53,9 +51,17 @@ const SUPPORTED_INPUT_SIZES = Object.values(InputSize);
 export default {
     name: 'a-text-input',
 
-    components: { ValidationProvider },
+    components: {
+        ValidationProvider,
+    },
 
     props: {
+        // must be included in props
+        value: {
+            type: [String, Number],
+            required: false,
+            default: () => '',
+        },
         vid: {
             type: String,
             required: false,
@@ -65,16 +71,15 @@ export default {
             type: [Object, String, Date],
             default: () => '',
         },
-        // must be included in props
-        value: {
-            type: [String, Number],
+        name: {
+            type: String,
             required: false,
             default: () => '',
         },
-        title: {
+        label: {
             type: String,
             required: false,
-            default: () => undefined,
+            default: () => '',
         },
         type: {
             type: String,
@@ -89,7 +94,7 @@ export default {
         expanded: {
             type: Boolean,
             required: false,
-            default: () => true,
+            default: () => false,
         },
         required: {
             type: Boolean,

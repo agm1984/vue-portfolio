@@ -1,26 +1,53 @@
 <template>
-    <div>
-        <b-select
-            v-model="innerValue"
-            ref="select"
-            :name="name"
-            :size="size"
-            :placeholder="placeholder"
-            :loading="loading"
-            :expanded="expanded"
-            :disabled="disabled"
-            :required="required"
-            :rounded="rounded"
+    <div class="w-full">
+        <validation-provider
+            v-slot="{ errors, valid }"
+            :vid="vid"
+            :name="$attrs.name || $attrs.label"
+            :rules="rules"
         >
-            <!-- accepts option or optgroup + option -->
-            <slot></slot>
-        </b-select>
+            <b-field
+                :label="label"
+                :type="{
+                    [InputContext.DEFAULT]: false,
+                    [InputContext.NEGATIVE]: errors[0],
+                    [InputContext.POSITIVE]: false,
+                    [InputContext.INFO]: false,
+                    [InputContext.WARN]: false,
+                }"
+                :message="errors"
+            >
+                <b-select
+                    v-model="innerValue"
+                    ref="select"
+                    :name="name"
+                    :size="size"
+                    :placeholder="placeholder"
+                    :loading="loading"
+                    :expanded="expanded"
+                    :disabled="disabled"
+                    :required="required"
+                    :rounded="rounded"
+                >
+                    <!-- accepts option or optgroup + option -->
+                    <slot></slot>
+
+                </b-select>
+            </b-field>
+        </validation-provider>
     </div>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate';
+import { InputContext, InputSize } from '~/globalStateTypes';
+
 export default {
     name: 'a-select',
+
+    components: {
+        ValidationProvider,
+    },
 
     props: {
         // must be included in props
@@ -29,7 +56,21 @@ export default {
             required: false,
             default: () => undefined,
         },
+        vid: {
+            type: String,
+            required: false,
+            default: () => undefined,
+        },
+        rules: {
+            type: [Object, String, Date],
+            default: () => '',
+        },
         name: {
+            type: String,
+            required: false,
+            default: () => '',
+        },
+        label: {
             type: String,
             required: false,
             default: () => '',
@@ -37,7 +78,7 @@ export default {
         size: {
             type: String,
             required: false,
-            default: () => 'is-default',
+            default: () => InputSize.DEFAULT,
         },
         placeholder: {
             type: String,
@@ -52,7 +93,7 @@ export default {
         expanded: {
             type: Boolean,
             required: false,
-            default: () => false,
+            default: () => true,
         },
         disabled: {
             type: Boolean,
@@ -73,6 +114,8 @@ export default {
 
     data() {
         return {
+            InputContext,
+
             innerValue: undefined,
         };
     },
