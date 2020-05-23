@@ -30,6 +30,13 @@ class OAuthProvider extends Model
     ];
 
     /**
+     * Update parent model(s) when this model is updated.
+     *
+     * @var array
+     */
+    protected $touches = ['user'];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
