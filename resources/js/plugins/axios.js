@@ -40,6 +40,16 @@ axios.interceptors.response.use(response => response, (error) => {
         });
     }
 
+    if (status === 429) {
+        // @TODO: needs more testing
+        Swal.fire({
+            icon: 'error',
+            title: 'Slow down...',
+            text: 'You\'ve been throttled.',
+            confirmButtonText: 'Ok',
+        });
+    }
+
     if (status === 401) {
         const dialog = store.getters['auth/check'] ? {
             icon: 'warning',

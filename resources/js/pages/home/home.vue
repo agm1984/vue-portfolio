@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
     name: 'home',
 
@@ -21,9 +19,14 @@ export default {
         return { title: 'Home' };
     },
 
-    computed: mapGetters({
-        authenticated: 'auth/check',
-    }),
+    data() {
+        return {};
+    },
+
+    computed: {},
+
+    methods: {},
+
 };
 </script>
 

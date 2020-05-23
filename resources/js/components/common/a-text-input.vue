@@ -181,7 +181,7 @@ export default {
 
         size() {
             if (!SUPPORTED_INPUT_SIZES.includes(this.size)) {
-                throw new Error(`ws-text-input# Illegal size '${this.size}', expected one of [${SUPPORTED_INPUT_SIZES}].`);
+                throw new Error(`a-text-input# Illegal size '${this.size}', expected one of [${SUPPORTED_INPUT_SIZES}].`);
             }
         },
 
@@ -193,11 +193,11 @@ export default {
         }
 
         if (!SUPPORTED_INPUT_SIZES.includes(this.size)) {
-            throw new Error(`ws-text-input# Illegal size '${this.size}', expected one of [${SUPPORTED_INPUT_SIZES}].`);
+            throw new Error(`a-text-input# Illegal size '${this.size}', expected one of [${SUPPORTED_INPUT_SIZES}].`);
         }
 
         if (this.hasRulesWithoutVid) {
-            throw new Error('ws-text-input# If you specify validation \'rules\' prop, you must also use the \'vid\' prop.');
+            throw new Error('a-text-input# If you specify validation \'rules\' prop, you must also use the \'vid\' prop.');
         }
     },
 

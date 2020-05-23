@@ -12,7 +12,7 @@
                 ...extraStyles,
                 zIndex: 0,
             }"
-      ></iframe>
+        ></iframe>
     </div>
 </template>
 

@@ -1,9 +1,13 @@
 <template>
     <div>
+        <a-heading level="1">
+            Create category
+        </a-heading>
+
         <a-form v-slot="{ handleSubmit }">
             <a-select
                 v-model="category.status"
-                placeholder="Status"
+                label="Status"
             >
                 <option v-for="status in statuses" :key="status.status" :value="status.status">
                     {{ status.label }}
@@ -12,12 +16,12 @@
 
             <a-text-input
                 v-model="category.name"
-                placeholder="Name"
+                label="Name"
             ></a-text-input>
 
             <a-text-input
                 v-model="category.slug"
-                placeholder="Slug"
+                label="Slug"
             ></a-text-input>
 
             <a-button @click="handleSubmit(submitForm)">

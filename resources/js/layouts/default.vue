@@ -1,10 +1,12 @@
 <template>
-    <a-page>
+    <a-page class="relative z-0">
         <top-nav-bar></top-nav-bar>
 
-        <div class="container mt-32">
+        <div class="container w-full mt-32">
             <child></child>
         </div>
+
+        <a-sacred-geometry-three></a-sacred-geometry-three>
     </a-page>
 </template>
 

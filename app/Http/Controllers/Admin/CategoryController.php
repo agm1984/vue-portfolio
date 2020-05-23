@@ -24,11 +24,13 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show(Request $request, Example $example)
+    public function show(Request $request, Category $category)
     {
         \Log::debug($request->all());
 
-        return response()->json($example);
+        return response()->json([
+            'category' => $category,
+        ]);
     }
 
 }

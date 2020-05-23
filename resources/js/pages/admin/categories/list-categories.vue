@@ -1,36 +1,44 @@
 <template>
     <div>
-        <a-button @click="handleCreate">
-            Create category
-        </a-button>
+        <div class="flex items-center justify-between">
+            <a-heading level="1">
+                Categories
+            </a-heading>
+
+            <router-link :to="{ name: 'admin.categories.create' }">
+                Create category
+            </router-link>
+        </div>
 
         <b-table
             :data="categories"
-            :loading="false"
+            :loading="isInitializing"
         >
-            <template slot-scope="props">
+            <template slot-scope="{ row }">
                 <b-table-column field="id" label="ID" width="1" numeric>
-                    {{ props.row.id }}
+                    {{ row.id }}
                 </b-table-column>
 
                 <b-table-column field="slug" label="Slug" width="1">
-                    {{ props.row.slug }}
+                    {{ row.slug }}
                 </b-table-column>
 
                 <b-table-column field="name" label="Name">
-                    {{ props.row.name }}
+                    <router-link :to="{ name: 'admin.categories.show', params: { category: row.slug } }">
+                        {{ row.name }}
+                    </router-link>
                 </b-table-column>
 
                 <b-table-column field="created_at" label="Created" width="1" numeric>
-                    {{ props.row.created_at }}
+                    {{ row.created_at }}
                 </b-table-column>
 
                 <b-table-column field="updated_at" label="Last updated" width="1" numeric>
-                    {{ props.row.updated_at }}
+                    {{ row.updated_at }}
                 </b-table-column>
 
                 <b-table-column field="status" label="Status" width="1" numeric>
-                    {{ props.row.status }}
+                    {{ row.status }}
                 </b-table-column>
             </template>
         </b-table>
@@ -42,6 +50,7 @@
 import axios from 'axios';
 import CreateCategory from './create-category.vue';
 
+const INITIAL = 'INITIAL';
 const SHOW = 'SHOW';
 const CREATE = 'CREATE';
 
@@ -56,12 +65,16 @@ export default {
 
     data() {
         return {
-            state: SHOW,
+            state: INITIAL,
             categories: [],
         };
     },
 
     computed: {
+        isInitializing() {
+            return (this.state === INITIAL);
+        },
+
         isShowing() {
             return (this.state === SHOW);
         },
@@ -82,6 +95,7 @@ export default {
                 const { data } = await axios.get(route('admin.categories.list'));
 
                 this.categories = data.categories;
+                this.state = SHOW;
             } catch (err) {
                 throw new Error(`list-categories# Problem fetching list of categories: ${err}.`);
             }
@@ -92,13 +106,13 @@ export default {
         },
 
         handleCreate() {
-            this.$buefy.modal.open({
+            this.state = CREATE;
+
+            return this.$buefy.modal.open({
                 parent: this,
                 component: CreateCategory,
                 onCancel: this.resetCreate,
             });
-
-            this.state = CREATE;
         },
     },
 
