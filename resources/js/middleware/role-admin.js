@@ -23,7 +23,7 @@ const roleAdmin = (to, from, next) => {
         title: 'Unauthorized!',
         text: 'You don\'t have permission to access this page.',
         confirmButtonText: 'Ok',
-    }).then(() => next(false)); // stop navigation event
+    }).then(() => next({ path: from.fullPath }));
 };
 
 export default roleAdmin;
