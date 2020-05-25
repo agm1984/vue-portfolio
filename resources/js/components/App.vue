@@ -1,12 +1,10 @@
 <template>
-    <div id="app" class="flex flex-col w-full min-h-screen p-32 bg-black">
+    <div id="app" class="flex flex-col w-full min-h-screen bg-black">
         <loading ref="loading"></loading>
 
         <transition name="page" mode="out-in">
             <component :is="layout" v-if="layout"></component>
         </transition>
-
-        k
     </div>
 </template>
 
