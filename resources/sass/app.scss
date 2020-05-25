@@ -41,9 +41,15 @@
     src: url('/AROLY.ttf');
 }
 
-html, body, #app {
-    height: 100%;
+html {}
+
+body {
+    min-height: 100%;
 }
+#app {
+    // height: 100%;
+}
+
 
 // brand
 .adam-logo {
