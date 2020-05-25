@@ -15,17 +15,14 @@ class LoginTest extends TestCase
     {
         $user = $this->adminUser();
 
-        $this->postJson(route('login'), [
-            'email' => $user->email,
-            'password' => TestCase::AUTH_PASSWORD,
-        ])
-        ->assertStatus(200)
-        ->assertJsonStructure([
-            'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
-            'token',
-            'token_type',
-            'expires_in',
-        ]);
+        $this->postJson(route('login'), ['email' => $user->email, 'password' => TestCase::AUTH_PASSWORD])
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
+                'token',
+                'token_type',
+                'expires_in',
+            ]);
     }
 
     /** @test */
@@ -33,28 +30,22 @@ class LoginTest extends TestCase
     {
         $user = $this->user();
 
-        $this->postJson(route('login'), [
-            'email' => $user->email,
-            'password' => TestCase::AUTH_PASSWORD,
-        ])
-        ->assertStatus(200)
-        ->assertJsonStructure([
-            'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
-            'token',
-            'token_type',
-            'expires_in',
-        ]);
+        $this->postJson(route('login'), ['email' => $user->email, 'password' => TestCase::AUTH_PASSWORD])
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
+                'token',
+                'token_type',
+                'expires_in',
+            ]);
     }
 
     /** @test */
     public function it_can_not_login_without_email()
     {
-        $this->postJson(route('login'), [
-            'email' => '',
-            'password' => TestCase::AUTH_PASSWORD,
-        ])
-        ->assertStatus(422)
-        ->assertJsonStructure(['message', 'errors' => ['email']]);
+        $this->postJson(route('login'), ['email' => '', 'password' => TestCase::AUTH_PASSWORD])
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors' => ['email']]);
     }
 
     /** @test */
@@ -62,12 +53,9 @@ class LoginTest extends TestCase
     {
         $user = $this->adminUser();
 
-        $this->postJson(route('login'), [
-            'email' => $user->email,
-            'password' => '',
-        ])
-        ->assertStatus(422)
-        ->assertJsonStructure(['message', 'errors' => ['password']]);
+        $this->postJson(route('login'), ['email' => $user->email, 'password' => ''])
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors' => ['password']]);
     }
 
     /** @test */
@@ -75,12 +63,9 @@ class LoginTest extends TestCase
     {
         $this->withHeader('fart', 'caca');
 
-        $this->postJson(route('login'), [
-            'email' => '',
-            'password' => '',
-        ])
-        ->assertStatus(422)
-        ->assertJsonStructure(['message', 'errors' => ['email', 'password']]);
+        $this->postJson(route('login'), ['email' => '', 'password' => ''])
+            ->assertStatus(422)
+            ->assertJsonStructure(['message', 'errors' => ['email', 'password']]);
     }
 
     /** @test */
@@ -89,9 +74,8 @@ class LoginTest extends TestCase
         $token = $this->getTokenForUser($this->adminUser());
 
         $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
-        // ->dumpHeaders();
-        ->assertStatus(200)
-        ->assertJsonStructure(['success']);
+            ->assertStatus(200)
+            ->assertJsonStructure(['success']);
     }
 
     /** @test */
@@ -100,8 +84,7 @@ class LoginTest extends TestCase
         $token = $this->getTokenForUser($this->user());
 
         $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
-        // ->dumpHeaders();
-        ->assertStatus(200)
-        ->assertJsonStructure(['success']);
+            ->assertStatus(200)
+            ->assertJsonStructure(['success']);
     }
 }
