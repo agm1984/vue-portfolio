@@ -17,7 +17,25 @@ class LoginTest extends TestCase
 
         $this->postJson(route('login'), [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => TestCase::AUTH_PASSWORD,
+        ])
+        ->assertStatus(200)
+        ->assertJsonStructure([
+            'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
+            'token',
+            'token_type',
+            'expires_in',
+        ]);
+    }
+
+    /** @test */
+    public function it_can_login_as_user()
+    {
+        $user = $this->user();
+
+        $this->postJson(route('login'), [
+            'email' => $user->email,
+            'password' => TestCase::AUTH_PASSWORD,
         ])
         ->assertStatus(200)
         ->assertJsonStructure([
@@ -33,7 +51,7 @@ class LoginTest extends TestCase
     {
         $this->postJson(route('login'), [
             'email' => '',
-            'password' => 'password',
+            'password' => TestCase::AUTH_PASSWORD,
         ])
         ->assertStatus(422)
         ->assertJsonStructure(['message', 'errors' => ['email']]);
@@ -55,6 +73,8 @@ class LoginTest extends TestCase
     /** @test */
     public function it_can_not_login_with_empty_form()
     {
+        $this->withHeader('fart', 'caca');
+
         $this->postJson(route('login'), [
             'email' => '',
             'password' => '',
@@ -64,16 +84,23 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function it_can_logout()
+    public function it_can_logout_as_admin()
     {
-        $user = $this->adminUser();
+        $token = $this->getTokenForUser($this->adminUser());
 
-        $this->postJson(route('login'), [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
+        // ->dumpHeaders();
+        ->assertStatus(200)
+        ->assertJsonStructure(['success']);
+    }
 
-        $this->postJson(route('logout'))
+    /** @test */
+    public function it_can_logout_as_user()
+    {
+        $token = $this->getTokenForUser($this->user());
+
+        $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
+        // ->dumpHeaders();
         ->assertStatus(200)
         ->assertJsonStructure(['success']);
     }

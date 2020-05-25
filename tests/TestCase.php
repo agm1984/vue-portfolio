@@ -7,10 +7,13 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Spatie\Permission\Models\Role;
+use JWTAuth;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, DatabaseTransactions;
+
+    const AUTH_PASSWORD = 'password';
 
     public function setUp() : void
     {
@@ -23,6 +26,11 @@ abstract class TestCase extends BaseTestCase
         // gc_collect_cycles();
     }
 
+    public function getTokenForUser(User $user) : string
+    {
+        return JWTAuth::fromUser($user);
+    }
+
     public function adminUser() : User
     {
         $user = User::query()->firstWhere('email', 'test-admin@example.com');
@@ -31,7 +39,7 @@ abstract class TestCase extends BaseTestCase
             return $user;
         }
 
-        $user = User::generate('Test Admin', 'test-admin@example.com', 'password');
+        $user = User::generate('Test Admin', 'test-admin@example.com', self::AUTH_PASSWORD);
 
         $user->assignRole(Role::findByName('admin'));
 
@@ -46,7 +54,7 @@ abstract class TestCase extends BaseTestCase
             return $user;
         }
 
-        $user = User::generate('Test User', 'test-user@example.com', 'password');
+        $user = User::generate('Test User', 'test-user@example.com', self::AUTH_PASSWORD);
 
         return $user;
     }
