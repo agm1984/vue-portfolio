@@ -15,7 +15,7 @@ If you need to add a middleware to any Vue component, you can add the `middlewar
 export default {
     name: 'list-admin-stuff',
 
-    middleware: 'role-admin',
+    middleware: 'auth',
 
     data() {
         return {};
@@ -31,7 +31,7 @@ export default {
 *Note:* The `middleware` Vue instance property can also accept an array of middlewares:
 
 ```vue
-middleware: ['role-admin', 'role-manager'],
+middleware: ['auth', 'role-admin'],
 ```
 
 ## Component ScrollToTop
