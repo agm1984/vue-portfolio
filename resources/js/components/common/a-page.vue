@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center flex-1 py-64 bg-black px-128">
+    <div class="flex flex-col items-center flex-1 py-64 px-128" style="background-color: #070d0d;">
 
         <!-- page -->
         <slot></slot>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+// http://hexcolor16.com/070d0d
 export default {
     name: 'a-page',
 
