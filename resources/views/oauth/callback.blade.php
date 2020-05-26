@@ -5,7 +5,6 @@
         <script>
             window.opener.postMessage(
                 {
-                    user: "{{ $user }}",
                     token: "{{ $token }}",
                 },
                 "{{ url('/') }}"
