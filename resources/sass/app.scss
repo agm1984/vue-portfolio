@@ -19,7 +19,6 @@
 
 @import 'bulma.scss';
 
-
 /**
  * Here you would add any of your custom component classes; stuff that you'd
  * want loaded *before* the utilities so that the utilities could still
@@ -68,6 +67,16 @@ body {
 .nav-link-white:hover { @apply text-primary-200; }
 .nav-link-white:active { @apply text-primary-100; }
 
-@tailwind components;
+
+// cards
+.a-card {
+    background: rgba(29, 38, 47, 0.96);
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.32);
+}
+
+// @tailwind components;
+
+// /*! purgecss end ignore */
 
 @tailwind utilities;
