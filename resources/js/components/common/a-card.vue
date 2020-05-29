@@ -1,5 +1,5 @@
 <template>
-    <div class="p-32 border-1 border-grey-900">
+    <div class="p-32 a-card">
         <!-- card content -->
         <slot></slot>
 
