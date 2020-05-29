@@ -10,6 +10,8 @@ import '~/plugins';
 import './components';
 import './components/common';
 
+Vue.config.productionTip = false;
+
 Vue.use(Buefy, {
     defaultIconPack: 'fas',
 });
@@ -21,8 +23,6 @@ Vue.mixin({
         route,
     },
 });
-
-Vue.config.productionTip = false;
 
 const app = new Vue({
     el: '#app',
