@@ -5,7 +5,7 @@
  * @returns {Function}
  */
 function page(path) {
-    return () => import(/* webpackChunkName: '' */ '~/pages/' + path).then(m => m.default || m); // eslint-disable-line prefer-template
+    return () => import('~/pages/' + path).then(m => m.default || m); // eslint-disable-line prefer-template
 }
 
 const router = [
@@ -39,6 +39,7 @@ const router = [
     { path: '/admin/users', name: 'admin.users.list', component: page('admin/users/list-users.vue') },
 
     { path: '/design', name: 'design', component: page('design/design-system.vue') },
+    { path: '/snippets', name: 'snippets', component: page('snippets/snippets.vue') },
 
     { path: '*', name: 'splat', component: page('errors/404.vue') },
 ];
