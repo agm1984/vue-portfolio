@@ -40,10 +40,13 @@
     src: url('/AROLY.ttf');
 }
 
-html {}
+html {
+    font-size: 10px;
+}
 
 body {
     min-height: 100%;
+    font-size: 1.6rem;
 }
 #app {
     // height: 100%;
