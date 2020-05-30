@@ -13,3 +13,4 @@ For config, see `./phpcs.xml` and `./eslintrc.json`.
 - Event analytics: https://stackoverflow.com/questions/18963817/designing-database-schema-for-event-based-analytics
 - GraphQL: https://github.com/rebing/graphql-laravel
 - Geometry: https://codepen.io/EntropyReversed/pen/YBEwXV
+- Flipping animations: https://github.com/davidkpiano/flipping
