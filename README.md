@@ -14,3 +14,4 @@ For config, see `./phpcs.xml` and `./eslintrc.json`.
 - GraphQL: https://github.com/rebing/graphql-laravel
 - Geometry: https://codepen.io/EntropyReversed/pen/YBEwXV
 - Flipping animations: https://github.com/davidkpiano/flipping
+- Splatter animation: https://codepen.io/tmrDevelops/pen/jEbbOa
