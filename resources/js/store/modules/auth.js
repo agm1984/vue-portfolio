@@ -1,18 +1,34 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+/**
+ * Users can login via email/password handled by `LoginController.php`,
+ * or via OAuth GitHub and/or Twitter handled by `OAuthController.php`.
+ *
+ * Any Vue component can check if a user is currently authenticated by polling
+ * the predicate function `this.$store.getters['auth/check']` which simply
+ * checks if `this.$store.state.auth.state === IS_LOGGED_IN`.
+ */
+
+const IS_LOGGED_IN = 'IS_LOGGED_IN';
+const IS_LOGGED_OUT = 'IS_LOGGED_OUT';
+
 // types
-export const REGISTER = 'REGISTER';
-export const LOGIN = 'LOGIN';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const FETCH_USER_FAILED = 'FETCH_USER_FAILED';
 export const UPDATE_USER = 'UPDATE_USER';
 export const LOGOUT = 'LOGOUT';
+export const SET_INTENDED_URL = 'SET_INTENDED_URL';
+export const CLEAR_INTENDED_URL = 'CLEAR_INTENDED_URL';
 
 // getters
 export const getters = {
+    check(state) {
+        return (state.state === IS_LOGGED_IN);
+    },
+
     user(state) {
         return state.user;
     },
@@ -21,36 +37,51 @@ export const getters = {
         return state.token;
     },
 
-    check(state) {
-        return (state.user !== null);
+    intendedUrl(state) {
+        if (state.intendedUrl.length === 1) return ''; // ignore redirect to '/' to keep URL pretty
+        return state.intendedUrl;
     },
 };
 
 // mutations
 export const mutations = {
-    [SAVE_TOKEN]: (state, { token, remember }) => {
+    [SAVE_TOKEN]: (state, { token }) => {
+        const ttlPlusRefreshPeriod = new Date(new Date().getTime() + (+window.config.jwt.ttl + +window.config.jwt.refresh_ttl) * 60 * 1000);
         state.token = token;
-        return Cookies.set('token', token, { expires: remember ? 365 : null });
+        console.log('expires_in', +window.config.jwt.ttl, ttlPlusRefreshPeriod);
+        return Cookies.set('token', token, { expires: ttlPlusRefreshPeriod });
     },
 
     [FETCH_USER_SUCCESS]: (state, { user }) => {
         state.user = user;
+        state.state = IS_LOGGED_IN;
     },
 
-    [FETCH_USER_FAILURE]: (state) => {
-        state.user = null;
-        state.token = null;
-        return Cookies.remove('token');
+    [FETCH_USER_FAILED]: (state) => {
+        state.user = {};
+        state.token = '';
+        Cookies.remove('token');
+        state.state = IS_LOGGED_OUT;
     },
 
     [UPDATE_USER]: (state, { user }) => {
         state.user = user;
+        state.state = IS_LOGGED_IN;
     },
 
     [LOGOUT]: (state) => {
-        state.user = null;
-        state.token = null;
-        return Cookies.remove('token');
+        state.user = {};
+        state.token = '';
+        Cookies.remove('token');
+        state.state = IS_LOGGED_OUT;
+    },
+
+    [SET_INTENDED_URL]: (state, intendedUrl) => {
+        state.intendedUrl = intendedUrl;
+    },
+
+    [CLEAR_INTENDED_URL]: (state) => {
+        state.intendedUrl = '';
     },
 };
 
@@ -62,7 +93,7 @@ export const actions = {
 
             commit(FETCH_USER_SUCCESS, { user: data.user });
 
-            return commit(SAVE_TOKEN, { token: data.token, remember: data.remember });
+            return commit(SAVE_TOKEN, { token: data.token });
         } catch (err) {
             commit(LOGOUT);
             throw new Error(`auth/register# Problem registering new user: ${err}.`);
@@ -79,7 +110,7 @@ export const actions = {
 
             return commit(FETCH_USER_SUCCESS, { user: data });
         } catch (e) {
-            return commit(FETCH_USER_FAILURE);
+            return commit(FETCH_USER_FAILED);
         }
     },
 
@@ -92,8 +123,9 @@ export const actions = {
             const { data } = await axios.post(route('login'), payload);
 
             commit(FETCH_USER_SUCCESS, { user: data.user });
+            commit(SAVE_TOKEN, { token: data.token });
 
-            return commit(SAVE_TOKEN, { token: data.token, remember: data.remember });
+            return commit(CLEAR_INTENDED_URL);
         } catch (err) {
             commit(LOGOUT);
             throw new Error(`auth/login# Problem logging user in: ${err}.`);
@@ -121,10 +153,21 @@ export const actions = {
             throw new Error(`auth/fetchOauthUrl# Problem redirecting to OAuth provider '${provider}': ${err}.`);
         }
     },
+
+    setIntendedUrl({ commit }, payload) {
+        return commit(SET_INTENDED_URL, payload);
+    },
+
+    clearIntendedUrl({ commit }) {
+        return commit(CLEAR_INTENDED_URL);
+    },
+
 };
 
 // state
 export const state = {
-    user: null,
-    token: Cookies.get('token'),
+    state: IS_LOGGED_OUT,
+    user: {},
+    token: Cookies.get('token') || '',
+    intendedUrl: '',
 };

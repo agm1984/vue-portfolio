@@ -33,7 +33,7 @@
 export default {
     name: 'admin-dashboard',
 
-    middleware: 'role-admin',
+    middleware: ['auth', 'role-admin'],
 
     metaInfo() {
         return { title: 'Dashboard' };

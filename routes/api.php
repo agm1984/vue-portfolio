@@ -29,12 +29,11 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-    Route::get('/user', 'Auth\UserController@me')->name('me');
-
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+    Route::get('user', 'Auth\UserController@me')->name('me');
+    Route::post('refresh', 'Auth\LoginController@refresh')->name('refresh');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {

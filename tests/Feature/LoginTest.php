@@ -20,8 +20,6 @@ class LoginTest extends TestCase
             ->assertJsonStructure([
                 'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
                 'token',
-                'token_type',
-                'expires_in',
             ]);
     }
 
@@ -35,8 +33,6 @@ class LoginTest extends TestCase
             ->assertJsonStructure([
                 'user' => ['id' , 'status', 'name', 'email', 'email_verified_at', 'photo_url', 'roles_list', 'roles'],
                 'token',
-                'token_type',
-                'expires_in',
             ]);
     }
 

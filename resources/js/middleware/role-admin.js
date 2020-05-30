@@ -6,12 +6,22 @@ const Roles = {
 };
 
 /**
- * Checks if a user has the 'admin' Role, and otherwise
- * halts the request and displays a permission-denied dialog.
+ * Checks if a user has the `admin` Role, and otherwise halts the request
+ * and displays a permission-denied dialog if the user isn't an `admin`.
+ *
+ * This middleware expects to be used with the `auth` middleware
+ * @example
+ * // a-component.vue
+ * <script>
+ * export default {
+ *     middleware: ['auth', 'role-admin'],
+ * };
+ * </script>
  *
  * @param {Object} to
  * @param {Object} from
  * @param {Function} next
+ * @return {Function}
  */
 const roleAdmin = (to, from, next) => {
     if (store.getters['auth/check'] && store.getters['auth/user'].roles_list.includes(Roles.ADMIN)) {

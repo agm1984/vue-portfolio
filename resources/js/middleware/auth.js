@@ -1,5 +1,6 @@
 import store from '~/store/index';
 
+
 /**
  * If the store has no user record, this middleware will redirect the
  * user to the login page.
@@ -11,7 +12,12 @@ import store from '~/store/index';
 const auth = async (to, from, next) => {
     if (!store.getters['auth/check']) {
         const intendedUrl = to.fullPath;
-        return next({ name: 'login', query: { redirect: intendedUrl } });
+
+        if (intendedUrl.length > 1) {
+            store.dispatch('auth/setIntendedUrl', intendedUrl);
+        }
+
+        return next({ name: 'login' });
     }
 
     return next();

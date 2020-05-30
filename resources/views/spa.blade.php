@@ -11,6 +11,10 @@ $config = [
         'callback_url' => config('services.twitter.callback_url'),
         'provider_name' => config('services.twitter.provider_name'),
     ],
+    'jwt' => [
+        'ttl' => config('jwt.ttl'),
+        'refresh_ttl' => config('jwt.refresh_ttl'),
+    ],
 ];
 @endphp
 

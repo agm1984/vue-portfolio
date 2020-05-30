@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\VerifyEmailException;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use JWTAuth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, ThrottlesLogins;
 
     /**
      * Create a new controller instance.
@@ -20,24 +23,55 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['refresh', 'logout']);
     }
 
     /**
-     * Authenticate the user.
+     * Undocumented function
+     *
+     * @param User $user
+     * @param array|null $extras
+     *
+     * @return array
+     */
+    protected function getCustomClaims(User $user, ?array $extras = []) : array
+    {
+        $defaults = [
+            'exp' => Carbon::now()->addMinutes(config('jwt.ttl'))->timestamp,
+            // 'sub' => $user->id,
+            // 'role' => $user->role,
+            // 'csrf' => Str::random(42),
+            // 'iat' => Carbon::now()->timestamp,
+            // 'nbf' => Carbon::now()->timestamp, // not before
+        ];
+
+        return array_merge($defaults, $extras);
+    }
+
+    /**
+     * Authenticates the user.
+     *
+     * API design-understanding pre-requisites:
+     * - https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
+     * - https://github.com/tymondesigns/jwt-auth/issues/89#issuecomment-94378594
+     * - https://stackoverflow.com/questions/38415851/how-to-make-jwt-cookie-authentication-in-laravel
      *
      * @param \Illuminate\Http\Request $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
     {
-        $token = $this->guard()->attempt($this->credentials($request));
+        $user = User::firstWhere('email', $request->input('email'));
+        $customClaims = [];
+        $token = JWTAuth::claims($customClaims)->attempt($this->credentials($request));
+
+        \Log::debug('Login...');
+        \Log::debug($token);
 
         if (!$token) {
             return false;
         }
 
-        $user = $this->guard()->user();
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
             return false;
         }
@@ -58,14 +92,11 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         $user = $this->guard()->user();
-        $token = (string) $this->guard()->getToken();
-        $expiration = $this->guard()->getPayload()->get('exp');
+        $token = (string)$this->guard()->getToken();
 
         return response()->json([
             'user' => $user,
             'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $expiration - time(),
         ]);
     }
 
@@ -89,15 +120,35 @@ class LoginController extends Controller
         ]);
     }
 
+    protected function refresh(Request $request)
+    {
+        \Log::debug('Refreshing...');
+        $refreshedToken = JWTAuth::refresh(JWTAuth::getToken());
+
+        return response()->json([
+            'token' => $refreshedToken,
+        ], 200);
+    }
+
     /**
-     * Log the user out of the application.
+     * If the user's session is expired, the auth token is already invalidated,
+     * so we just return success to the client.
+     *
+     * This solves the edge case where the user clicks the Logout button as their first
+     * interaction in a stale session, and allows a clean redirect to the login page.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        $user = $this->guard()->user();
+
+        if ($user) {
+            $this->guard()->logout();
+            $this->guard()->invalidate();
+        }
+
         return response()->json(['success' => 'Logged out.'], 200);
     }
 }

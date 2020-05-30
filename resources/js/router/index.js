@@ -45,14 +45,14 @@ function resolveComponents(components) {
  * @return {Router}
  */
 function createRouter() {
-    const router = new Router({ /* eslint-disable no-use-before-define */
-        scrollBehavior,
+    const router = new Router({
+        scrollBehavior, // eslint-disable-line no-use-before-define
         mode: 'history',
         routes,
     });
 
-    router.beforeEach(beforeEach);
-    router.afterEach(afterEach); /* eslint-disable no-use-before-define */
+    router.beforeEach(beforeEach); // eslint-disable-line no-use-before-define
+    router.afterEach(afterEach); // eslint-disable-line no-use-before-define
 
     return router;
 }
@@ -189,7 +189,7 @@ async function beforeEach(to, from, next) {
             router.app.setLayout(components[0].layout || '');
         }
 
-        next(...args);
+        return next(...args);
     });
 }
 

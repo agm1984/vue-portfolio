@@ -28,17 +28,7 @@
                 required
             ></a-text-input>
 
-            <div class="flex items-center">
-                <checkbox v-model="newUser.remember" name="remember">
-                    Remember me
-                </checkbox>
-
-                <router-link :to="{ name: 'password.request' }" class="my-auto ml-auto small">
-                    Forgot password?
-                </router-link>
-            </div>
-
-            <div class="flex flex-col">
+            <div class="flex flex-col items-end">
                 <a-button :loading="isAuthenticating" @click="handleSubmit(register)">
                     Register
                 </a-button>
@@ -75,7 +65,6 @@ export default {
             newUser: {
                 email: '',
                 password: '',
-                remember: true,
             },
             form: new Form({
                 name: '',

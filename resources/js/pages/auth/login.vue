@@ -20,24 +20,23 @@
                 required
             ></a-text-input>
 
-            <div class="flex items-center">
-                <checkbox v-model="user.remember" name="remember">
-                    Remember me
-                </checkbox>
+            <div class="flex justify-between">
+                <div>
+                    <router-link :to="{ name: 'password.request' }" class="my-auto ml-auto small">
+                        Forgot password?
+                    </router-link>
+                </div>
 
-                <router-link :to="{ name: 'password.request' }" class="my-auto ml-auto small">
-                    Forgot password?
-                </router-link>
+                <div class="flex flex-col items-end">
+                    <a-button :loading="isAuthenticating" @click="handleSubmit(login)">
+                        Login
+                    </a-button>
+
+                    <login-with-oauth provider="github"></login-with-oauth>
+                    <login-with-oauth provider="twitter"></login-with-oauth>
+                </div>
             </div>
 
-            <div class="flex flex-col">
-                <a-button :loading="isAuthenticating" @click="handleSubmit(login)">
-                    Login
-                </a-button>
-
-                <login-with-oauth provider="github" :intended-url="intendedUrl"></login-with-oauth>
-                <login-with-oauth provider="twitter" :intended-url="intendedUrl"></login-with-oauth>
-            </div>
         </a-form>
 
     </div>
@@ -67,7 +66,6 @@ export default {
             user: {
                 email: '',
                 password: '',
-                remember: true,
             },
             form: new Form({
                 email: '',
@@ -85,10 +83,16 @@ export default {
             return (this.state === AUTHENTICATING);
         },
 
-        intendedUrl() {
-            return this.$route.query.redirect;
+        hasIntendedUrl() {
+            return (this.$store.getters['auth/intendedUrl'].length > 0);
         },
 
+    },
+
+    created() {
+        if (this.$store.getters['auth/intendedUrl']) {
+            this.$router.replace({ name: 'login', query: { redirect: this.$store.getters['auth/intendedUrl'] } });
+        }
     },
 
     methods: {
@@ -103,11 +107,17 @@ export default {
 
                 await this.$store.dispatch('auth/login', this.user);
 
-                if (this.intendedUrl) {
-                    return this.$router.push(this.intendedUrl);
+                if (this.hasIntendedUrl) {
+                    return this.$router.push(this.$store.getters['auth/intendedUrl'])
+                        .then(() => this.$store.dispatch('auth/clearIntendedUrl'))
+                        .catch((err) => {
+                            throw new Error(`login# Problem redirecting to intended URL: ${err}.`);
+                        });
                 }
 
-                return this.$router.push({ name: 'home' });
+                return this.$router.push({ name: 'home' }).catch(() => {
+                    throw new Error(`login# Problem navigating to 'home' route: ${err}.`);
+                });
             } catch (err) {
                 this.state = INITIAL;
 

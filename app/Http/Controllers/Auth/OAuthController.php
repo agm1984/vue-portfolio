@@ -73,8 +73,6 @@ class OAuthController extends Controller
 
         return view('oauth/callback', [
             'token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->guard()->getPayload()->get('exp') - time(),
         ]);
     }
 

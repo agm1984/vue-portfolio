@@ -27,8 +27,8 @@
  * version of the ratio 1.618:1. Knowing this, designs tend to be
  * pleasant on the eyes without conscious effort.
  *
- * Tailwind docs: https://next.tailwindcss.com/docs/what-is-tailwind/
  * Atomic design: http://bradfrost.com/blog/post/atomic-web-design/
+ * Tailwind docs: https://next.tailwindcss.com/docs/what-is-tailwind/
  *
  */
 

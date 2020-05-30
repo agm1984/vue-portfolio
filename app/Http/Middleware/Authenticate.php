@@ -9,12 +9,23 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Auth;
 
 class Authenticate extends Middleware
 {
     /**
-     * Handle an incoming request.
+     * Exclude these routes from authentication check.
+     *
+     * Note: https://laracasts.com/discuss/channels/laravel/middleware-on-all-routes-except-one?page=1#reply=611575
+     *
+     * @var array
+     */
+    protected $except = [
+        'api/logout',
+        'api/refresh',
+    ];
+
+    /**
+     * Ensure the user is authenticated.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
@@ -23,58 +34,53 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next)
     {
         try {
-            \Log::debug('starting');
-            $user = JWTAuth::parseToken()->authenticate();
-
-            if (!$user) {
-                \Log::debug('1');
-                 return response()->json([
-                   'code'   => 101, // means auth error in the api,
-                   'response' => null // nothing to show
-                 ]);
+            foreach ($this->except as $excluded_route) {
+                if ($request->path() === $excluded_route) {
+                    \Log::debug("Skipping $excluded_route from auth check...");
+                    return  $next($request);
+                }
             }
-        } catch (TokenExpiredException $e) {
-            $refreshed = JWTAuth::refresh(JWTAuth::getToken());
-            $user = JWTAuth::setToken($refreshed)->toUser();
-            header('Authorization: Bearer ' . $refreshed);
 
-            // return response()->json([
-            //     'error' => 'token_expired',
-            // ], 401);
+            \Log::debug('Authenticating... '. $request->url());
+
+            JWTAuth::parseToken()->authenticate();
+
+            return $next($request);
+        } catch (TokenExpiredException $e) {
+            \Log::debug('token expired');
+            try {
+                $customClaims = [];
+                $refreshedToken = JWTAuth::claims($customClaims)->refresh(JWTAuth::getToken());
+            } catch (TokenExpiredException $e) {
+                return response()->json([
+                    'error' => 'token_expired',
+                    'refresh' => false,
+                ], 401);
+            }
+
+            return response()->json([
+                'error' => 'token_expired_and_refreshed',
+                'refresh' => [
+                    'token' => $refreshedToken,
+                ],
+            ], 401);
         } catch (TokenInvalidException $e) {
+            \Log::debug('token invalid');
             return response()->json([
                 'error' => 'token_invalid',
             ], 401);
+        } catch (TokenBlacklistedException $e) {
+            \Log::debug('token blacklisted');
+            return response()->json([
+                'error' => 'token_blacklisted',
+            ], 401);
         } catch (JWTException $e) {
+            \Log::debug('token absent');
             return response()->json([
                 'error' => 'token_absent',
             ], 401);
 
         }
 
-        // catch (TokenExpiredException $e) {
-        //     // If the token is expired, then it will be refreshed and added to the headers
-        //     try {
-        //         $refreshed = JWTAuth::refresh(JWTAuth::getToken());
-        //         $user = JWTAuth::setToken($refreshed)->toUser();
-        //         header('Authorization: bearer ' . $refreshed);
-        //     } catch (JWTException $e) {
-        //          return response()->json([
-        //            'code'   => 103, // means not refreshable
-        //            'response' => null // nothing to show
-        //          ]);
-        //     }
-        // } catch (JWTException $e) {
-        //     \Log::debug($e);
-        //     return response()->json([
-        //            'code'   => 101, // means auth error in the api,
-        //            'response' => null // nothing to show
-        //     ]);
-        // }
-
-        // Login the user instance for global usage
-        Auth::login($user, false);
-
-        return  $next($request);
     }
 }

@@ -57,7 +57,7 @@ const CREATE = 'CREATE';
 export default {
     name: 'list-categories',
 
-    middleware: 'role-admin',
+    middleware: ['auth', 'role-admin'],
 
     metaInfo() {
         return { title: 'List categories' };

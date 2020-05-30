@@ -90,8 +90,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
     name: 'top-nav-bar',
 
@@ -113,7 +111,9 @@ export default {
             return this.$store.getters['auth/check'];
         },
 
-        ...mapState('auth', ['user']),
+        user() {
+            return this.$store.getters['auth/user'];
+        },
     },
 
     mounted() {},
