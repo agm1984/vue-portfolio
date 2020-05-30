@@ -1,5 +1,5 @@
 <template>
-    <div ref="p5" class="absolute inset-0">
+    <div ref="p5" class="absolute inset-0 opacity-50">
         <vue-p5
             @preload="preload"
             @setup="setup"
@@ -18,7 +18,7 @@ export default {
     name: 'a-sacred-geometry-three',
 
     components: {
-        'vue-p5': VueP5,
+        VueP5,
     },
 
     data() {
