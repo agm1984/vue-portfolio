@@ -127,3 +127,6 @@ $family-sans-serif: 'Roboto', sans-serif;
 @import "~buefy/src/scss/components/_timepicker.scss";
 @import "~buefy/src/scss/components/_tooltip.scss";
 @import "~buefy/src/scss/components/_upload.scss";
+
+// for `a-code.vue` syntax highlighter component
+@import 'prismjs-duotone-sea-theme.scss';
