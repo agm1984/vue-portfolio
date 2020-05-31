@@ -5,6 +5,7 @@
             :type="type"
             :size="size"
             :disabled="disabled"
+            :expanded="expanded"
             :loading="loading"
             :rounded="rounded"
             :outlined="outlined"
@@ -40,6 +41,12 @@ export default {
         },
 
         disabled: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+
+        expanded: {
             type: Boolean,
             required: false,
             default: () => false,
