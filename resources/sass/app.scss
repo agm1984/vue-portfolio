@@ -62,12 +62,18 @@ body {
     background-position: center center;
 }
 
+// buefy
+.dropdown-content {
+    @apply .a-card;
+}
+
 // typography
 .nav-link-white {
-    @apply text-white font-aroly text-base leading-none tracking-wide;
+    @apply text-white font-aroly text-base leading-none tracking-wide p-4 rounded-sm;
+    background-color: rgba(7, 13, 13, 0.5);
     transition: all 250ms ease-in-out;
 }
-.nav-link-white:hover { @apply text-primary-200; }
+.nav-link-white:hover { @apply text-primary-200 cursor-pointer; }
 .nav-link-white:active { @apply text-primary-100; }
 
 
