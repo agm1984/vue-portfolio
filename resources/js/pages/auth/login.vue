@@ -1,44 +1,46 @@
 <template>
-    <div class="">
-        <a-heading level="1">Login</a-heading>
+    <div class="flex justify-center w-full h-auto">
+        <a-card class="flex flex-col h-auto w-384">
+            <span class="pb-32 text-2xl text-center text-white font-aroly">Login</span>
 
-        <a-form v-slot="{ handleSubmit }">
-            <a-text-input
-                v-model="user.email"
-                vid="email"
-                rules="required|email|max:255"
-                placeholder="Email"
-                required
-            ></a-text-input>
+            <a-form v-slot="{ handleSubmit }">
+                <a-text-input
+                    v-model="user.email"
+                    vid="email"
+                    rules="required|email|max:255"
+                    placeholder="Email"
+                    required
+                ></a-text-input>
 
-            <a-text-input
-                v-model="user.password"
-                vid="password"
-                rules="required|min:8"
-                placeholder="Password"
-                type="password"
-                required
-            ></a-text-input>
+                <a-text-input
+                    v-model="user.password"
+                    vid="password"
+                    rules="required|min:8"
+                    placeholder="Password"
+                    type="password"
+                    required
+                ></a-text-input>
 
-            <div class="flex justify-between">
-                <div>
-                    <router-link :to="{ name: 'password.request' }" class="my-auto ml-auto small">
+                <a-button :loading="isAuthenticating" expanded @click="handleSubmit(login)">
+                    Login
+                </a-button>
+
+                <div class="flex justify-center">
+                    <router-link :to="{ name: 'password.request' }">
                         Forgot password?
                     </router-link>
                 </div>
 
-                <div class="flex flex-col items-end">
-                    <a-button :loading="isAuthenticating" @click="handleSubmit(login)">
-                        Login
-                    </a-button>
+                <hr>
 
+                <div class="flex items-center justify-around">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
-            </div>
 
-        </a-form>
+            </a-form>
 
+        </a-card>
     </div>
 </template>
 
