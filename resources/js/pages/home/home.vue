@@ -1,12 +1,13 @@
 <template>
     <div class="">
-        <div id="home_avatar" style="background-image: url('/adam.png')"></div>
 
-        <h2 id="home_leadIn">THE PORTFOLIO OF</h2>
-
-        <h1 class="home_name">adam</h1>
-
-        <h1 class="home_name">mackintosh</h1>
+        <div class="relative">
+            <div id="home_avatar" style="background-image: url('/adam.png')"></div>
+            <h2 id="home_leadIn">THE PORTFOLIO OF</h2>
+            <a-lambda class="absolute ml-8 mt-28" :size="32"></a-lambda>
+            <h1 class="home_name">Adam</h1>
+            <h1 class="home_name">Mackintosh</h1>
+        </div>
 
     </div>
 </template>
