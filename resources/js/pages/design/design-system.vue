@@ -2,7 +2,7 @@
     <div class="flex w-full h-auto">
         <div class="flex flex-col w-2/3 h-auto">
             <div class="relative h-auto p-32 mb-64 a-card">
-                <a-sacred-geometry-two id="design-system-1"></a-sacred-geometry-two>
+                <a-sacred-geometry id="design-system-1"></a-sacred-geometry>
 
                 <a-heading level="1">Design system</a-heading>
 
@@ -16,7 +16,7 @@
             </div>
 
             <div class="relative h-auto p-32 a-card">
-                <a-sacred-geometry-two id="design-system-2"></a-sacred-geometry-two>
+                <a-sacred-geometry id="design-system-2"></a-sacred-geometry>
 
                 <a-heading level="1">System design</a-heading>
 
@@ -31,7 +31,7 @@
         </div>
 
         <div class="relative w-1/3 h-auto p-32 ml-64 a-card">
-            <a-sacred-geometry-two id="design-system-3"></a-sacred-geometry-two>
+            <a-sacred-geometry id="design-system-3"></a-sacred-geometry>
 
             <a-heading level="1">Design system</a-heading>
 
