@@ -75,7 +75,7 @@
                 "normal": "never",
                 "component": "never"
             },
-            "svg": "always",
+            "svg": "never",
             "math": "always"
         }],
         "vue/max-attributes-per-line": [2,
