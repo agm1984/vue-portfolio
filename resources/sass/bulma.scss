@@ -6,11 +6,11 @@
 |-----------------------------------------------------------------------------
 */
 
-// // misc
-// $radius-small: 0.2rem; // tailwind: rounded-sm (but doesn't exist yet) WIP
-// $radius: 0.6rem; // tailwind: rounded
-// $radius-large: 1.5rem;
-// $radius-rounded: 290486px; // tailwind: rounded-full
+// misc
+$radius-small: 0.0rem; // tailwind: rounded-sm
+$radius: 0.0rem; // tailwind: rounded
+$radius-large: 0.0rem; // tailwind: rounded-lg
+$radius-rounded: 290486px; // tailwind: rounded-full
 
 // // colours
 // $black:        hsl(0, 0%, 4%) !default;
