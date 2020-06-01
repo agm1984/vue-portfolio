@@ -1,12 +1,11 @@
 <template>
-    <a-page class="relative z-0">
-        <a-sacred-geometry></a-sacred-geometry>
+    <a-page id="default-layout" class="relative z-0">
+        <a-sacred-geometry-two id="wallpaper" is-wallpaper></a-sacred-geometry-two>
 
         <top-nav-bar></top-nav-bar>
 
-        <div class="container w-full mt-32">
-            <child></child>
-        </div>
+        <!-- page content -->
+        <router-view></router-view>
 
     </a-page>
 </template>
@@ -20,5 +19,15 @@ export default {
     components: {
         TopNavBar,
     },
+
+    data() {
+        return {};
+    },
+
+    computed: {},
+
+    mounted() {},
+
+    methods: {},
 };
 </script>
