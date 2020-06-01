@@ -1,7 +1,12 @@
 <template>
-    <button v-if="hasClientId" class="ml-auto btn btn-dark" type="button" @click="login">
+    <button
+        v-if="hasClientId"
+        class="btn btn-dark"
+        type="button"
+        @click="login"
+    >
+        <i :class="iconStyles"></i>
         {{ actionLabel }} {{ providerName }}
-        <!-- <fa :icon="['fab', 'github']" /> -->
     </button>
 </template>
 
@@ -30,6 +35,10 @@ export default {
 
         url() {
             return route('oauth.redirect', this.provider);
+        },
+
+        iconStyles() {
+            return `fab fa-${this.provider}`;
         },
 
         actionLabel() {
