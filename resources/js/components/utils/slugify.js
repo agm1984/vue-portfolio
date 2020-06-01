@@ -1,4 +1,11 @@
+/**
+ * Slugifies the input string. Output should match Laravel's `Str::slug()` function.
+ *
+ * @param {String} inputStr
+ * @return {String}
+ */
 const slugify = (inputStr) => {
+    // TODO: put a try/catch around string preparations, to throw useful error
     let str = String(inputStr).toString();
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
