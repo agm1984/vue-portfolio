@@ -159,33 +159,37 @@ export default {
 </script>
 
 <style>
-    /* TODO:: might need this soon to support mobile viewport widths */
     pre > code {
-        white-space: pre-wrap !important;
-        word-wrap: break-word !important;
+        white-space: pre;
     }
 
     /**
      * !important marks are used because styles stem from numerous config locations,
-     * namely
+     * namely node_modules > app.scss > bulma.scss
      */
-    .fancy-code {
-        display: inline-block !important;
-        padding-right: 10em !important;
-        padding-top: 4rem !important;
+    pre[class*="language-"].fancy-code {
+        display: inline-block;
+        padding-right: 10em;
+        padding-top: 4rem;
         background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fillRule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="%23FF5F56" stroke="%23E0443E" strokeWidth=".5" /><circle cx="26" cy="6" r="6" fill="%23FFBD2E" stroke="%23DEA123" strokeWidth=".5" /><circle cx="46" cy="6" r="6" fill="%2327C93F" stroke="%231AAB29" strokeWidth=".5" /></g></svg>') !important;
-        background-repeat: no-repeat !important;
-        background-position: 16px 16px !important;
-        white-space: pre-line !important;
+        background-repeat: no-repeat;
+        background-position: 16px 16px;
+        white-space: pre !important;
+        /* word-wrap: break-word; */
     }
 
-    .inline-highlight {
-        display: inline !important;
-        padding: 4px 8px 4px 8px !important;
+    code[class*="language-"].fancy-code {
+        white-space: pre;
+        /* word-wrap: break-word; */
+    }
+
+    pre[class*="language-"].inline-highlight {
+        display: inline;
+        padding: 4px 8px 4px 8px;
 
         /* background and radius are congruent with .a-card */
-        background: rgba(29, 38, 47, 0.96) !important;
-        border-radius: 4px !important;
+        background: rgba(29, 38, 47, 0.96);
+        border-radius: 4px;
     }
 
     pre.inline-highlight > code {
