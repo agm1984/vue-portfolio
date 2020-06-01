@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex flex-col w-full h-auto">
         <!-- eslint-disable vue/html-indent-->
         <a-code language="css" highlight-line="7,14, 20-24">
             pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
@@ -200,11 +200,7 @@ export default {
 
     computed: {},
 
-    mounted() {
-        // setTimeout(() => {
-        //     this.sourcecode = 'const sampling = \'sampling\'';
-        // }, 1000);
-    },
+    mounted() {},
 
     methods: {},
 
