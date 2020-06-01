@@ -309,10 +309,11 @@ module.exports = {
         },
         borderRadius: {
             none: '0',
-            sm: '0.6rem',
-            default: '1.5rem',
-            lg: '1.5rem',
+            sm: '0.4rem',
+            default: '0.8rem',
+            lg: '1.6rem',
             full: '9999px',
+            inherit: 'inherit',
         },
         cursor: {
             auto: 'auto',
@@ -416,6 +417,7 @@ module.exports = {
         },
         zIndex: {
             auto: 'auto',
+            '-10': -10,
             0: 0,
             10: 10,
             20: 20,
