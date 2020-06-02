@@ -27,7 +27,7 @@
                     Login
                 </a-button>
 
-                <div class="flex justify-center pt-16">
+                <div class="flex justify-center py-16">
                     <router-link :to="{ name: 'password.request' }">
                         Forgot password?
                     </router-link>
@@ -35,7 +35,7 @@
 
                 <hr>
 
-                <div class="flex items-center justify-around">
+                <div class="flex items-center justify-around pt-32">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
