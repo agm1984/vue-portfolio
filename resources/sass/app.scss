@@ -50,6 +50,7 @@ body {
 }
 #app {
     // height: 100%;
+    @apply flex flex-col w-full min-h-screen;
 }
 
 
@@ -62,19 +63,28 @@ body {
     background-position: center center;
 }
 
+// layout
+hr {
+    @apply bg-grey-800 my-32;
+}
+
 // buefy
 .dropdown-content {
     @apply .a-card;
 }
 
-// typography
+// links
 .nav-link-white {
     @apply text-white font-aroly text-base leading-none tracking-wide p-4 rounded-sm;
     background-color: rgba(7, 13, 13, 0.5);
     transition: all 250ms ease-in-out;
 }
-.nav-link-white:hover { @apply text-primary-200 cursor-pointer; }
-.nav-link-white:active { @apply text-primary-100; }
+.nav-link-white:hover { @apply text-mint cursor-pointer; }
+.nav-link-white:active { @apply text-mint-hover; }
+
+.nav-link-white-active {
+    @apply text-mint;
+}
 
 
 // cards

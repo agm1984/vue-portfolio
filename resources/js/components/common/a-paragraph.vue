@@ -1,5 +1,5 @@
 <template>
-    <p class="p-32 text-grey-500">
+    <p class="p-32 text-bodycopy">
         <!-- paragraph content -->
         <slot></slot>
 

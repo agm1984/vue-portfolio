@@ -1,7 +1,9 @@
 <template>
     <div class="flex justify-center w-full h-auto">
         <a-card class="flex flex-col h-auto w-384">
-            <span class="pb-32 text-2xl text-center text-white font-aroly">Login</span>
+            <span class="pb-32 text-2xl text-center text-white font-aroly">
+                Login
+            </span>
 
             <a-form v-slot="{ handleSubmit }">
                 <a-text-input
@@ -25,7 +27,7 @@
                     Login
                 </a-button>
 
-                <div class="flex justify-center">
+                <div class="flex justify-center pt-16">
                     <router-link :to="{ name: 'password.request' }">
                         Forgot password?
                     </router-link>

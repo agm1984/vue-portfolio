@@ -1,10 +1,8 @@
 <template>
-    <div id="app" class="flex flex-col w-full min-h-screen">
+    <div id="app">
         <loading ref="loading"></loading>
 
-        <transition name="page" mode="out-in">
-            <component :is="layout" v-if="layout"></component>
-        </transition>
+        <component :is="layout" v-if="layout"></component>
 
     </div>
 </template>

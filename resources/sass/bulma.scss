@@ -27,7 +27,7 @@ $radius-rounded: 290486px; // tailwind: rounded-full
 // $white-bis:    hsl(0, 0%, 98%) !default;
 // $white:        hsl(0, 0%, 100%) !default;
 
-// $red:          hsl(348, 100%, 61%) !default;
+$red:          #ff6961 !default;
 // $orange:       hsl(14,  100%, 53%) !default;
 // $yellow:       hsl(48,  100%, 67%) !default;
 // $green:        hsl(141, 71%,  48%) !default;
@@ -36,7 +36,8 @@ $radius-rounded: 290486px; // tailwind: rounded-full
 // $blue:         hsl(217, 71%,  53%) !default;
 // $purple:       hsl(271, 100%, 71%) !default;
 
-$primary: #137F7C;
+$primary: #006666;
+$secondary: #006699;
 
 // // layout
 // $body-min-width: 1024px;
@@ -46,7 +47,7 @@ $primary: #137F7C;
 
 // typography
 $family-sans-serif: 'Roboto', sans-serif;
-$text: #a0aec0; // tailwind: text-grey-500
+$text: #cccccc; // tailwind: text-grey-500
 
 $size-1: 3.2rem;
 $size-2: 2.8rem;

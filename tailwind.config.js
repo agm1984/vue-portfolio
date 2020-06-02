@@ -90,10 +90,17 @@ module.exports = {
             black: '#000000',
             white: '#ffffff',
 
-            primary: {
-                100: '#45A29E',
-                200: '#66FCF1',
-            },
+            primary: '#006666',
+            'primary-hover': '#005959',
+            'primary-active': '#004d4d',
+
+            secondary: '#006699',
+
+            mint: '#47ebb4',
+            'mint-hover': '#0aa370',
+            'mint-active': 'rgba(10, 163, 112, 0.2)',
+
+            bodycopy: '#cccccc',
 
             grey: {
                 100: '#f7fafc',

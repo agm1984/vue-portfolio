@@ -1,5 +1,5 @@
 <template>
-    <div class="Nav" role="navigation">
+    <div class="mb-64 Nav" role="navigation">
         <div class="flex items-center flex-0">
             <router-link :to="{ name: 'home' }" class="flex items-center" title="View home" role="banner">
                 <div class="w-20 h-20 mr-4 adam-logo"></div>
@@ -9,11 +9,11 @@
         </div>
 
         <div class="flex items-center justify-center flex-1">
-            <router-link :to="{ name: 'about' }" class="nav-link-white">About me</router-link>
-            <router-link :to="{ name: 'examples' }" class="ml-16 nav-link-white">Examples</router-link>
-            <router-link :to="{ name: 'contact' }" class="ml-16 nav-link-white">Contact</router-link>
-            <router-link :to="{ name: 'admin' }" class="ml-16 nav-link-white">Admin</router-link>
-            <router-link :to="{ name: 'design' }" class="ml-16 nav-link-white">Design</router-link>
+            <top-nav-link :to="{ name: 'about' }">About me</top-nav-link>
+            <top-nav-link :to="{ name: 'examples' }" class="ml-16">Examples</top-nav-link>
+            <top-nav-link :to="{ name: 'contact' }" class="ml-16">Contact</top-nav-link>
+            <top-nav-link :to="{ name: 'admin' }" class="ml-16">Admin</top-nav-link>
+            <top-nav-link :to="{ name: 'design' }" class="ml-16">Design</top-nav-link>
         </div>
 
         <div class="flex items-center flex-0">
@@ -45,14 +45,16 @@
                     </b-dropdown-item>
                 </b-dropdown>
 
-                <b-dropdown aria-role="menu">
+                <b-dropdown aria-role="menu" position="is-bottom-left">
                     <div slot="trigger" class="w-32 h-32 bg-no-repeat bg-cover rounded-full">
                         <img :src="user.photo_url">
                     </div>
 
                     <b-dropdown-item custom aria-role="menuitem">
-                        Logged as <b>{{ user.name }}</b>
+                        <span class="whitespace-no-wrap min-w-384">Logged in as <strong>{{ user.name }}</strong></span>
                     </b-dropdown-item>
+
+                    <hr class="my-8 bg-teal-400">
 
                     <b-dropdown-item aria-role="listitem" has-link>
                         <router-link :to="{ name: 'profile' }">Profile</router-link>
@@ -65,6 +67,8 @@
                     <b-dropdown-item aria-role="listitem" has-link>
                         <router-link :to="{ name: 'admin' }">Admin</router-link>
                     </b-dropdown-item>
+
+                    <hr class="my-8 bg-teal-400">
 
                     <b-dropdown-item aria-role="listitem" @click="logout">
                         Logout
@@ -90,8 +94,14 @@
 </template>
 
 <script>
+import TopNavLink from './top-nav-link.vue';
+
 export default {
     name: 'top-nav-bar',
+
+    components: {
+        TopNavLink,
+    },
 
     props: {},
 
