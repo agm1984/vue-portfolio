@@ -1,6 +1,6 @@
 <template>
     <div class="mb-64 Nav" role="navigation">
-        <div class="flex items-center flex-0">
+        <div class="flex items-center w-256">
             <router-link :to="{ name: 'home' }" class="flex items-center" title="View home" role="banner">
                 <div class="w-20 h-20 mr-4 adam-logo"></div>
                 <span id="Nav_brand-adam">ADAM</span>
@@ -9,18 +9,29 @@
         </div>
 
         <div class="flex items-center justify-center flex-1">
-            <top-nav-link :to="{ name: 'about' }">About me</top-nav-link>
-            <top-nav-link :to="{ name: 'examples' }" class="ml-16">Examples</top-nav-link>
-            <top-nav-link :to="{ name: 'contact' }" class="ml-16">Contact</top-nav-link>
-            <top-nav-link :to="{ name: 'admin' }" class="ml-16">Admin</top-nav-link>
-            <top-nav-link :to="{ name: 'design' }" class="ml-16">Design</top-nav-link>
+            <top-nav-link :to="{ name: 'about' }">
+                About me
+            </top-nav-link>
+            <top-nav-link :to="{ name: 'examples' }" class="mx-16">
+                Examples
+            </top-nav-link>
+            <top-nav-link :to="{ name: 'contact' }" class="mx-16">
+                Contact
+            </top-nav-link>
+            <top-nav-link :to="{ name: 'admin' }" class="mx-16">
+                Admin
+            </top-nav-link>
+            <top-nav-link :to="{ name: 'design' }">
+                Design
+            </top-nav-link>
         </div>
 
-        <div class="flex items-center flex-0">
+        <div class="flex items-center w-256">
+            <!-- https://stackoverflow.com/questions/22735740/how-to-add-badge-on-top-of-font-awesome-symbol -->
             <template v-if="isAuthenticated">
-                <b-dropdown aria-role="menu" position="is-bottom-left" class="flex justify-end min-w-320">
+                <b-dropdown id="notifications" aria-role="menu" position="is-bottom-left" class="flex justify-end">
                     <div slot="trigger" class="flex items-center justify-center w-32 h-32 text-orange-400 bg-no-repeat bg-cover rounded-full">
-                        BELL
+                        <i class="fas fa-bell"></i>
                     </div>
 
                     <b-dropdown-item
@@ -29,7 +40,7 @@
                         aria-role="menuitem"
                         custom
                     >
-                        <div class="flex w-full">
+                        <div class="flex w-full w-384">
                             <div class="w-32 h-32 bg-no-repeat bg-cover rounded-full">
                                 <img :src="user.photo_url">
                             </div>
@@ -54,7 +65,7 @@
                         <span class="whitespace-no-wrap min-w-384">Logged in as <strong>{{ user.name }}</strong></span>
                     </b-dropdown-item>
 
-                    <hr class="my-8 bg-teal-400">
+                    <hr class="m-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" has-link>
                         <router-link :to="{ name: 'profile' }">Profile</router-link>
@@ -68,7 +79,7 @@
                         <router-link :to="{ name: 'admin' }">Admin</router-link>
                     </b-dropdown-item>
 
-                    <hr class="my-8 bg-teal-400">
+                    <hr class="m-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" @click="logout">
                         Logout
@@ -77,12 +88,12 @@
             </template>
 
             <div v-else class="flex items-center">
-                <router-link :to="{ name: 'register' }" class="nav-link-white">
+                <top-nav-link :to="{ name: 'register' }">
                     Register
-                </router-link>
-                <router-link :to="{ name: 'login' }" class="ml-16 nav-link-white">
+                </top-nav-link>
+                <top-nav-link :to="{ name: 'login' }" class="ml-16">
                     Login
-                </router-link>
+                </top-nav-link>
             </div>
 
         </div>
@@ -138,6 +149,7 @@ export default {
                 throw new Error(`top-nav-bar# Problem logging user out: ${err}.`);
             }
         },
+
     },
 
 };
