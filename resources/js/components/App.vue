@@ -27,13 +27,6 @@ export default {
         Loading,
     },
 
-    data() {
-        return {
-            layout: null,
-            defaultLayout: 'default',
-        };
-    },
-
     metaInfo() {
         return {
             titleTemplate(titleChunk) {
@@ -41,6 +34,15 @@ export default {
             },
         };
     },
+
+    data() {
+        return {
+            layout: null,
+            defaultLayout: 'default',
+        };
+    },
+
+    computed: {},
 
     mounted() {
         this.$loading = this.$refs.loading;
