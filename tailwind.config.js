@@ -34,7 +34,7 @@
 
 const availableSizes = {
     1: '0.1rem',
-    2: '0.3rem', // 1/8 standard-padding/margin
+    2: '0.2rem', // 1/8 standard-padding/margin
     4: '0.4rem', // 1/4 standard-padding/margin
     8: '0.8rem', // 1/2 standard-padding/margin
     10: '1.0rem',
@@ -99,6 +99,10 @@ module.exports = {
             mint: '#47ebb4',
             'mint-hover': '#0aa370',
             'mint-active': 'rgba(10, 163, 112, 0.2)',
+
+            accent: '#ffcc99',
+
+            olive: '#999966',
 
             bodycopy: '#cccccc',
 
@@ -435,7 +439,9 @@ module.exports = {
         opacity: {
             0: '0',
             25: '.25',
+            33: '.333',
             50: '.5',
+            66: '.666',
             75: '.75',
             100: '1',
         },
