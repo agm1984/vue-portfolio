@@ -9,7 +9,7 @@ const Roles = {
  * Checks if a user has the `admin` Role, and otherwise halts the request
  * and displays a permission-denied dialog if the user isn't an `admin`.
  *
- * This middleware expects to be used with the `auth` middleware
+ * This middleware expects to be used after the `auth` middleware
  * @example
  * // a-component.vue
  * <script>

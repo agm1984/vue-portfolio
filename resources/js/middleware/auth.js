@@ -10,17 +10,17 @@ import store from '~/store/index';
  * @param {Function} next
  */
 const auth = async (to, from, next) => {
-    if (!store.getters['auth/check']) {
-        const intendedUrl = to.fullPath;
-
-        if (intendedUrl.length > 1) {
-            store.dispatch('auth/setIntendedUrl', intendedUrl);
-        }
-
-        return next({ name: 'login' });
+    if (store.getters['auth/check']) {
+        return next();
     }
 
-    return next();
+    const intendedUrl = to.fullPath;
+
+    if (intendedUrl.length > 1) {
+        store.dispatch('auth/setIntendedUrl', intendedUrl);
+    }
+
+    return next({ name: 'login' });
 };
 
 export default auth;

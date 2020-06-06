@@ -1,60 +1,26 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import store from '~/store';
 import router from '~/router';
 
 /**
- * Decodes a JSON Web Token.
- *
- * @param {String} token
- * @return {Object}
- */
-const parseJwt = (token) => {
-    try {
-        if (!token) {
-            throw new Error('parseJwt# Token is required.');
-        }
-
-        const base64Payload = token.split('.')[1];
-        let payload = new Uint8Array();
-
-        try {
-            payload = Buffer.from(base64Payload, 'base64');
-        } catch (err) {
-            throw new Error(`parseJwt# Malformed token: ${err}`);
-        }
-
-        return {
-            decodedToken: JSON.parse(payload),
-        };
-    } catch (err) {
-        console.log(`Bonus logging: ${err}`);
-
-        return {
-            error: 'Unable to decode token.',
-        };
-    }
-};
-
-/**
  * Request interceptor: for each request to the server,
- * attach the auth token if it exists.
+ * attach the CSRF token if it exists.
  *
  */
 axios.interceptors.request.use(async (request) => {
     try {
-        const token = store.getters['auth/token'];
+        const csrf = Cookies.get('XSRF-TOKEN');
+        request.withCredentials = true;
 
-        if (token) {
-            request.headers.common.Authorization = `Bearer ${token}`;
+        if (csrf) {
+            request.headers.common['XSRF-TOKEN'] = csrf;
         }
-
-        // https://laravel.com/docs/7.x/broadcasting
-        // request.headers['X-Socket-Id'] = Echo.socketId()
 
         return request;
     } catch (err) {
-        throw new Error(`axios# Problem with request during pre-flight phase: ${err}`);
+        throw new Error(`axios# Problem with request during pre-flight phase: ${err}.`);
     }
 });
 
@@ -90,19 +56,36 @@ axios.interceptors.response.use(response => response, (error) => {
         });
     }
 
-    if ((status === 401) && (data.error === 'token_expired_and_refreshed')) {
-        store.commit('auth/SAVE_TOKEN', { token: data.refresh.token });
-        error.config.headers.Authorization = `Bearer: ${store.getters['auth/token']}`;
+    // if ((status === 401) && (data.error === 'token_expired_and_refreshed')) {
+    //     store.commit('auth/LOGIN');
+    //     error.config.headers.Authorization = `Bearer: ${store.getters['auth/token']}`;
 
-        return axios.request(config); // re-try the request
+    //     return axios.request(config); // re-try the request
+    // }
+
+    // if ((status === 401) && (data.error === 'token_expired')) {
+    //     store.commit('auth/LOGOUT');
+
+    //     if (router.currentRoute.name !== 'login') {
+    //         router.push({ name: 'login' }).catch(() => {});
+    //     }
+    // }
+
+    if ((status === 401) && (data.error === 'UNAUTHENTICATED')) {
+        if (config.url.name === 'logout') {
+            // if the user tries to log out with a stale-expired session, go to login page
+            Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
+        }
+
+        if (config.url.name === 'me') {
+            // if fetching user details fails, do nothing
+            Promise.resolve();
+        }
     }
 
-    if ((status === 401) && (data.error === 'token_expired')) {
-        store.commit('auth/LOGOUT');
-
-        if (router.currentRoute.name !== 'login') {
-            router.push({ name: 'login' }).catch(() => {});
-        }
+    if ((status === 400) && (data.error === 'ALREADY_AUTHENTICATED')) {
+        // if the user somehow logs in again, do nothing
+        Promise.resolve();
     }
 
     return Promise.reject(error);

@@ -9,8 +9,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\ValidationException;
-use JWTAuth;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -23,29 +25,64 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except(['refresh', 'logout']);
+        Auth::viaRemember();
+        $this->middleware('guest')->except(['logout']);
     }
 
     /**
-     * Undocumented function
+     * Authenticates the user via email/password.
      *
-     * @param User $user
-     * @param array|null $extras
+     * Pre-requisites:
+     * - OAuth: https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps-06
+     * - PKCE: https://tools.ietf.org/html/rfc7636
      *
-     * @return array
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    protected function getCustomClaims(User $user, ?array $extras = []) : array
-    {
-        $defaults = [
-            'exp' => Carbon::now()->addMinutes(config('jwt.ttl'))->timestamp,
-            // 'sub' => $user->id,
-            // 'role' => $user->role,
-            // 'csrf' => Str::random(42),
-            // 'iat' => Carbon::now()->timestamp,
-            // 'nbf' => Carbon::now()->timestamp, // not before
-        ];
+    // public function login(LoginRequest $request)
+    // {
+    //     if (Auth::attempt($request->only('email', 'password'))) {
+    //         return response()->json([
+    //             'user' => Auth::user(),
+    //         ], 200);
+    //     }
 
-        return array_merge($defaults, $extras);
+    //     throw ValidationException::withMessages([
+    //         'email' => ['Email or password is incorrect.']
+    //     ]);
+    // }
+
+    // might be useful?
+    // Session::flush()
+
+    // public function logout()
+    // {
+    //     \Log::debug('Logging out...');
+    //     Auth::logout();
+
+    //     $rememberMeCookie = Auth::getRecallerName();
+
+    //     \Log::debug('remember me');
+    //     \Log::debug($rememberMeCookie);
+
+    //     // forget this cookie
+    //     $cookie = Cookie::forget($rememberMeCookie);
+
+    //     \Log::debug('coookie');
+    //     \Log::debug($cookie);
+
+    //     return response()->json([ 'success' => 'You are now logged out.'], 200)->withCookie($cookie);
+    // }
+
+    public function logout(Request $request)
+    {
+        \Log::debug('Logging out...');
+        \Log::debug('user');
+        \Log::debug(Auth::user());
+
+        Auth::logout();
+        return response()->json(['success' => 'LOGGED_OUT'], 200);
     }
 
     /**
@@ -61,24 +98,25 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $user = User::firstWhere('email', $request->input('email'));
-        $customClaims = [];
-        $token = JWTAuth::claims($customClaims)->attempt($this->credentials($request));
+        // TODO: make this field required so the client always supplies true or false
+        // $remember = $request->input('remember');
+        $remember = true;
 
-        \Log::debug('Login...');
-        \Log::debug($token);
+        \Log::debug('testttt ' . Auth::validate($request->only('email', 'password')));
 
-        if (!$token) {
-            return false;
+        if (Auth::attempt($request->only('email', 'password'), $remember)) {
+            $user = User::firstWhere('email', $request->input('email'));
+
+            if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+                return false;
+            }
+
+            \Log::debug('isAuthenticated? '.Auth::check());
+
+            return true;
         }
 
-        if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
-            return false;
-        }
-
-        $this->guard()->setToken($token);
-
-        return true;
+        return false;
     }
 
     /**
@@ -91,13 +129,11 @@ class LoginController extends Controller
     {
         $this->clearLoginAttempts($request);
 
-        $user = $this->guard()->user();
-        $token = (string)$this->guard()->getToken();
+        \Log::debug('Auth::check()'.Auth::check());
 
         return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ]);
+            'user' => Auth::user(),
+        ], 200);
     }
 
     /**
@@ -110,45 +146,16 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        $user = $this->guard()->user();
+        \Log::debug('running login failed crap');
+        $user = Auth::user();
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
             throw VerifyEmailException::forUser($user);
         }
 
+        \Log::debug('finna throw errors');
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            'email' => ['Email or password is incorrect.']
         ]);
     }
 
-    protected function refresh(Request $request)
-    {
-        \Log::debug('Refreshing...');
-        $refreshedToken = JWTAuth::refresh(JWTAuth::getToken());
-
-        return response()->json([
-            'token' => $refreshedToken,
-        ], 200);
-    }
-
-    /**
-     * If the user's session is expired, the auth token is already invalidated,
-     * so we just return success to the client.
-     *
-     * This solves the edge case where the user clicks the Logout button as their first
-     * interaction in a stale session, and allows a clean redirect to the login page.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Request $request)
-    {
-        $user = $this->guard()->user();
-
-        if ($user) {
-            $this->guard()->logout();
-            $this->guard()->invalidate();
-        }
-
-        return response()->json(['success' => 'Logged out.'], 200);
-    }
 }

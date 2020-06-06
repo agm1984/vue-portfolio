@@ -7,7 +7,7 @@
 
             <a-form v-slot="{ handleSubmit }">
                 <a-text-input
-                    v-model="user.email"
+                    v-model="credentials.email"
                     vid="email"
                     rules="required|email|max:255"
                     placeholder="Email"
@@ -15,7 +15,7 @@
                 ></a-text-input>
 
                 <a-text-input
-                    v-model="user.password"
+                    v-model="credentials.password"
                     vid="password"
                     rules="required|min:8"
                     placeholder="Password"
@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import Form from 'vform';
 import LoginWithOauth from '~/components/login-with-oauth.vue';
 
 const INITIAL = 'INITIAL';
@@ -67,14 +66,10 @@ export default {
     data() {
         return {
             state: INITIAL,
-            user: {
+            credentials: {
                 email: '',
                 password: '',
             },
-            form: new Form({
-                email: '',
-                password: '',
-            }),
         };
     },
 
@@ -109,7 +104,7 @@ export default {
             try {
                 this.state = AUTHENTICATING;
 
-                await this.$store.dispatch('auth/login', this.user);
+                await this.$store.dispatch('auth/login', this.credentials);
 
                 if (this.hasIntendedUrl) {
                     return this.$router.push(this.$store.getters['auth/intendedUrl'])

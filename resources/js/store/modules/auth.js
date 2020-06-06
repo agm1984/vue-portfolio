@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 /**
  * Users can login via email/password handled by `LoginController.php`,
@@ -14,7 +13,7 @@ const IS_LOGGED_IN = 'IS_LOGGED_IN';
 const IS_LOGGED_OUT = 'IS_LOGGED_OUT';
 
 // types
-export const SAVE_TOKEN = 'SAVE_TOKEN';
+export const LOGIN = 'LOGIN';
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILED = 'FETCH_USER_FAILED';
@@ -33,10 +32,6 @@ export const getters = {
         return state.user;
     },
 
-    token(state) {
-        return state.token;
-    },
-
     intendedUrl(state) {
         if (state.intendedUrl.length === 1) return ''; // ignore redirect to '/' to keep URL pretty
         return state.intendedUrl;
@@ -45,11 +40,8 @@ export const getters = {
 
 // mutations
 export const mutations = {
-    [SAVE_TOKEN]: (state, { token }) => {
-        const ttlPlusRefreshPeriod = new Date(new Date().getTime() + (+window.config.jwt.ttl + +window.config.jwt.refresh_ttl) * 60 * 1000);
-        state.token = token;
-        console.log('expires_in', +window.config.jwt.ttl, ttlPlusRefreshPeriod);
-        return Cookies.set('token', token, { expires: ttlPlusRefreshPeriod });
+    [LOGIN]: (state) => {
+        state.state = IS_LOGGED_IN;
     },
 
     [FETCH_USER_SUCCESS]: (state, { user }) => {
@@ -58,10 +50,8 @@ export const mutations = {
     },
 
     [FETCH_USER_FAILED]: (state) => {
-        state.user = {};
-        state.token = '';
-        Cookies.remove('token');
         state.state = IS_LOGGED_OUT;
+        state.user = {};
     },
 
     [UPDATE_USER]: (state, { user }) => {
@@ -70,10 +60,8 @@ export const mutations = {
     },
 
     [LOGOUT]: (state) => {
-        state.user = {};
-        state.token = '';
-        Cookies.remove('token');
         state.state = IS_LOGGED_OUT;
+        state.user = {};
     },
 
     [SET_INTENDED_URL]: (state, intendedUrl) => {
@@ -93,7 +81,7 @@ export const actions = {
 
             commit(FETCH_USER_SUCCESS, { user: data.user });
 
-            return commit(SAVE_TOKEN, { token: data.token });
+            return commit(LOGIN);
         } catch (err) {
             commit(LOGOUT);
             throw new Error(`auth/register# Problem registering new user: ${err}.`);
@@ -101,7 +89,7 @@ export const actions = {
     },
 
     saveToken({ commit }, payload) {
-        return commit(SAVE_TOKEN, payload);
+        return commit(LOGIN, payload);
     },
 
     async fetchUser({ commit }) {
@@ -118,12 +106,12 @@ export const actions = {
         return commit(UPDATE_USER, payload);
     },
 
-    async login({ commit }, payload) {
+    async login({ commit }, credentials) {
         try {
-            const { data } = await axios.post(route('login'), payload);
+            const { data } = await axios.post(route('login'), credentials);
 
             commit(FETCH_USER_SUCCESS, { user: data.user });
-            commit(SAVE_TOKEN, { token: data.token });
+            commit(LOGIN);
 
             return commit(CLEAR_INTENDED_URL);
         } catch (err) {
@@ -168,6 +156,5 @@ export const actions = {
 export const state = {
     state: IS_LOGGED_OUT,
     user: {},
-    token: Cookies.get('token') || '',
     intendedUrl: '',
 };

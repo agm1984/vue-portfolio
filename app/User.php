@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
+class User extends Authenticatable //, MustVerifyEmail
 {
     use HasRoles, Notifiable;
 
@@ -38,7 +37,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      *
      * @var string
      */
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
 
     /**
      * Create a new user.
@@ -133,23 +132,4 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         $this->notify(new VerifyEmail);
     }
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return int
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 }

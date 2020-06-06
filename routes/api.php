@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'guest'], function () {
+Route::group(['middleware' => ['guest', 'throttle:2,1']], function () {
     Route::post('register', 'Auth\RegisterController@register')->name('register');
     Route::post('login', 'Auth\LoginController@login')->name('login');
 
@@ -28,7 +28,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
     Route::get('user', 'Auth\UserController@me')->name('me');
@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
     Route::get('/categories/{category}', 'Admin\CategoryController@show')->name('admin.categories.show');
 

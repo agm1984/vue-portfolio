@@ -12,25 +12,25 @@ class AuthTest extends TestCase
     use DatabaseTransactions;
 
     /** @test */
-    public function it_can_do_something()
-    {
-        $token = $this->getTokenForUser($this->user());
+    // public function it_can_do_something()
+    // {
+    //     $token = $this->getTokenForUser($this->user());
 
-        $token = JWTAuth::fromUser($this->user());
-        $payload = JWTAuth::setToken($token)->getPayload();
+    //     $token = JWTAuth::fromUser($this->user());
+    //     $payload = JWTAuth::setToken($token)->getPayload();
 
-        \Log::debug(auth()->user());
+    //     \Log::debug(auth()->user());
 
-        JWTAuth::invalidate();
+    //     JWTAuth::invalidate();
 
-        \Log::debug(json_encode(JWTAuth::manager()->getBlacklist()));
+    //     \Log::debug(json_encode(JWTAuth::manager()->getBlacklist()));
 
-        $this->assertTrue(JWTAuth::manager()->getBlacklist()->has($payload));
+    //     $this->assertTrue(JWTAuth::manager()->getBlacklist()->has($payload));
 
-        $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
-            ->assertStatus(401)
-            ->assertJsonStructure(['error']);
-    }
+    //     $this->postJson(route('logout'), [], ['Authorization' => "Bearer $token"])
+    //         ->assertStatus(401)
+    //         ->assertJsonStructure(['error']);
+    // }
 
     // it_can_refresh_token_during_JWT_REFRESH_TTL
 
