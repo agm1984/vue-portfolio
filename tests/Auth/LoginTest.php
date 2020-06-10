@@ -10,8 +10,10 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Auth;
 
 /**
- * When making multiple requests in one test, the state of the Laravel API is not reset between the requests.
- * The Auth manager is a singleton in the laravel container, and it keeps a local cache of the resolved auth guards.
+ * When making multiple requests in one test, the state of the Laravel API would not reset between the requests.
+ * The AuthManager is a singleton in the laravel container, and it keeps a local cache of the resolved auth guards.
+ * `$this->resetAuth()` is used to reset any session-remnants between unit tests.
+ * Theory: https://stackoverflow.com/a/57941133/6141025
  */
 
 class LoginTest extends TestCase
