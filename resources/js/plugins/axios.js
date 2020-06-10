@@ -12,6 +12,7 @@ import router from '~/router';
 axios.interceptors.request.use(async (request) => {
     try {
         const csrf = Cookies.get('XSRF-TOKEN');
+
         request.withCredentials = true;
 
         if (csrf) {
@@ -56,6 +57,22 @@ axios.interceptors.response.use(response => response, (error) => {
         });
     }
 
+    if (status === 419) {
+        if (config.url.name === 'logout') {
+            console.log('running this 1');
+            // if the user tries to log out with a stale-expired session, go to login page
+            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
+        }
+
+        // @TODO: needs more testing
+        Swal.fire({
+            icon: 'error',
+            title: 'Page expired',
+            text: 'Refresh the page and try again.',
+            confirmButtonText: 'Ok',
+        });
+    }
+
     // if ((status === 401) && (data.error === 'token_expired_and_refreshed')) {
     //     store.commit('auth/LOGIN');
     //     error.config.headers.Authorization = `Bearer: ${store.getters['auth/token']}`;
@@ -71,19 +88,27 @@ axios.interceptors.response.use(response => response, (error) => {
     //     }
     // }
 
-    if ((status === 401) && (data.error === 'UNAUTHENTICATED')) {
+    if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
         if (config.url.name === 'logout') {
+            console.log('running this 2');
             // if the user tries to log out with a stale-expired session, go to login page
-            Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
+            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
         }
 
         if (config.url.name === 'me') {
             // if fetching user details fails, do nothing
-            Promise.resolve();
+            return Promise.resolve();
+        }
+
+        console.log('definitely ran this:::');
+        store.commit('auth/LOGOUT');
+
+        if (router.currentRoute.name !== 'login') {
+            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
         }
     }
 
-    if ((status === 400) && (data.error === 'ALREADY_AUTHENTICATED')) {
+    if ((status === 400) && (data.message === 'Already authenticated.')) {
         // if the user somehow logs in again, do nothing
         Promise.resolve();
     }
