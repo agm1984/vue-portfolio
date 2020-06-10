@@ -1,10 +1,10 @@
 <template>
     <div ref="p5" :id="id" class="absolute inset-0 -z-10 rounded-inherit">
         <vue-p5
-            :class="['absolute inset-0', { 'opacity-50': isWallpaper }]"
+            :class="['p5wrapper absolute inset-0', { 'opacity-50': isWallpaper }]"
             @preload="preload"
             @setup="setup"
-            @windowresized="windowResized"
+            @windowresized=""
         ></vue-p5>
 
     </div>
@@ -55,6 +55,10 @@ export default {
     data() {
         return {
             state: IS_INITIAL,
+
+            offsetWidth: 0,
+            offsetHeight: 0,
+            containerDimensionAnalyzer: undefined,
 
             sketch: {},
             baseSize: undefined,
@@ -122,12 +126,9 @@ export default {
     },
 
     watch: {
-        /**
-         * To ensure the DOM has been fully updated, we must wait until the next tick,
-         * and then execute a double-requestAnimationFrame; otherwise, the <#app> element
-         * may still have the previous height.
-         */
-        $route() {
+        $route(to, from) {
+            // retain the wallpaper if the route-base is the same
+            if (from.name === to.name) return undefined;
             return this.reset();
         },
 
@@ -143,16 +144,54 @@ export default {
             return this.setState(this.sketch);
         },
 
+        offsetWidth() {
+            return this.restretchCanvas();
+        },
+
+        offsetHeight() {
+            return this.restretchCanvas();
+        },
+
     },
 
-    mounted() {},
+    mounted() {
+        this.containerDimensionAnalyzer = setInterval(this.checkForDimensionChanges, 100);
+    },
+
+    beforeDestroy() {
+        clearInterval(this.containerDimensionAnalyzer);
+    },
 
     methods: {
+        /**
+         * P5.js acts upon DOM nodes outside Vue's control, and Vue lacks an event hook for when
+         * the DOM is done loading, so we must actively sample the geometry container's dimensions
+         * during the pageload to ensure the background is stretched and centered.
+         *
+         * The issue stems from P5 limitations, and unpredictable-child-dimensions inside `a-card.vue`.
+         */
+        restretchCanvas() {
+            if ([HAS_SETTINGS, IS_DRAWN].includes(this.state)) {
+                this.draw(this.sketch);
+            }
+        },
+
+        checkForDimensionChanges() {
+            return requestAnimationFrame(() => requestAnimationFrame(() => {
+                const node = document.getElementById(this.id);
+                if (!node) return;
+
+                const { offsetWidth, offsetHeight } = node;
+                this.offsetWidth = offsetWidth;
+                this.offsetHeight = offsetHeight;
+            }));
+        },
+
         windowResized(sketch) {
-            const { offsetWidth, offsetHeight } = document.getElementById(this.id);
-            sketch.resizeCanvas(offsetWidth, offsetHeight - 4, false);
-            this.baseSize = offsetWidth > offsetHeight ? offsetHeight : offsetWidth;
-            return this.draw(this.sketch);
+            // const { offsetWidth, offsetHeight } = document.getElementById(this.id);
+            // sketch.resizeCanvas(offsetWidth, offsetHeight - 4, false);
+            // this.baseSize = offsetWidth > offsetHeight ? offsetHeight : offsetWidth;
+            // return this.draw(this.sketch);
         },
 
         preload(sketch) {
@@ -395,7 +434,7 @@ export default {
 </script>
 
 <style>
-    canvas#defaultCanvas0 {
+    canvas[id^="defaultCanvas"] {
         position: absolute;
         top: 0;
         left: 0;
