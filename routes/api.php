@@ -14,27 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['guest', 'throttle:2,1']], function () {
-    Route::post('register', 'Auth\RegisterController@register')->name('register');
-    Route::post('login', 'Auth\LoginController@login')->name('login');
-
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-    Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
-    Route::post('email/resend', 'Auth\VerificationController@resend');
-
-    Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider')->name('oauth.redirect');
-    Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
-});
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
     Route::get('user', 'Auth\UserController@me')->name('me');
-    Route::post('refresh', 'Auth\LoginController@refresh')->name('refresh');
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 });
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');

@@ -26,24 +26,30 @@ class Authenticate extends Middleware
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    // public function handle($request, Closure $next)
+    // {
+    //     // \Log::debug($request->header);
+    //     // \Log::debug($request->session()->all());
+
+    //     // if (Auth::check()) {
+    //     //     \Log::debug('Authenticate@ is logged in...');
+    //     //     if (Auth::viaRemember()) {
+    //     //         \Log::debug('IS VIA REMEMBER');
+    //     //     }
+    //     //     return $next($request);
+    //     // }
+
+    //     \Log::debug('Authenticate@ isnt logged in...');
+    //     return response()->json([
+    //         'error' => 'UNAUTHENTICATED',
+    //     ], 401);
+    // }
+
+    protected function redirectTo($request)
     {
-        // \Log::debug($request->header);
-        // \Log::debug($request->session()->all());
-
-        if (Auth::check()) {
-            \Log::debug('Authenticate@ is logged in...');
-            if (Auth::viaRemember()) {
-                \Log::debug('IS VIA REMEMBER');
-            }
-            return $next($request);
+        if (! $request->expectsJson()) {
+            return route('login');
         }
-
-        \Log::debug('Authenticate@ isnt logged in...');
-        return response()->json([
-            'error' => 'UNAUTHENTICATED',
-        ], 401);
-
     }
 
 }

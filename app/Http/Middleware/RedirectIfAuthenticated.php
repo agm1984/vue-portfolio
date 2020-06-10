@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class RedirectIfAuthenticated
 {
     /**
-     * Checks if a guest is authenticated, and halts the request if so.
+     * Checks if a guest is authenticated and if so, alerts the Vue client.
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
@@ -18,7 +18,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return response()->json(['error' => 'ALREADY_AUTHENTICATED'], 400);
+            return response()->json(['message' => 'Already authenticated.'], 400);
         }
 
         return $next($request);

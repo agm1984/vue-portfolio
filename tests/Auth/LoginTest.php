@@ -2,11 +2,17 @@
 
 namespace Tests\Auth;
 
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 // use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Auth;
+
+/**
+ * When making multiple requests in one test, the state of the Laravel API is not reset between the requests.
+ * The Auth manager is a singleton in the laravel container, and it keeps a local cache of the resolved auth guards.
+ */
 
 class LoginTest extends TestCase
 {
@@ -15,35 +21,7 @@ class LoginTest extends TestCase
     protected $auth_guard = 'web';
 
     /** @test */
-    public function it_should_login_as_admin()
-    {
-        $user = $this->adminUser();
-
-        $this->postJson(route('login'), ['email' => $user->email, 'password' => TestCase::AUTH_PASSWORD])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-                'user' => [
-                    'id' ,
-                    'status',
-                    'name',
-                    'email',
-                    'email_verified_at',
-                    'created_at',
-                    'updated_at',
-                    'photo_url',
-                    'roles_list',
-                    'roles',
-                ],
-            ]);
-
-        $this->assertEquals(Auth::check(), true);
-        $this->assertEquals(Auth::user()->email, $user->email);
-        $this->assertAuthenticated($this->auth_guard);
-        $this->assertAuthenticatedAs($user, $this->auth_guard);
-    }
-
-    /** @test */
-    public function it_should_login_as_user()
+    public function it_can_login()
     {
         $user = $this->user();
 
@@ -68,6 +46,20 @@ class LoginTest extends TestCase
         $this->assertEquals(Auth::user()->email, $user->email);
         $this->assertAuthenticated($this->auth_guard);
         $this->assertAuthenticatedAs($user, $this->auth_guard);
+
+        $this->resetAuth();
+    }
+
+    /** @test */
+    public function it_can_logout()
+    {
+        $this->actingAs($this->user())
+            ->postJson(route('logout'))
+            ->assertStatus(204);
+
+        $this->assertGuest($this->auth_guard);
+
+        $this->resetAuth();
     }
 
     /** @test */
@@ -78,6 +70,8 @@ class LoginTest extends TestCase
             ->assertJsonStructure(['message', 'errors' => ['email']]);
 
         $this->assertGuest($this->auth_guard);
+
+        $this->resetAuth();
     }
 
     /** @test */
@@ -88,6 +82,8 @@ class LoginTest extends TestCase
             ->assertJsonStructure(['message', 'errors' => ['password']]);
 
         $this->assertGuest($this->auth_guard);
+
+        $this->resetAuth();
     }
 
     /** @test */
@@ -98,54 +94,36 @@ class LoginTest extends TestCase
             ->assertJsonStructure(['message', 'errors' => ['email', 'password']]);
 
         $this->assertGuest($this->auth_guard);
-    }
 
-    /** @test */
-    public function it_should_logout_as_admin()
-    {
-        $this->actingAs($this->adminUser())->postJson(route('logout'))
-            ->assertStatus(200)
-            ->assertJson(['success' => 'LOGGED_OUT']);
-
-        $this->assertGuest($this->auth_guard);
-    }
-
-    /** @test */
-    public function it_should_logout_as_user()
-    {
-        $this->actingAs($this->user())->postJson(route('logout'))
-            ->assertStatus(200)
-            ->assertJson(['success' => 'LOGGED_OUT']);
-
-        $this->assertGuest($this->auth_guard);
+        $this->resetAuth();
     }
 
     /** @test */
     public function it_should_throw_error_401_as_guest_on_protected_routes()
     {
-        $this->getJson(route('me'))
-            ->assertStatus(401)
-            ->assertJson(['error' => 'UNAUTHENTICATED']);
-    }
+        $this->assertGuest($this->auth_guard);
 
-    /** @test */
-    public function it_should_throw_error_400_as_admin_on_protected_routes()
-    {
         $this->getJson(route('me'))
             ->assertStatus(401)
-            ->assertJson(['error' => 'UNAUTHENTICATED']);
+            ->assertJson(['message' => 'Unauthenticated.']);
     }
 
     /** @test */
     public function it_should_throw_error_429_when_login_attempt_is_throttled()
     {
-        $user = $this->user();
-        $this->postJson(route('login'), ['email' => $user->email, 'password' => TestCase::AUTH_PASSWORD . '1']);
+        $this->resetAuth();
 
-        \Log::debug('made it to the end');
-        $this->postJson(route('login'), ['email' => $user->email, 'password' => TestCase::AUTH_PASSWORD . '2'])
+        $throttledUser = factory(User::class, 1)->create()->first();
+
+        foreach (range(0, 9) as $attempt) {
+            $this->postJson(route('login'), ['email' => $throttledUser->email, 'password' => "{TestCase::AUTH_PASSWORD}_{$attempt}"]);
+        }
+
+        $this->postJson(route('login'), ['email' => $throttledUser->email, 'password' => TestCase::AUTH_PASSWORD . '6'])
             ->assertStatus(429)
-            ->assertJson(['error' => 'UNAUTHENTICATED']);
+            ->assertJson(['message' => 'Too Many Attempts.']);
+
+        $this->resetAuth();
     }
 
 }
