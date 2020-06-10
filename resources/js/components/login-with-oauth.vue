@@ -68,6 +68,7 @@ export default {
         /**
          * Upon successful authentication, `onMessage` will be called by `./resources/views/oauth/callback.blade.php`,
          * so any extra parameters can be added there.
+         * Note for PKCE: https://dev.to/stefant123/pkce-authenticaton-for-nuxt-spa-with-laravel-as-backend-170n
          *
          * @param {MessageEvent} e
          * @return {Void}
@@ -77,7 +78,7 @@ export default {
                 return undefined;
             }
 
-            this.$store.dispatch('auth/saveToken', { token: e.data.token });
+            this.$store.dispatch('auth/startSession');
 
             if (this.hasIntendedUrl) {
                 return this.$router.push(this.$store.getters['auth/intendedUrl'])

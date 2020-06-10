@@ -70,3 +70,4 @@ For config, see `./phpcs.xml` and `./eslintrc.json`.
 - Flipping animations: https://github.com/davidkpiano/flipping
 - Splatter animation: https://codepen.io/tmrDevelops/pen/jEbbOa
 - Blog article reading-percent meter: https://github.com/webnoobcodes/webnoob.dev
+- Impersonate user: https://mauricius.dev/easily-impersonate-any-user-in-a-laravel-application/
