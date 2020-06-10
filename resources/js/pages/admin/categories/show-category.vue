@@ -48,6 +48,8 @@ export default {
         EditCategory,
     },
 
+    middleware: ['auth', 'role-admin'],
+
     data() {
         return {
             state: EDITING,
