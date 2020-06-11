@@ -5,7 +5,7 @@
                 <div id="contact_left">
                     <a-sacred-geometry
                         circleColor="#FF5043"
-                        dotColor="#45A29E"
+                        dotColor="#339999"
                         lineColor="#C5C6C7"
                         :extraStyles="{
                             position: 'absolute',

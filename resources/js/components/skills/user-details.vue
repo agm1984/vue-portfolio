@@ -157,7 +157,7 @@ export default {
   letter-spacing: 0.2em;
   color: #fff;
   background-color: #000;
-  border: 0.2rem solid #45A29E;
+  border: 0.2rem solid #339999;
   border-radius: 50%; }
 
 #nav_left_user_rightSide {
@@ -193,7 +193,7 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-  background-color: #45A29E;
+  background-color: #339999;
   border-top: 0.4rem solid #000;
   box-shadow: -2px 4px 10px 0px rgba(0, 0, 0, 0.5); }
 

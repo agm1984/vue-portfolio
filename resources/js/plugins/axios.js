@@ -59,7 +59,7 @@ axios.interceptors.response.use(response => response, (error) => {
 
     if (status === 419) {
         if (config.url.name === 'logout') {
-            console.log('running this 1');
+            console.log('axios## running this 1');
             // if the user tries to log out with a stale-expired session, go to login page
             return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
         }

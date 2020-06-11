@@ -130,7 +130,7 @@ export default {
     #Nav_social svg:active #twitter-icon,
     #Nav_social svg:active #medium-icon,
     #Nav_social svg:active #github-icon {
-    fill: #45A29E;
+    fill: #339999;
     width: 50px;
     height: 100px;
 }

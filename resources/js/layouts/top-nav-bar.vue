@@ -194,7 +194,7 @@ export default {
     color: #66FCF1; }
 
     .Nav_brand-logo:active {
-    color: #45A29E;
+    color: #339999;
     font-size: 2.0rem; }
 
     #Nav_brand-adam {
@@ -211,7 +211,7 @@ export default {
     font-size: 2.0rem;
     line-height: 2.0rem;
     letter-spacing: 0.001em;
-    color: #45A29E; }
+    color: #339999; }
 
     #Nav_pages {
     flex: 1;
@@ -244,7 +244,7 @@ export default {
     color: #66FCF1; }
 
     .Nav_link:active {
-    color: #45A29E;
+    color: #339999;
     font-size: 2.0rem; }
 
     .activeRoute {
@@ -272,7 +272,7 @@ export default {
     color: #FF5043; }
 
     .Nav_link-isContact:active {
-    color: #45A29E;
+    color: #339999;
     font-size: 2.0rem; }
 
     .isScrolling .activeRoute {

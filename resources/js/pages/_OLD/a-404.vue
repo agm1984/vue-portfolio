@@ -95,7 +95,7 @@ export default {
 }
 
 #notfound_button:active {
-    background-color: #45A29E;
-    border: 0.1rem solid #45A29E;
+    background-color: #339999;
+    border: 0.1rem solid #339999;
 }
 </style>

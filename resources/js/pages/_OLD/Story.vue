@@ -643,7 +643,7 @@ export default {
     line-height: 2.8rem;
     font-weight: 200;
     letter-spacing: 0.1em;
-    color: #45A29E;
+    color: #339999;
     margin: 0;
     padding: 0;
 }

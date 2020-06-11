@@ -79,7 +79,7 @@ export default {
 
 .statBar_points {
   height: 2.4rem;
-  background-color: #45A29E; }
+  background-color: #339999; }
 
 .statBar_points-divider {
   position: absolute;
