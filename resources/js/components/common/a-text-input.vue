@@ -62,90 +62,108 @@ export default {
             required: false,
             default: () => '',
         },
+
         vid: {
             type: String,
             required: false,
             default: () => undefined,
         },
+
         rules: {
             type: [Object, String, Date],
             default: () => '',
         },
+
         name: {
             type: String,
             required: false,
             default: () => '',
         },
+
         label: {
             type: String,
             required: false,
             default: () => '',
         },
+
         type: {
             type: String,
             required: false,
             default: () => 'text',
         },
+
         size: {
             type: String,
             required: false,
             default: () => InputSize.DEFAULT,
         },
+
         expanded: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         required: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         disabled: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         passwordReveal: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         loading: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         rounded: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         iconPack: {
             type: String,
             required: false,
             default: () => 'fas',
         },
+
         icon: {
             type: String,
             required: false,
             default: () => undefined,
         },
+
         placeholder: {
             type: String,
             required: false,
             default: () => '',
         },
+
         maxlength: {
             type: [Number, String],
             required: false,
             default: () => undefined,
         },
+
         hasCounter: {
             type: Boolean,
             required: false,
             default: () => false,
         },
+
         customClass: {
             type: String,
             required: false,
