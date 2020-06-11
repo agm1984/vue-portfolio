@@ -93,6 +93,7 @@ module.exports = {
             primary: '#006666',
             'primary-hover': '#005959',
             'primary-active': '#004d4d',
+            'primary-text': '#45A29E',
 
             secondary: '#006699',
 
