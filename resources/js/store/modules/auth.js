@@ -108,7 +108,10 @@ export const actions = {
 
     async login({ commit }, credentials) {
         try {
-            const { data } = await axios.post(route('login'), credentials);
+            const { data } = await axios.post(route('login'), {
+                ...credentials,
+                remember: credentials.remember || undefined,
+            });
 
             commit(FETCH_USER_SUCCESS, { user: data.user });
             commit(LOGIN);

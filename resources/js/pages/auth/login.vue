@@ -27,7 +27,13 @@
                     Login
                 </a-button>
 
-                <div class="flex justify-center py-16">
+                <div class="flex items-center justify-center py-16">
+                    <a-checkbox
+                        v-model="credentials.remember"
+                    >
+                        Remember me
+                    </a-checkbox>
+
                     <router-link :to="{ name: 'password.request' }">
                         Forgot password?
                     </router-link>
@@ -39,11 +45,9 @@
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
-
             </a-form>
 
         </a-card>
-
     </div>
 </template>
 
@@ -70,6 +74,7 @@ export default {
             credentials: {
                 email: '',
                 password: '',
+                remember: true,
             },
         };
     },
