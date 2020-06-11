@@ -3,10 +3,11 @@
 namespace Tests\Auth;
 
 use App\User;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 // use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Auth;
 
 /**
@@ -60,6 +61,41 @@ class LoginTest extends TestCase
             ->assertStatus(204);
 
         $this->assertGuest($this->auth_guard);
+
+        $this->resetAuth();
+    }
+
+    /** @test */
+    public function it_should_get_two_cookies_without_remember_me()
+    {
+        $user = $this->user();
+
+        $response = $this->postJson(route('login'), [
+            'email' => $user->email,
+            'password' => TestCase::AUTH_PASSWORD,
+        ]);
+
+        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_').'_session');
+        $response->assertCookieNotExpired('XSRF-TOKEN');
+        $this->assertEquals(config('session.http_only'), true);
+
+        $this->resetAuth();
+    }
+
+    /** @test */
+    public function it_should_get_three_cookies_with_remember_me()
+    {
+        $user = $this->user();
+
+        $response = $this->postJson(route('login'), [
+            'email' => $user->email,
+            'password' => TestCase::AUTH_PASSWORD,
+            'remember' => true,
+        ]);
+
+        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_').'_session');
+        $response->assertCookieNotExpired('XSRF-TOKEN');
+        $response->assertCookieNotExpired(Auth::getRecallerName());
 
         $this->resetAuth();
     }
