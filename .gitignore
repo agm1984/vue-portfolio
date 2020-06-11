@@ -18,3 +18,5 @@ public/css/*
 public/js/*
 public/dist/*
 public/mix-manifest.json
+
+.LOCAL-NOTES.md
