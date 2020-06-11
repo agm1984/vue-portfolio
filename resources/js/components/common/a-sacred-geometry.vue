@@ -1,7 +1,12 @@
 <template>
-    <div ref="p5" :id="id" class="absolute inset-0 -z-10 rounded-inherit">
+    <div ref="p5" :id="id" class="absolute inset-0 -z-10">
         <vue-p5
-            :class="['p5wrapper absolute inset-0', { 'opacity-50': isWallpaper }]"
+            :class="['p5wrapper absolute inset-0', {
+                'opacity-50': isWallpaper,
+                'rounded-lg': !isWallpaper,
+                'overflow-hidden': !isWallpaper,
+            }]"
+            style=""
             @preload="preload"
             @setup="setup"
             @windowresized=""
@@ -21,9 +26,6 @@ const HAS_SETTINGS = 'HAS_SETTINGS';
 const IS_DRAWN = 'IS_DRAWN';
 const IS_RESET = 'IS_RESET';
 
-/**
- * A note about future usage:
- */
 export default {
     name: 'a-sacred-geometry',
 
