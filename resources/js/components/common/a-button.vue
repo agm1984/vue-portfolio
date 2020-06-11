@@ -2,19 +2,20 @@
     <div>
         <b-button
             ref="button"
+            :tag="tag"
+            :href="href"
             :type="type"
             :size="size"
             :disabled="disabled"
             :expanded="expanded"
             :loading="loading"
             :rounded="rounded"
+            :inverted="inverted"
             :outlined="outlined"
             :icon-pack="iconPack"
             :icon-left="iconLeft"
             :icon-right="iconRight"
             :native-type="nativeType"
-            :tag="tag"
-            :href="href"
             @click="handleButtonClick"
         >
             <slot></slot>
@@ -59,6 +60,12 @@ export default {
         },
 
         rounded: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+
+        inverted: {
             type: Boolean,
             required: false,
             default: () => false,
