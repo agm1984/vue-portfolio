@@ -63,6 +63,11 @@ body {
     background-position: center center;
 }
 
+// buttons
+button {
+    font-weight: bold;
+}
+
 // layout
 hr {
     @apply bg-accent m-0 opacity-50;
