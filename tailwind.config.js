@@ -96,6 +96,8 @@ module.exports = {
             'primary-text': '#339999',
 
             secondary: '#006699',
+            'secondary-hover': '#005580',
+            'secondary-active': '#004466',
 
             mint: '#47ebb4',
             'mint-hover': '#0aa370',
@@ -110,7 +112,11 @@ module.exports = {
             bodycopy: '#cccccc',
 
             github: '#474e52',
+            'github-hover': '#3b3f44',
+            'github-active': '#2f3237',
             twitter: '#006699',
+            'twitter-hover': '#005580',
+            'twitter-active': '#004466',
 
             grey: {
                 100: '#f7fafc',

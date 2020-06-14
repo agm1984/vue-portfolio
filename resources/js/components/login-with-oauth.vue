@@ -1,12 +1,13 @@
 <template>
     <button
         v-if="hasClientId"
-        class="btn btn-dark"
+        :class="buttonStyles"
         type="button"
         @click="login"
     >
         <i :class="iconStyles"></i>
-        {{ actionLabel }} {{ providerName }}
+
+        {{ buttonLabel }}
     </button>
 </template>
 
@@ -37,17 +38,25 @@ export default {
             return route('oauth.redirect', this.provider);
         },
 
-        iconStyles() {
-            return `fab fa-${this.provider}`;
+        buttonStyles() {
+            const styles = ['h-40'];
+
+            styles.push(`bg-${this.provider} hover:bg-${this.provider}-hover active:bg-${this.provider}-active`);
+
+            return styles;
         },
 
-        actionLabel() {
-            if (this.$route.name === 'register') return 'Register using';
-            return 'Login with';
+        iconStyles() {
+            return `fab fa-${this.provider} mr-4`;
         },
 
         providerName() {
             return window.config[this.provider].provider_name;
+        },
+
+        buttonLabel() {
+            if (this.$route.name === 'register') return `Register via ${this.providerName}`;
+            return `Login via ${this.providerName}`;
         },
 
         hasIntendedUrl() {
@@ -103,11 +112,12 @@ export default {
                 url = '';
             }
 
-            options = { url, title, width: 600, height: 720, ...options };
             const dualScreenLeft = (window.screenLeft !== undefined) ? window.screenLeft : window.screen.left;
             const dualScreenTop = (window.screenTop !== undefined) ? window.screenTop : window.screen.top;
             const width = (window.innerWidth || document.documentElement.clientWidth || window.screen.width);
             const height = (window.innerHeight || document.documentElement.clientHeight || window.screen.height);
+
+            options = { url, title, width: 600, height: 720, ...options };
             options.left = (((width / 2) - (options.width / 2)) + dualScreenLeft);
             options.top = (((height / 2) - (options.height / 2)) + dualScreenTop);
 
