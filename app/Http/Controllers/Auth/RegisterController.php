@@ -24,42 +24,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'confirmed']
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
-    }
-
-    /**
-     * The user has been registered.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function registered(Request $request, User $user)
-    {
-        if ($user instanceof MustVerifyEmail) {
-            return response()->json(['status' => trans('verification.sent')]);
-        }
-
-        $token = $this->guard()->login($user);
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ]);
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -70,13 +34,13 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|max:255|email|unique:users',
             'password' => 'required|min:6',
         ]);
     }
 
     /**
-     * Create a new user from the registration form.
+     * Create a new user from the registration form data.
      *
      * @param array $data
      * @return \App\User
@@ -84,5 +48,19 @@ class RegisterController extends Controller
     protected function create(array $data) : User
     {
         return User::generate($data['name'], $data['email'], $data['password']);
+    }
+
+    /**
+     * Send the user's details upon successful registration.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $user
+     * @return mixed
+     */
+    protected function registered(Request $request, User $user)
+    {
+        return response()->json([
+            'user' => $user,
+        ]);
     }
 }

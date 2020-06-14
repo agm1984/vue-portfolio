@@ -31,12 +31,14 @@ class LoginController extends Controller
     /**
      * Send the user's details upon successful authentication.
      *
+     * @param \Illuminate\Http\Request $request
+     * @param User $user
      * @return void
      */
-    public function authenticated()
+    public function authenticated(Request $request, User $user)
     {
         return response()->json([
-            'user' => Auth::user(),
+            'user' => $user,
         ]);
     }
 
