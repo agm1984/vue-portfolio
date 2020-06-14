@@ -101,31 +101,27 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function it_should_throw_error_422_on_login_attempt_without_email()
+    public function it_should_throw_error_422_without_email()
     {
         $this->postJson(route('login'), ['email' => '', 'password' => TestCase::AUTH_PASSWORD])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['email']]);
 
         $this->assertGuest($this->auth_guard);
-
-        $this->resetAuth();
     }
 
     /** @test */
-    public function it_should_throw_error_422_on_login_attempt_without_password()
+    public function it_should_throw_error_422_without_password()
     {
         $this->postJson(route('login'), ['email' => $this->adminUser()->email, 'password' => ''])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['password']]);
 
         $this->assertGuest($this->auth_guard);
-
-        $this->resetAuth();
     }
 
     /** @test */
-    public function it_should_throw_error_422_on_login_attempt_with_empty_form()
+    public function it_should_throw_error_422_with_empty_form()
     {
         $this->postJson(route('login'), ['email' => '', 'password' => ''])
             ->assertStatus(422)
