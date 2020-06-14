@@ -24,6 +24,13 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
+    /**
+     * Resets AuthManager state by logging out the user from all auth guards.
+     * This is used between unit tests to wipe cached auth state.
+     *
+     * @param array $guards
+     * @return void
+     */
     protected function resetAuth(array $guards = null) : void
     {
         $guards = $guards ?: array_keys(config('auth.guards'));
