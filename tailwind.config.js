@@ -104,8 +104,13 @@ module.exports = {
             accent: '#ffcc99',
 
             olive: '#999966',
+            rose: '#996666',
+            lilac: '#666699',
 
             bodycopy: '#cccccc',
+
+            github: '#474e52',
+            twitter: '#006699',
 
             grey: {
                 100: '#f7fafc',
@@ -217,11 +222,6 @@ module.exports = {
                 800: '#97266d',
                 900: '#702459',
             },
-            facebook: '#33689B',
-            twitter: '#24AAE1',
-            instagram: '#D43281',
-            youtube: '#CE3334',
-            github: '#333333',
         },
         spacing: {
             px: '1px',
