@@ -1,48 +1,65 @@
 <template>
-    <div class="">
-        <a-heading level="1">Register</a-heading>
+    <div class="flex justify-center w-full h-auto">
+        <a-card class="flex flex-col h-auto w-384">
+            <span class="pb-32 text-2xl tracking-wide text-center text-white font-aroly">
+                Register
+            </span>
 
-        <a-form v-slot="{ handleSubmit }">
-            <a-text-input
-                v-model="newUser.name"
-                vid="name"
-                rules="required|max:255"
-                placeholder="Name"
-                required
-            ></a-text-input>
+            <div class="flex flex-col">
+                <login-with-oauth provider="github"></login-with-oauth>
+                <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth>
+            </div>
 
-            <a-text-input
-                v-model="newUser.email"
-                vid="email"
-                rules="required|email|max:255"
-                placeholder="Email"
-                required
-            ></a-text-input>
+            <div class="flex items-center pt-16">
+                <hr class="inline w-full">
+                <span class="mx-8">or</span>
+                <hr class="inline w-full">
+            </div>
 
-            <a-text-input
-                v-model="newUser.password"
-                vid="password"
-                rules="required|min:8"
-                placeholder="Password"
-                type="password"
-                required
-            ></a-text-input>
+            <a-form v-slot="{ handleSubmit }" class="pt-16">
+                <a-text-input
+                    v-model="newUser.name"
+                    vid="name"
+                    rules="required|max:255"
+                    placeholder="Name"
+                    required
+                ></a-text-input>
 
-            <div class="flex flex-col items-end">
-                <a-button :loading="isAuthenticating" @click="handleSubmit(register)">
+                <a-text-input
+                    v-model="newUser.email"
+                    class="mt-8"
+                    vid="email"
+                    rules="required|email|max:255"
+                    placeholder="Email"
+                    required
+                ></a-text-input>
+
+                <a-text-input
+                    v-model="newUser.password"
+                    class="mt-8"
+                    type="password"
+                    vid="password"
+                    rules="required|min:8"
+                    placeholder="Password"
+                    password-reveal
+                    required
+                ></a-text-input>
+
+                <a-button
+                    class="mt-8"
+                    :loading="isAuthenticating"
+                    expanded
+                    @click="handleSubmit(register)"
+                >
                     Register
                 </a-button>
+            </a-form>
 
-                <login-with-oauth provider="github" :intended-url="intendedUrl"></login-with-oauth>
-                <login-with-oauth provider="twitter" :intended-url="intendedUrl"></login-with-oauth>
-            </div>
-        </a-form>
-
+        </a-card>
     </div>
 </template>
 
 <script>
-import Form from 'vform';
 import LoginWithOauth from '~/components/login-with-oauth.vue';
 
 const INITIAL = 'INITIAL';
@@ -66,13 +83,6 @@ export default {
                 email: '',
                 password: '',
             },
-            form: new Form({
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
-            }),
-            mustVerifyEmail: false,
         };
     },
 

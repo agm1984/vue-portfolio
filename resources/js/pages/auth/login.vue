@@ -1,11 +1,22 @@
 <template>
     <div class="flex justify-center w-full h-auto">
         <a-card class="flex flex-col h-auto w-384">
-            <span class="pb-32 text-2xl text-center text-white font-aroly">
+            <span class="pb-32 text-2xl tracking-wide text-center text-white font-aroly">
                 Login
             </span>
 
-            <a-form v-slot="{ handleSubmit }">
+            <div class="flex flex-col">
+                <login-with-oauth provider="github"></login-with-oauth>
+                <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth>
+            </div>
+
+            <div class="flex items-center pt-16">
+                <hr class="inline w-full">
+                <span class="mx-8">or</span>
+                <hr class="inline w-full">
+            </div>
+
+            <a-form v-slot="{ handleSubmit }" class="pt-16">
                 <a-text-input
                     v-model="credentials.email"
                     vid="email"
@@ -16,18 +27,25 @@
 
                 <a-text-input
                     v-model="credentials.password"
+                    class="mt-8"
+                    type="password"
                     vid="password"
                     rules="required|min:8"
                     placeholder="Password"
-                    type="password"
+                    password-reveal
                     required
                 ></a-text-input>
 
-                <a-button :loading="isAuthenticating" expanded @click="handleSubmit(login)">
+                <a-button
+                    class="mt-8"
+                    :loading="isAuthenticating"
+                    expanded
+                    @click="handleSubmit(login)"
+                >
                     Login
                 </a-button>
 
-                <div class="flex items-center justify-center py-16">
+                <div class="flex items-center justify-between pt-16">
                     <a-checkbox
                         v-model="credentials.remember"
                     >
@@ -37,13 +55,6 @@
                     <router-link :to="{ name: 'password.request' }">
                         Forgot password?
                     </router-link>
-                </div>
-
-                <hr>
-
-                <div class="flex items-center justify-around pt-32">
-                    <login-with-oauth provider="github"></login-with-oauth>
-                    <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
             </a-form>
 
@@ -89,6 +100,7 @@ export default {
         },
 
         hasIntendedUrl() {
+            console.log('was unset');
             return (this.$store.getters['auth/intendedUrl'].length > 0);
         },
 
@@ -111,10 +123,12 @@ export default {
                 this.state = AUTHENTICATING;
 
                 await this.$store.dispatch('auth/login', this.credentials);
+                console.log('has intended 1', this.$store.getters['auth/intendedUrl'], 'a');
 
                 if (this.hasIntendedUrl) {
+                    console.log('has intended 2');
                     return this.$router.push(this.$store.getters['auth/intendedUrl'])
-                        .then(() => this.$store.dispatch('auth/clearIntendedUrl'))
+                        // .then(() => this.$store.dispatch('auth/clearIntendedUrl'))
                         .catch((err) => {
                             throw new Error(`login# Problem redirecting to intended URL: ${err}.`);
                         });
