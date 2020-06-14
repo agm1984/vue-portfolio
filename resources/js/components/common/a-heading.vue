@@ -48,7 +48,7 @@ export default {
         const getStylesForHeadingLevel = ({ level, dark, light, oswald, inline }) => {
             const styles = [''];
 
-            if (inline) styles.push('inline');
+            if (inline) styles.push('inline tracking-wide');
 
             if (+level === 1) styles.push('text-xl');
             if (+level === 2) styles.push('text-lg');
