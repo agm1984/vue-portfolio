@@ -30,7 +30,7 @@ export default {
     metaInfo() {
         return {
             titleTemplate(titleChunk) {
-                return titleChunk ? `${titleChunk} - Adam Mackintosh's Portfolio` : 'Adam Mackintosh\'s Portfolio';
+                return titleChunk ? `${titleChunk} - Adam Mackintosh's Portfolio` : "Adam Mackintosh's Portfolio";
             },
         };
     },
