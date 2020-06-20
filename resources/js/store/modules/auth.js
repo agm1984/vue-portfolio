@@ -88,10 +88,6 @@ export const actions = {
         }
     },
 
-    saveToken({ commit }, payload) {
-        return commit(LOGIN, payload);
-    },
-
     async fetchUser({ commit }) {
         try {
             const { data } = await axios.get(route('me'));
@@ -106,11 +102,11 @@ export const actions = {
         return commit(UPDATE_USER, payload);
     },
 
-    async login({ commit }, credentials) {
+    async login({ commit }, payload) {
         try {
             const { data } = await axios.post(route('login'), {
-                ...credentials,
-                remember: credentials.remember || undefined,
+                ...payload,
+                remember: payload.remember || undefined,
             });
 
             commit(FETCH_USER_SUCCESS, { user: data.user });

@@ -9,6 +9,7 @@ import store from '~/store/index';
  * @param {Function} next
  */
 const guest = (to, from, next) => {
+    console.log('guest@ running');
     if (store.getters['auth/check']) {
         return next({ name: 'home' });
     }

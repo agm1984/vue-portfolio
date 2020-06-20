@@ -24,6 +24,7 @@ import store from '~/store/index';
  * @throws {Function} calls `commit(FETCH_USER_FAILED)` which will trigger the `auth/logout` action.
  */
 const checkAuth = async (to, from, next) => {
+    console.log('checkAuth@ running');
     if (store.getters['auth/check']) {
         return next();
     }
