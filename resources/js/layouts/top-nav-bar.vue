@@ -144,7 +144,7 @@ export default {
             try {
                 await this.$store.dispatch('auth/logout');
 
-                return this.$router.push({ name: 'login' });
+                return this.$router.go();
             } catch (err) {
                 throw new Error(`top-nav-bar# Problem logging user out: ${err}.`);
             }
