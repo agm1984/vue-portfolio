@@ -108,6 +108,7 @@ module.exports = {
             olive: '#999966',
             rose: '#996666',
             lilac: '#666699',
+            'pale-yellow': '#ffcc66',
 
             bodycopy: '#cccccc',
 
