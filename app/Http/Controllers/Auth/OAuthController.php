@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Exceptions\EmailTakenException;
 use App\Http\Controllers\Controller;
 use App\OAuthProvider;
 use App\User;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,7 +32,7 @@ class OAuthController extends Controller
 
     /**
      * Redirect the user to the provider authentication page. Twitter uses OAuth1.0a, and does not support
-     * Socialite::driver($provider)->stateless(), so library `abraham/twitteroauth` is used to handle everything.
+     * Socialite::driver($provider)->stateless(), so library `abraham/twitteroauth` is used to handle that case.
      *
      * @param string $provider
      * @return \Illuminate\Http\RedirectResponse
@@ -51,7 +51,8 @@ class OAuthController extends Controller
     }
 
     /**
-     * Obtain the user information from the provider.
+     * Obtain the user information from the provider. `$socialIdentity` must be an Object due to
+     * downstream accessors.
      *
      * @param \Illuminate\Http\Request $request
      * @param string $driver
@@ -60,19 +61,17 @@ class OAuthController extends Controller
     public function handleProviderCallback(Request $request, $provider)
     {
         if ($provider === 'twitter') {
-            $user = (object)$this->twitterApi->getUser($request);
+            $socialIdentity = (object)$this->twitterApi->getUser($request);
         } else {
-            $user = Socialite::driver($provider)->stateless()->user();
+            $socialIdentity = Socialite::driver($provider)->stateless()->user();
         }
 
-        $user = $this->findOrCreateUser($provider, $user);
+        $user = $this->findOrCreateUser($provider, $socialIdentity);
 
-        $this->guard()->setToken(
-            $token = $this->guard()->login($user)
-        );
+        Auth::login($user);
 
         return view('oauth/callback', [
-            'token' => $token,
+            'user' => $user,
         ]);
     }
 
@@ -124,7 +123,8 @@ class OAuthController extends Controller
      */
     protected function addProvider($provider, $sUser, User $user) : User
     {
-        $user->oauthProviders()->create([
+        // TODO: function should update if entry already exists
+        $user->oauthProviders()->updateOrCreate(['user_id' => $user->id], [
             'provider' => $provider,
             'provider_user_id' => $sUser->id,
             'access_token' => $sUser->token,
