@@ -9,7 +9,7 @@ import router from '~/router';
  * attach the CSRF token if it exists.
  *
  */
-axios.interceptors.request.use(async (request) => {
+axios.interceptors.request.use((request) => {
     try {
         const csrf = Cookies.get('XSRF-TOKEN');
 
@@ -34,6 +34,7 @@ axios.interceptors.response.use(response => response, (error) => {
     if (!error.config) {
         return Promise.reject(error);
     }
+
     const { config, data, status } = error.response;
 
     console.log('ERROR RESPONSE', error.response);
