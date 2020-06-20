@@ -83,11 +83,13 @@ export default {
          * @return {Void}
          */
         onMessage(e) {
-            if ((e.origin !== window.origin) || !e.data.token) {
+            const hasUser = (e.data.user && (Object.keys(e.data.user).length > 0));
+
+            if ((e.origin !== window.origin) || !hasUser) {
                 return undefined;
             }
 
-            this.$store.dispatch('auth/startSession');
+            this.$store.dispatch('auth/updateUser', { user: e.data.user });
 
             if (this.hasIntendedUrl) {
                 return this.$router.push(this.$store.getters['auth/intendedUrl'])

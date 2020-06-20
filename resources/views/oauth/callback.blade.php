@@ -3,9 +3,11 @@
         <meta charset="utf-8">
         <title>{{ config('app.name') }}</title>
         <script>
+            'use strict';
+
             window.opener.postMessage(
                 {
-                    token: "{{ $token }}",
+                    user: {!! $user !!},
                 },
                 "{{ url('/') }}"
             );
