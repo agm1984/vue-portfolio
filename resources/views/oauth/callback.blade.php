@@ -5,6 +5,9 @@
         <script>
             'use strict';
 
+            // if VS Code IDE lights up a warning here, it is caused by mixing languages in this template file:
+            // https://github.com/microsoft/vscode/issues/100613
+
             window.opener.postMessage(
                 {
                     user: {!! $user !!},
