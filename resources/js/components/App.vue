@@ -10,19 +10,19 @@
 <script>
 import Loading from './Loading.vue';
 
-// load layout components dynamically
-const requireContext = require.context('~/layouts', false, /.*\.vue$/);
-
-const layouts = requireContext.keys()
-    .map(file => [file.replace(/(^.\/)|(\.vue$)/g, ''), requireContext(file)])
-    .reduce((components, [name, component]) => {
-        components[name] = component.default || component;
-        return components;
-    }, {});
+/**
+ * Layouts can be programmatically changed at run-time.
+ *
+ * The `default` layout shows the sacred-geometry wallpaper, top nav bar, and page content.
+ *
+ * The `basic` layout shows only the page content.
+ */
+const layouts = {
+    default: () => import('~/layouts/default.vue').then(m => m.default || m),
+    basic: () => import('~/layouts/basic.vue').then(m => m.default || m),
+};
 
 export default {
-    el: '#app',
-
     components: {
         Loading,
     },
