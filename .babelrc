@@ -4,5 +4,5 @@
             "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]]
         }
     },
-    "plugins": ["@babel/plugin-syntax-dynamic-import", "@vue/babel-plugin-transform-vue-jsx"]
+    "plugins": ["@vue/babel-plugin-transform-vue-jsx"]
 }

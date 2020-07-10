@@ -6,8 +6,8 @@ module.exports = {
         'vue',
     ],
     transform: {
-        '.*\\.(vue)$': 'vue-jest',
         '^.+\\.js$': 'babel-jest',
+        '^.+\\.vue$': 'vue-jest',
     },
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/resources/$1',
