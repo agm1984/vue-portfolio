@@ -2,7 +2,6 @@
 /public/hot
 /public/storage
 /public/mix-manifest.json
-/public/.DS_Store
 /storage/*.key
 /vendor
 .env
@@ -12,6 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+**/.DS_Store
 
 # build-generated files
 public/css/*
