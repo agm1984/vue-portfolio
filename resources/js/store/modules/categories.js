@@ -18,3 +18,13 @@ export const actions = {};
 
 // state
 export const state = {};
+
+const categories = {
+    namespaced: true,
+    getters,
+    mutations,
+    actions,
+    state,
+};
+
+export default categories;

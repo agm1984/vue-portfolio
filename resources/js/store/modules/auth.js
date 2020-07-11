@@ -6,7 +6,7 @@ import axios from 'axios';
  *
  * Any Vue component can check if a user is currently authenticated by polling
  * the predicate function `this.$store.getters['auth/check']` which simply
- * checks if `this.$store.state.auth.state === IS_LOGGED_IN`.
+ * checks if the auth finite state machine is set to `IS_LOGGED_IN`.
  */
 
 const IS_LOGGED_IN = 'IS_LOGGED_IN';
@@ -33,7 +33,7 @@ export const getters = {
     },
 
     intendedUrl(state) {
-        if (state.intendedUrl.length === 1) return ''; // ignore redirect to '/' to keep URL pretty
+        if (state.intendedUrl.length === 1) return ''; // ignore redirects to '/' to keep URL pretty
         return state.intendedUrl;
     },
 };
@@ -157,3 +157,13 @@ export const state = {
     user: {},
     intendedUrl: '',
 };
+
+const auth = {
+    namespaced: true,
+    getters,
+    mutations,
+    actions,
+    state,
+};
+
+export default auth;
