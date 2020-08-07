@@ -79,7 +79,7 @@ Execute:
 $ php artisan test
 ```
 
-Browse `./phpunit.xml` for
+Browse `./phpunit.xml` for config settings.
 
 ### Vue
 
@@ -89,6 +89,12 @@ Execute:
 
 ``` bash
 $ npm run test
+```
+
+To watch tests, execute:
+
+``` bash
+$ npm test -- --watch
 ```
 
 This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) for mocking client-side requests.
