@@ -7,7 +7,6 @@ import router from '~/router';
 /**
  * Request interceptor: for each request to the server,
  * attach the CSRF token if it exists.
- *
  */
 axios.interceptors.request.use((request) => {
     try {
@@ -28,7 +27,6 @@ axios.interceptors.request.use((request) => {
 /**
  * Response interceptor: for each server error response,
  * check if client-side action is needed.
- *
  */
 axios.interceptors.response.use(response => response, (error) => {
     if (!error.config) {
