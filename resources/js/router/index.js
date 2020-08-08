@@ -1,30 +1,25 @@
 import Vue from 'vue';
-import Meta from 'vue-meta';
 import Router from 'vue-router';
 import { sync } from 'vuex-router-sync';
 import store from '~/store/index';
 import routes from './routes';
+import auth from '~/middleware/auth';
+import checkAuth from '~/middleware/check-auth';
+import guest from '~/middleware/guest';
+import roleAdmin from '~/middleware/role-admin';
 
-Vue.use(Meta);
 Vue.use(Router);
 
-// define middleware for every page of the application
+// define middleware that runs on every page in the application
 const globalMiddleware = ['check-auth'];
 
-/**
- * @param {Object} requireContext
- * @return {Object}
- */
-function resolveMiddleware(requireContext) {
-    return requireContext.keys()
-        .map(file => [file.replace(/(^.\/)|(\.js$)/g, ''), requireContext(file)])
-        .reduce((guards, [name, guard]) => (
-            { ...guards, [name]: guard.default }
-        ), {});
-}
-
-// load all middlewares found at this file path, so any route can use them
-const routeMiddleware = resolveMiddleware(require.context('~/middleware', false, /.*\.js$/));
+// define route middleware that can be used anywhere
+const availableMiddleware = {
+    auth,
+    'check-auth': checkAuth,
+    guest,
+    'role-admin': roleAdmin,
+};
 
 /**
  * Resolve async components.
@@ -40,7 +35,7 @@ function resolveComponents(components) {
 }
 
 /**
- * Create and export a new router instance.
+ * Creates and exports a new router instance.
  *
  * @return {Router}
  */
@@ -139,8 +134,8 @@ function callMiddleware(middleware, to, from, next) {
             return mw(to, from, _next);
         }
 
-        if (routeMiddleware[mw]) {
-            return routeMiddleware[mw](to, from, _next);
+        if (availableMiddleware[mw]) {
+            return availableMiddleware[mw](to, from, _next);
         }
 
         throw Error(`callMiddleware# Undefined middleware: '${mw}'.`);
