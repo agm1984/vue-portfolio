@@ -55,7 +55,7 @@ export default {
     props: {
         // must be included in props
         value: {
-            type: Boolean,
+            type: [Boolean, String],
             required: false,
             default: () => '',
         },

@@ -80,15 +80,15 @@ hr {
 
 // links
 .nav-link-white {
-    @apply text-white font-aroly text-base leading-none tracking-wide p-4 rounded-sm;
+    @apply text-white font-aroly font-bold text-base leading-none tracking-wide p-4 rounded-sm;
     background-color: rgba(7, 13, 13, 0.5);
     transition: all 250ms ease-in-out;
 }
-.nav-link-white:hover { @apply text-mint cursor-pointer; }
-.nav-link-white:active { @apply text-mint-hover; }
+.nav-link-white:hover { @apply text-primary cursor-pointer; }
+.nav-link-white:active { @apply text-primary-hover; }
 
 .nav-link-white-active {
-    @apply text-mint;
+    @apply text-primary;
 }
 
 

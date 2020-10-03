@@ -14,7 +14,6 @@ import Loading from './Loading.vue';
  * Layouts can be programmatically changed at run-time.
  *
  * The `default` layout shows the sacred-geometry wallpaper, top nav bar, and page content.
- *
  * The `basic` layout shows only the page content.
  */
 const layouts = {
@@ -27,10 +26,14 @@ export default {
         Loading,
     },
 
+    /**
+     * Sets page meta info, such as page title.
+     */
     metaInfo() {
         return {
             titleTemplate(titleChunk) {
-                return titleChunk ? `${titleChunk} - Adam Mackintosh's Portfolio` : "Adam Mackintosh's Portfolio";
+                const suffix = "Adam Mackintosh's Portfolio";
+                return titleChunk ? `${titleChunk} - ${suffix}` : suffix;
             },
         };
     },
@@ -61,6 +64,7 @@ export default {
             }
 
             this.layout = layouts[layout];
+            console.log('did somethin');
         },
 
     },

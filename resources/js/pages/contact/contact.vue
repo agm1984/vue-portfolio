@@ -14,10 +14,10 @@
                 width="16px"
                 height="16px"
                 viewBox="0 0 64 64"
-                aria-labelledby="twitter-icon"
-                role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                aria-labelledby="twitter-icon"
+                role="img"
             >
                 <title id="twitter-icon">See Adam&apos;s Twitter</title>
                 <path
@@ -40,10 +40,10 @@
                 width="16px"
                 height="16px"
                 viewBox="0 0 24 24"
-                aria-labelledby="medium-icon"
-                role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                aria-labelledby="medium-icon"
+                role="img"
             >
                 <title id="medium-icon">See Adam&apos;s Medium</title>
                 <path
@@ -66,10 +66,10 @@
                 width="16px"
                 height="16px"
                 viewBox="0 0 24 24"
-                aria-labelledby="github-icon"
-                role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                aria-labelledby="github-icon"
+                role="img"
             >
                 <title>See Adam&apos;s GitHub</title>
                 <path
