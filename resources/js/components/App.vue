@@ -27,7 +27,7 @@ export default {
     },
 
     /**
-     * Sets page meta info, such as page title.
+     * Sets page meta info, such as default and page-specific page titles.
      */
     metaInfo() {
         return {
