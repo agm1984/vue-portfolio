@@ -75,26 +75,18 @@ hr {
 
 // buefy
 .dropdown-content {
-    @apply .a-card;
+    @apply .dark-card;
 }
-
-// links
-.nav-link-white {
-    @apply text-white font-aroly font-bold text-base leading-none tracking-wide p-4 rounded-sm;
-    background-color: rgba(7, 13, 13, 0.5);
-    transition: all 250ms ease-in-out;
-}
-.nav-link-white:hover { @apply text-primary cursor-pointer; }
-.nav-link-white:active { @apply text-primary-hover; }
-
-.nav-link-white-active {
-    @apply text-primary;
-}
-
 
 // cards
-.a-card {
+.dark-card {
     background: rgba(29, 38, 47, 0.96);
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.32);
+}
+
+.light-card {
+    background: rgba(255, 255, 245, 0.96);
     border-radius: 8px;
     box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.32);
 }

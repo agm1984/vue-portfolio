@@ -1,10 +1,8 @@
 <template>
     <div class="mb-64 Nav" role="navigation">
         <div class="flex items-center w-256">
-            <router-link :to="{ name: 'home' }" class="flex items-center" title="View home" role="banner">
-                <div class="w-20 h-20 mr-4 adam-logo"></div>
-                <span id="Nav_brand-adam">ADAM</span>
-                <span id="Nav_brand-mackintosh">MACKINTOSH</span>
+            <router-link :to="{ name: 'home' }" title="View home" role="banner">
+                <adam-mackintosh-logo></adam-mackintosh-logo>
             </router-link>
         </div>
 
@@ -12,13 +10,13 @@
             <top-nav-link :to="{ name: 'about' }">
                 About me
             </top-nav-link>
-            <top-nav-link :to="{ name: 'examples' }" class="mx-16">
+            <top-nav-link :to="{ name: 'examples' }" class="">
                 Examples
             </top-nav-link>
-            <top-nav-link :to="{ name: 'contact' }" class="mx-16">
+            <top-nav-link :to="{ name: 'contact' }" class="">
                 Contact
             </top-nav-link>
-            <top-nav-link :to="{ name: 'admin' }" class="mx-16">
+            <top-nav-link :to="{ name: 'admin' }" class="">
                 Admin
             </top-nav-link>
             <top-nav-link :to="{ name: 'design' }">
@@ -26,7 +24,7 @@
             </top-nav-link>
         </div>
 
-        <div class="flex items-center w-256">
+        <div class="flex items-center justify-end w-256">
             <!-- https://stackoverflow.com/questions/22735740/how-to-add-badge-on-top-of-font-awesome-symbol -->
             <template v-if="isAuthenticated">
                 <b-dropdown id="notifications" aria-role="menu" position="is-bottom-left" class="flex justify-end">
@@ -105,12 +103,14 @@
 </template>
 
 <script>
+import AdamMackintoshLogo from './adam-mackintosh-logo.vue';
 import TopNavLink from './top-nav-link.vue';
 
 export default {
     name: 'top-nav-bar',
 
     components: {
+        AdamMackintoshLogo,
         TopNavLink,
     },
 
@@ -196,22 +196,6 @@ export default {
     .Nav_brand-logo:active {
     color: #339999;
     font-size: 2.0rem; }
-
-    #Nav_brand-adam {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 200;
-    font-size: 2.0rem;
-    line-height: 2.0rem;
-    letter-spacing: 0.001em;
-    color: #fff; }
-
-    #Nav_brand-mackintosh {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 400;
-    font-size: 2.0rem;
-    line-height: 2.0rem;
-    letter-spacing: 0.001em;
-    color: #339999; }
 
     #Nav_pages {
     flex: 1;

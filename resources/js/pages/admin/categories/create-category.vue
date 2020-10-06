@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <a-heading level="1">
+    <a-card with-geometry>
+        <a-heading level="1" light>
             Create category
         </a-heading>
 
@@ -28,10 +28,12 @@
                 Create
             </a-button>
         </a-form>
-    </div>
+    </a-card>
 </template>
 
 <script>
+import { Category } from '~/globalModelTypes';
+
 export default {
     name: 'create-category',
 
@@ -48,8 +50,8 @@ export default {
     computed: {
         statuses() {
             return [
-                { status: 0, label: 'Inactive' },
-                { status: 1, label: 'Active' },
+                { status: Category.STATUS_INACTIVE, label: 'Inactive' },
+                { status: Category.STATUS_ACTIVE, label: 'Active' },
             ];
         },
     },

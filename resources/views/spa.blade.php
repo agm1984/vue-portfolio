@@ -25,6 +25,7 @@ $config = [
         <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:300">
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

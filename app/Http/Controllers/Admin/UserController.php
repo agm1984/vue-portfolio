@@ -15,17 +15,21 @@ class UserController extends Controller
         \Log::debug($request->all());
 
         $users = QueryBuilder::for(User::class)
-                ->allowedFilters('category.slug')
+                ->allowedFilters('user.id')
                 ->get();
 
-        return response()->json($users);
+        return response()->json([
+            'users' => $users,
+        ]);
     }
 
     public function show(Request $request, User $user)
     {
         \Log::debug($request->all());
 
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+        ]);
     }
 
 }

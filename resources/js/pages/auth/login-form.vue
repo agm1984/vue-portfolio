@@ -94,9 +94,10 @@ export default {
                         });
                 }
 
-                return this.$router.push({ name: 'home' }).catch((err) => {
-                    throw new Error(`login-form# Problem navigating to 'home' route: ${err}.`);
-                });
+                return this.$router.push({ name: 'home' })
+                    .catch((err) => {
+                        throw new Error(`login-form# Problem navigating to 'home' route: ${err}.`);
+                    });
             } catch (err) {
                 this.state = INITIAL;
 

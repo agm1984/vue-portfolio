@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <a-card with-geometry>
         <div class="flex items-center justify-between">
             <a-heading level="1">
                 Categories
@@ -43,7 +43,7 @@
             </template>
         </b-table>
 
-    </div>
+    </a-card>
 </template>
 
 <script>
@@ -51,7 +51,7 @@ import axios from 'axios';
 import CreateCategory from './create-category.vue';
 
 const INITIAL = 'INITIAL';
-const SHOW = 'SHOW';
+const LIST = 'LIST';
 const CREATE = 'CREATE';
 
 export default {
@@ -75,45 +75,46 @@ export default {
             return (this.state === INITIAL);
         },
 
-        isShowing() {
-            return (this.state === SHOW);
+        isListing() {
+            return (this.state === LIST);
         },
 
-        isCreating() {
-            return (this.state === CREATE);
-        },
+        // isCreating() {
+        //     return (this.state === CREATE);
+        // },
 
     },
 
     mounted() {
-        return this.fetchData();
+        return this.fetchAllCategories();
     },
 
     methods: {
-        async fetchData() {
+        async fetchAllCategories() {
             try {
                 const { data } = await axios.get(route('admin.categories.list'));
 
                 this.categories = data.categories;
-                this.state = SHOW;
+                this.state = LIST;
             } catch (err) {
-                throw new Error(`list-categories# Problem fetching list of categories: ${err}.`);
+                throw new Error(`list-categories# Problem fetching all categories: ${err}.`);
             }
         },
 
-        resetCreate() {
-            this.state = SHOW;
-        },
+        // resetCreate() {
+        //     this.state = LIST;
+        // },
 
-        handleCreate() {
-            this.state = CREATE;
+        // use as reference for modals?
+        // handleCreate() {
+        //     this.state = CREATE;
 
-            return this.$buefy.modal.open({
-                parent: this,
-                component: CreateCategory,
-                onCancel: this.resetCreate,
-            });
-        },
+        //     return this.$buefy.modal.open({
+        //         parent: this,
+        //         component: CreateCategory,
+        //         onCancel: this.resetCreate,
+        //     });
+        // },
     },
 
 };

@@ -120,7 +120,7 @@ export default {
             if (this.language) styles.push(`language-${this.language}`);
 
             if (this.inline) styles.push('inline-highlight');
-            else styles.push('a-card');
+            else styles.push('dark-card');
 
             return styles;
         },
@@ -187,7 +187,7 @@ export default {
         display: inline;
         padding: 4px 8px 4px 8px;
 
-        /* background and radius are congruent with .a-card */
+        /* background and radius are congruent with .dark-card */
         background: rgba(29, 38, 47, 0.96);
         border-radius: 4px;
     }

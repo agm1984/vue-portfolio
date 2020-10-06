@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <a-card with-geometry>
         <div class="relative flex items-center justify-between">
             <a-heading level="1">
                 {{ category.name }}
@@ -11,27 +11,39 @@
         </div>
 
         <a-card v-if="isShowing">
-            <a-show-field label="ID" :value="category.id"></a-show-field>
+            <a-input-row type="is-split" heading="ID">
+                <span>{{ category.id }}</span>
+            </a-input-row>
 
-            <a-show-field label="Status" :value="category.status"></a-show-field>
+            <a-input-row type="is-split" heading="Status">
+                <span>{{ category.status }}</span>
+            </a-input-row>
 
-            <a-show-field label="Slug" :value="category.slug"></a-show-field>
+            <a-input-row type="is-split" heading="Slug">
+                <span>{{ category.slug }}</span>
+            </a-input-row>
 
-            <a-show-field label="Name" :value="category.name"></a-show-field>
+            <a-input-row type="is-split" heading="Name">
+                <span>{{ category.name }}</span>
+            </a-input-row>
 
-            <a-show-field label="Created at" :value="category.created_at"></a-show-field>
+            <a-input-row type="is-split" heading="Created at">
+                <span>{{ category.created_at }}</span>
+            </a-input-row>
 
-            <a-show-field label="Updated at" :value="category.updated_at"></a-show-field>
+            <a-input-row type="is-split" heading="Updated at">
+                <span>{{ category.updated_at }}</span>
+            </a-input-row>
         </a-card>
 
-        <a-card v-if="isEditing" class="w-1/2">
+        <div v-if="isEditing" class="">
             <edit-category
                 :category="category"
                 @reset="handleReset"
             ></edit-category>
-        </a-card>
+        </div>
 
-    </div>
+    </a-card>
 </template>
 
 <script>
@@ -52,7 +64,7 @@ export default {
 
     data() {
         return {
-            state: EDITING,
+            state: SHOWING,
             category: {},
         };
     },
@@ -68,11 +80,11 @@ export default {
     },
 
     mounted() {
-        return this.fetchData();
+        return this.fetchCategory();
     },
 
     methods: {
-        async fetchData() {
+        async fetchCategory() {
             try {
                 const { data } = await axios.get(route('admin.categories.show', this.$route.params.category));
 

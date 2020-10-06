@@ -1,8 +1,45 @@
 <template>
-    <div></div>
+    <a-card with-geometry class="">
+        <div class="flex items-center justify-between">
+            <a-heading level="1">
+                Users
+            </a-heading>
+        </div>
+
+        <b-table
+            :data="users"
+            :loading="isInitializing"
+        >
+            <template slot-scope="{ row }">
+                <b-table-column field="name" label="Name">
+                    <router-link :to="{ name: 'admin.users.show', params: { user: row.id } }">
+                        {{ row.name }}
+                    </router-link>
+                </b-table-column>
+
+                <b-table-column field="created_at" label="Created" width="1" numeric>
+                    {{ row.created_at }}
+                </b-table-column>
+
+                <b-table-column field="updated_at" label="Last updated" width="1" numeric>
+                    {{ row.updated_at }}
+                </b-table-column>
+
+                <b-table-column field="status" label="Status" width="1" numeric>
+                    {{ row.status }}
+                </b-table-column>
+            </template>
+        </b-table>
+
+    </a-card>
 </template>
 
 <script>
+import axios from 'axios';
+
+const INITIAL = 'INITIAL';
+const LIST = 'LIST';
+
 export default {
     name: 'list-users',
 
@@ -11,12 +48,40 @@ export default {
     },
 
     data() {
-        return {};
+        return {
+            state: INITIAL,
+            users: [],
+        };
     },
 
-    computed: {},
+    computed: {
+        isInitializing() {
+            return (this.state === INITIAL);
+        },
 
-    methods: {},
+        isListing() {
+            return (this.state === LIST);
+        },
+    },
+
+    mounted() {
+        return this.fetchAllUsers();
+    },
+
+    methods: {
+        async fetchAllUsers() {
+            try {
+                const { data } = await axios.get(route('admin.users.list'));
+
+                console.log('users', data);
+
+                this.users = data.users;
+                this.state = LIST;
+            } catch (err) {
+                throw new Error(`list-users# Problem fetching all users: ${err}.`);
+            }
+        },
+    },
 
 };
 </script>

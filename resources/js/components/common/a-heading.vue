@@ -14,16 +14,16 @@ export default {
         light: {
             type: Boolean,
             required: false,
-            default: () => true,
+            default: () => false,
         },
 
         dark: {
             type: Boolean,
             required: false,
-            default: () => false,
+            default: () => true,
         },
 
-        oswald: {
+        nunito: {
             type: Boolean,
             required: false,
             default: () => false,
@@ -45,7 +45,7 @@ export default {
 
         const Heading = `h${props.level}`;
 
-        const getStylesForHeadingLevel = ({ level, dark, light, oswald, inline }) => {
+        const getStylesForHeadingLevel = ({ level, dark, light, nunito, inline }) => {
             const styles = [''];
 
             if (inline) styles.push('inline tracking-wide');
@@ -57,7 +57,7 @@ export default {
             if (+level === 5) styles.push('text-sm');
             if (+level === 6) styles.push('text-xs');
 
-            if (oswald) styles.push('oswald');
+            if (nunito) styles.push('nunito');
             else styles.push('font-aroly');
 
             // text colour

@@ -90,6 +90,9 @@ module.exports = {
             black: '#000000',
             white: '#ffffff',
 
+            // transparent black https://www.colorcodehex.com/1d262f.html
+            'transparent-black': 'rgba(29, 38, 47, 0.96)',
+
             primary: '#006666',
             'primary-hover': '#005959',
             'primary-active': '#004d4d',
@@ -244,13 +247,13 @@ module.exports = {
         },
         fontFamily: {
             aroly: ['AROLY'],
-            oswald: ['Oswald'],
+            nunito: ['Nunito'],
             sans: [
-                'TBD',
+                'Nunito',
                 'Arial',
                 'sans-serif',
             ],
-            serif: ['TBD', 'serif'],
+            serif: ['serif'],
             mono: [
                 'Menlo',
                 'Monaco',

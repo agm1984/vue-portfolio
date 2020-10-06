@@ -1,5 +1,5 @@
 /**
- * This utility transforms a Vue component's relative file path into a dynamic-imported component.
+ * Transforms a Vue component's relative file path into a dynamic-imported component.
  *
  * @param {String} path
  * @returns {Function}
@@ -31,14 +31,29 @@ const router = [
         ],
     },
 
-    { path: '/admin', name: 'admin', component: page('admin/admin-dashboard.vue') },
-    { path: '/admin/categories', name: 'admin.categories.list', component: page('admin/categories/list-categories.vue') },
-    { path: '/admin/categories/create', name: 'admin.categories.create', component: page('admin/categories/create-category.vue') },
-    { path: '/admin/categories/:category', name: 'admin.categories.show', component: page('admin/categories/show-category.vue') },
-    { path: '/admin/examples', name: 'admin.examples.list', component: page('admin/examples/list-examples.vue') },
-    { path: '/admin/users', name: 'admin.users.list', component: page('admin/users/list-users.vue') },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: page('admin/admin-dashboard.vue'),
+        children: [
+            { path: '/admin/users', name: 'admin.users.list', component: page('admin/users/list-users.vue') },
+            { path: '/admin/users/:user', name: 'admin.users.show', component: page('admin/users/show-user.vue') },
+            { path: '/admin/categories', name: 'admin.categories.list', component: page('admin/categories/list-categories.vue') },
+            { path: '/admin/categories/create', name: 'admin.categories.create', component: page('admin/categories/create-category.vue') },
+            { path: '/admin/categories/:category', name: 'admin.categories.show', component: page('admin/categories/show-category.vue') },
+            { path: '/admin/examples', name: 'admin.examples.list', component: page('admin/examples/list-examples.vue') },
+        ],
+    },
 
-    { path: '/design', name: 'design', component: page('design/design-system.vue') },
+    {
+        path: '/design',
+        name: 'design',
+        component: page('design/design.vue'),
+        children: [
+            { path: 'buttons', name: 'design.buttons', component: page('design/buttons.vue') },
+            { path: 'typography', name: 'design.typography', component: page('design/typography.vue') },
+        ],
+    },
     { path: '/snippets', name: 'snippets', component: page('snippets/snippets.vue') },
 
     { path: '*', name: 'splat', component: page('errors/404.vue') },

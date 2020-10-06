@@ -1,5 +1,7 @@
 <template>
     <div ref="p5" :id="id" class="absolute inset-0 -z-10">
+        <!-- on DOM-change, push redraw action -->
+        <!-- note: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver -->
         <vue-p5
             :class="['p5wrapper absolute inset-0', {
                 'opacity-50': isWallpaper,
