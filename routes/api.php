@@ -33,14 +33,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin'
 });
 
 Route::group(['prefix' => 'public'], function () {
-    Route::get('/categories', 'Public\CategoryController@index')->name('public.categories.list');
-    Route::get('/categories/{category}', 'Public\CategoryController@show')->name('public.categories.show');
+    Route::get('/categories', 'CategoryController@index')->name('public.categories.list');
+    Route::get('/categories/{category}', 'CategoryController@show')->name('public.categories.show');
 
-    Route::get('/examples', 'Public\ExampleController@index')->name('public.examples.list');
-    Route::get('/examples/{example}', 'Public\ExampleController@show')->name('public.examples.show');
+    Route::get('/examples', 'ExampleController@index')->name('public.examples.list');
+    Route::get('/examples/{example}', 'ExampleController@show')->name('public.examples.show');
 
-    Route::get('/users', 'Public\UserController@index')->name('public.users.list');
-    Route::get('/users/{user}', 'Public\UserController@show')->name('public.users.show');
+    Route::get('/users', 'UserController@index')->name('public.users.list');
+    Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
 });
 
 

@@ -18,14 +18,18 @@ class ExampleController extends Controller
                 ->allowedFilters('category.slug')
                 ->get();
 
-        return response()->json($examples->load('category'));
+        return response()->json([
+            'examples' => $examples->load('category'),
+        ]);
     }
 
     public function show(Request $request, Example $example)
     {
         \Log::debug($request->all());
 
-        return response()->json($example->load('category'));
+        return response()->json([
+            'example' => $example->load('category'),
+        ]);
     }
 
 }

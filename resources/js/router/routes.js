@@ -11,7 +11,16 @@ function page(path) {
 const router = [
     { path: '/', name: 'home', component: page('home/home.vue') },
     { path: '/about', name: 'about', component: page('aboutMe/about-me.vue') },
-    { path: '/examples', name: 'examples', component: page('examples/examples.vue') },
+    {
+        path: '/examples/:category?',
+        name: 'public.examples.list',
+        component: page('examples/examples.vue'),
+        children: [
+            { path: '/examples/:category?', name: 'public.examples.filtered', component: page('examples/show-example.vue') },
+        ],
+    },
+    { path: '/examples/:category/:example', name: 'public.examples.show', component: page('examples/show-example.vue') },
+
     { path: '/contact', name: 'contact', component: page('contact/contact.vue') },
 
     { path: '/login', name: 'login', component: page('auth/login.vue') },
@@ -42,6 +51,7 @@ const router = [
             { path: '/admin/categories/create', name: 'admin.categories.create', component: page('admin/categories/create-category.vue') },
             { path: '/admin/categories/:category', name: 'admin.categories.show', component: page('admin/categories/show-category.vue') },
             { path: '/admin/examples', name: 'admin.examples.list', component: page('admin/examples/list-examples.vue') },
+            { path: '/admin/examples/:category', name: 'admin.examples.show', component: page('admin/examples/show-category.vue') },
         ],
     },
 

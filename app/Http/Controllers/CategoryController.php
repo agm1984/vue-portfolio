@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Example;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CategoryController extends Controller
 {
@@ -11,10 +13,12 @@ class CategoryController extends Controller
     {
         \Log::debug($request->all());
 
-        $examples = QueryBuilder::for(Example::class)
+        $categories = QueryBuilder::for(Category::class)
                 ->allowedFilters('category.slug')
                 ->get();
 
-        return response()->json($examples->load('category'));
+        return response()->json([
+            'categories' => $categories,
+        ]);
     }
 }

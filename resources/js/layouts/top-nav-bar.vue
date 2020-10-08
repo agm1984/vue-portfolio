@@ -10,7 +10,7 @@
             <top-nav-link :to="{ name: 'about' }">
                 About me
             </top-nav-link>
-            <top-nav-link :to="{ name: 'examples' }" class="">
+            <top-nav-link :to="{ name: 'public.examples.list' }" class="">
                 Examples
             </top-nav-link>
             <top-nav-link :to="{ name: 'contact' }" class="">
