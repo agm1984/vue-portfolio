@@ -1,7 +1,7 @@
 <template>
     <a-card with-geometry>
         <!-- {(+currentScrollYPosition === 0) && this.renderDownScroller()} -->
-        <div id="examples_categories">
+        <div class="flex items-center justify-center">
             <router-link
                 :to="{ name: 'public.examples.list' }"
                 class=""
@@ -11,15 +11,14 @@
                 exact
                 @click="() => this.handleSetActiveCategory('viewAll')"
             >
-                VIEW ALL
+                View all
             </router-link>
-
 
             <router-link
                 v-for="category in categories"
                 :key="category.slug"
                 :to="{ name: 'public.examples.list', params: { category: category.slug } }"
-                class=""
+                class="ml-8"
                 activeClassName="isActiveCategory"
                 tabindex="0"
                 :title="`Show only ${category.name}`"

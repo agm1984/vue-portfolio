@@ -113,8 +113,6 @@ module.exports = {
             lilac: '#666699',
             'pale-yellow': '#ffcc66',
 
-            bodycopy: '#cccccc',
-
             github: '#474e52',
             'github-hover': '#3b3f44',
             'github-active': '#2f3237',

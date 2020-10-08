@@ -1,13 +1,19 @@
 <template>
-    <a-card with-geometry>
-        <div id="example">
+    <a-card v-if="isLoaded" with-geometry>
+        <div class="relative flex items-center justify-between">
+            <a-heading level="1" dark>
+                {{ example.name }}
+            </a-heading>
+        </div>
 
-            <div id="example_line"></div>
+        <a-card>
 
-            <div id="example_header">
-                <div id="example_header-left">
-                    <h2 id="example_heading">{{ example.name }}</h2>
-                    <div id="example_links">
+            <div id=""></div>
+
+            <div id="">
+                <div id="">
+                    <h2 id="">{{ example.name }}</h2>
+                    <div id="">
                         {feature_URL_primary.enabled && (
                         <a
                             class="example_links-link"
@@ -138,7 +144,7 @@
                     BACK
                 </button>
             </div>
-        </div>
+        </a-card>
     </a-card>
 </template>
 
@@ -196,7 +202,7 @@ export default {
                 console.log('params', this.$route.params);
                 console.log('example', example.data);
 
-                this.example = example.data;
+                this.example = example.data.example;
 
                 this.state = IS_LOADED;
 

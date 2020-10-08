@@ -1,7 +1,7 @@
 <template>
-    <a-card id="design-system-1" dark>
+    <a-card id="design-system-1" with-geometry>
 
-        <a-heading level="1" light>Design system</a-heading>
+        <a-heading level="1" dark>Design system</a-heading>
 
         <a-paragraph>
             Inside setup I have used this but the canvas size is not according to the div size.
