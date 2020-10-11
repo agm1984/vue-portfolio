@@ -1,12 +1,12 @@
 <template>
     <div class="flex items-center">
-        <div class="w-20 h-20 mb-4 mr-4 adam-logo"></div>
+        <div class="w-20 h-20 mb-4 adam-logo"></div>
 
         <span class="mt-2 leading-none font-aroly text-grey-500 text-md">
             ADAM
         </span>
 
-        <span class="leading-none font-nunito text-primary-text text-md">
+        <span class="ml-2 leading-none font-nunito text-primary-text text-md">
             MACKINTOSH
         </span>
 

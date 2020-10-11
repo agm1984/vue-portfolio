@@ -8,8 +8,7 @@
 
 <script>
 /**
- * This component aims to make a standardized approach to `<p></p>` usage.
- * As usual, the goal is to make DOM markup simpler and more declarative.
+ * Standardizes `<p></p>` element usage.
  *
  */
 export default {

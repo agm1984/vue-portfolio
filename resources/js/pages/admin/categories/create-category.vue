@@ -1,6 +1,6 @@
 <template>
     <a-card with-geometry>
-        <a-heading level="1" light>
+        <a-heading level="1" dark>
             Create category
         </a-heading>
 
@@ -36,6 +36,8 @@ import { Category } from '~/globalModelTypes';
 
 export default {
     name: 'create-category',
+
+    props: {},
 
     data() {
         return {

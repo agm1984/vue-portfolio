@@ -1,6 +1,5 @@
 <template>
     <div class="flex w-full h-auto">
-
         <div class="sidebar-page">
             <section class="sidebar-layout">
                 <b-sidebar
@@ -49,12 +48,12 @@
                                     :to="{ name: 'admin.examples.list' }"
                                     :active="$router.currentRoute.name === 'admin.examples.list'"
                                 ></b-menu-item>
-                                <!-- <b-menu-item
+                                <b-menu-item
                                     label="Add"
                                     tag="router-link"
                                     :to="{ name: 'admin.examples.create' }"
                                     :active="$router.currentRoute.name === 'admin.examples.create'"
-                                ></b-menu-item> -->
+                                ></b-menu-item>
                             </b-menu-list>
 
                         </b-menu>
@@ -64,7 +63,40 @@
         </div>
 
         <div class="w-full h-auto pt-64 pl-64">
-            <router-view></router-view>
+            <div v-if="isDashboard" class="flex items-center">
+                <a-card class="w-1/3" with-geometry>
+                    <a-heading level="1">
+                        Users
+                    </a-heading>
+                </a-card>
+
+                <a-card class="w-1/3 m-16" with-geometry>
+                    <a-heading level="1">
+                        Categories
+                    </a-heading>
+                </a-card>
+
+                <a-card class="w-1/3" with-geometry>
+                    <a-heading level="1">
+                        Examples
+                    </a-heading>
+                </a-card>
+            </div>
+            <a-card v-if="isDashboard" with-geometry>
+                <a-heading level="1">
+                    Dashboard
+                </a-heading>
+
+                <div>
+                    <apexchart
+                        type="line"
+                        :options="options"
+                        :series="series"
+                    ></apexchart>
+                </div>
+            </a-card>
+
+            <router-view v-else></router-view>
         </div>
 
         <!-- <div class="flex flex-col p-32">
@@ -97,8 +129,17 @@
 </template>
 
 <script>
+import VueApexCharts from 'vue-apexcharts';
+
+const INITIAL = 'INITIAL';
+const LOADED = 'LOADED';
+
 export default {
     name: 'admin-dashboard',
+
+    components: {
+        apexchart: VueApexCharts,
+    },
 
     middleware: ['auth', 'role-admin'],
 
@@ -107,12 +148,53 @@ export default {
     },
 
     data() {
-        return {};
+        return {
+            state: INITIAL,
+            options: {
+                chart: {
+                    id: 'vuechart-example',
+                },
+                xaxis: {
+                    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+                },
+            },
+            series: [{
+                name: 'series-1',
+                data: [30, 40, 45, 50, 49, 60, 70, 91],
+            }],
+        };
     },
 
-    computed: {},
+    computed: {
+        isDashboard() {
+            return (this.$route.matched.length === 1);
+        },
 
-    methods: {},
+        isLoaded() {
+            return (this.state === LOADED);
+        },
+    },
+
+    mounted() {
+        // this.renderChart(this.chartdata, this.options);
+    },
+
+    methods: {
+        async fetchChart() {
+            try {
+                // const { data } = await axios.get(route('admin.categories.list'));
+
+                const data = [40, 20];
+
+                console.log('chart data', data);
+
+                this.chartdata.datasets[0].data = data;
+                this.state = LOADED;
+            } catch (err) {
+                throw new Error(`admin-dashboard# Problem fetching chart data: ${err}.`);
+            }
+        },
+    },
 
 };
 </script>

@@ -51,7 +51,8 @@ const router = [
             { path: '/admin/categories/create', name: 'admin.categories.create', component: page('admin/categories/create-category.vue') },
             { path: '/admin/categories/:category', name: 'admin.categories.show', component: page('admin/categories/show-category.vue') },
             { path: '/admin/examples', name: 'admin.examples.list', component: page('admin/examples/list-examples.vue') },
-            { path: '/admin/examples/:category', name: 'admin.examples.show', component: page('admin/examples/show-category.vue') },
+            { path: '/admin/examples/create', name: 'admin.examples.create', component: page('admin/examples/create-example.vue') },
+            { path: '/admin/examples/:example', name: 'admin.examples.show', component: page('admin/examples/show-example.vue') },
         ],
     },
 

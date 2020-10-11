@@ -48,6 +48,8 @@ return [
             'root' => storage_path('app'),
         ],
 
+        // If server doesn't support "making symbolic links":
+        // https://medium.com/@shafiya.ariff23/how-to-store-uploaded-images-in-public-folder-in-laravel-5-8-and-display-them-on-shared-hosting-e31c7f37a737
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

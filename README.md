@@ -59,10 +59,10 @@ DB_USERNAME=portfolio
 DB_PASSWORD=portfolio
 ```
 
-3. Create Passport encryption keys, and create access/grant clients:
+3. Create symbolic link to storage folder:
 
 ``` bash
-$ php artisan passport:install
+$ php artisan storage:link
 ```
 
 ## Unit testing
@@ -104,7 +104,7 @@ This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-moc
 1. On the first production run, generate encryption keys:
 
 ``` bash
-$ php artisan passport:keys
+$ php artisan storage:link
 ```
 
 ## Static analysis

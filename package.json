@@ -51,13 +51,18 @@
         "vee-validate": "^3.3.0",
         "vform": "^1.0.1",
         "vue": "^2.6.11",
+        "vue-image-lightbox-carousel": "^1.0.7",
         "vue-jest": "^3.0.6",
         "vue-meta": "^2.3.3",
         "vue-p5": "^0.8.3",
+        "vue-popperjs": "^2.3.0",
         "vue-router": "^3.1.6",
         "vue-template-compiler": "^2.6.11",
         "vuex": "^3.3.0",
         "vuex-router-sync": "^5.0.0"
     },
-    "dependencies": {}
+    "dependencies": {
+        "apexcharts": "^3.22.0",
+        "vue-apexcharts": "^1.6.0"
+    }
 }
