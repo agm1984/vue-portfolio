@@ -367,12 +367,6 @@ export default {
     }
 }
 
-
-
-
-
-
-
 @media (max-width: 1650px) {
     #example_heading {
         font-size: 4.8rem;

@@ -4,7 +4,7 @@
             Create example
         </a-heading>
 
-        <a-form v-slot="{ handleSubmit }">
+        <a-form v-slot="{ handleSubmit }" has-files>
             <a-input-row type="is-wider-right" heading="Status">
                 <a-select
                     v-model="example.status"
@@ -24,15 +24,15 @@
 
             <a-input-row type="is-wider-right" heading="Category">
                 <a-select
-                    v-model="example.category.slug"
+                    v-model="example.category_id"
                     vid="category"
                     rules="required"
                     :expanded="false"
                 >
                     <option
                         v-for="category in categories"
-                        :key="category.slug"
-                        :value="category.slug"
+                        :key="category.id"
+                        :value="category.id"
                     >
                         {{ category.name }}
                     </option>
@@ -57,20 +57,18 @@
 
             <a-input-row type="is-wider-right" heading="Images">
                 <a-multi-image-input
-                    @upload-success="uploadImageSuccess"
-                    @before-remove="beforeRemove"
-                    @edit-image="editImage"
-                    @data-change="dataChange"
-                    @limit-exceeded="limitExceeded"
+                    v-model="images"
                 ></a-multi-image-input>
             </a-input-row>
 
-            <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
-
-            </div>
-
             <a-button @click="handleSubmit(submitForm)">
                 Create
+            </a-button>
+        </a-form>
+
+        <a-form v-slot="{ handleSubmit }" has-files>
+            <a-button @click="handleSubmit(uploadImageSuccess2)">
+                Mock fart
             </a-button>
         </a-form>
 
@@ -96,11 +94,11 @@ export default {
             categories: [],
             example: {
                 status: Example.STATUS_ACTIVE,
-                category: {},
+                category_id: undefined,
                 slug: '',
                 name: '',
-                images: [],
             },
+            images: [],
         };
     },
 
@@ -114,7 +112,7 @@ export default {
     },
 
     mounted() {
-        this.fetchAllCategories();
+        return this.fetchAllCategories();
     },
 
     methods: {
@@ -125,6 +123,7 @@ export default {
                 // console.log('catz', data.categories);
 
                 this.categories = data.categories;
+                this.example.category_id = 1;
                 this.state = CREATE;
             } catch (err) {
                 throw new Error(`create-example# Problem fetching all categories: ${err}.`);
@@ -133,20 +132,43 @@ export default {
 
         async submitForm() {
             try {
-                console.log('testtttttttt');
+                console.log('form submitting:');
+                const payload = new FormData();
+
+                Object.keys(this.example).forEach(field => payload.append(field, this.example[field]));
+
+                this.images.forEach((image) => {
+                    console.log('image', image);
+                    payload.append('images[]', image);
+                });
+
+                const newExample = await axios.post(route('admin.examples.create', payload));
+                console.log('newExample form submitted', newExample.data.example);
+
+                // const { data } = await axios.post(route('admin.examples.editImages', { id: this.example.slug }), payload);
+                // console.log('images', data);
             } catch (err) {
-                throw new Error();
+                throw new Error(`create-example# Problem creating new example: ${err}.`);
             }
         },
 
         uploadImageSuccess(formData, index, fileList) {
-            console.log('uploadImageSuccess', formData, index, fileList);
-
-            // Upload image api
-            // axios.post('http://gostore.gostore-api.test/api/items/upload', formData).then(response => {
-            //   console.log(response)
-            // })
+            console.log('uploadImageSuccess', formData);
+            this.images = fileList;
         },
+
+        // async uploadImageSuccess2() {
+        //     const payload = this.images.reduce((all, image) => {
+        //         all.append(`images[${i}]`, image);
+        //         return all;
+        //     }, new FormData());
+
+        //     payload.append('farto', 'rad');
+
+        //     const { data } = await axios.post(route('admin.examples.editImages', 'business-management-portal'), payload);
+
+        //     console.log('images', data);
+        // },
 
         beforeRemove(index, done, fileList) {
             console.log('index', index, fileList);
@@ -159,7 +181,10 @@ export default {
         },
 
         editImage(formData, index, fileList) {
-            console.log('edit data', formData, index, fileList);
+            console.log('editImage', formData);
+            console.log('index', index);
+            console.log('fileList', fileList);
+            this.images = fileList;
         },
 
         dataChange(data) {

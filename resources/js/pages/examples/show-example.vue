@@ -157,6 +157,8 @@ const IS_LOADED = 1;
 export default {
     name: 'show-example',
 
+    middleware: ['auth', 'role-admin'],
+
     props: {},
 
     data() {
@@ -171,6 +173,12 @@ export default {
         };
     },
 
+    metaInfo() {
+        return {
+            title: this.example.name,
+        };
+    },
+
     computed: {
         isLoading() {
             return (this.state === IS_LOADING);
@@ -178,10 +186,6 @@ export default {
 
         isLoaded() {
             return (this.state === IS_LOADED);
-        },
-
-        title() {
-            return this.example.name;
         },
 
     },
@@ -199,8 +203,8 @@ export default {
             try {
                 const example = await axios.get(route('public.examples.show', this.$route.params.example));
 
-                console.log('params', this.$route.params);
-                console.log('example', example.data);
+                // console.log('params', this.$route.params);
+                // console.log('example', example.data);
 
                 this.example = example.data.example;
 

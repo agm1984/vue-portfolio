@@ -33,4 +33,38 @@ class ExampleController extends Controller
         ]);
     }
 
+    public function create(Request $request)
+    {
+        \Log::debug('flap');
+        \Log::debug($request->all());
+        \Log::debug($request->headers->all());
+
+        \Log::debug('images');
+        \Log::debug($request->input('images[]'));
+        \Log::debug(json_decode($request->input('images[]')));
+
+        $example = Example::generate(
+            $request->input('category_id'),
+            $request->input('name'),
+            $request->input('slug'),
+            $request->input('images'),
+        );
+
+        return response()->json([
+            'example' => $example,
+        ]);
+    }
+
+    public function editImages(Request $request, Example $example)
+    {
+        \Log::debug('example');
+        \Log::debug($example);
+        \Log::debug($request->all());
+        // \Log::debug($request->headers->all());
+
+        return response()->json([
+            'example' => $example,
+        ]);
+    }
+
 }

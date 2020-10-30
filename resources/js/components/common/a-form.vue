@@ -17,7 +17,7 @@
         tag="form"
         :action="action"
         :enctype="formEncType"
-        :method="computedMethod"
+        method="POST"
         :name="name"
         v-bind="$attrs"
         v-on="$listeners"
@@ -90,29 +90,7 @@ export default {
     },
 
     computed: {
-        isMethodPost() {
-            return (this.method === FormMethod.POST);
-        },
-
-        isMethodPut() {
-            return (this.method === FormMethod.PUT);
-        },
-
-        isMethodDelete() {
-            return (this.method === FormMethod.DELETE);
-        },
-
-        hasAction() {
-            return !!this.action;
-        },
-
-        computedMethod() {
-            if (this.method === FormMethod.GET) return FormMethod.GET;
-            return FormMethod.POST; // works for POST, PUT, and DELETE
-        },
-
         formEncType() {
-            // currently unused: 'text/plain'
             if (this.hasFiles) return 'multipart/form-data';
             return 'application/x-www-form-urlencoded';
         },

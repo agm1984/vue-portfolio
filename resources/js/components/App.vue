@@ -28,6 +28,8 @@ export default {
 
     /**
      * Sets page meta info, such as default and page-specific page titles.
+     * To set page-specific titles, see:
+     * https://stackoverflow.com/questions/51921546/vuejs-and-dynamic-titles/64326431#64326431
      */
     metaInfo() {
         return {

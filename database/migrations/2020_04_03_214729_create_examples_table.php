@@ -23,7 +23,6 @@ class CreateExamplesTable extends Migration
 
             $table->string('slug', 255)->unique();
             $table->string('name', 255);
-            $table->string('image_url', 255);
             $table->text('summary')->nullable();
             $table->text('conclusion')->nullable();
 
