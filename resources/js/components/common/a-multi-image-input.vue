@@ -31,10 +31,13 @@
                             <p>
                                 <b-icon
                                     icon="upload"
-                                    size="is-large">
-                                </b-icon>
+                                    size="is-large"
+                                ></b-icon>
                             </p>
-                            <p>Drop your files here or click to upload</p>
+
+                            <p>
+                                Drop your files here or click to upload
+                            </p>
                         </div>
                     </section>
                 </b-upload>
@@ -43,15 +46,16 @@
             <div class="tags">
                 <span v-for="(file, index) in innerValue" :key="index" class="tag is-primary">
                     {{ file.name }}
-                    <button class="delete is-small" type="button" @click="deleteDropFile(index)">
-                    </button>
+
+                    <button
+                        class="delete is-small"
+                        type="button"
+                        @click="deleteDropFile(index)"
+                    ></button>
                 </span>
             </div>
 
         </validation-provider>
-
-        {{ innerValue }}
-
     </section>
 </template>
 

@@ -1,11 +1,11 @@
 <template>
-    <a-card with-geometry>
+    <div>
         <!-- {(+currentScrollYPosition === 0) && this.renderDownScroller()} -->
         <div class="flex items-center justify-center">
             <router-link
                 :to="{ name: 'public.examples.list' }"
                 class=""
-                activeClassName="isActiveCategory"
+                active-class="isActiveCategory"
                 tabindex="0"
                 title="Show everything"
                 exact
@@ -19,7 +19,7 @@
                 :key="category.slug"
                 :to="{ name: 'public.examples.list', params: { category: category.slug } }"
                 class="ml-8"
-                activeClassName="isActiveCategory"
+                active-class="isActiveCategory"
                 tabindex="0"
                 :title="`Show only ${category.name}`"
                 @click="() => this.handleSetActiveCategory(category.slug)"
@@ -28,30 +28,32 @@
             </router-link>
         </div>
 
-        <div id="examples_grid">
+        <div class="flex flex-wrap justify-center w-full">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
                 :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
-                class="examples_grid_feature-button"
+                class="m-32"
                 @click="() => this.props.markExampleSeen(example.slug)"
             >
                 <a-tilt>
-                    <div
-                        class="examples_grid_feature-photo"
-                        :style="{ backgroundImage: `url(${example.image_url})` }"
-                    >
-                        <div class="examples_grid_feature-overlay">
-                            <span class="examples_grid_feature-caption">
-                                {{ example.name }}
-                            </span>
-                            <div
-                                :class="(example.feature_seen === true) ? 'examples_grid_feature-seen' : 'examples_grid_feature-unseen'"
-                            >
-                                <span>✓</span>
+                    <a-card>
+                        <div
+                            class="bg-teal-100 bg-no-repeat bg-cover h-256 w-448"
+                            :style="{ backgroundImage: `url(${example.image_url})` }"
+                        >
+                            <div class="">
+                                <span class="">
+                                    {{ example.name }}
+                                </span>
+                                <div
+                                    :class="(example.feature_seen === true) ? 'examples_grid_feature-seen' : 'examples_grid_feature-unseen'"
+                                >
+                                    <span>✓</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a-card>
                 </a-tilt>
             </router-link>
         </div>
@@ -78,7 +80,7 @@
         >
             ⇧
         </button>
-    </a-card>
+    </div>
 </template>
 
 <script>
@@ -141,7 +143,7 @@ export default {
     methods: {
         setActiveCategory() {
             if (this.$route.params.category) {
-                this.activeCategory = this.categories.find(category => category.slug === this.$route.params.category);
+                this.activeCategory = this.categories.find(category => (category.slug === this.$route.params.category));
                 this.state = SHOW_SINGLE_CATEGORY;
             } else {
                 this.activeCategory = {};
@@ -259,30 +261,6 @@ export default {
     color: #212121;
     background-color: #66FCF1;
     border: 0.1rem solid #66FCF1;
-}
-
-.examples_grid_feature-button {
-    width: 48.0rem;
-    height: 27.0rem;
-    padding: 0;
-    margin: 0;
-    border: none;
-    margin: 3.2rem;
-}
-
-.examples_grid_feature-photo {
-    position: relative;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: left top;
-    width: 48.0rem;
-    height: 27.0rem;
-    border: 0.2rem solid #000;
-    box-shadow: -8px 14px 40px 0px black;
-}
-
-.examples_grid_feature-photo:active {
-    border: 0.2rem solid #66FCF1;
 }
 
 .examples_grid_feature-overlay {

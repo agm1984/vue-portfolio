@@ -21,6 +21,8 @@ class CreateCategoriesTable extends Migration
             $table->string('slug', 255)->unique();
             $table->string('name', 255);
 
+            $table->boolean('is_default')->default(0);
+
             $table->timestamps();
         });
     }

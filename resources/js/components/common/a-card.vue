@@ -27,6 +27,12 @@ export default {
             default: generateUuid,
         },
 
+        fill: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+
         light: {
             type: Boolean,
             required: false,
@@ -48,6 +54,8 @@ export default {
     computed: {
         containerStyles() {
             const styles = ['relative h-auto p-32'];
+
+            if (this.fill) styles.push('w-full');
 
             if (this.light) styles.push('light-card');
             else if (this.dark) styles.push('dark-card');

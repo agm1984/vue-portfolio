@@ -4,75 +4,72 @@
             Create example
         </a-heading>
 
-        <a-form v-slot="{ handleSubmit }" has-files>
-            <a-input-row type="is-wider-right" heading="Status">
-                <a-select
-                    v-model="example.status"
-                    vid="status"
-                    rules="required"
-                    :expanded="false"
-                >
-                    <option
-                        v-for="status in statuses"
-                        :key="status.status"
-                        :value="status.status"
+        <div class="p-32">
+            <a-form v-slot="{ handleSubmit }" has-files>
+                <a-input-row type="is-wider-right" heading="Status">
+                    <a-select
+                        v-model="example.status"
+                        vid="status"
+                        rules="required"
+                        :expanded="false"
                     >
-                        {{ status.label }}
-                    </option>
-                </a-select>
-            </a-input-row>
+                        <option
+                            v-for="status in statuses"
+                            :key="status.status"
+                            :value="status.status"
+                        >
+                            {{ status.label }}
+                        </option>
+                    </a-select>
+                </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Category">
-                <a-select
-                    v-model="example.category_id"
-                    vid="category"
-                    rules="required"
-                    :expanded="false"
-                >
-                    <option
-                        v-for="category in categories"
-                        :key="category.id"
-                        :value="category.id"
+                <a-input-row type="is-wider-right" heading="Category">
+                    <a-select
+                        v-model="example.category_id"
+                        vid="category"
+                        rules="required"
+                        :expanded="false"
                     >
-                        {{ category.name }}
-                    </option>
-                </a-select>
-            </a-input-row>
+                        <option
+                            v-for="category in categories"
+                            :key="category.id"
+                            :value="category.id"
+                        >
+                            {{ category.name }}
+                        </option>
+                    </a-select>
+                </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Name">
-                <a-text-input
-                    v-model="example.name"
-                    vid="name"
-                    rules="required"
-                ></a-text-input>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Name">
+                    <a-text-input
+                        v-model="example.name"
+                        vid="name"
+                        rules="required"
+                    ></a-text-input>
+                </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Slug">
-                <a-text-input
-                    v-model="example.slug"
-                    vid="slug"
-                    rules="required"
-                ></a-text-input>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Slug">
+                    <a-text-input
+                        v-model="example.slug"
+                        vid="slug"
+                        rules="required"
+                    ></a-text-input>
+                </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Images">
-                <a-multi-image-input
-                    v-model="images"
-                ></a-multi-image-input>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Images">
+                    <a-multi-image-input
+                        v-model="example.images"
+                        vid="images"
+                        rules="required"
+                    ></a-multi-image-input>
+                </a-input-row>
 
-            <a-button @click="handleSubmit(submitForm)">
-                Create
-            </a-button>
-        </a-form>
+                <a-button @click="handleSubmit(submitForm)">
+                    Create
+                </a-button>
+            </a-form>
+        </div>
 
-        <a-form v-slot="{ handleSubmit }" has-files>
-            <a-button @click="handleSubmit(uploadImageSuccess2)">
-                Mock fart
-            </a-button>
-        </a-form>
-
-        {{ example }}
     </a-card>
 </template>
 
@@ -97,8 +94,8 @@ export default {
                 category_id: undefined,
                 slug: '',
                 name: '',
+                images: [],
             },
-            images: [],
         };
     },
 
@@ -132,21 +129,15 @@ export default {
 
         async submitForm() {
             try {
-                console.log('form submitting:');
                 const payload = new FormData();
 
                 Object.keys(this.example).forEach(field => payload.append(field, this.example[field]));
 
-                this.images.forEach((image) => {
-                    console.log('image', image);
-                    payload.append('images[]', image);
-                });
+                this.example.images.forEach(image => payload.append('images[]', image));
 
-                const newExample = await axios.post(route('admin.examples.create', payload));
-                console.log('newExample form submitted', newExample.data.example);
+                const response = await axios.post(route('admin.examples.create'), payload);
 
-                // const { data } = await axios.post(route('admin.examples.editImages', { id: this.example.slug }), payload);
-                // console.log('images', data);
+                console.log('newExample form submitted', response.data.example);
             } catch (err) {
                 throw new Error(`create-example# Problem creating new example: ${err}.`);
             }
@@ -154,21 +145,8 @@ export default {
 
         uploadImageSuccess(formData, index, fileList) {
             console.log('uploadImageSuccess', formData);
-            this.images = fileList;
+            this.example.images = fileList;
         },
-
-        // async uploadImageSuccess2() {
-        //     const payload = this.images.reduce((all, image) => {
-        //         all.append(`images[${i}]`, image);
-        //         return all;
-        //     }, new FormData());
-
-        //     payload.append('farto', 'rad');
-
-        //     const { data } = await axios.post(route('admin.examples.editImages', 'business-management-portal'), payload);
-
-        //     console.log('images', data);
-        // },
 
         beforeRemove(index, done, fileList) {
             console.log('index', index, fileList);
@@ -184,7 +162,7 @@ export default {
             console.log('editImage', formData);
             console.log('index', index);
             console.log('fileList', fileList);
-            this.images = fileList;
+            this.example.images = fileList;
         },
 
         dataChange(data) {

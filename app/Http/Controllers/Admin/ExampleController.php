@@ -37,11 +37,7 @@ class ExampleController extends Controller
     {
         \Log::debug('flap');
         \Log::debug($request->all());
-        \Log::debug($request->headers->all());
-
-        \Log::debug('images');
-        \Log::debug($request->input('images[]'));
-        \Log::debug(json_decode($request->input('images[]')));
+        // \Log::debug($request->headers->all());
 
         $example = Example::generate(
             $request->input('category_id'),

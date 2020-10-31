@@ -4,6 +4,7 @@ namespace App;
 
 use App\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Example extends Model
 {
@@ -37,16 +38,10 @@ class Example extends Model
         int $category_id,
         string $name,
         string $slug,
-        $images,
+        array $images,
         ?array $attributes = []
     ) : self
     {
-        \Log::debug('shit ass');
-        \Log::debug($images);
-        \Log::debug(json_decode($images));
-
-        $category = Category::findOrFail($category_id);
-
         $example = self::query()->firstOrNew([ 'slug' => $slug ]);
 
         $example->fill([
@@ -58,7 +53,20 @@ class Example extends Model
             $example->{$key} = $attribute;
         }
 
+        foreach ($images as $image) {
+            \Log::debug('file a');
+            \Log::debug($image);
+
+            Storage::putFileAs(
+                'examples' .'/'. $slug,
+                $image,
+                $image->getClientOriginalName()
+            );
+        }
+
+        $category = Category::findOrFail($category_id);
         $example->category()->associate($category);
+
         $example->save();
 
         return $example;
