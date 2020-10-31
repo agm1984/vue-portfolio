@@ -54,9 +54,6 @@ class Example extends Model
         }
 
         foreach ($images as $image) {
-            \Log::debug('file a');
-            \Log::debug($image);
-
             Storage::putFileAs(
                 'examples' .'/'. $slug,
                 $image,
