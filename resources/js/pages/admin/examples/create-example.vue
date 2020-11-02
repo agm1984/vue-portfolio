@@ -4,6 +4,8 @@
             Create example
         </a-heading>
 
+        <div class="w-full h-2 bg-blue-400"></div>
+
         <div class="p-32">
             <a-form v-slot="{ handleSubmit }" has-files>
                 <a-input-row type="is-wider-right" heading="Status">
@@ -64,9 +66,11 @@
                     ></a-multi-image-input>
                 </a-input-row>
 
-                <a-button @click="handleSubmit(submitForm)">
-                    Create
-                </a-button>
+                <div class="flex items-center justify-end">
+                    <a-button @click="handleSubmit(submitForm)">
+                        Create
+                    </a-button>
+                </div>
             </a-form>
         </div>
 
@@ -137,7 +141,8 @@ export default {
 
                 const response = await axios.post(route('admin.examples.create'), payload);
 
-                console.log('newExample form submitted', response.data.example);
+                // console.log('newExample form submitted', response.data.example);
+                return this.$router.push({ name: 'admin.examples.show', params: { example: response.data.example.slug } }).catch(() => {});
             } catch (err) {
                 throw new Error(`create-example# Problem creating new example: ${err}.`);
             }

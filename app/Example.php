@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Category;
+use App\ExampleImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,7 +32,7 @@ class Example extends Model
     }
 
     public function images() {
-        return $this->belongsToMany(ExampleImage::class);
+        return $this->hasMany(ExampleImage::class);
     }
 
     public static function generate(
@@ -53,18 +54,21 @@ class Example extends Model
             $example->{$key} = $attribute;
         }
 
-        foreach ($images as $image) {
-            Storage::putFileAs(
-                'examples' .'/'. $slug,
-                $image,
-                $image->getClientOriginalName()
-            );
-        }
-
         $category = Category::findOrFail($category_id);
         $example->category()->associate($category);
-
         $example->save();
+
+        foreach ($images as $image) {
+            $image->storeAs(
+                'examples' .'/'. $slug,
+                $image->getClientOriginalName(),
+                'public'
+            );
+
+            $img = ExampleImage::generate($example->id, $image->getClientOriginalName());
+
+            // $example->images()->associate($image);
+        }
 
         return $example;
     }

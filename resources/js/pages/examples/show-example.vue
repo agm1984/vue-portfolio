@@ -93,7 +93,7 @@
                         :to="`/examples/${category_id}/${feature_id}/${image.image_id}`"
                         class="example_image"
                         title="Click to enlarge"
-                        :style="{ backgroundImage: `url('/adam.png')` }"
+                        :style="{ backgroundImage: `url('/storage/examples/test-1/90755726_1623676947772622_5396634804085063680_n.jpg')` }"
                         @click="() => props.markImageSeen({
                             feature_id,
                             image_id: image.image_id,

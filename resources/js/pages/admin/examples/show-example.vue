@@ -13,7 +13,9 @@
             </a-button>
         </div>
 
-        <a-card v-if="isShowing">
+        <div class="w-full h-2 bg-blue-400"></div>
+
+        <div v-if="isShowing" class="p-32">
             <a-input-row type="is-split" heading="ID">
                 <span>{{ example.id }}</span>
             </a-input-row>
@@ -45,7 +47,15 @@
             <a-input-row type="is-split" heading="Conclusion">
                 <span>{{ example.conclusion }}</span>
             </a-input-row>
-        </a-card>
+
+            <a-input-row type="is-split" heading="Images">
+                <img
+                    v-for="image in example.images"
+                    :key="image.filename"
+                    :src="`/storage/examples/${example.slug}/${image.filename}`"
+                >
+            </a-input-row>
+        </div>
 
         <div v-if="isEditing" class="">
             <edit-example
@@ -100,7 +110,7 @@ export default {
         async fetchExample() {
             try {
                 console.log('params', this.$route.params);
-                const { data } = await axios.get(route('admin.examples.show', [this.$route.params.category, this.$route.params.example]));
+                const { data } = await axios.get(route('admin.examples.show', this.$route.params.example));
 
                 console.log('example', data.example);
 

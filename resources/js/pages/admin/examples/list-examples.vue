@@ -12,7 +12,7 @@
         >
             <template slot-scope="{ row }">
                 <b-table-column field="name" label="Name">
-                    <router-link :to="{ name: 'admin.examples.show', params: { category: row.slug } }">
+                    <router-link :to="{ name: 'admin.examples.show', params: { example: row.slug } }">
                         {{ row.name }}
                     </router-link>
                 </b-table-column>

@@ -21,7 +21,7 @@ class CreateExampleImagesTable extends Migration
             $table->unsignedBigInteger('example_id');
             $table->foreign('example_id')->references('id')->on('examples')->cascadeOnDelete();
 
-            $table->string('title', 255);
+            $table->string('filename', 255);
 
             $table->timestamps();
         });
