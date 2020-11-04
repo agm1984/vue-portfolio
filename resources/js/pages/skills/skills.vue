@@ -1,13 +1,13 @@
 <template>
-    <a-page v-title="'Skills'">
-        <user-details></user-details>
+    <div>
+        <!-- <user-details></user-details> -->
 
-        <scene></scene>
+        <!-- <scene></scene> -->
 
         <div id="skills-leftScrollZone"></div>
         <div id="skills-rightScrollZone"></div>
 
-        <stat-cluster
+        <!-- <stat-cluster
             id="cluster_javascript"
             category="skill ratios"
         >
@@ -28,7 +28,7 @@
             <stat-bar label="INDESIGN" :points="75"></stat-bar>
             <stat-bar label="THREE.JS" :points="30"></stat-bar>
             <stat-bar label="BLENDER" :points="25"></stat-bar>
-        </stat-cluster>
+        </stat-cluster> -->
 
         <a
             class="btn resumeButton"
@@ -37,12 +37,12 @@
         >
             DOWNLOAD RESUME
         </a>
-    </a-page>
+    </div>
 </template>
 
 <script>
 import UserDetails from './user-details.vue';
-import Scene from './scene.vue';
+// import Scene from './scene.vue';
 import StatCluster from './stat-cluster.vue';
 import StatBar from './stat-bar.vue';
 
@@ -51,9 +51,13 @@ export default {
 
     components: {
         UserDetails,
-        Scene,
+        // Scene,
         StatCluster,
         StatBar,
+    },
+
+    metaInfo() {
+        return { title: 'Skills' };
     },
 
     props: {},

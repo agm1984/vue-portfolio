@@ -1,5 +1,10 @@
 <template>
-    <div :class="containerStyles">
+    <div
+        :class="containerStyles"
+        :style="{
+            backgroundColor: primary ? '#006666' : undefined,
+        }"
+    >
         <a-sacred-geometry v-if="withGeometry" :id="id"></a-sacred-geometry>
 
         <!-- card content -->
@@ -40,6 +45,12 @@ export default {
         },
 
         dark: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+
+        primary: {
             type: Boolean,
             required: false,
             default: () => false,

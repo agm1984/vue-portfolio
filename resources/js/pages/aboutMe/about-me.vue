@@ -1,201 +1,131 @@
 <template>
-    <div>
+    <div class="w-full">
         <button
-            v-if="true"
-            id="downScroller"
-            @click="handleScrollDown"
+            v-if="!isUserScrolling"
+            class="absolute flex items-center justify-center w-64 h-64 text-white bg-primary"
             tabindex="0"
             title="Click or scroll down to see more"
+            :style="{
+                top: 'calc(100vh - 6.4rem)',
+                right: '1.6rem',
+            }"
+            @click="handleScrollDown"
         >
-            ⇩
+            <span class="mt-4 text-lg">⇩</span>
         </button>
 
+        <a-card>
+            <a-heading level="1" class="mb-16">About me</a-heading>
+
+            <div class="flex flex-row h-auto">
+                <div class="w-1/2">
+                    <a-paragraph>
+                        I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
+                        but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
+                        for coding around that time. I'm an autodidact-type person. All I need is a topic and an impetus, and
+                        I can start researching it. Google really is a magical thing.
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        My list of hobbies is quite short because my main hobby is programming. Beyond that,
+                        I enjoy working out. I've been working out at the gym four times a week for the past 10 years,
+                        although I haven't gone that much in the past 2 years, lol. I'll go again soon (insert joke).
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        I also own a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
+                        you can find me out driving with my friends, listening to music, finding new places to visit.
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        On my <router-link :to="{ name: 'contact' }">Contact</router-link> page, you can find my social details, but I'd recommend my Twitter first,
+                        because it shows all my whimsical, irrational shower thoughts. I'm a little dry and logical,
+                        but I make up for it by being super-friendly and helpful. I am efficient but also fault tolerant.
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        For efficiency reasons, I'll link a few of my social media profiles here:
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        <strong>Twitter</strong> <a href="https://www.twitter.com/agm1984">https://www.twitter.com/agm1984</a>
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        <strong>GitHub</strong> <a href="https://github.com/agm1984">https://github.com/agm1984</a>
+                    </a-paragraph>
+
+                    <a-paragraph>
+                        <strong>StackOverflow</strong> <a href="https://stackoverflow.com/users/6141025/agm1984">https://stackoverflow.com/users/6141025/agm1984</a>
+                    </a-paragraph>
+                </div>
+
+                <div class="flex flex-col w-1/2">
+                    <adam-scene></adam-scene>
+
+                    <button @click="$root.$emit('animate-it')">Test</button>
+                </div>
+            </div>
+
+        </a-card>
+
         <div
-            id="story"
-            class=""
+            class="w-full "
             title="Story"
             description="An approximate history and story about Adam Mackintosh"
         >
-            <h1 class="timeline-title">A MACKINTOSH TREE</h1>
-            <div id="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        API
-                    </div>
-                    <div class="timeline-content">
-                        <h2>backend developer</h2>
-                        <p>
-                            Since 2002, I have helped build, maintain, and promote products &amp; services
-                            from various perspectives.
-                            I have been programming off and on since before then. Since the
-                            emergence of React, I have settled as a fullstack web and mobile developer.
-                            I advocate Functional Programming techniques, and I prefer to use GraphQL,
-                            node.js, React, and React Native.
-                        </p>
-                        {this.renderContactButton()}
-                    </div>
-                </div>
+            <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
 
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        APP
-                    </div>
-                    <div class="timeline-content right">
-                        <h2>frontend developer</h2>
-                        <p>
-                            I am comfortable working in the DOM.
-                            I enjoy the science behind building performant, fluid interfaces.
-                            I can implement virtually anything that can be described on paper.
-                        </p>
-                        {this.renderContactButton()}
-                    </div>
-                </div>
+            <div class="flex flex-row w-full">
+                <a-card class="mr-32" fill primary>
+                    <a-heading level="1" class="mb-16" light>To programmers</a-heading>
 
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        QA
-                    </div>
-                    <div class="timeline-content">
-                        <h2>quality assurance</h2>
-                        <p>
-                            After years of hands-on QA experience helping optimize pre-production
-                            software and print materials against business objectives,
-                            I appreciate Test-Driven Development (TDD). I know the
-                            most about affected logic and features while I am working on them.
-                            Memory fades—this is also why readable code and verbose documentation
-                            are valuable. I appreciate a build-measure-learn
-                            feedback loop because it describes the scientific method.
-                        </p>
-                        {this.renderContactButton()}
-                    </div>
-                </div>
-            </div>
+                    <a-paragraph light>
+                        What can I say? I like to use Mealy finite state machines, ES Lint Airbnb, and
+                        unidirectional, immutable functional-reactive programming (FRP) styles (ie: map, reduce, filter, etc).
+                    </a-paragraph>
 
-            <h1 class="timeline-title timeline-bonusPadding">A TEAM</h1>
+                    <a-paragraph light>
+                        I often think in two modes: push and pull. Pushing is like doing & triggering.
+                        Pulling is like listening & acting. In my opinion, this is much of where the
+                        "functional-reactive" comes from in FRP. Functional can be pushing, and reactive can be pulling.
+                    </a-paragraph>
+                </a-card>
 
-            <div id="team-container-wrapper">
-                <div id="team-container">
+                <a-card class="ml-32" fill>
+                    <a-heading level="1" class="mb-16">To non-programmers</a-heading>
 
-                    <div class="team_person">
-                        <div
-                            class="team_person-avatar"
-                            style="background-image: url('/adam-left.png')"
-                        ></div>
-                        <h1 class="team_person-title">adam backend</h1>
-                        <p class="team_person-blurb">
-                            I compose functions in node.js.
-                            I like polyglot microservices, graph database paired with GraphQL, and websockets.
-                            I strive to make easy to maintain, extend, and test APIs.
-                        </p>
-                    </div>
-
-                    <div class="team_person">
-                        <div
-                            class="team_person-avatar"
-                            style="background-image: url('/adam-center.png')"
-                        ></div>
-                        <h1 class="team_person-title">adam qa</h1>
-                        <p class="team_person-blurb">
-                            A good QA effort allows implementation details to change with
-                            minimal to no effect on the existing test suite.
-                            I prefer continuous integration and testing in multiple environments.
-                        </p>
-                        {this.renderContactButton()}
-                    </div>
-
-                    <div class="team_person">
-                        <div
-                            class="team_person-avatar"
-                            style="background-image: url('/adam-right.png')"
-                        ></div>
-                        <h1 class="team_person-title">adam frontend</h1>
-                        <p class="team_person-blurb">
-                            Designing UIs can be easy.
-                            Take a constraint, and use it to implement a ruleset that
-                            communicates effectively in a riveting manner.
-                            Maximizing UX is a different story.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <h1 class="timeline-title timeline-bonusPadding">A BRIEF WORD</h1>
-            <div id="info-wrapper">
-                <div id="info-specialWrapper">
-                    <div id="info-container">
-                        <div class="info_split">
-                            <h3 class="info_split-title">to non-programmers</h3>
-                            <div id="info_split-container">
-                                <div class="info_split-column">
-                                    <h4 class="info_split-heading">work</h4>
-                                    <p class="info_split-content">
-                                        As a developer, I aim to write not only pragmatic and UX-enriched
-                                        code but also empathetic and thorough technical documentation.
-                                        I am always curious to learn new tools and techniques.
-                                    </p>
-                                </div>
-                                <div class="info_split-column">
-                                    <h4 class="info_split-heading">life</h4>
-                                    <p class="info_split-content">
-                                        I am introverted and creative and known for being light hearted,
-                                        precise, and thorough. I decompress from work by going to
-                                        the gym and cooking nice meals for other people.
-                                        I like the chemistry behind balancing salty, sweet, sour, and hot.
-                                    </p>
-                                </div>
-                                <div class="info_split-column">
-                                    <h4 class="info_split-heading">balance</h4>
-                                    <p class="info_split-content">
-                                        Fitness &amp; nutrition has been a way of life for me for the past ten years.
-                                        A healthy mind and optimized metabolic processes both start with
-                                        optimized nutrient-intake.
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="flex flex-row w-full">
+                        <div class="w-1/3">
+                            <a-heading level="3" primary nunito>Work</a-heading>
+                            <a-paragraph class="pr-32">
+                                As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
+                                thorough technical documentation. I am always curious to learn new tools and techniques.
+                            </a-paragraph>
                         </div>
-                        <div id="info_split-divider"></div>
-                        <div class="info_split">
-                            <h3 class="info_split-title">to programmers</h3>
-                            <div id="programmers-container">
-                                <p class="story_paragraph">
-                                    I like JavaScript (JS) because it is a language made of atomic building blocks.
-                                    A Function is a place to do work, like in Mathematics.
-                                    This is fundamentally why I am passionate about deterministic transformations;
-                                    they create predictable movement from point A to B like a math formula.
-                                    Immutable Functional Programming allows a person to compose
-                                    Functions together with minimized time and complexity
-                                    provided the person follows some strict rules.
-                                </p>
-                                <p class="story_paragraph">
-                                    The declarative-nature of Functional Programming
-                                    matches up well with Objects, event streams, and state;
-                                    immutability is important because shared state and side
-                                    effects are very dangerous. Understanding the event loop and garbage
-                                    collection helps a lot. Aiming for referential transparency helps even more.
-                                </p>
-                                <p class="story_paragraph">
-                                    Some consider JS loose, and they are correct,
-                                    but dynamic typing allows one to rapidly spool out logic
-                                    in any desired direction.
-                                    JS is a language of great productivity towards both APIs and apps.
-                                    It is an isomorphic dominator. Reach out to me on Twitter if you want
-                                    to pick up the conversation.
-                                    I'd love to hear your thoughts or provide additional context.
-                                </p>
-                                <p class="story_paragraph">
-                                    I would need more time to explain, but JS is great at managing streams
-                                    of concurrent, potentially-unrelated actions and events
-                                    while maximizing what I would call lossless IOPs (Input/Outputs per second).
-                                    JS has everything I need to quickly create scalable,
-                                    performant applications.
-                                </p>
-                            </div>
+
+                        <div class="w-1/3">
+                            <a-heading level="3" primary nunito>Life</a-heading>
+                            <a-paragraph class="pr-32">
+                                I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
+                                from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
+                                balancing salty, sweet, sour, and hot.
+                            </a-paragraph>
+                        </div>
+
+                        <div class="w-1/3">
+                            <a-heading level="3" primary nunito>Balance</a-heading>
+                            <a-paragraph>
+                                Fitness & nutrition has been a way of life for me for the past ten years. A healthy mind and
+                                optimized metabolic processes both start with optimized nutrient-intake.
+                            </a-paragraph>
                         </div>
                     </div>
-                </div>
+                </a-card>
             </div>
 
-            <h1 class="timeline-title timeline-bonusPadding">A COUPLE PATHS</h1>
+            <a-heading level="3" class="mt-64 mb-32" nunito>A COUPLE PATHS</a-heading>
+
             <div id="path-wrapper">
                 <div id="path-container">
                     <router-link
@@ -219,9 +149,6 @@
 
                 <div id="story-footer">
                     <div id="story-left">
-                        <div class="nav_adamLogo"></div>
-                        <span id="Nav_brand-adam">ADAM</span>
-                        <span id="Nav_brand-mackintosh">MACKINTOSH</span>
                     </div>
 
                     <div id="story-center">
@@ -231,21 +158,33 @@
                     <div id="story-right"></div>
                 </div>
 
-                <button
-                    id="backToTopScroller"
-                    title="Back to top?"
-                    @click="handleScrollBackToTop"
-                >
-                    ⇧
-                </button>
             </div>
+        </div>
+
+        <div class="absolute" :style="{ right: '1.6rem' }">
+            <button
+                class="flex items-center justify-center w-64 h-64 text-white bg-primary"
+                title="Back to top?"
+                @click="handleScrollBackToTop"
+            >
+                <span class="mt-4 text-lg">⇧</span>
+            </button>
         </div>
     </div>
 </template>
 
 <script>
+import AdamScene from './adam-scene.vue';
+import isUserScrolling from '../../components/mixins/isUserScrolling';
+
 export default {
     name: 'about-me',
+
+    components: {
+        AdamScene,
+    },
+
+    mixins: [isUserScrolling],
 
     metaInfo() {
         return { title: 'About me' };
@@ -277,17 +216,6 @@ export default {
 </script>
 
 <style>
-#story {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 12.8rem;
-    width: 100%;
-    max-width: 1100px;
-    height: 100%;
-    margin: 0 auto;
-}
-
 .timeline-title {
     position: relative;
     font-family: 'Oswald', sans-serif;
@@ -428,35 +356,6 @@ export default {
     border-bottom: 0.4rem solid #8B4513;
 }
 
-.btn {
-    display: inline-block;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.6rem;
-    font-weight: 200;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
-    background: none;
-    margin-bottom: 3.2rem;
-    padding: 1.6rem;
-    border: 0.1rem solid #fff;
-    transition: all 250ms ease-in-out;
-}
-
-.btn:hover {
-    color: #66FCF1;
-    border: 0.1rem solid #66FCF1;
-    transition: all 250ms ease-in-out;
-}
-
-.btn:active {
-    color: #FF5043;
-    border: 0.1rem solid #FF5043;
-    transition: all 125ms ease-in-out;
-}
-
 @media (max-width: 768px) {
     #timeline {
         margin: 3.2rem;
@@ -508,14 +407,6 @@ export default {
     #timeline .timeline-item .timeline-content.right:before {
         margin-left: 0.4rem;
     }
-}
-
-.story_paragraph {
-    font-family: 'Roboto', sans-serif;
-    letter-spacing: 0.1rem;
-    font-weight: 300;
-    font-size: 1.6rem;
-    line-height: 2.4rem;
 }
 
 #team-intro {

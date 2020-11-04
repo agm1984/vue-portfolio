@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="relative w-512 h-512">
         <div id="skills_scene"></div>
     </div>
 </template>
@@ -84,13 +84,14 @@ export default {
 
         initialize() {
             this.mount = document.querySelector('#skills_scene');
+            this.mount.domElement.id = 'YourIDName';
 
             // setup
             this.clock = new THREE.Clock();
-            this.width = this.mount.clientWidth;
-            this.height = this.mount.clientHeight;
-            this.windowHalfX = this.mount.clientWidth / 2;
-            this.windowHalfY = this.mount.clientHeight / 2;
+            this.width = this.mount.offsetWidth;
+            this.height = this.mount.offsetHeight;
+            this.windowHalfX = this.mount.offsetWidth / 2;
+            this.windowHalfY = this.mount.offsetHeight / 2;
 
             // camera
             this.camera = new THREE.PerspectiveCamera(85, this.width / this.height, 1, 4000);
@@ -140,7 +141,7 @@ export default {
             });
 
             // render
-            this.renderer = new THREE.WebGLRenderer({ alpha: true });
+            this.renderer = new THREE.WebGLRenderer({ alpha: true, canvas: this.mount });
             this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(this.width, this.height);
             this.mount.appendChild(this.renderer.domElement);
@@ -169,11 +170,12 @@ export default {
 </script>
 
 <style>
-#skills_scene {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; }
+    #skills_scene {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* height: 100vh; */
+    }
 </style>

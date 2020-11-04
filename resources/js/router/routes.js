@@ -11,6 +11,7 @@ function page(path) {
 const router = [
     { path: '/', name: 'home', component: page('home/home.vue') },
     { path: '/about', name: 'about', component: page('aboutMe/about-me.vue') },
+    { path: '/skills', name: 'skills', component: page('skills/skills.vue') },
     {
         path: '/examples/:category?',
         name: 'public.examples.list',

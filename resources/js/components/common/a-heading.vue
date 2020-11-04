@@ -23,6 +23,12 @@ export default {
             default: () => true,
         },
 
+        primary: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+
         nunito: {
             type: Boolean,
             required: false,
@@ -45,7 +51,7 @@ export default {
 
         const Heading = `h${props.level}`;
 
-        const getStylesForHeadingLevel = ({ level, dark, light, nunito, inline }) => {
+        const getStylesForHeadingLevel = ({ level, dark, light, primary, nunito, inline }) => {
             const styles = [''];
 
             if (inline) styles.push('inline tracking-wide');
@@ -61,7 +67,8 @@ export default {
             else styles.push('font-aroly');
 
             // text colour
-            if (light) styles.push('text-white');
+            if (primary) styles.push('text-primary');
+            else if (light) styles.push('text-white');
             else if (dark) styles.push('text-black');
 
             return styles;

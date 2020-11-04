@@ -65,9 +65,7 @@ class Example extends Model
                 'public'
             );
 
-            $img = ExampleImage::generate($example->id, $image->getClientOriginalName());
-
-            // $example->images()->associate($image);
+            ExampleImage::generate($example->id, $image->getClientOriginalName());
         }
 
         return $example;
