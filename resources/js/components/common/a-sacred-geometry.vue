@@ -4,7 +4,7 @@
         <!-- note: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver -->
         <vue-p5
             :class="['p5wrapper absolute inset-0', {
-                'opacity-50': isWallpaper,
+                'opacity-10': isWallpaper,
                 'rounded-lg': !isWallpaper,
                 'overflow-hidden': !isWallpaper,
             }]"
