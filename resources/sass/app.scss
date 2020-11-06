@@ -73,22 +73,18 @@ hr {
     @apply bg-accent m-0 opacity-50;
 }
 
-// buefy
-.dropdown-content {
-    @apply .dark-card;
-}
-
 // cards
 .dark-card {
     background: rgba(29, 38, 47, 0.96);
-    border-radius: 8px;
-    box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.32);
 }
 
 .light-card {
     background: rgba(255, 255, 245, 0.96);
-    border-radius: 8px;
-    box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.32);
+}
+
+// buefy
+.dropdown-content {
+    @apply .dark-card;
 }
 
 // @tailwind components;

@@ -3,6 +3,7 @@
         :class="containerStyles"
         :style="{
             backgroundColor: primary ? '#006666' : undefined,
+            boxShadow: '5px 5px 15px 0px rgba(50, 50, 50, 0.32)'
         }"
     >
         <a-sacred-geometry v-if="withGeometry" :id="id"></a-sacred-geometry>
@@ -64,7 +65,7 @@ export default {
 
     computed: {
         containerStyles() {
-            const styles = ['relative h-auto p-32'];
+            const styles = ['relative h-auto rounded'];
 
             if (this.fill) styles.push('w-full');
 

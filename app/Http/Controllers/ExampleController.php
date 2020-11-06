@@ -19,7 +19,7 @@ class ExampleController extends Controller
                 ->get();
 
         return response()->json([
-            'examples' => $examples->load('category'),
+            'examples' => $examples->load(['category', 'images']),
         ]);
     }
 

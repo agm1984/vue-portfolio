@@ -1,6 +1,19 @@
 <template>
-    <div>
-        <!-- {(+currentScrollYPosition === 0) && this.renderDownScroller()} -->
+    <div class="w-full">
+        <button
+            v-if="!isUserScrolling"
+            class="absolute flex items-center justify-center w-64 h-64 text-white bg-primary"
+            tabindex="0"
+            title="Click or scroll down to see more"
+            :style="{
+                top: 'calc(100vh - 6.4rem)',
+                right: '1.6rem',
+            }"
+            @click="handleScrollDown"
+        >
+            <span class="mt-4 text-lg">⇩</span>
+        </button>
+
         <div class="flex items-center justify-center">
             <router-link
                 :to="{ name: 'public.examples.list' }"
@@ -28,7 +41,7 @@
             </router-link>
         </div>
 
-        <div class="flex flex-wrap justify-center w-full">
+        <a-card class="flex flex-wrap justify-center w-full">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
@@ -37,13 +50,13 @@
                 @click="() => this.props.markExampleSeen(example.slug)"
             >
                 <a-tilt>
-                    <a-card>
+                    <a-card class="">
                         <div
-                            class="bg-teal-100 bg-no-repeat bg-cover h-256 w-448"
-                            :style="{ backgroundImage: `url(${example.image_url})` }"
+                            class="bg-no-repeat bg-cover h-256 w-448"
+                            :style="{ backgroundImage: `url(/storage/examples/${example.slug}/${example.images[0].filename})` }"
                         >
-                            <div class="">
-                                <span class="">
+                            <div class="px-16 py-8 bg-primary">
+                                <span class="text-white font-nunito">
                                     {{ example.name }}
                                 </span>
                                 <div
@@ -56,7 +69,7 @@
                     </a-card>
                 </a-tilt>
             </router-link>
-        </div>
+        </a-card>
 
         <template v-if="true">
             <div id="examples-footer">
@@ -72,19 +85,21 @@
             </div>
         </template>
 
-        <button
-            v-if="true"
-            id="backToTopScroller"
-            onClick={this.handleScrollBackToTop}
-            title="Back to top?"
-        >
-            ⇧
-        </button>
+        <div class="absolute" :style="{ right: '1.6rem' }">
+            <button
+                class="flex items-center justify-center w-64 h-64 text-white bg-primary"
+                title="Back to top?"
+                @click="handleScrollBackToTop"
+            >
+                <span class="mt-4 text-lg">⇧</span>
+            </button>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import isUserScrolling from '../../components/mixins/isUserScrolling';
 
 const LOADING = 0;
 const SHOW_ALL_CATEGORIES = 1;
@@ -93,6 +108,8 @@ const SHOW_NETWORK_ERRORS = 3;
 
 export default {
     name: 'examples',
+
+    mixins: [isUserScrolling],
 
     metaInfo() {
         return { title: 'Examples' };
@@ -141,6 +158,20 @@ export default {
     },
 
     methods: {
+        handleScrollDown() {
+            return window.scrollTo({
+                top: window.innerHeight / 2,
+                behavior: 'smooth',
+            });
+        },
+
+        handleScrollBackToTop() {
+            return window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        },
+
         setActiveCategory() {
             if (this.$route.params.category) {
                 this.activeCategory = this.categories.find(category => (category.slug === this.$route.params.category));

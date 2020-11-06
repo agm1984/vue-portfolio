@@ -23,7 +23,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
-                'name' => 'content management system',
+                'name' => 'Content Management System',
                 'images' => [
                     'cms-articles.gif',
                     'cms-dashboards.gif',
@@ -40,7 +40,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
-                'name' => 'business management portal',
+                'name' => 'Business Management Portal',
                 'images' => [
                     'router.png',
                     'workflow-addLead.gif',
@@ -54,7 +54,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
-                'name' => 'mackintosh windows',
+                'name' => 'Mackintosh Windows',
                 'images' => [
                     'windows-adamHobbies.gif',
                     'windows-adamProperties.gif',
@@ -66,7 +66,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
-                'name' => 'clock angle calculator',
+                'name' => 'Clock Angle Calculator',
                 'images' => [
                     'clockAngle.gif',
                     'clockUnitTest.gif',
@@ -75,7 +75,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'react 16 complete guide',
+                'name' => 'React 16 Complete Guide',
                 'images' => [
                     'burger-creation.gif',
                     'burger-signup.gif',
@@ -84,7 +84,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'modern react with redux',
+                'name' => 'Modern React with Redux',
                 'images' => [
                     'modern-weather.gif',
                     'modern-youtube.gif',
@@ -94,7 +94,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'advanced react and redux',
+                'name' => 'Advanced React and Redux',
                 'images' => [
                     'action-creators-old.png',
                     'advanced-signup.gif',
@@ -104,7 +104,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'graphql with react',
+                'name' => 'Graphql with React',
                 'images' => [
                     'add-songs.gif',
                 ],
@@ -112,7 +112,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'advanced node.js',
+                'name' => 'Advanced Node.js',
                 'images' => [
                     'chatbot.gif',
                 ],
@@ -120,7 +120,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'react native and redux',
+                'name' => 'React Native and Redux',
                 'images' => [
                     'album-purchase.gif',
                     'employee-manager.gif',
@@ -130,7 +130,7 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $courses_id,
-                'name' => 'web developer bootcamp',
+                'name' => 'Web Developer Bootcamp',
                 'images' => [
                     'campsite-addNew.gif',
                     'campsite-comments.gif',
