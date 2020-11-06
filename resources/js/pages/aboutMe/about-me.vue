@@ -14,7 +14,7 @@
             <span class="mt-4 text-lg">⇩</span>
         </button>
 
-        <a-card>
+        <a-card class="p-32">
             <a-heading level="1" class="mb-16">About me</a-heading>
 
             <div class="flex flex-row h-auto">
@@ -77,7 +77,7 @@
             <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
 
             <div class="flex flex-row w-full">
-                <a-card class="mr-32" fill primary>
+                <a-card class="p-32 mr-32" fill primary>
                     <a-heading level="1" class="mb-16" light>To programmers</a-heading>
 
                     <a-paragraph light>
@@ -92,7 +92,7 @@
                     </a-paragraph>
                 </a-card>
 
-                <a-card class="ml-32" fill>
+                <a-card class="p-32 ml-32" fill>
                     <a-heading level="1" class="mb-16">To non-programmers</a-heading>
 
                     <div class="flex flex-row w-full">
