@@ -63,6 +63,8 @@ const router = [
         component: page('design/design.vue'),
         children: [
             { path: 'buttons', name: 'design.buttons', component: page('design/buttons.vue') },
+            { path: 'colour', name: 'design.colour', component: page('design/colour.vue') },
+            { path: 'sizing', name: 'design.sizing', component: page('design/sizing.vue') },
             { path: 'typography', name: 'design.typography', component: page('design/typography.vue') },
         ],
     },

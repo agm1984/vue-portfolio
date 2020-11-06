@@ -1,7 +1,7 @@
 <template>
-    <a-card id="design-system-buttons" class="p-32" with-geometry>
+    <a-card id="design-system-colour" class="p-32" with-geometry>
 
-        <a-heading level="1" dark>Buttons</a-heading>
+        <a-heading level="1" dark>Colour</a-heading>
 
         <a-paragraph>
             Inside setup I have used this but the canvas size is not according to the div size.

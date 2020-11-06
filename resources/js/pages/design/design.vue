@@ -26,6 +26,18 @@
                                     :active="$router.currentRoute.name === 'design.buttons'"
                                 ></b-menu-item>
                                 <b-menu-item
+                                    label="Colour"
+                                    tag="router-link"
+                                    :to="{ name: 'design.colour' }"
+                                    :active="$router.currentRoute.name === 'design.colour'"
+                                ></b-menu-item>
+                                <b-menu-item
+                                    label="Space & Size"
+                                    tag="router-link"
+                                    :to="{ name: 'design.sizing' }"
+                                    :active="$router.currentRoute.name === 'design.sizing'"
+                                ></b-menu-item>
+                                <b-menu-item
                                     label="Typography"
                                     tag="router-link"
                                     :to="{ name: 'design.typography' }"
