@@ -1,6 +1,6 @@
 <template>
-    <a-card with-geometry>
-        <a-heading level="1" dark>
+    <a-card class="p-32" with-geometry>
+        <a-heading level="1" class="mb-16" dark>
             Create category
         </a-heading>
 

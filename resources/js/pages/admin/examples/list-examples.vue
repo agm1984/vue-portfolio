@@ -1,6 +1,6 @@
 <template>
-    <a-card with-geometry>
-        <div class="flex items-center justify-between">
+    <a-card class="p-32" with-geometry>
+        <div class="flex items-center justify-between pb-16">
             <a-heading level="1">
                 Examples
             </a-heading>

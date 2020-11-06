@@ -1,12 +1,10 @@
 <template>
-    <a-card with-geometry>
-        <a-heading level="1" dark>
+    <a-card class="p-32" with-geometry>
+        <a-heading level="1" class="mb-16" dark>
             Create example
         </a-heading>
 
-        <div class="w-full h-2 bg-blue-400"></div>
-
-        <div class="p-32">
+        <div class="">
             <a-form v-slot="{ handleSubmit }" has-files>
                 <a-input-row type="is-wider-right" heading="Status">
                     <a-select

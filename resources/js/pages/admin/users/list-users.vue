@@ -1,7 +1,7 @@
 <template>
-    <a-card with-geometry class="">
-        <div class="flex items-center justify-between">
-            <a-heading level="1">
+    <a-card with-geometry class="p-32">
+        <div class="flex items-center justify-between pb-16">
+            <a-heading level="1" >
                 Users
             </a-heading>
         </div>
