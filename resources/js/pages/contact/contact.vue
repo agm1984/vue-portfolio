@@ -1,7 +1,7 @@
 <template>
     <div class="flex w-full h-auto">
         <div class="flex flex-row w-full">
-            <a-card class="mr-16 w-768" with-geometry>
+            <a-card class="p-32 mr-16 w-768" with-geometry>
                 <a-heading level="1" class="mb-16">Contact</a-heading>
 
                 <a-paragraph>
@@ -30,7 +30,9 @@
                 </a-paragraph>
 
                 <div class="flex flex-col pb-8 bg-grey-200">
-                    <a-heading level="4" class="pl-8 bg-primary" nunito light>Find me on social media</a-heading>
+                    <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
+                        Find me on social media
+                    </a-heading>
                     <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
                     <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
                     <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
