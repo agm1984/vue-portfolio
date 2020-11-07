@@ -56,8 +56,8 @@ export default {
 
             if (inline) styles.push('inline tracking-wide');
 
-            if (+level === 1) styles.push('text-xl');
-            if (+level === 2) styles.push('text-lg');
+            if (+level === 1) styles.push('text-2xl');
+            if (+level === 2) styles.push('text-xl');
             if (+level === 3) styles.push('text-md');
             if (+level === 4) styles.push('text-base');
             if (+level === 5) styles.push('text-sm');

@@ -1,151 +1,149 @@
 <template>
-    <a-card v-if="isLoaded" with-geometry>
-        <div class="relative flex items-center justify-between">
-            <a-heading level="1" dark>
-                {{ example.name }}
-            </a-heading>
+    <div class="w-full">
+        <a-card v-if="isLoaded" class="p-32" with-geometry>
+            <div class="relative flex items-center justify-between">
+                <a-heading level="1" dark>
+                    {{ example.name }}
+                </a-heading>
+            </div>
+
+            <div>
+                <div id=""></div>
+
+                <div id="">
+                    <div id="">
+                        <h2 id="">{{ example.name }}</h2>
+                        <div id="">
+                            {feature_URL_primary.enabled && (
+                            <a
+                                class="example_links-link"
+                                href={feature_URL_primary.url}
+                                rel="noopener noreferrer"
+                                title={feature_URL_primary.tooltip}
+                                target="_blank"
+                            >
+                                {feature_URL_primary.label}
+                            </a>
+                            )}
+                            {feature_URL_secondary.enabled && (
+                            <a
+                                class="example_links-link"
+                                href={feature_URL_secondary.url}
+                                rel="noopener noreferrer"
+                                title={feature_URL_secondary.tooltip}
+                                target="_blank"
+                            >
+                                {feature_URL_secondary.label}
+                            </a>
+                            )}
+                            {feature_URL_tertiary.enabled && (
+                            <a
+                                class="example_links-link"
+                                href={feature_URL_tertiary.url}
+                                rel="noopener noreferrer"
+                                title={feature_URL_tertiary.tooltip}
+                                target="_blank"
+                            >
+                                {feature_URL_tertiary.label}
+                            </a>
+                            )}
+                        </div>
+                    </div>
+                    <div id="example_header-right">
+                        <div
+                            class="example_header-photo"
+                            :style="{ backgroundImage: `url('/adam.png')` }"
+                            title="Scroll down to see more"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="example_content-half">
+                    <div class="example_content-split">
+                        <h3 class="example_content-subheading">technologies used</h3>
+
+                        <div id="example_technologies-container">
+                            <ul class="example_technologies">
+                                <li v-for="primary in ['One', 'Two', 'Three']" :key="primary">
+                                    {{ primary }}
+                                </li>
+                            </ul>
+                            <ul class="example_technologies">
+                                <li v-for="secondary in ['Four', 'Five', 'Six']" :key="secondary">
+                                    {{ secondary }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="story-footer">
+                    <div id="story-left"></div>
+                    <div id="story-center">
+                        <span
+                            id="story-conclusion"
+                            :style="{ color: '#FF5043' }"
+                        >
+                            △△△
+                        </span>
+                    </div>
+                    <div id="story-right"></div>
+                </div>
+
+            </div>
+
+        </a-card>
+
+        <div class="flex flex-row w-full">
+            <a-card class="w-1/2 p-32 mt-16 mr-16" with-geometry>
+                <a-heading level="2" class="mb-16">Summary</a-heading>
+
+                <a-paragraph>
+                    {{ example.summary }}
+                </a-paragraph>
+            </a-card>
+
+            <a-card class="w-1/2 p-32 mt-16 ml-16" primary>
+                <a-heading level="2" class="mb-16" light>Technologies Used</a-heading>
+
+                list
+            </a-card>
         </div>
 
-        <a-card>
+        <a-card class="p-32 mt-16" with-geometry>
+            <a-heading level="2" class="mb-16">Images</a-heading>
 
-            <div id=""></div>
-
-            <div id="">
-                <div id="">
-                    <h2 id="">{{ example.name }}</h2>
-                    <div id="">
-                        {feature_URL_primary.enabled && (
-                        <a
-                            class="example_links-link"
-                            href={feature_URL_primary.url}
-                            rel="noopener noreferrer"
-                            title={feature_URL_primary.tooltip}
-                            target="_blank"
-                        >
-                            {feature_URL_primary.label}
-                        </a>
-                        )}
-                        {feature_URL_secondary.enabled && (
-                        <a
-                            class="example_links-link"
-                            href={feature_URL_secondary.url}
-                            rel="noopener noreferrer"
-                            title={feature_URL_secondary.tooltip}
-                            target="_blank"
-                        >
-                            {feature_URL_secondary.label}
-                        </a>
-                        )}
-                        {feature_URL_tertiary.enabled && (
-                        <a
-                            class="example_links-link"
-                            href={feature_URL_tertiary.url}
-                            rel="noopener noreferrer"
-                            title={feature_URL_tertiary.tooltip}
-                            target="_blank"
-                        >
-                            {feature_URL_tertiary.label}
-                        </a>
-                        )}
-                    </div>
-                </div>
-                <div id="example_header-right">
-                    <div
-                        class="example_header-photo"
-                        :style="{ backgroundImage: `url('/adam.png')` }"
-                        title="Scroll down to see more"
-                    ></div>
-                </div>
-            </div>
-
-            <div class="example_content-half">
-                <div class="example_content-split">
-                    <h3 class="example_content-subheading">summary</h3>
-
-                    <p class="example_content-paragraph">
-                        {{ example.summary }}
-                    </p>
-                </div>
-                <div class="example_content-split">
-                    <h3 class="example_content-subheading">technologies used</h3>
-
-                    <div id="example_technologies-container">
-                        <ul class="example_technologies">
-                            <li v-for="primary in ['One', 'Two', 'Three']" :key="primary">
-                                {{ primary }}
-                            </li>
-                        </ul>
-                        <ul class="example_technologies">
-                            <li v-for="secondary in ['Four', 'Five', 'Six']" :key="secondary">
-                                {{ secondary }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="example_content-full">
-                <h3 class="example_content-subheading">additional images</h3>
-                <div id="example_images">
-                    {feature_images.map(image => (
-                    <router-link
-                        key={image.image_id}
-                        :to="`/examples/${category_id}/${feature_id}/${image.image_id}`"
-                        class="example_image"
-                        title="Click to enlarge"
-                        :style="{ backgroundImage: `url('/storage/examples/test-1/90755726_1623676947772622_5396634804085063680_n.jpg')` }"
-                        @click="() => props.markImageSeen({
-                            feature_id,
-                            image_id: image.image_id,
-                        })"
-                    >
-                        <div
-                            class="example_image-overlay"
-                        >
-                            <span class="example_image-caption">
-                                {image.image_caption}
-                            </span>
-                            <div
-                                :class="(image.image_seen === true) ? 'example_image-seen' : 'example_image-unseen'"
-                            >
-                                <span>✓</span>
-                            </div>
-                        </div>
-                    </router-link>
-                    ))}
-                </div>
-            </div>
-
-            <div class="example_content-full">
-                <h3 class="example_content-subheading">conclusion</h3>
-                <p class="example_content-paragraph">
-                    {{ example.conclusion }}
-                </p>
-            </div>
-
-            <div id="story-footer">
-                <div id="story-left"></div>
-                <div id="story-center">
-                    <span
-                        id="story-conclusion"
-                        :style="{ color: '#FF5043' }"
-                    >
-                        △△△
-                    </span>
-                </div>
-                <div id="story-right"></div>
-            </div>
-
-            <div id="example_back-wrapper">
-                <button
-                    id="example_back"
-                    @click="() => props.handleBackToExamples()"
+            <div id="example_images">
+                <router-link
+                    v-for="image in example.images"
+                    :key="image.image_id"
+                    :to="`/storage/examples/${example.slug}/${image.filename}`"
+                    class="example_image"
+                    title="Click to enlarge"
+                    :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
+                    @click="() => props.markImageSeen({
+                        feature_id,
+                        image_id: image.image_id,
+                    })"
                 >
-                    BACK
-                </button>
+                    <div
+                        :class="(image.image_seen === true) ? 'example_image-seen' : 'example_image-unseen'"
+                    >
+                        <span>✓</span>
+                    </div>
+                </router-link>
             </div>
         </a-card>
-    </a-card>
+
+        <a-card class="p-32 mt-16" with-geometry>
+            <a-heading level="2" class="mb-16">Conclusion</a-heading>
+
+            <a-paragraph>
+                {{ example.conclusion }}
+            </a-paragraph>
+        </a-card>
+
+    </div>
 </template>
 
 <script>

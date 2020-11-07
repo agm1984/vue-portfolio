@@ -35,7 +35,6 @@ class ExampleController extends Controller
 
     public function create(Request $request)
     {
-        \Log::debug('flap');
         \Log::debug($request->all());
         // \Log::debug($request->headers->all());
 

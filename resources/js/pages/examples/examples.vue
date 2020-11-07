@@ -53,9 +53,9 @@
                     <a-card class="">
                         <div
                             class="bg-no-repeat bg-cover h-256 w-448"
-                            :style="{ backgroundImage: `url(/storage/examples/${example.slug}/${example.images[0].filename})` }"
+                            :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${example.images[0].filename}')` }"
                         >
-                            <div class="px-16 py-8 bg-primary">
+                            <div class="px-16 py-8 bg-transparent-grey">
                                 <span class="text-white font-nunito">
                                     {{ example.name }}
                                 </span>

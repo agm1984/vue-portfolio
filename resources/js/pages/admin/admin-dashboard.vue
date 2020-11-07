@@ -65,25 +65,25 @@
         <div class="w-full h-auto pt-64 pl-64">
             <div v-if="isDashboard" class="flex items-center">
                 <a-card class="w-1/3 p-32" with-geometry>
-                    <a-heading level="1">
+                    <a-heading level="2">
                         Users
                     </a-heading>
                 </a-card>
 
                 <a-card class="w-1/3 p-32 m-16" with-geometry>
-                    <a-heading level="1">
+                    <a-heading level="2">
                         Categories
                     </a-heading>
                 </a-card>
 
                 <a-card class="w-1/3 p-32" with-geometry>
-                    <a-heading level="1">
+                    <a-heading level="2">
                         Examples
                     </a-heading>
                 </a-card>
             </div>
             <a-card v-if="isDashboard" class="p-32" with-geometry>
-                <a-heading level="1">
+                <a-heading level="2">
                     Dashboard
                 </a-heading>
 

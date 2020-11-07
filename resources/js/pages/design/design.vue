@@ -14,7 +14,7 @@
                     <div class="">
                         <div class="block">
                             <a-heading level="1">
-                                Design system
+                                Design
                             </a-heading>
                         </div>
                         <b-menu class="is-custom-mobile">

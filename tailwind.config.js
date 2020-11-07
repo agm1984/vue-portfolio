@@ -92,6 +92,7 @@ module.exports = {
 
             // transparent black https://www.colorcodehex.com/1d262f.html
             'transparent-black': 'rgba(29, 38, 47, 0.96)',
+            'transparent-grey': 'rgba(51, 51, 51, 0.8)',
 
             primary: '#006666',
             'primary-hover': '#005959',

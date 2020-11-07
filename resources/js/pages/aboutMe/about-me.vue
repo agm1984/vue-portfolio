@@ -78,7 +78,7 @@
 
             <div class="flex flex-row w-full">
                 <a-card class="p-32 mr-32" fill primary>
-                    <a-heading level="1" class="mb-16" light>To programmers</a-heading>
+                    <a-heading level="2" class="mb-16" light>To programmers</a-heading>
 
                     <a-paragraph light>
                         What can I say? I like to use Mealy finite state machines, ES Lint Airbnb, and
@@ -93,7 +93,7 @@
                 </a-card>
 
                 <a-card class="p-32 ml-32" fill>
-                    <a-heading level="1" class="mb-16">To non-programmers</a-heading>
+                    <a-heading level="2" class="mb-16">To non-programmers</a-heading>
 
                     <div class="flex flex-row w-full">
                         <div class="w-1/3">
