@@ -1,84 +1,82 @@
 <template>
-    <div v-if="isLoaded" class="flex flex-col w-full h-auto">
-        <a-heading level="1" class="" dark>
-            {{ example.name }}
-        </a-heading>
+    <div class="w-full">
+        <a-card v-if="isLoaded" class="p-32" with-geometry>
+            <a-heading level="1" class="mb-16" dark>
+                {{ example.name }}
+            </a-heading>
 
-        <div class="flex flex-row w-full h-auto">
-            <div class="w-3/4 mr-16">
-                <div class="flex flex-row w-full">
-                    <a-card class="p-32" with-geometry>
-                        <a-heading level="2" class="mb-16">Summary</a-heading>
-
-                        <a-paragraph>
-                            {{ example.summary }}
-                        </a-paragraph>
-                    </a-card>
-                </div>
-
-                <a-card class="p-32 mt-16" with-geometry>
-                    <a-heading level="2" class="mb-16">Images</a-heading>
-
-                    <div class="flex flex-row flex-wrap justify-start">
-                        <router-link
-                            v-for="image in example.images"
-                            :key="image.image_id"
-                            :to="`/storage/examples/${example.slug}/${image.filename}`"
-                            class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
-                            title="Click to enlarge"
-                            :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
-                            @click="() => props.markImageSeen({
-                                feature_id,
-                                image_id: image.image_id,
-                            })"
-                        >
-                            <div
-                                :class="(image.image_seen === true) ? 'example_image-seen' : 'example_image-unseen'"
-                            >
-                                <span>✓</span>
-                            </div>
-                        </router-link>
-                    </div>
-                </a-card>
-
-                <a-card class="p-32 mt-16" with-geometry>
-                    <a-heading level="2" class="mb-16">Conclusion</a-heading>
-
-                    <a-paragraph>
-                        {{ example.conclusion }}
-                    </a-paragraph>
-                </a-card>
-
-                <div class="flex justify-center w-full mt-32 text-primary">
-                    △△△
-                </div>
+            <div>
 
             </div>
 
-            <div class="w-1/4 ml-16">
-                <a-card class="p-32" with-geometry>
-                    <a-heading level="2" class="mb-16">Links</a-heading>
+            <div class="flex flex-row">
+                <a-button type="is-link" outlined>
+                    GitHub
+                </a-button>
 
-                    <a-button type="is-link" outlined>
-                        GitHub
-                    </a-button>
-
-                    <a-button type="is-link" class="mt-16" outlined>
-                        Demo
-                    </a-button>
-                </a-card>
-
-                <a-card class="p-32 mt-16" with-geometry>
-                    <a-heading level="2" class="mb-16">Tags</a-heading>
-
-                    <a-unordered-list>
-                        <li v-for="tag in example.tags" :key="`tag-${tag.name}`">
-                            {{ tag.name }}
-                        </li>
-                    </a-unordered-list>
-                </a-card>
+                <a-button type="primary" class="ml-32" outlined>
+                    Demo
+                </a-button>
             </div>
+        </a-card>
+
+        <div class="flex flex-row w-full">
+            <a-card class="w-1/2 p-32 mt-16 mr-16" primary>
+                <a-heading level="2" class="mb-16" light>Summary</a-heading>
+
+                <a-paragraph light>
+                    {{ example.summary }}
+                </a-paragraph>
+            </a-card>
+
+            <a-card class="w-1/2 p-32 mt-16 ml-16" with-geometry>
+                <a-heading level="2" class="mb-16">Technologies Used</a-heading>
+
+                <a-unordered-list>
+                    <li v-for="tag in example.tags" :key="`tag-${tag}`">
+                        {{ tag }}
+                    </li>
+                </a-unordered-list>
+            </a-card>
         </div>
+
+        <a-card class="p-32 mt-16" with-geometry>
+            <a-heading level="2" class="mb-16">Images</a-heading>
+
+            <div class="flex flex-row flex-wrap justify-start">
+                <router-link
+                    v-for="image in example.images"
+                    :key="image.image_id"
+                    :to="`/storage/examples/${example.slug}/${image.filename}`"
+                    class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
+                    title="Click to enlarge"
+                    :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
+                    @click="() => props.markImageSeen({
+                        feature_id,
+                        image_id: image.image_id,
+                    })"
+                >
+                    <div
+                        :class="(image.image_seen === true) ? 'example_image-seen' : 'example_image-unseen'"
+                    >
+                        <span>✓</span>
+                    </div>
+                </router-link>
+            </div>
+        </a-card>
+
+        <a-card class="p-32 mt-16" with-geometry>
+            <a-heading level="2" class="mb-16">Conclusion</a-heading>
+
+            <a-paragraph>
+                {{ example.conclusion }}
+            </a-paragraph>
+        </a-card>
+
+        <div class="flex justify-center w-full mt-32 text-primary">
+            △△△
+        </div>
+
     </div>
 </template>
 
@@ -138,7 +136,7 @@ export default {
                 const example = await axios.get(route('public.examples.show', this.$route.params.example));
 
                 // console.log('params', this.$route.params);
-                console.log('example', example.data);
+                // console.log('example', example.data);
 
                 this.example = example.data.example;
 

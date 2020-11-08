@@ -4,6 +4,7 @@ namespace App;
 
 use App\Category;
 use App\ExampleImage;
+use App\Tag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,6 +34,10 @@ class Example extends Model
 
     public function images() {
         return $this->hasMany(ExampleImage::class);
+    }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class);
     }
 
     public static function generate(
