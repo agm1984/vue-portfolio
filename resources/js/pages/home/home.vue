@@ -15,7 +15,7 @@
 <script>
 import tailwind from '../../../../tailwind.config';
 
-const secondary = tailwind.theme.colors.secondary;
+const { secondary } = tailwind.theme.colors;
 
 export default {
     name: 'home',
