@@ -271,8 +271,8 @@ module.exports = {
             xl: '3.4rem',
             '2xl': '4.8rem',
             '3xl': '6.4rem',
-            '4xl': '1.6rem',
-            '5xl': '1.6rem',
+            '4xl': '8.8rem',
+            '5xl': '12.8rem',
         },
         fontWeight: {
             hairline: 100,
