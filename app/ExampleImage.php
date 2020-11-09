@@ -18,6 +18,11 @@ class ExampleImage extends Model
      */
     protected $touches = ['example'];
 
+    public function getRouteKeyName()
+    {
+        return 'filename';
+    }
+
     public function example() {
         return $this->belongsTo(Example::class);
     }
