@@ -21,6 +21,7 @@ const router = [
         ],
     },
     { path: '/examples/:category/:example', name: 'public.examples.show', component: page('examples/show-example.vue') },
+    { path: '/examples/:category/:example/images/:filename', name: 'public.examples.images', component: page('examples/show-example-images.vue') },
 
     { path: '/contact', name: 'contact', component: page('contact/contact.vue') },
 

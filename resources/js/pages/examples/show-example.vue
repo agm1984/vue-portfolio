@@ -23,21 +23,11 @@
                         <router-link
                             v-for="image in example.images"
                             :key="image.image_id"
-                            :to="`/storage/examples/${example.slug}/${image.filename}`"
+                            :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
                             class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
                             title="Click to enlarge"
                             :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
-                            @click="() => props.markImageSeen({
-                                feature_id,
-                                image_id: image.image_id,
-                            })"
-                        >
-                            <div
-                                :class="(image.image_seen === true) ? 'example_image-seen' : 'example_image-unseen'"
-                            >
-                                <span>✓</span>
-                            </div>
-                        </router-link>
+                        ></router-link>
                     </div>
                 </a-card>
 
@@ -129,10 +119,6 @@ export default {
     },
 
     methods: {
-        goBack() {
-            return this.$router.go(-1);
-        },
-
         async fetchExample() {
             try {
                 const example = await axios.get(route('public.examples.show', this.$route.params.example));
@@ -155,6 +141,14 @@ export default {
 </script>
 
 <style>
+.is-active .al img {
+    filter: grayscale(0%);
+}
+
+.al img {
+    filter: grayscale(100%);
+}
+
 #example-wrapper {
     display: flex;
     justify-content: center;
