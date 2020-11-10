@@ -60,20 +60,16 @@
                     </a-paragraph>
                 </div>
 
-                <div class="flex flex-col w-1/2">
-                    <adam-scene></adam-scene>
+                <div class="flex flex-col items-start w-1/2">
 
                     <button @click="$root.$emit('animate-it')">Test</button>
+                    <adam-scene></adam-scene>
                 </div>
             </div>
 
         </a-card>
 
-        <div
-            class="w-full "
-            title="Story"
-            description="An approximate history and story about Adam Mackintosh"
-        >
+        <div class="w-full">
             <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
 
             <div class="flex flex-row w-full">
