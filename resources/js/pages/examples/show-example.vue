@@ -47,14 +47,18 @@
 
             <div class="w-1/4 ml-16">
                 <a-card class="p-32" with-geometry>
-                    <a-heading level="2" class="mb-16">Links</a-heading>
+                    <a-heading level="2">Links</a-heading>
 
-                    <a-button type="is-link" outlined>
-                        GitHub
-                    </a-button>
-
-                    <a-button type="is-link" class="mt-16" outlined>
-                        Demo
+                    <a-button
+                        v-for="link in example.links"
+                        :key="`link-${link.url}`"
+                        class="mt-16"
+                        tag="a"
+                        :href="link.url"
+                        type="is-link"
+                        outlined
+                    >
+                        {{ link.name }}
                     </a-button>
                 </a-card>
 

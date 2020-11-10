@@ -36,6 +36,10 @@ class Example extends Model
         return $this->hasMany(ExampleImage::class);
     }
 
+    public function links() {
+        return $this->hasMany(Link::class);
+    }
+
     public function tags() {
         return $this->belongsToMany(Tag::class);
     }
