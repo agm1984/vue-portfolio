@@ -70,9 +70,10 @@ $size-7: 1.4rem;
 
 // // tables
 // $table-head-cell-border-width: 0;
-// $table-head-cell-color: #9F9F9F;
 // $table-cell-padding: 0.8rem;
-$table-background-color: transparent;
+$table-background-color: #edf2f7;
+$table-head-background-color: $primary;
+$table-head-cell-color: #ffffff;
 
 // // forms
 // $label-color: #BDBDBD; // tailwind: grey-403500
