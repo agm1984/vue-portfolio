@@ -13,8 +13,22 @@ class Link extends Model
 
     protected $guarded = [];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['status_nice'];
+
     public function example() {
         return $this->belongsTo(Example::class);
+    }
+
+    public function getStatusNiceAttribute()
+    {
+        if ($this->status === 0) return 'Inactive';
+        if ($this->status === 1) return 'Active';
+        throw \Exception('Problem');
     }
 
     public static function generate(

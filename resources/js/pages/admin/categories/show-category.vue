@@ -17,7 +17,7 @@
                 </a-input-row>
 
                 <a-input-row type="is-split" heading="Status">
-                    <span>{{ category.status }}</span>
+                    <span>{{ category.status_nice }}</span>
                 </a-input-row>
 
                 <a-input-row type="is-split" heading="Slug">
@@ -65,7 +65,7 @@
                     <a-tilt>
                         <a-card class="">
                             <div
-                                class="bg-no-repeat bg-cover h-160 w-320"
+                                class="relative bg-no-repeat bg-cover h-160 w-320"
                                 :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${example.images[0].filename}')` }"
                             >
                                 <div class="px-16 py-8 bg-transparent-grey">
@@ -73,6 +73,13 @@
                                         {{ example.name }}
                                     </span>
                                 </div>
+
+                                <b-tag v-if="example.status === 1" class="absolute bottom-0 right-0 m-8" type="is-success is-light" rounded>
+                                    {{ example.status_nice }}
+                                </b-tag>
+                                <b-tag v-else class="absolute bottom-0 right-0 m-8" type="is-warning is-light" rounded>
+                                    {{ example.status_nice }}
+                                </b-tag>
                             </div>
                         </a-card>
                     </a-tilt>

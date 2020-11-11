@@ -14,7 +14,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $appends = ['examples_count'];
+    protected $appends = ['status_nice', 'examples_count'];
 
     public function getRouteKeyName()
     {
@@ -24,6 +24,13 @@ class Category extends Model
     public function examples()
     {
         return $this->hasMany(Example::class);
+    }
+
+    public function getStatusNiceAttribute()
+    {
+        if ($this->status === 0) return 'Inactive';
+        if ($this->status === 1) return 'Active';
+        throw \Exception('Problem');
     }
 
     public function getExamplesCountAttribute()

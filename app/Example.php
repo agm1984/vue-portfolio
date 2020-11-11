@@ -22,6 +22,13 @@ class Example extends Model
      */
     protected $touches = ['category'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['status_nice'];
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -42,6 +49,13 @@ class Example extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function getStatusNiceAttribute()
+    {
+        if ($this->status === 0) return 'Inactive';
+        if ($this->status === 1) return 'Active';
+        throw \Exception('Problem');
     }
 
     public static function generate(
