@@ -45,13 +45,12 @@
             </router-link>
         </div>
 
-        <a-card class="flex flex-wrap justify-center w-full mt-16">
+        <a-card class="flex flex-wrap w-full mt-16">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
                 :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
                 class="m-32"
-                @click="() => this.props.markExampleSeen(example.slug)"
             >
                 <a-tilt>
                     <a-card class="">

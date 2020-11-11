@@ -1,10 +1,8 @@
 <template>
     <a-card class="p-32" with-geometry>
-        <div class="flex items-center justify-between pb-16">
-            <a-heading level="1">
-                Categories
-            </a-heading>
-        </div>
+        <a-heading level="2" class="mb-16">
+            Categories
+        </a-heading>
 
         <b-table
             :data="categories"

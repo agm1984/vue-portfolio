@@ -29,7 +29,7 @@ class CategoryController extends Controller
         \Log::debug($request->all());
 
         return response()->json([
-            'category' => $category,
+            'category' => $category->load(['examples.category', 'examples.images']),
         ]);
     }
 
