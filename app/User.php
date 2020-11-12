@@ -28,6 +28,7 @@ class User extends Authenticatable //, MustVerifyEmail
     ];
 
     protected $appends = [
+        'status_nice',
         'photo_url',
         'roles_list',
     ];
@@ -38,6 +39,44 @@ class User extends Authenticatable //, MustVerifyEmail
      * @var string
      */
     protected $guard_name = 'web';
+
+    /**
+     * Get the oauth providers.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function oauthProviders()
+    {
+        return $this->hasMany(OAuthProvider::class);
+    }
+
+    public function getStatusNiceAttribute()
+    {
+        if ($this->status === 0) return 'Inactive';
+        if ($this->status === 1) return 'Active';
+        throw \Exception('Problem');
+    }
+
+    /**
+     * Get the profile photo URL attribute.
+     *
+     * @return string
+     */
+    public function getPhotoUrlAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    /**
+     * Get a simple enum list of the user's roles.
+     *
+     * @return array
+     */
+    public function getRolesListAttribute()
+    {
+        return $this->roles->pluck('name')->toArray();
+    }
+
 
     /**
      * Create a new user.
@@ -79,36 +118,6 @@ class User extends Authenticatable //, MustVerifyEmail
         $user->save();
 
         return $user;
-    }
-
-    /**
-     * Get the profile photo URL attribute.
-     *
-     * @return string
-     */
-    public function getPhotoUrlAttribute()
-    {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
-    }
-
-    /**
-     * Get a simple enum list of the user's roles.
-     *
-     * @return array
-     */
-    public function getRolesListAttribute()
-    {
-        return $this->roles->pluck('name')->toArray();
-    }
-
-    /**
-     * Get the oauth providers.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function oauthProviders()
-    {
-        return $this->hasMany(OAuthProvider::class);
     }
 
     /**
