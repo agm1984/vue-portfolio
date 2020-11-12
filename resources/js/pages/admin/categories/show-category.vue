@@ -20,12 +20,12 @@
                     <span>{{ category.status_nice }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Slug">
-                    <span>{{ category.slug }}</span>
-                </a-input-row>
-
                 <a-input-row type="is-split" heading="Name">
                     <span>{{ category.name }}</span>
+                </a-input-row>
+
+                <a-input-row type="is-split" heading="Slug">
+                    <span>{{ category.slug }}</span>
                 </a-input-row>
 
                 <a-input-row type="is-split" heading="Examples">

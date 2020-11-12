@@ -1,14 +1,11 @@
 <template>
     <div>
         <a-card class="p-32" with-geometry>
-            <div class="relative flex items-center justify-between">
-                <div class="flex items-center">
-                    <a-heading level="1" dark>
-                        {{ example.name }}
-                    </a-heading>
-                    <b-tag class="ml-8">{{ example.category.name }}</b-tag>
-                </div>
+            <a-heading level="1" class="mb-16" dark>
+                {{ example.name }}
+            </a-heading>
 
+            <div class="flex items-center justify-end">
                 <a-button v-if="isShowing" @click="toggleEdit">
                     Edit
                 </a-button>
@@ -19,31 +16,31 @@
                     <span>{{ example.id }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Status">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Status">
                     <span>{{ example.status_nice }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Slug">
-                    <span>{{ example.slug }}</span>
-                </a-input-row>
-
-                <a-input-row type="is-wider-right" heading="Name">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                     <span>{{ example.name }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Summary">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
+                    <span>{{ example.slug }}</span>
+                </a-input-row>
+
+                <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
                     <span>{{ example.summary }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Conclusion">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
                     <span>{{ example.conclusion }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Created at">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Created at">
                     <span>{{ example.created_at }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Updated at">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Updated at">
                     <span>{{ example.updated_at }}</span>
                 </a-input-row>
             </div>
@@ -78,7 +75,7 @@
                 Links
             </a-heading>
 
-            <div v-for="link in example.links" :key="`link-${link.id}`" class="flex flex-col">
+            <div v-for="(link, i) in example.links" :key="`link-${link.id}`" class="flex flex-col">
                 <a-input-row type="is-wider-right" heading="Name">
                     <a-text-input
                         v-model="links[link.id].name"
@@ -90,6 +87,8 @@
                         v-model="links[link.id].url"
                     ></a-text-input>
                 </a-input-row>
+
+                <hr v-if="(i !== (example.links.length - 1))" class="h-1 my-16 bg-grey-600">
             </div>
         </a-card>
 

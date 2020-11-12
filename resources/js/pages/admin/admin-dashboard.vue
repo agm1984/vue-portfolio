@@ -16,6 +16,7 @@
                                 Admin
                             </a-heading>
                         </div>
+
                         <b-menu class="is-custom-mobile">
                             <b-menu-list label="Users">
                                 <b-menu-item
@@ -62,7 +63,7 @@
             </section>
         </div>
 
-        <div class="w-full h-auto pt-64 pl-64">
+        <div class="w-full h-auto pt-64 pl-32">
             <div v-if="isDashboard" class="flex items-center">
                 <a-card class="w-1/3 p-32" with-geometry>
                     <a-heading level="2">

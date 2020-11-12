@@ -31,15 +31,38 @@
                 </a-select>
             </a-input-row>
 
+            <a-input-row type="is-wider-right" heading="Name">
+                <a-text-input
+                    v-model="modifiedExample.name"
+                ></a-text-input>
+            </a-input-row>
+
             <a-input-row type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="modifiedExample.slug"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Name">
+            <a-input-row type="is-wider-right" heading="Summary">
                 <a-text-input
-                    v-model="modifiedExample.name"
+                    v-model="modifiedExample.summary"
+                    rules="required"
+                    vid="summary"
+                    type="textarea"
+                    maxlength="2000"
+                    has-counter
+                ></a-text-input>
+            </a-input-row>
+
+            <a-input-row type="is-wider-right" heading="Conclusion">
+                <a-text-input
+                    v-model="modifiedExample.conclusion"
+                    rules="required"
+                    vid="conclusion"
+                    type="textarea"
+                    placeholder="Type your message here"
+                    maxlength="2000"
+                    has-counter
                 ></a-text-input>
             </a-input-row>
 
@@ -109,6 +132,8 @@ export default {
 
     methods: {
         onReset() {
+            this.modifiedExample = {};
+            this.modifiedExample = this.example;
             return this.$emit('reset');
         },
 
