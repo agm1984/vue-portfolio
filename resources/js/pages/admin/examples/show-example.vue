@@ -1,70 +1,113 @@
 <template>
-    <a-card with-geometry>
-        <div class="relative flex items-center justify-between">
-            <div class="flex items-center">
-                <a-heading level="1" dark>
-                    {{ example.name }}
-                </a-heading>
-                <b-tag class="ml-8">{{ example.category.name }}</b-tag>
+    <div>
+        <a-card class="p-32" with-geometry>
+            <div class="relative flex items-center justify-between">
+                <div class="flex items-center">
+                    <a-heading level="1" dark>
+                        {{ example.name }}
+                    </a-heading>
+                    <b-tag class="ml-8">{{ example.category.name }}</b-tag>
+                </div>
+
+                <a-button v-if="isShowing" @click="toggleEdit">
+                    Edit
+                </a-button>
             </div>
 
-            <a-button v-if="isShowing" @click="toggleEdit">
-                Edit
-            </a-button>
-        </div>
+            <div v-if="isShowing" class="p-32">
+                <a-input-row type="is-wider-right" heading="ID">
+                    <span>{{ example.id }}</span>
+                </a-input-row>
 
-        <div class="w-full h-2 bg-blue-400"></div>
+                <a-input-row type="is-wider-right" heading="Status">
+                    <span>{{ example.status_nice }}</span>
+                </a-input-row>
 
-        <div v-if="isShowing" class="p-32">
-            <a-input-row type="is-split" heading="ID">
-                <span>{{ example.id }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Slug">
+                    <span>{{ example.slug }}</span>
+                </a-input-row>
 
-            <a-input-row type="is-split" heading="Status">
-                <span>{{ example.status }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Name">
+                    <span>{{ example.name }}</span>
+                </a-input-row>
 
-            <a-input-row type="is-split" heading="Slug">
-                <span>{{ example.slug }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Summary">
+                    <span>{{ example.summary }}</span>
+                </a-input-row>
 
-            <a-input-row type="is-split" heading="Name">
-                <span>{{ example.name }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Conclusion">
+                    <span>{{ example.conclusion }}</span>
+                </a-input-row>
 
-            <a-input-row type="is-split" heading="Created at">
-                <span>{{ example.created_at }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Created at">
+                    <span>{{ example.created_at }}</span>
+                </a-input-row>
 
-            <a-input-row type="is-split" heading="Updated at">
-                <span>{{ example.updated_at }}</span>
-            </a-input-row>
+                <a-input-row type="is-wider-right" heading="Updated at">
+                    <span>{{ example.updated_at }}</span>
+                </a-input-row>
+            </div>
 
-            <a-input-row type="is-split" heading="Summary">
-                <span>{{ example.summary }}</span>
-            </a-input-row>
+            <div v-if="isEditing" class="">
+                <edit-example
+                    :example="example"
+                    @reset="handleReset"
+                ></edit-example>
+            </div>
+        </a-card>
 
-            <a-input-row type="is-split" heading="Conclusion">
-                <span>{{ example.conclusion }}</span>
-            </a-input-row>
+        <a-card class="p-32 mt-16">
+            <a-heading level="2" class="mb-16">
+                Images
+            </a-heading>
 
-            <a-input-row type="is-split" heading="Images">
-                <img
+            <div class="flex flex-row flex-wrap justify-start">
+                <router-link
                     v-for="image in example.images"
-                    :key="image.filename"
-                    :src="`/storage/examples/${example.slug}/${image.filename}`"
-                >
-            </a-input-row>
-        </div>
+                    :key="image.image_id"
+                    :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
+                    class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
+                    title="Click to enlarge"
+                    :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
+                ></router-link>
+            </div>
+        </a-card>
 
-        <div v-if="isEditing" class="">
-            <edit-example
-                :example="example"
-                @reset="handleReset"
-            ></edit-example>
-        </div>
+        <a-card class="p-32 mt-16">
+            <a-heading level="2" class="mb-16">
+                Links
+            </a-heading>
 
-    </a-card>
+            <div v-for="link in example.links" :key="`link-${link.id}`" class="flex flex-col">
+                <a-input-row type="is-wider-right" heading="Name">
+                    <a-text-input
+                        v-model="links[link.id].name"
+                    ></a-text-input>
+                </a-input-row>
+
+                <a-input-row type="is-wider-right" heading="URL">
+                    <a-text-input
+                        v-model="links[link.id].url"
+                    ></a-text-input>
+                </a-input-row>
+            </div>
+        </a-card>
+
+        <a-card class="p-32 mt-16">
+            <a-heading level="2" class="mb-16">
+                Tags
+            </a-heading>
+
+            <div v-for="tag in example.tags" :key="`tag-${tag.id}`" class="flex flex-col">
+                <a-input-row type="is-wider-right" heading="Name">
+                    <a-text-input
+                        v-model="tags[tag.id].name"
+                    ></a-text-input>
+                </a-input-row>
+            </div>
+
+        </a-card>
+    </div>
 </template>
 
 <script>
@@ -89,6 +132,8 @@ export default {
             example: {
                 category: {},
             },
+            links: {},
+            tags: {},
         };
     },
 
@@ -115,6 +160,20 @@ export default {
                 console.log('example', data.example);
 
                 this.example = data.example;
+
+                this.example.links.reduce((acc, link) => {
+                    this.links[link.id] = {};
+                    this.links[link.id].name = link.name;
+                    this.links[link.id].url = link.url;
+                    return acc;
+                }, {});
+
+                this.example.tags.reduce((acc, tag) => {
+                    this.tags[tag.id] = {};
+                    this.tags[tag.id].name = tag.name;
+                    return acc;
+                }, {});
+
                 // this.state = SHOWING;
             } catch (err) {
                 throw new Error(`show-example# Problem fetching example: ${err}.`);

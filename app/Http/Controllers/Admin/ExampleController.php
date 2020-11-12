@@ -29,7 +29,7 @@ class ExampleController extends Controller
         \Log::debug($request->all());
 
         return response()->json([
-            'example' => $example->load(['category', 'images.example', 'tags']),
+            'example' => $example->load(['category', 'images.example', 'links', 'tags']),
         ]);
     }
 
