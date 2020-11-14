@@ -62,6 +62,8 @@ class Example extends Model
         int $category_id,
         string $name,
         string $slug,
+        string $summary,
+        string $conclusion,
         array $images,
         ?array $attributes = []
     ) : self
@@ -71,6 +73,8 @@ class Example extends Model
         $example->fill([
             'status' => self::STATUS_ACTIVE,
             'name' => $name,
+            'summary' => $summary,
+            'conclusion' => $conclusion,
         ]);
 
         foreach ($attributes as $key => $attribute) {

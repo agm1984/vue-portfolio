@@ -42,8 +42,29 @@ class ExampleController extends Controller
             $request->input('category_id'),
             $request->input('name'),
             $request->input('slug'),
+            $request->input('summary'),
+            $request->input('conclusion'),
             $request->input('images'),
         );
+
+        return response()->json([
+            'example' => $example,
+        ]);
+    }
+
+    public function edit(Request $request, Example $example)
+    {
+        \Log::debug('edit success 123');
+        \Log::debug($request->all());
+        $editableFields = ['name', 'slug', 'summary', 'conclusion'];
+
+        foreach ($editableFields as $field) {
+            if ($request->filled($field)) {
+                $example->{$field} = $request->input($field);
+            }
+        }
+
+        $example->save();
 
         return response()->json([
             'example' => $example,

@@ -16,34 +16,34 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Category">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Category">
                 <a-select
-                    v-model="modifiedExample.category.slug"
+                    v-model="modifiedExample.category.id"
                     :expanded="false"
                 >
                     <option
                         v-for="category in categories"
-                        :key="category.slug"
-                        :value="category.slug"
+                        :key="category.id"
+                        :value="category.id"
                     >
                         {{ category.name }}
                     </option>
                 </a-select>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Name">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="modifiedExample.name"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Slug">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="modifiedExample.slug"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Summary">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
                 <a-text-input
                     v-model="modifiedExample.summary"
                     rules="required"
@@ -54,7 +54,7 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Conclusion">
+            <a-input-row type="is-wider-right" heading="Conclusion" is-tall>
                 <a-text-input
                     v-model="modifiedExample.conclusion"
                     rules="required"
@@ -67,11 +67,11 @@
             </a-input-row>
 
             <div class="flex items-center justify-end">
-                <a-button @click="onReset">
+                <a-button type="is-default" outlined @click="onReset">
                     Cancel
                 </a-button>
 
-                <a-button @click="handleSubmit(submitForm)">
+                <a-button class="ml-16" @click="handleSubmit(submitForm)">
                     Save
                 </a-button>
             </div>
@@ -81,10 +81,11 @@
 
 <script>
 import axios from 'axios';
+import cloneDeep from 'lodash.clonedeep';
 import { Category } from '~/globalModelTypes';
 
 const INITIAL = 'INITIAL';
-const EDIT = 'EDIT';
+const IS_LOADED = 'IS_LOADED';
 
 export default {
     name: 'edit-example',
@@ -104,7 +105,7 @@ export default {
         return {
             state: INITIAL,
             categories: [],
-            modifiedExample: this.example,
+            modifiedExample: cloneDeep(this.example),
         };
     },
 
@@ -132,8 +133,6 @@ export default {
 
     methods: {
         onReset() {
-            this.modifiedExample = {};
-            this.modifiedExample = this.example;
             return this.$emit('reset');
         },
 
@@ -141,14 +140,28 @@ export default {
             try {
                 const { data } = await axios.get(route('admin.categories.list'));
 
-                // console.log('catz', data.categories);
-
                 this.categories = data.categories;
-                this.state = EDIT;
+
+                this.state = IS_LOADED;
             } catch (err) {
                 throw new Error(`edit-example# Problem fetching all categories: ${err}.`);
             }
         },
+
+        async submitForm() {
+            try {
+                await axios.put(route('admin.examples.edit', this.example.slug), {
+                    ...this.modifiedExample,
+                    category: undefined,
+                    category_id: this.modifiedExample.category.id,
+                });
+
+                return this.$emit('saved');
+            } catch (err) {
+                throw new Error(`edit-example# Problem editing example: ${err}.`);
+            }
+        },
+
     },
 
 };

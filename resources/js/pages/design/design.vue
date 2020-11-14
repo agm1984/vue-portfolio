@@ -76,7 +76,7 @@
             </section>
         </div>
 
-        <div class="pt-64 pl-64">
+        <div class="pt-64 pl-32">
             <router-view></router-view>
         </div>
 

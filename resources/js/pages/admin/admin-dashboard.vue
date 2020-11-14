@@ -64,14 +64,14 @@
         </div>
 
         <div class="w-full h-auto pt-64 pl-32">
-            <div v-if="isDashboard" class="flex items-center">
+            <div v-if="isDashboard" class="flex items-center pb-16">
                 <a-card class="w-1/3 p-32" with-geometry>
                     <a-heading level="2">
                         Users
                     </a-heading>
                 </a-card>
 
-                <a-card class="w-1/3 p-32 m-16" with-geometry>
+                <a-card class="w-1/3 p-32 mx-16" with-geometry>
                     <a-heading level="2">
                         Categories
                     </a-heading>

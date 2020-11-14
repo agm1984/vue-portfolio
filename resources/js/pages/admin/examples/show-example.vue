@@ -1,12 +1,12 @@
 <template>
     <div>
         <a-card class="p-32" with-geometry>
-            <a-heading level="1" class="mb-16" dark>
-                {{ example.name }}
-            </a-heading>
+            <div class="flex items-center pb-16">
+                <a-heading level="2" dark>
+                    {{ example.name }}
+                </a-heading>
 
-            <div class="flex items-center justify-end">
-                <a-button v-if="isShowing" @click="toggleEdit">
+                <a-button v-if="isShowing" class="ml-16" outlined @click="toggleEdit">
                     Edit
                 </a-button>
             </div>
@@ -49,6 +49,7 @@
                 <edit-example
                     :example="example"
                     @reset="handleReset"
+                    @saved="handleSaved"
                 ></edit-example>
             </div>
         </a-card>
@@ -179,13 +180,19 @@ export default {
             }
         },
 
+        toggleEdit() {
+            this.state = EDITING;
+        },
+
         handleReset() {
             this.state = SHOWING;
         },
 
-        toggleEdit() {
-            this.state = EDITING;
+        handleSaved() {
+            this.fetchExample();
+            this.state = SHOWING;
         },
+
     },
 
 };

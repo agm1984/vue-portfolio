@@ -49,6 +49,11 @@ export default {
             default: () => '',
         },
 
+        /**
+         * When the input area is too tall, the heading can look oddly-placed
+         * if it is vertically-centered with the row, so some changes can
+         * take place via `<a-input-row is-tall></a-input-row>`.
+         */
         isTall: {
             type: Boolean,
             required: false,
@@ -77,6 +82,9 @@ export default {
             if (this.type === 'is-wider-left') styles.push('w-3/4');
             if (this.type === 'is-wider-right') styles.push('w-1/4');
             if (this.type === 'is-split') styles.push('w-1/2');
+
+            if (!this.hasContent && this.isTall) styles.push('pt-8');
+
             return styles;
         },
 

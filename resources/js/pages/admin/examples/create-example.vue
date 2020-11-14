@@ -23,7 +23,7 @@
                     </a-select>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Category">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Category">
                     <a-select
                         v-model="example.category_id"
                         vid="category"
@@ -40,7 +40,7 @@
                     </a-select>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Name">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                     <a-text-input
                         v-model="example.name"
                         vid="name"
@@ -48,11 +48,34 @@
                     ></a-text-input>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Slug">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
                     <a-text-input
                         v-model="example.slug"
                         vid="slug"
                         rules="required"
+                    ></a-text-input>
+                </a-input-row>
+
+                <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
+                    <a-text-input
+                        v-model="example.summary"
+                        rules="required"
+                        vid="summary"
+                        type="textarea"
+                        maxlength="2000"
+                        has-counter
+                    ></a-text-input>
+                </a-input-row>
+
+                <a-input-row type="is-wider-right" heading="Conclusion" is-tall>
+                    <a-text-input
+                        v-model="example.conclusion"
+                        rules="required"
+                        vid="conclusion"
+                        type="textarea"
+                        placeholder="Type your message here"
+                        maxlength="2000"
+                        has-counter
                     ></a-text-input>
                 </a-input-row>
 
