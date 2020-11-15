@@ -56,13 +56,21 @@ class ExampleController extends Controller
     {
         \Log::debug('edit success 123');
         \Log::debug($request->all());
-        $editableFields = ['name', 'slug', 'summary', 'conclusion'];
+        $editableFields = [
+            'name',
+            'slug',
+            'summary',
+            'conclusion',
+        ];
 
         foreach ($editableFields as $field) {
             if ($request->filled($field)) {
                 $example->{$field} = $request->input($field);
             }
         }
+
+        $category = Category::findOrFail($request->input('category_id'));
+        $example->category()->associate($category);
 
         $example->save();
 
