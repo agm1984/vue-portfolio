@@ -24,7 +24,7 @@
                 </b-table-column>
 
                 <b-table-column field="status" label="Status" width="1" numeric>
-                    {{ row.status }}
+                    <a-status-tag :status="row.status_nice"></a-status-tag>
                 </b-table-column>
             </template>
         </b-table>
