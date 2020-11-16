@@ -69,4 +69,9 @@ class Tag extends Model
         return $tag;
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', self::STATUS_ACTIVE);
+    }
+
 }

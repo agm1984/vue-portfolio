@@ -37,4 +37,9 @@ class Category extends Model
     {
         return $this->examples->count();
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', self::STATUS_ACTIVE);
+    }
 }

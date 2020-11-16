@@ -52,4 +52,9 @@ class Link extends Model
         return $link;
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', self::STATUS_ACTIVE);
+    }
+
 }

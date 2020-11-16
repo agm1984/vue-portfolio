@@ -140,7 +140,7 @@ export default {
     methods: {
         async fetchAllCategories() {
             try {
-                const { data } = await axios.get(route('admin.categories.list'));
+                const { data } = await axios.get(route('admin.categories.getAll'));
 
                 // console.log('catz', data.categories);
 
@@ -148,7 +148,7 @@ export default {
                 this.example.category_id = 1;
                 this.state = CREATE;
             } catch (err) {
-                throw new Error(`create-example# Problem fetching all categories: ${err}.`);
+                throw new Error(`create-example# Problem fetching all active categories: ${err}.`);
             }
         },
 

@@ -17,7 +17,14 @@ class CategoryController extends Controller
 
         $categories = Category::query()->get();
 
-        \Log::debug($categories);
+        return response()->json([
+            'categories' => $categories,
+        ]);
+    }
+
+    public function getAll(Request $request)
+    {
+        $categories = Category::query()->get();
 
         return response()->json([
             'categories' => $categories,

@@ -141,4 +141,9 @@ class User extends Authenticatable //, MustVerifyEmail
         $this->notify(new VerifyEmail);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', self::STATUS_ACTIVE);
+    }
+
 }
