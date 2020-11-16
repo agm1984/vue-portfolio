@@ -19,6 +19,10 @@
                 <span>{{ user.name }}</span>
             </a-input-row>
 
+            <a-input-row class="pt-8" type="is-wider-right" heading="Email">
+                <span>{{ user.email }}</span>
+            </a-input-row>
+
             <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
                 <span>{{ user.created_at_nice }} ({{ user.created_at_diff }})</span>
             </a-input-row>

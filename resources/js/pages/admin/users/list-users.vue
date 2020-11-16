@@ -15,6 +15,10 @@
                     </router-link>
                 </b-table-column>
 
+                <b-table-column field="email" label="Email">
+                    {{ row.email }}
+                </b-table-column>
+
                 <b-table-column field="created_at" label="Created" width="128" numeric>
                     {{ row.created_at_diff }}
                 </b-table-column>
