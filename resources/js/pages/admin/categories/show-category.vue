@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <a-card class="p-32" with-geometry>
-            <div class="relative flex items-center justify-between mb-16">
+            <div class="relative flex items-center mb-16">
                 <a-heading level="2">
                     {{ category.name }}
                 </a-heading>
