@@ -29,7 +29,7 @@ class ExampleController extends Controller
         \Log::debug($request->all());
 
         return response()->json([
-            'example' => $example->load(['category', 'images.example', 'links', 'tags']),
+            'example' => $example->load(['category', 'images', 'links', 'tags']),
         ]);
     }
 
@@ -81,10 +81,32 @@ class ExampleController extends Controller
 
     public function editImages(Request $request, Example $example)
     {
-        \Log::debug('example');
+        \Log::debug('edit example images');
         \Log::debug($example);
         \Log::debug($request->all());
         // \Log::debug($request->headers->all());
+
+        return response()->json([
+            'example' => $example,
+        ]);
+    }
+
+    public function editLinks(Request $request, Example $example)
+    {
+        \Log::debug('edit example links');
+        \Log::debug($example);
+        \Log::debug($request->all());
+
+        return response()->json([
+            'example' => $example,
+        ]);
+    }
+
+    public function editTags(Request $request, Example $example)
+    {
+        \Log::debug('edit example tags');
+        \Log::debug($example);
+        \Log::debug($request->all());
 
         return response()->json([
             'example' => $example,

@@ -66,6 +66,16 @@
                 ></a-text-input>
             </a-input-row>
 
+            <a-input-row type="is-wider-right" heading="Tags" is-tall>
+                <a-tags-input
+                    v-model="modifiedExample.tags"
+                    vid="tags"
+                    field="name"
+                    :fetch-endpoint="route('admin.tags.getAll')"
+                    allow-new
+                ></a-tags-input>
+            </a-input-row>
+
             <div class="flex items-center justify-end">
                 <a-button type="is-default" outlined @click="onReset">
                     Cancel
@@ -128,7 +138,8 @@ export default {
     },
 
     mounted() {
-        this.fetchAllCategories();
+        console.log('example', this.example);
+        return this.fetchAllCategories();
     },
 
     methods: {

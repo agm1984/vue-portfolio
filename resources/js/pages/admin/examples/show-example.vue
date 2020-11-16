@@ -36,6 +36,49 @@
                     <span>{{ example.conclusion }}</span>
                 </a-input-row>
 
+                <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
+                    <div
+                        v-for="(link, i) in example.links"
+                        :key="`link-${link.url}`"
+                        class="flex flex-col"
+                    >
+                        <span>
+                            Name: {{ link.name }}
+                        </span>
+
+                        <span>
+                            URL: {{ link.url }}
+                        </span>
+
+                        <hr v-if="(i !== (example.links.length - 1))" class="h-1 my-16 bg-grey-600">
+                    </div>
+
+                </a-input-row>
+
+                <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
+                    <b-tag
+                        v-for="tag in example.tags"
+                        :key="`tag-${tag.name}`"
+                        type="is-info is-light"
+                        class="m-4"
+                    >
+                        {{ tag.name }}
+                    </b-tag>
+                </a-input-row>
+
+                <a-input-row class="pt-16" type="is-wider-right" heading="Images" is-tall>
+                    <div class="flex flex-row flex-wrap justify-start">
+                        <router-link
+                            v-for="image in example.images"
+                            :key="image.image_id"
+                            :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
+                            class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-256 h-128"
+                            title="Click to enlarge"
+                            :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
+                        ></router-link>
+                    </div>
+                </a-input-row>
+
                 <a-input-row class="pt-16" type="is-wider-right" heading="Created at">
                     <span>{{ example.created_at }}</span>
                 </a-input-row>
