@@ -12,31 +12,31 @@
             </div>
 
             <div v-if="isShowing">
-                <a-input-row type="is-split" heading="ID">
+                <a-input-row type="is-wider-right" heading="ID">
                     <span>{{ category.id }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Status">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Status">
                     <span>{{ category.status_nice }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Name">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Name">
                     <span>{{ category.name }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Slug">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
                     <span>{{ category.slug }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Examples">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Examples">
                     <span>{{ category.examples_count }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Created at">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
                     <span>{{ category.created_at }}</span>
                 </a-input-row>
 
-                <a-input-row type="is-split" heading="Updated at">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
                     <span>{{ category.updated_at }}</span>
                 </a-input-row>
             </div>
@@ -59,7 +59,7 @@
                 <router-link
                     v-for="example in category.examples"
                     :key="example.slug"
-                    :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
+                    :to="{ name: 'admin.examples.show', params: { category: example.category.slug, example: example.slug } }"
                     class="m-32"
                 >
                     <a-tilt>

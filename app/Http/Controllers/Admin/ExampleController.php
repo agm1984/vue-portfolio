@@ -26,8 +26,6 @@ class ExampleController extends Controller
 
     public function show(Request $request, Example $example)
     {
-        \Log::debug($request->all());
-
         return response()->json([
             'example' => $example->load(['category', 'images', 'links', 'tags']),
         ]);

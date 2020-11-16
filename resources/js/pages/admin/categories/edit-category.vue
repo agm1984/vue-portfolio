@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <a-form v-slot="{ handleSubmit }">
-            <a-input-row type="is-split" heading="Status">
+            <a-input-row type="is-wider-right" heading="Status">
                 <a-select
                     v-model="modifiedCategory.status"
                     :expanded="false"
@@ -16,24 +16,28 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Slug">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="modifiedCategory.slug"
+                    vid="slug"
+                    rules="required"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Name">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="modifiedCategory.name"
+                    vid="name"
+                    rules="required"
                 ></a-text-input>
             </a-input-row>
 
-            <div class="flex items-center justify-end">
-                <a-button @click="onReset">
+            <div class="flex items-center justify-end pt-16">
+                <a-button type="is-default" outlined @click="onReset">
                     Cancel
                 </a-button>
 
-                <a-button @click="handleSubmit(submitForm)">
+                <a-button class="ml-16" @click="handleSubmit(submitForm)">
                     Save
                 </a-button>
             </div>

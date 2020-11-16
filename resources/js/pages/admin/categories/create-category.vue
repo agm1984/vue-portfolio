@@ -18,21 +18,27 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Name">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="category.name"
+                    vid="name"
+                    rules="required"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Slug">
+            <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="category.slug"
+                    vid="slug"
+                    rules="required"
                 ></a-text-input>
             </a-input-row>
 
-            <a-button @click="handleSubmit(submitForm)">
-                Create
-            </a-button>
+            <div class="flex items-center justify-end pt-16">
+                <a-button @click="handleSubmit(submitForm)">
+                    Create
+                </a-button>
+            </div>
         </a-form>
     </a-card>
 </template>

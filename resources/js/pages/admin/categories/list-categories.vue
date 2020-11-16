@@ -9,18 +9,14 @@
             :loading="isInitializing"
         >
             <template slot-scope="{ row }">
-                <b-table-column field="id" label="ID" width="1" numeric>
-                    {{ row.id }}
-                </b-table-column>
-
-                <b-table-column field="slug" label="Slug" width="1">
-                    {{ row.slug }}
-                </b-table-column>
-
                 <b-table-column field="name" label="Name">
                     <router-link :to="{ name: 'admin.categories.show', params: { category: row.slug } }">
                         {{ row.name }}
                     </router-link>
+                </b-table-column>
+
+                <b-table-column field="slug" label="Slug">
+                    {{ row.slug }}
                 </b-table-column>
 
                 <b-table-column field="created_at" label="Created" width="1" numeric>
