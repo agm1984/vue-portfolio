@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use TimestampAttributes;
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
 
@@ -14,7 +17,14 @@ class Category extends Model
      *
      * @var array
      */
-    protected $appends = ['status_nice', 'examples_count'];
+    protected $appends = [
+        'status_nice',
+        'created_at_nice',
+        'created_at_diff',
+        'updated_at_nice',
+        'updated_at_diff',
+        'examples_count',
+    ];
 
     public function getRouteKeyName()
     {

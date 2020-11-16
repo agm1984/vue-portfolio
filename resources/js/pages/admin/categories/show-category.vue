@@ -6,7 +6,7 @@
                     {{ category.name }}
                 </a-heading>
 
-                <a-button v-if="isShowing" @click="toggleEdit">
+                <a-button v-if="isShowing" class="ml-16" outlined @click="toggleEdit">
                     Edit
                 </a-button>
             </div>
@@ -33,11 +33,11 @@
                 </a-input-row>
 
                 <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
-                    <span>{{ category.created_at }}</span>
+                    <span>{{ category.created_at_nice }} ({{ category.created_at_diff }})</span>
                 </a-input-row>
 
                 <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
-                    <span>{{ category.updated_at }}</span>
+                    <span>{{ category.updated_at_nice }} ({{ category.updated_at_diff }})</span>
                 </a-input-row>
             </div>
 

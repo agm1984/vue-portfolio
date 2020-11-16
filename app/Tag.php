@@ -4,11 +4,14 @@ namespace App;
 
 use App\Category;
 use App\Example;
+use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Tag extends Model
 {
+    use TimestampAttributes;
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
 
@@ -26,7 +29,13 @@ class Tag extends Model
      *
      * @var array
      */
-    protected $appends = ['status_nice'];
+    protected $appends = [
+        'status_nice',
+        'created_at_nice',
+        'created_at_diff',
+        'updated_at_nice',
+        'updated_at_diff',
+    ];
 
     public function getRouteKeyName()
     {

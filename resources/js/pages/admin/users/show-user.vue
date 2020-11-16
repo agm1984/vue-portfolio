@@ -1,36 +1,32 @@
 <template>
-    <a-card with-geometry>
+    <a-card class="p-32" with-geometry>
         <div class="relative flex items-center justify-between">
-            <a-heading level="1">
+            <a-heading level="2" class="mb-16">
                 {{ user.name }}
             </a-heading>
         </div>
 
-        <a-card v-if="isShowing">
-            <a-input-row type="is-split" heading="ID">
+        <div v-if="isShowing">
+            <a-input-row type="is-wider-right" heading="ID">
                 <span>{{ user.id }}</span>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Status">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Status">
                 <span>{{ user.status }}</span>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Slug">
-                <span>{{ user.slug }}</span>
-            </a-input-row>
-
-            <a-input-row type="is-split" heading="Name">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Name">
                 <span>{{ user.name }}</span>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Created at">
-                <span>{{ user.created_at }}</span>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
+                <span>{{ user.created_at_nice }} ({{ user.created_at_diff }})</span>
             </a-input-row>
 
-            <a-input-row type="is-split" heading="Updated at">
-                <span>{{ user.updated_at }}</span>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
+                <span>{{ user.updated_at_nice }} ({{ user.updated_at_diff }})</span>
             </a-input-row>
-        </a-card>
+        </div>
 
     </a-card>
 </template>

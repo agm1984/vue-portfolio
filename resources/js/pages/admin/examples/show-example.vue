@@ -16,27 +16,27 @@
                     <span>{{ example.id }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Status">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Status">
                     <span>{{ example.status_nice }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Name">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Name">
                     <span>{{ example.name }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
+                <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
                     <span>{{ example.slug }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Summary" is-tall>
                     <span>{{ example.summary }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Conclusion" is-tall>
                     <span>{{ example.conclusion }}</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Links" is-tall>
                     <div
                         v-for="(link, i) in example.links"
                         :key="`link-${link.url}`"
@@ -55,7 +55,7 @@
 
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Tags" is-tall>
                     <b-tag
                         v-for="tag in example.tags"
                         :key="`tag-${tag.name}`"
@@ -66,7 +66,7 @@
                     </b-tag>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Images" is-tall>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Images" is-tall>
                     <div class="flex flex-row flex-wrap justify-start">
                         <router-link
                             v-for="image in example.images"
@@ -79,12 +79,12 @@
                     </div>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Created at">
-                    <span>{{ example.created_at }}</span>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
+                    <span>{{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
                 </a-input-row>
 
-                <a-input-row class="pt-16" type="is-wider-right" heading="Updated at">
-                    <span>{{ example.updated_at }}</span>
+                <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
+                    <span>{{ example.updated_at_nice }} ({{ example.updated_at_diff }})</span>
                 </a-input-row>
             </div>
 

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use App\Traits\TimestampAttributes;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable //, MustVerifyEmail
 {
-    use HasRoles, Notifiable;
+    use HasRoles, Notifiable, TimestampAttributes;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -31,6 +32,10 @@ class User extends Authenticatable //, MustVerifyEmail
         'status_nice',
         'photo_url',
         'roles_list',
+        'created_at_nice',
+        'created_at_diff',
+        'updated_at_nice',
+        'updated_at_diff',
     ];
 
     /**
@@ -76,7 +81,6 @@ class User extends Authenticatable //, MustVerifyEmail
     {
         return $this->roles->pluck('name')->toArray();
     }
-
 
     /**
      * Create a new user.
