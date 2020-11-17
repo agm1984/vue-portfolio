@@ -41,12 +41,17 @@ class Link extends Model
     }
 
     public static function generate(
+        int $example_id,
         string $name,
         string $url,
         ?array $attributes = []
     ) : self
     {
-        $link = self::query()->firstOrNew([ 'name' => $name, 'url' => $url ]);
+        $link = self::query()->firstOrNew([
+            'example_id' => $example_id,
+            'name' => $name,
+            'url' => $url,
+        ]);
 
         $link->fill([
             'status' => self::STATUS_ACTIVE,

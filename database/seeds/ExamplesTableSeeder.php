@@ -420,11 +420,11 @@ class ExamplesTableSeeder extends Seeder
                 }
 
                 foreach ($example['links'] as $link) {
-                    $link = Link::create([
-                        'example_id' => $new_example->id,
-                        'name' => $link['name'],
-                        'url' => $link['url']
-                    ]);
+                    $link = Link::generate(
+                        $new_example->id,
+                        $link['name'],
+                        $link['url']
+                    );
                 }
 
                 foreach ($example['tags'] as $tagname) {
