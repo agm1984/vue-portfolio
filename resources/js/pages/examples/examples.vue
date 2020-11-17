@@ -22,7 +22,7 @@
             <router-link
                 :to="{ name: 'public.examples.list' }"
                 class="p-8"
-                active-class="isActiveCategory"
+                active-class="font-bold rounded-sm isActiveCategory"
                 tabindex="0"
                 title="Show everything"
                 exact
@@ -36,7 +36,7 @@
                 :key="category.slug"
                 :to="{ name: 'public.examples.list', params: { category: category.slug } }"
                 class="p-8 ml-8"
-                active-class="isActiveCategory"
+                active-class="font-bold rounded-sm isActiveCategory"
                 tabindex="0"
                 :title="`Show only ${category.name}`"
                 @click="() => this.handleSetActiveCategory(category.slug)"

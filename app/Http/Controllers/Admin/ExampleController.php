@@ -53,7 +53,7 @@ class ExampleController extends Controller
     public function edit(Request $request, Example $example)
     {
         \Log::debug('edit success 123');
-        \Log::debug($request->all());
+        // \Log::debug($request->all());
         $editableFields = [
             'name',
             'slug',
@@ -67,10 +67,16 @@ class ExampleController extends Controller
             }
         }
 
+        $example->save();
+
         $category = Category::findOrFail($request->input('category_id'));
         $example->category()->associate($category);
 
-        $example->save();
+        $tags = [];
+        foreach ($request->input('tags') as $tag) {
+            array_push($tags, $tag['id']);
+        }
+        $example->tags()->sync($tags);
 
         return response()->json([
             'example' => $example,
