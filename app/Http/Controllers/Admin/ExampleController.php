@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Example;
+use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -74,7 +75,12 @@ class ExampleController extends Controller
 
         $tags = [];
         foreach ($request->input('tags') as $tag) {
-            array_push($tags, $tag['id']);
+            if (!is_array($tag)) {
+                $new_tag = Tag::generate($tag);
+                array_push($tags, $new_tag->id);
+            } else {
+                array_push($tags, $tag['id']);
+            }
         }
         $example->tags()->sync($tags);
 
