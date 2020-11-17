@@ -135,21 +135,6 @@
                 <hr v-if="(i !== (example.links.length - 1))" class="h-1 my-16 bg-grey-600">
             </div>
         </a-card>
-
-        <a-card class="p-32 mt-16">
-            <a-heading level="2" class="mb-16">
-                Tags
-            </a-heading>
-
-            <div v-for="tag in example.tags" :key="`tag-${tag.id}`" class="flex flex-col">
-                <a-input-row type="is-wider-right" heading="Name">
-                    <a-text-input
-                        v-model="tags[tag.id].name"
-                    ></a-text-input>
-                </a-input-row>
-            </div>
-
-        </a-card>
     </div>
 </template>
 
