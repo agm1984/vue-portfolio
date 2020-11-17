@@ -46,6 +46,17 @@ class ExampleController extends Controller
             $request->input('images'),
         );
 
+        $tags = [];
+        foreach ($request->input('tags') as $tag) {
+            if (!is_array($tag)) {
+                $new_tag = Tag::generate($tag);
+                array_push($tags, $new_tag->id);
+            } else {
+                array_push($tags, $tag['id']);
+            }
+        }
+        $example->tags()->sync($tags);
+
         return response()->json([
             'example' => $example,
         ]);
@@ -54,7 +65,7 @@ class ExampleController extends Controller
     public function edit(Request $request, Example $example)
     {
         \Log::debug('edit success 123');
-        // \Log::debug($request->all());
+        \Log::debug($request->all());
         $editableFields = [
             'name',
             'slug',

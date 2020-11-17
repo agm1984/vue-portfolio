@@ -79,6 +79,16 @@
                     ></a-text-input>
                 </a-input-row>
 
+                <a-input-row type="is-wider-right" heading="Tags" is-tall>
+                    <a-tags-input
+                        v-model="example.tags"
+                        vid="tags"
+                        field="name"
+                        :fetch-endpoint="route('admin.tags.getAll')"
+                        allow-new
+                    ></a-tags-input>
+                </a-input-row>
+
                 <a-input-row type="is-wider-right" heading="Images">
                     <a-multi-image-input
                         v-model="example.images"
@@ -119,6 +129,7 @@ export default {
                 category_id: undefined,
                 slug: '',
                 name: '',
+                tags: [],
                 images: [],
             },
         };
@@ -157,6 +168,20 @@ export default {
                 const payload = new FormData();
 
                 Object.keys(this.example).forEach(field => payload.append(field, this.example[field]));
+
+                this.example.tags.forEach((tag, i) => {
+                    console.log('TAG DATA', tag);
+                    if (Object.prototype.toString.call(tag) === '[object String]') {
+                        console.log('NEW TAG', tag);
+                        payload.append(`tags[${i}]`, tag);
+                    } else {
+                        console.log('EXISTING TAG', tag);
+                        Object.keys(tag).forEach(field => {
+                            console.log('ADD', field);
+                            payload.append(`tags[${i}][${field}]`, tag[field]);
+                        });
+                    }
+                });
 
                 this.example.images.forEach(image => payload.append('images[]', image));
 
