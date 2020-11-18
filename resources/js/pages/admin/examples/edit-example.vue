@@ -66,6 +66,12 @@
                 ></a-text-input>
             </a-input-row>
 
+            <a-input-row type="is-wider-right" heading="Links" is-tall>
+                <example-links-input
+                    v-model="modifiedExample.links"
+                ></example-links-input>
+            </a-input-row>
+
             <a-input-row type="is-wider-right" heading="Tags" is-tall>
                 <a-tags-input
                     v-model="modifiedExample.tags"
@@ -92,6 +98,7 @@
 <script>
 import axios from 'axios';
 import cloneDeep from 'lodash.clonedeep';
+import ExampleLinksInput from './example-links-input.vue';
 import { Category } from '~/globalModelTypes';
 
 const INITIAL = 'INITIAL';
@@ -99,6 +106,10 @@ const IS_LOADED = 'IS_LOADED';
 
 export default {
     name: 'edit-example',
+
+    components: {
+        ExampleLinksInput,
+    },
 
     props: {
         example: {
@@ -116,6 +127,7 @@ export default {
             state: INITIAL,
             categories: [],
             modifiedExample: cloneDeep(this.example),
+            links: [],
         };
     },
 

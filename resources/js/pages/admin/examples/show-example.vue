@@ -114,27 +114,6 @@
             </div>
         </a-card>
 
-        <a-card class="p-32 mt-16">
-            <a-heading level="2" class="mb-16">
-                Links
-            </a-heading>
-
-            <div v-for="(link, i) in example.links" :key="`link-${link.id}`" class="flex flex-col">
-                <a-input-row type="is-wider-right" heading="Name">
-                    <a-text-input
-                        v-model="links[link.id].name"
-                    ></a-text-input>
-                </a-input-row>
-
-                <a-input-row type="is-wider-right" heading="URL">
-                    <a-text-input
-                        v-model="links[link.id].url"
-                    ></a-text-input>
-                </a-input-row>
-
-                <hr v-if="(i !== (example.links.length - 1))" class="h-1 my-16 bg-grey-600">
-            </div>
-        </a-card>
     </div>
 </template>
 
@@ -193,12 +172,6 @@ export default {
                     this.links[link.id] = {};
                     this.links[link.id].name = link.name;
                     this.links[link.id].url = link.url;
-                    return acc;
-                }, {});
-
-                this.example.tags.reduce((acc, tag) => {
-                    this.tags[tag.id] = {};
-                    this.tags[tag.id].name = tag.name;
                     return acc;
                 }, {});
 

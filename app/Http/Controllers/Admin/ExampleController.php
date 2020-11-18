@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Example;
+use App\Link;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,6 +47,14 @@ class ExampleController extends Controller
             $request->input('images'),
         );
 
+        foreach ($request->input('links') as $link) {
+            Link::generate(
+                $example->id,
+                $link['name'],
+                $link['url']
+            );
+        }
+
         $tags = [];
         foreach ($request->input('tags') as $tag) {
             if (!is_array($tag)) {
@@ -83,6 +92,15 @@ class ExampleController extends Controller
 
         $category = Category::findOrFail($request->input('category_id'));
         $example->category()->associate($category);
+
+        $example->links()->delete();
+        foreach ($request->input('links') as $link) {
+            Link::generate(
+                $example->id,
+                $link['name'],
+                $link['url']
+            );
+        }
 
         $tags = [];
         foreach ($request->input('tags') as $tag) {

@@ -67,7 +67,7 @@
                     ></a-text-input>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Conclusion" is-tall>
+                <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
                     <a-text-input
                         v-model="example.conclusion"
                         rules="required"
@@ -79,7 +79,13 @@
                     ></a-text-input>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Tags" is-tall>
+                <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
+                    <example-links-input
+                        v-model="example.links"
+                    ></example-links-input>
+                </a-input-row>
+
+                <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
                     <a-tags-input
                         v-model="example.tags"
                         vid="tags"
@@ -89,7 +95,7 @@
                     ></a-tags-input>
                 </a-input-row>
 
-                <a-input-row type="is-wider-right" heading="Images">
+                <a-input-row class="pt-16" type="is-wider-right" heading="Images">
                     <a-multi-image-input
                         v-model="example.images"
                         vid="images"
@@ -110,6 +116,7 @@
 
 <script>
 import axios from 'axios';
+import ExampleLinksInput from './example-links-input.vue';
 import { Example } from '~/globalModelTypes';
 
 const INITIAL = 'INITIAL';
@@ -117,6 +124,10 @@ const CREATE = 'CREATE';
 
 export default {
     name: 'create-example',
+
+    components: {
+        ExampleLinksInput,
+    },
 
     props: {},
 
@@ -129,6 +140,7 @@ export default {
                 category_id: undefined,
                 slug: '',
                 name: '',
+                links: [],
                 tags: [],
                 images: [],
             },
@@ -169,17 +181,18 @@ export default {
 
                 Object.keys(this.example).forEach(field => payload.append(field, this.example[field]));
 
+                this.example.links.forEach((link, i) => {
+                    console.log('LINK', link);
+                    Object.keys(link).forEach(field => {
+                        payload.append(`links[${i}][${field}]`, link[field]);
+                    });
+                });
+
                 this.example.tags.forEach((tag, i) => {
-                    console.log('TAG DATA', tag);
                     if (Object.prototype.toString.call(tag) === '[object String]') {
-                        console.log('NEW TAG', tag);
                         payload.append(`tags[${i}]`, tag);
                     } else {
-                        console.log('EXISTING TAG', tag);
-                        Object.keys(tag).forEach(field => {
-                            console.log('ADD', field);
-                            payload.append(`tags[${i}][${field}]`, tag[field]);
-                        });
+                        Object.keys(tag).forEach(field => payload.append(`tags[${i}][${field}]`, tag[field]));
                     }
                 });
 

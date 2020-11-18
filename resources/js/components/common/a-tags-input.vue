@@ -266,7 +266,6 @@ export default {
             try {
                 const { data } = await axios.get(this.fetchEndpoint);
 
-                console.log('tags', data.tags);
                 this.allTags = data.tags;
             } catch (err) {
                 throw new Error(`example-tags-input# Problem fetching list of tags: ${err}.`);
@@ -274,7 +273,6 @@ export default {
         },
 
         getFilteredTags(text) {
-            console.log('running this getFilteredTags');
             this.filteredTags = this.allTags.filter((option) => {
                 return (option.name.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0);
             });
