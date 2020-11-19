@@ -62,7 +62,7 @@
 
                 <div class="flex flex-col items-start w-1/2">
 
-                    <button @click="$root.$emit('animate-it')">Test</button>
+                    <!-- <button @click="$root.$emit('animate-it')">Interact</button> -->
                     <adam-scene></adam-scene>
                 </div>
             </div>
