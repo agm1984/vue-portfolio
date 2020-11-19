@@ -15,7 +15,7 @@
                     </router-link>
                 </b-table-column>
 
-                <b-table-column field="slug" label="Slug" width="1">
+                <b-table-column field="slug" label="Slug">
                     {{ row.slug }}
                 </b-table-column>
 
