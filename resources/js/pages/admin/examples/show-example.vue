@@ -99,19 +99,22 @@
 
         <a-card class="p-32 mt-16">
             <a-heading level="2" class="mb-16">
-                Images
+                Add images
             </a-heading>
 
-            <div class="flex flex-row flex-wrap justify-start">
-                <router-link
-                    v-for="image in example.images"
-                    :key="image.image_id"
-                    :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
-                    class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
-                    title="Click to enlarge"
-                    :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
-                ></router-link>
-            </div>
+            <a-form v-slot="{ handleSubmit }" has-files>
+                <a-multi-image-input
+                    v-model="newImages"
+                    vid="images"
+                    rules="required"
+                ></a-multi-image-input>
+
+                <div class="flex items-center justify-end">
+                    <a-button @click="handleSubmit(submitNewImages)">
+                        Upload
+                    </a-button>
+                </div>
+            </a-form>
         </a-card>
 
     </div>
@@ -139,8 +142,8 @@ export default {
             example: {
                 category: {},
             },
-            links: {},
-            tags: {},
+            links: [],
+            newImages: [],
         };
     },
 
@@ -192,6 +195,21 @@ export default {
         handleSaved() {
             this.fetchExample();
             this.state = SHOWING;
+        },
+
+        async submitNewImages() {
+            try {
+                console.log('newImages', this.newImages);
+                const payload = new FormData();
+
+                this.newImages.forEach(image => payload.append('images[]', image));
+
+                const { data } = await axios.post(route('admin.examples.appendImages', this.example.slug), payload);
+
+                console.log('data', data);
+            } catch (err) {
+                throw new Error(`show-example# Problem adding images: ${err}.`);
+            }
         },
 
     },

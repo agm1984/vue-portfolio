@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Example;
+use App\ExampleImage;
 use App\Link;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -118,34 +120,35 @@ class ExampleController extends Controller
         ]);
     }
 
-    public function editImages(Request $request, Example $example)
+    public function appendImages(Request $request, Example $example)
     {
-        \Log::debug('edit example images');
-        \Log::debug($example);
+        \Log::debug('append images');
         \Log::debug($request->all());
-        // \Log::debug($request->headers->all());
+        \Log::debug($request->input('images'));
+
+        foreach ($request->input('images') as $image) {
+            $image->storeAs(
+                'examples' .'/'. $example->slug,
+                $image->getClientOriginalName(),
+                'public'
+            );
+
+            ExampleImage::generate($example->id, $image->getClientOriginalName());
+        }
 
         return response()->json([
             'example' => $example,
         ]);
     }
 
-    public function editLinks(Request $request, Example $example)
+    public function removeImage(Request $request, Example $example, ExampleImage $exampleImage)
     {
-        \Log::debug('edit example links');
-        \Log::debug($example);
-        \Log::debug($request->all());
+        \Log::debug('remove image');
+        \Log::debug($example->slug);
+        \Log::debug($exampleImage->filename);
 
-        return response()->json([
-            'example' => $example,
-        ]);
-    }
-
-    public function editTags(Request $request, Example $example)
-    {
-        \Log::debug('edit example tags');
-        \Log::debug($example);
-        \Log::debug($request->all());
+        Storage::disk('public')->delete('/examples/'.$example->slug.'/'.$exampleImage->filename);
+        ExampleImage::destroy($exampleImage->id);
 
         return response()->json([
             'example' => $example,

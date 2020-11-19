@@ -54,7 +54,7 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Conclusion" is-tall>
+            <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
                 <a-text-input
                     v-model="modifiedExample.conclusion"
                     rules="required"
@@ -66,13 +66,13 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Links" is-tall>
+            <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
                 <example-links-input
                     v-model="modifiedExample.links"
                 ></example-links-input>
             </a-input-row>
 
-            <a-input-row type="is-wider-right" heading="Tags" is-tall>
+            <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
                 <a-tags-input
                     v-model="modifiedExample.tags"
                     vid="tags"
@@ -80,6 +80,15 @@
                     :fetch-endpoint="route('admin.tags.getAll')"
                     allow-new
                 ></a-tags-input>
+            </a-input-row>
+
+            <a-input-row class="pt-16" type="is-wider-right" heading="Images" is-tall>
+                <example-images-editor
+                    v-model="modifiedExample.images"
+                    vid="images"
+                    rules="required"
+                    :example="example"
+                ></example-images-editor>
             </a-input-row>
 
             <div class="flex items-center justify-end">
@@ -99,6 +108,7 @@
 import axios from 'axios';
 import cloneDeep from 'lodash.clonedeep';
 import ExampleLinksInput from './example-links-input.vue';
+import ExampleImagesEditor from './example-images-editor.vue';
 import { Category } from '~/globalModelTypes';
 
 const INITIAL = 'INITIAL';
@@ -109,6 +119,7 @@ export default {
 
     components: {
         ExampleLinksInput,
+        ExampleImagesEditor,
     },
 
     props: {
@@ -127,7 +138,6 @@ export default {
             state: INITIAL,
             categories: [],
             modifiedExample: cloneDeep(this.example),
-            links: [],
         };
     },
 
@@ -150,7 +160,6 @@ export default {
     },
 
     mounted() {
-        console.log('example', this.example);
         return this.fetchAllCategories();
     },
 

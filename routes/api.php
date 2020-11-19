@@ -30,9 +30,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin'
     Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');
     Route::post('/examples', 'Admin\ExampleController@create')->name('admin.examples.create');
     Route::put('/examples/{example}', 'Admin\ExampleController@edit')->name('admin.examples.edit');
-    Route::put('/examples/{example}/images', 'Admin\ExampleController@editImages')->name('admin.examples.editImages');
-    Route::put('/examples/{example}/links', 'Admin\ExampleController@editLinks')->name('admin.examples.editLinks');
-    Route::put('/examples/{example}/tags', 'Admin\ExampleController@editTags')->name('admin.examples.editTags');
+    Route::post('/examples/{example}/images/append', 'Admin\ExampleController@appendImages')->name('admin.examples.appendImages');
+    Route::put('/examples/{example}/images/delete/{exampleImage}', 'Admin\ExampleController@removeImage')->name('admin.examples.removeImage');
 
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.list');
     Route::get('/users/{user}', 'Admin\UserController@show')->name('admin.users.show');

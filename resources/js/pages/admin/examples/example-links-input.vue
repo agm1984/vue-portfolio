@@ -45,7 +45,7 @@ export default {
     props: {
         // must be included in props
         value: {
-            type: [Array, Object],
+            type: Array,
             required: false,
             default: () => '',
         },
