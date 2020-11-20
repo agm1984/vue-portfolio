@@ -66,7 +66,7 @@
                     <hr class="m-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" has-link>
-                        <router-link :to="{ name: 'profile' }">Profile</router-link>
+                        <router-link :to="{ name: 'settings.profile' }">Profile</router-link>
                     </b-dropdown-item>
 
                     <b-dropdown-item aria-role="listitem" has-link>
