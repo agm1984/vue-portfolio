@@ -5,6 +5,9 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+// Test image upload syntax
+// https://vegibit.com/vuejs-image-upload/
+
 class ExampleTest extends TestCase
 {
     /**
