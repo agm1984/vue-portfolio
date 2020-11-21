@@ -56,6 +56,11 @@ axios.interceptors.response.use(response => response, (error) => {
         });
     }
 
+    if (status === 422) {
+        // @TODO: needs more testing
+        // load error display with field names mapped to errors
+    }
+
     if (status === 419) {
         if (config.url.name === 'logout') {
             console.log('axios## running this 1');

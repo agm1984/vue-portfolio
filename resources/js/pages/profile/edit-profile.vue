@@ -56,17 +56,11 @@ export default {
     },
 
     created() {
-        console.log('user', this.user);
         this.profile.name = this.user.name;
         this.profile.email = this.user.email;
     },
 
     methods: {
-        async update() {
-            const { data } = await this.form.patch('/api/settings/profile');
-            this.$store.dispatch('auth/updateUser', { user: data });
-        },
-
         async submitForm() {
             try {
                 const { data } = await axios.put(route('user.profile.edit'), this.profile);

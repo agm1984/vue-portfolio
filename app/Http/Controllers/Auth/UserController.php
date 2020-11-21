@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -25,8 +26,6 @@ class UserController extends Controller
 
     public function editProfile(Request $request)
     {
-        \Log::debug($request->input('name'));
-        \Log::debug($request->input('email'));
         $user = $request->user();
         $editableFields = ['name', 'email'];
 
@@ -45,8 +44,23 @@ class UserController extends Controller
 
     public function editPassword(Request $request)
     {
+        $user = $request->user();
+        $current_password = $user->password;
+
+        if (Hash::check($request->input('old_password'), $current_password)) {
+            $user->password = Hash::make($request->input('new_password'));
+            $user->save();
+        } else {
+            return response()->json([
+                'errors' => [
+                    'old_password' => ['Password is incorrect.'],
+                ],
+                'message' => 'The given data was invalid.',
+            ], 422);
+        }
+
         return response()->json([
-            'test' => 'ok',
+            'user' => $user,
         ]);
     }
 }

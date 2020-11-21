@@ -3,7 +3,7 @@
         <a-form v-slot="{ handleSubmit }">
             <a-input-row class="pt-16" type="is-wider-right" heading="Old password">
                 <a-text-input
-                    v-model="password.name"
+                    v-model="password.old_password"
                     vid="name"
                     rules="required"
                 ></a-text-input>
@@ -11,7 +11,7 @@
 
             <a-input-row class="pt-16" type="is-wider-right" heading="New password">
                 <a-text-input
-                    v-model="password.name"
+                    v-model="password.new_password"
                     vid="name"
                     rules="required"
                 ></a-text-input>
@@ -19,7 +19,7 @@
 
             <a-input-row class="pt-16" type="is-wider-right" heading="Confirm password">
                 <a-text-input
-                    v-model="password.name"
+                    v-model="password.password_confirmation"
                     vid="name"
                     rules="required"
                 ></a-text-input>
@@ -60,6 +60,18 @@ export default {
         async update() {
             await this.form.patch('/api/settings/password');
             this.form.reset();
+        },
+
+        async submitForm() {
+            try {
+                const { data } = await axios.put(route('user.password.edit'), this.password);
+
+                console.log('data', data);
+                this.$store.dispatch('auth/updateUser', { user: data.user });
+
+            } catch (err) {
+                throw new Error(`edit-profile# Problem submitting form: ${err}.`);
+            }
         },
     },
 };
