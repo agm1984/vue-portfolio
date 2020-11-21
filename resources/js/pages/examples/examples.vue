@@ -21,7 +21,7 @@
         <div class="flex items-center justify-center">
             <router-link
                 :to="{ name: 'public.examples.list' }"
-                class="p-8 font-bold rounded-sm"
+                class="px-16 py-8 font-bold rounded-sm"
                 active-class="text-white bg-primary border-1 border-primary"
                 title="Show everything"
                 exact
@@ -34,7 +34,7 @@
                 v-for="category in categories"
                 :key="category.slug"
                 :to="{ name: 'public.examples.list', params: { category: category.slug } }"
-                class="p-8 ml-8 font-bold rounded-sm"
+                class="px-16 py-8 font-bold rounded-sm"
                 active-class="text-white bg-primary border-1 border-primary"
                 :title="`Show only ${category.name}`"
                 @click="() => this.handleSetActiveCategory(category.slug)"

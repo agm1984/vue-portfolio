@@ -34,11 +34,11 @@ const router = [
 
     {
         path: '/settings',
-        component: page('settings/index.vue'),
+        component: page('profile/profile-index.vue'),
         children: [
             { path: '', redirect: { name: 'settings.profile' } },
-            { path: 'profile', name: 'settings.profile', component: page('profile/profile.vue') },
-            { path: 'password', name: 'settings.password', component: page('settings/password.vue') },
+            { path: 'profile', name: 'settings.profile', component: page('profile/edit-profile.vue') },
+            { path: 'password', name: 'settings.password', component: page('profile/edit-password.vue') },
         ],
     },
 
