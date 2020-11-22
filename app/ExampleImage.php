@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Example;
 use Illuminate\Database\Eloquent\Model;
 
 class ExampleImage extends Model

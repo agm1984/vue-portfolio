@@ -1,6 +1,13 @@
 <template>
     <div class="">
-        <a-form v-slot="{ handleSubmit }">
+        <a-form v-slot="{ handleSubmit }" has-files>
+            <div class="flex items-center justify-center">
+                <a-single-image-input
+                    v-model="profile.avatar"
+                    :user="user"
+                ></a-single-image-input>
+            </div>
+
             <a-input-row class="pt-16" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="profile.name"
@@ -42,6 +49,7 @@ export default {
     data() {
         return {
             profile: {
+                avatar: '',
                 name: '',
                 email: '',
             },
@@ -56,14 +64,23 @@ export default {
     },
 
     created() {
+        // console.log('user', this.user);
         this.profile.name = this.user.name;
         this.profile.email = this.user.email;
     },
 
     methods: {
+
+
         async submitForm() {
             try {
-                const { data } = await axios.put(route('user.profile.edit'), this.profile);
+                const payload = new FormData();
+
+                payload.append('avatar', this.profile.avatar);
+                payload.append('name', this.profile.name);
+                payload.append('email', this.profile.email);
+
+                const { data } = await axios.post(route('user.profile.edit'), payload);
 
                 console.log('data', data.user);
                 this.$store.dispatch('auth/updateUser', { user: data.user });

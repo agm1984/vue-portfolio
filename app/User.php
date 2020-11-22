@@ -31,6 +31,7 @@ class User extends Authenticatable //, MustVerifyEmail
     protected $appends = [
         'status_nice',
         'photo_url',
+        'avatar_url',
         'roles_list',
         'created_at_nice',
         'created_at_diff',
@@ -70,6 +71,14 @@ class User extends Authenticatable //, MustVerifyEmail
     public function getPhotoUrlAttribute()
     {
         return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar_filename) {
+            return "/users/{$this->id}/{$this->avatar_filename}";
+        }
+        return '';
     }
 
     /**

@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
     Route::get('user', 'Auth\UserController@me')->name('me');
 
-    Route::put('/user/profile', 'Auth\UserController@editProfile')->name('user.profile.edit');
+    Route::post('/user/profile', 'Auth\UserController@editProfile')->name('user.profile.edit');
     Route::put('/user/password', 'Auth\UserController@editPassword')->name('user.password.edit');
 });
 

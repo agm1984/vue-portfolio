@@ -39,7 +39,7 @@
                         custom
                     >
                         <div class="flex w-384">
-                            <div class="w-32 h-32 bg-no-repeat bg-cover rounded-full">
+                            <div class="w-32 h-32 bg-no-repeat bg-cover rounded-full border-1 border-primary">
                                 <img :src="user.photo_url">
                             </div>
 
@@ -56,7 +56,7 @@
 
                 <b-dropdown aria-role="menu" position="is-bottom-left">
                     <div slot="trigger" class="w-32 h-32 bg-no-repeat bg-cover rounded-full">
-                        <img :src="user.photo_url">
+                        <a-avatar :user="user"></a-avatar>
                     </div>
 
                     <b-dropdown-item custom aria-role="menuitem">
