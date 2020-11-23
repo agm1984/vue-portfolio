@@ -70,17 +70,20 @@ class UserController extends Controller
         if (Hash::check($request->input('old_password'), $current_password)) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
-        } else {
+
             return response()->json([
-                'errors' => [
-                    'old_password' => ['Password is incorrect.'],
-                ],
-                'message' => 'The given data was invalid.',
-            ], 422);
+                'user' => $user,
+            ]);
         }
 
         return response()->json([
-            'user' => $user,
-        ]);
+            'errors' => [
+                'old_password' => ['Password is incorrect.'],
+            ],
+            'message' => 'The given data was invalid.',
+        ], 422);
+
+
+
     }
 }
