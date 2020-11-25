@@ -28,23 +28,17 @@
 
                     <a-paragraph>
                         My list of hobbies is quite short because my main hobby is programming. Beyond that,
-                        I enjoy working out. I've been working out at the gym four times a week for the past 10 years,
-                        although I haven't gone that much in the past 2 years, lol. I'll go again soon (insert joke).
+                        I enjoy working out. I've been working out for the past 10 years. I didn't go to the gym much in 2019,
+                        but I've been going again four times a week, and it feels great.
                     </a-paragraph>
 
                     <a-paragraph>
-                        I also own a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
-                        you can find me out driving with my friends, listening to music, finding new places to visit.
+                        I have a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
+                        you can find me out driving with my friends, listening to music, and finding new places to visit.
                     </a-paragraph>
 
                     <a-paragraph>
-                        On my <router-link :to="{ name: 'contact' }">Contact</router-link> page, you can find my social details, but I'd recommend my Twitter first,
-                        because it shows all my whimsical, irrational shower thoughts. I'm a little dry and logical,
-                        but I make up for it by being super-friendly and helpful. I am efficient but also fault tolerant.
-                    </a-paragraph>
-
-                    <a-paragraph>
-                        For efficiency reasons, I'll link a few of my social media profiles here:
+                        On my <router-link :to="{ name: 'contact' }">Contact</router-link> page, you can find my social details.
                     </a-paragraph>
 
                     <a-paragraph>
@@ -120,41 +114,6 @@
                 </a-card>
             </div>
 
-            <a-heading level="3" class="mt-64 mb-32" nunito>A COUPLE PATHS</a-heading>
-
-            <div id="path-wrapper">
-                <div id="path-container">
-                    <router-link
-                        to="/skills"
-                        class="btn"
-                        title="See Adam's skills"
-                    >
-                        SEE SKILLS
-                    </router-link>
-
-                    <div class="path-divider"></div>
-
-                    <router-link
-                        to="/contact"
-                        class="btn"
-                        title="Start a conversation with Adam"
-                    >
-                        CONTACT
-                    </router-link>
-                </div>
-
-                <div id="story-footer">
-                    <div id="story-left">
-                    </div>
-
-                    <div id="story-center">
-                        <span id="story-conclusion">△△△</span>
-                    </div>
-
-                    <div id="story-right"></div>
-                </div>
-
-            </div>
         </div>
 
         <div class="absolute" :style="{ right: '1.6rem' }">
