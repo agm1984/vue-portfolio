@@ -18,7 +18,7 @@
             <span class="mt-4 text-lg">⇩</span>
         </button>
 
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-end">
             <router-link
                 :to="{ name: 'public.examples.list' }"
                 class="px-16 py-8 font-bold rounded-sm"
