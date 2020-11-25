@@ -10,9 +10,12 @@
         >
             <template slot-scope="{ row }">
                 <b-table-column field="name" label="Name">
-                    <router-link :to="{ name: 'admin.users.show', params: { user: row.id } }">
-                        {{ row.name }}
-                    </router-link>
+                    <div class="flex items-center">
+                        <a-avatar :size="24" :user="row" class="mr-4"></a-avatar>
+                        <router-link :to="{ name: 'admin.users.show', params: { user: row.id } }">
+                            {{ row.name }}
+                        </router-link>
+                    </div>
                 </b-table-column>
 
                 <b-table-column field="email" label="Email">

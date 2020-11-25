@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="['flex items-center justify-center w-32 h-32 rounded-full border-1 border-primary', {
+        :class="[containerStyles, {
             'bg-grey-400': !hasImage
         }]"
     >
@@ -27,6 +27,12 @@ export default {
     name: 'a-profile-image',
 
     props: {
+        size: {
+            type: Number,
+            required: false,
+            default: () => 32,
+        },
+
         user: {
             type: Object,
             required: true,
@@ -44,6 +50,15 @@ export default {
 
         firstLetterOfName() {
             return (this.user.name.charAt(0));
+        },
+
+        containerStyles() {
+            const styles = ['flex items-center justify-center rounded-full border-1 border-primary'];
+
+            if (this.size) styles.push(`w-${this.size} h-${this.size}`);
+            else styles.push('w-32 h-32');
+
+            return styles;
         },
     },
 
