@@ -77,8 +77,8 @@
                     <a-heading level="2" class="mb-16" light>To programmers</a-heading>
 
                     <a-paragraph light>
-                        What can I say? I like to use Mealy finite state machines, ES Lint Airbnb, and
-                        unidirectional, immutable functional-reactive programming (FRP) styles (ie: map, reduce, filter, etc).
+                        What can I say? I like to use Mealy finite state machines, predicates and booleans,
+                        and immutable functional-reactive programming (FRP) styles (ie: map, reduce, filter, etc).
                     </a-paragraph>
 
                     <a-paragraph light>
