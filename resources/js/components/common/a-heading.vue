@@ -58,7 +58,7 @@ export default {
 
             if (+level === 1) styles.push('text-2xl');
             if (+level === 2) styles.push('text-xl');
-            if (+level === 3) styles.push('text-md');
+            if (+level === 3) styles.push('text-md font-bold');
             if (+level === 4) styles.push('text-base');
             if (+level === 5) styles.push('text-sm');
             if (+level === 6) styles.push('text-xs');
