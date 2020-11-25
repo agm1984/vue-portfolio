@@ -38,20 +38,18 @@
                     </a-paragraph>
 
                     <a-paragraph>
-                        On my <router-link :to="{ name: 'contact' }">Contact</router-link> page, you can find my social details.
+                        Check out my <router-link :to="{ name: 'contact' }">Contact</router-link> page.
                     </a-paragraph>
 
-                    <a-paragraph>
-                        <strong>Twitter</strong> <a href="https://www.twitter.com/agm1984">https://www.twitter.com/agm1984</a>
-                    </a-paragraph>
-
-                    <a-paragraph>
-                        <strong>GitHub</strong> <a href="https://github.com/agm1984">https://github.com/agm1984</a>
-                    </a-paragraph>
-
-                    <a-paragraph>
-                        <strong>StackOverflow</strong> <a href="https://stackoverflow.com/users/6141025/agm1984">https://stackoverflow.com/users/6141025/agm1984</a>
-                    </a-paragraph>
+                    <div class="flex flex-col pb-8 bg-grey-200">
+                        <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
+                            Find me on social media
+                        </a-heading>
+                        <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link>
+                    </div>
                 </div>
 
                 <div class="flex flex-col items-start w-1/2">
