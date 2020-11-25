@@ -237,7 +237,6 @@ module.exports = {
             0: '0',
             ...availableSizes,
         },
-        /* We are using Bootstrap V4 screen dimensions */
         screens: {
             sm: '576px',
             md: '720px',
