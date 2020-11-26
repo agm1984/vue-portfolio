@@ -59,9 +59,13 @@
             font-weight: 400;
         </a-code>
 
-        Aroly
+        <a-heading level="1" class="mb-16" dark>Paragraphs</a-heading>
+        <a-code>
+            &lt;a-paragraph dark&gt;
+                This is a paragraph.
+            &lt;/a-paragraph&gt;
+        </a-code>
 
-        Nunito
     </a-card>
 </template>
 
