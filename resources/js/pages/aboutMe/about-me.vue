@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="flex flex-col w-full h-auto xl:w-1024">
         <button
             v-if="!isUserScrolling"
             class="absolute flex items-center justify-center w-64 h-64 text-white bg-primary"
@@ -64,8 +64,8 @@
         <div class="w-full">
             <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
 
-            <div class="flex flex-row w-full">
-                <a-card class="p-32 mr-32" fill primary>
+            <div class="flex flex-col w-full xl:flex-row">
+                <a-card class="order-1 p-32 mr-0 xl:mr-16" fill primary>
                     <a-heading level="2" class="mb-16" light>To programmers</a-heading>
 
                     <a-paragraph light>
@@ -80,11 +80,11 @@
                     </a-paragraph>
                 </a-card>
 
-                <a-card class="p-32 ml-32" fill>
+                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill>
                     <a-heading level="2" class="mb-16">To non-programmers</a-heading>
 
-                    <div class="flex flex-row w-full">
-                        <div class="w-1/3">
+                    <div class="flex flex-col w-full">
+                        <div class="w-full">
                             <a-heading level="3" primary nunito>Work</a-heading>
                             <a-paragraph class="pr-32">
                                 As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
@@ -92,7 +92,7 @@
                             </a-paragraph>
                         </div>
 
-                        <div class="w-1/3">
+                        <div class="w-full mt-16">
                             <a-heading level="3" primary nunito>Life</a-heading>
                             <a-paragraph class="pr-32">
                                 I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
@@ -101,7 +101,7 @@
                             </a-paragraph>
                         </div>
 
-                        <div class="w-1/3">
+                        <div class="w-full mt-16">
                             <a-heading level="3" primary nunito>Balance</a-heading>
                             <a-paragraph>
                                 Fitness & nutrition has been a way of life for me for the past ten years. A healthy mind and
@@ -114,7 +114,11 @@
 
         </div>
 
-        <div class="absolute" :style="{ right: '1.6rem' }">
+        <div class="flex justify-center w-full mt-32 text-primary">
+            △△△
+        </div>
+
+        <!-- <div class="absolute" :style="{ right: '1.6rem' }">
             <button
                 class="flex items-center justify-center w-64 h-64 text-white bg-primary"
                 title="Back to top?"
@@ -122,7 +126,7 @@
             >
                 <span class="mt-4 text-lg">⇧</span>
             </button>
-        </div>
+        </div> -->
     </div>
 </template>
 

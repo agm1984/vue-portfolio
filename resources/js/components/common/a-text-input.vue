@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <div>
         <validation-provider
             v-slot="{ errors, valid }"
             :vid="vid"
@@ -39,7 +39,7 @@
 
             </b-field>
         </validation-provider>
-    </section>
+    </div>
 </template>
 
 <script>

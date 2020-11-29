@@ -1,6 +1,6 @@
 <template>
     <a-page id="default-layout" class="relative z-0">
-        <a-sacred-geometry id="wallpaper" is-wallpaper></a-sacred-geometry>
+        <!-- <a-sacred-geometry id="wallpaper" is-wallpaper></a-sacred-geometry> -->
 
         <top-nav-bar></top-nav-bar>
 

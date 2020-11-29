@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-auto w-1024">
+    <div class="flex flex-col h-auto">
         <a-card id="design-system-buttons" class="p-32" with-geometry>
             <a-heading level="2" dark>Buttons</a-heading>
 

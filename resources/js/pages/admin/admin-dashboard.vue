@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full h-auto">
+    <div class="flex w-full h-auto xl:w-1280">
         <div class="sidebar-page">
             <section class="sidebar-layout">
                 <b-sidebar
@@ -18,6 +18,14 @@
                         </div>
 
                         <b-menu class="is-custom-mobile">
+                            <b-menu-list :label="currentDate">
+                                <b-menu-item
+                                    label="Dashboard"
+                                    tag="router-link"
+                                    :to="{ name: 'admin' }"
+                                    :active="$router.currentRoute.name === 'admin'"
+                                ></b-menu-item>
+                            </b-menu-list>
                             <b-menu-list label="Users">
                                 <b-menu-item
                                     label="List"
@@ -166,6 +174,7 @@ export default {
                 name: 'series-1',
                 data: [30, 40, 45, 50, 49, 60, 70, 91],
             }],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         };
     },
 
@@ -176,6 +185,11 @@ export default {
 
         isLoaded() {
             return (this.state === LOADED);
+        },
+
+        currentDate() {
+            const d = new Date();
+            return `${this.months[d.getMonth()]} ${d.getDate()}`;
         },
     },
 

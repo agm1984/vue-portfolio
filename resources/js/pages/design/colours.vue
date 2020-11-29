@@ -1,11 +1,20 @@
 <template>
     <a-card id="design-system-colour" class="p-32" with-geometry>
 
-        <a-heading level="1" dark>Colour</a-heading>
+        <a-heading level="1" dark>Colours</a-heading>
 
-        <a-heading level="2" dark>Greyscale</a-heading>
+        <a-pararaph>
+            This site uses Tailwind to manage colours.
+        </a-pararaph>
 
-        <div class="flex flex-col m-16 w-256">
+        <a-heading level="2" dark>Palettes</a-heading>
+
+        <a-heading level="3" primary nunito>Brand</a-heading>
+        <div class="w-full h-64 p-8 text-white bg-primary">Primary</div>
+        <div class="w-full h-64 p-8 mt-16 text-white bg-secondary">Secondary</div>
+
+        <div class="flex flex-col mt-32 w-192">
+            <a-heading level="3" primary nunito>Greyscale</a-heading>
             <div class="flex items-center justify-between p-8 bg-grey-100"><span>100</span><span>#f7fafc</span></div>
             <div class="flex items-center justify-between p-8 bg-grey-200"><span>200</span><span>#edf2f7</span></div>
             <div class="flex items-center justify-between p-8 bg-grey-300"><span>300</span><span>#e2e8f0</span></div>
@@ -17,10 +26,9 @@
             <div class="flex items-center justify-between p-8 text-white bg-grey-900"><span>900</span><span>#1a202c</span></div>
         </div>
 
-        <a-heading level="2" dark>Colours</a-heading>
-
-        <div class="flex flex-wrap">
-            <div class="flex flex-col m-16 w-256">
+        <div class="flex flex-wrap mt-32">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Red</a-heading>
                 <div class="flex items-center justify-between p-8 bg-red-100"><span>100</span><span>#fff5f5</span></div>
                 <div class="flex items-center justify-between p-8 bg-red-200"><span>200</span><span>#fed7d7</span></div>
                 <div class="flex items-center justify-between p-8 bg-red-300"><span>300</span><span>#feb2b2</span></div>
@@ -32,7 +40,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-red-900"><span>900</span><span>#742a2a</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col mx-16 w-192">
+                <a-heading level="3" primary nunito>Orange</a-heading>
                 <div class="flex items-center justify-between p-8 bg-orange-100"><span>100</span><span>#fffaf0</span></div>
                 <div class="flex items-center justify-between p-8 bg-orange-200"><span>200</span><span>#feebc8</span></div>
                 <div class="flex items-center justify-between p-8 bg-orange-300"><span>300</span><span>#fbd38d</span></div>
@@ -44,7 +53,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-orange-900"><span>900</span><span>#7b341e</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Yellow</a-heading>
                 <div class="flex items-center justify-between p-8 bg-yellow-100"><span>100</span><span>#fffff0</span></div>
                 <div class="flex items-center justify-between p-8 bg-yellow-200"><span>200</span><span>#fefcbf</span></div>
                 <div class="flex items-center justify-between p-8 bg-yellow-300"><span>300</span><span>#faf089</span></div>
@@ -57,8 +67,9 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap">
-            <div class="flex flex-col m-16 w-256">
+        <div class="flex flex-wrap mt-32">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Green</a-heading>
                 <div class="flex items-center justify-between p-8 bg-green-100"><span>100</span><span>#f0fff4</span></div>
                 <div class="flex items-center justify-between p-8 bg-green-200"><span>200</span><span>#c6f6d5</span></div>
                 <div class="flex items-center justify-between p-8 bg-green-300"><span>300</span><span>#9ae6b4</span></div>
@@ -70,7 +81,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-green-900"><span>900</span><span>#22543d</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col mx-16 w-192">
+                <a-heading level="3" primary nunito>Teal</a-heading>
                 <div class="flex items-center justify-between p-8 bg-teal-100"><span>100</span><span>#e6fffa</span></div>
                 <div class="flex items-center justify-between p-8 bg-teal-200"><span>200</span><span>#b2f5ea</span></div>
                 <div class="flex items-center justify-between p-8 bg-teal-300"><span>300</span><span>#81e6d9</span></div>
@@ -82,7 +94,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-teal-900"><span>900</span><span>#234e52</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Blue</a-heading>
                 <div class="flex items-center justify-between p-8 bg-blue-100"><span>100</span><span>#ebf8ff</span></div>
                 <div class="flex items-center justify-between p-8 bg-blue-200"><span>200</span><span>#bee3f8</span></div>
                 <div class="flex items-center justify-between p-8 bg-blue-300"><span>300</span><span>#90cdf4</span></div>
@@ -95,8 +108,9 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap">
-            <div class="flex flex-col m-16 w-256">
+        <div class="flex flex-wrap mt-32">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Indigo</a-heading>
                 <div class="flex items-center justify-between p-8 bg-indigo-100"><span>100</span><span>#ebf4ff</span></div>
                 <div class="flex items-center justify-between p-8 bg-indigo-200"><span>200</span><span>#c3dafe</span></div>
                 <div class="flex items-center justify-between p-8 bg-indigo-300"><span>300</span><span>#a3bffa</span></div>
@@ -108,7 +122,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-indigo-900"><span>900</span><span>#3c366b</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col mx-16 w-192">
+                <a-heading level="3" primary nunito>Purple</a-heading>
                 <div class="flex items-center justify-between p-8 bg-purple-100"><span>100</span><span>#faf5ff</span></div>
                 <div class="flex items-center justify-between p-8 bg-purple-200"><span>200</span><span>#e9d8fd</span></div>
                 <div class="flex items-center justify-between p-8 bg-purple-300"><span>300</span><span>#d6bcfa</span></div>
@@ -120,7 +135,8 @@
                 <div class="flex items-center justify-between p-8 text-white bg-purple-900"><span>900</span><span>#44337a</span></div>
             </div>
 
-            <div class="flex flex-col m-16 w-256">
+            <div class="flex flex-col w-192">
+                <a-heading level="3" primary nunito>Pink</a-heading>
                 <div class="flex items-center justify-between p-8 bg-pink-100"><span>100</span><span>#fff5f7</span></div>
                 <div class="flex items-center justify-between p-8 bg-pink-200"><span>200</span><span>#fed7e2</span></div>
                 <div class="flex items-center justify-between p-8 bg-pink-300"><span>300</span><span>#fbb6ce</span></div>

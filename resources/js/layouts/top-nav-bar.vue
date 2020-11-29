@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row items-center w-full mb-64 z-1" role="navigation">
+    <div class="flex flex-row items-center w-full px-32 pt-32 mb-64 z-1" role="navigation">
         <div class="flex items-center w-256">
             <router-link :to="{ name: 'home' }" title="View home" role="banner">
                 <adam-mackintosh-logo></adam-mackintosh-logo>

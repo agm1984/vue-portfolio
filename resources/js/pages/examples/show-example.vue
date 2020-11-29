@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLoaded" class="flex flex-col w-full h-auto">
+    <div v-if="isLoaded" class="flex flex-col w-full h-auto xl:w-1024">
         <a-heading level="1" class="" dark>
             {{ example.name }}
         </a-heading>
@@ -24,7 +24,7 @@
                             v-for="image in example.images"
                             :key="image.image_id"
                             :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
-                            class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-320 h-160"
+                            class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-256 h-128"
                             title="Click to enlarge"
                             :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
                         ></router-link>

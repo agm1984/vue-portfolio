@@ -61,10 +61,10 @@ const router = [
     {
         path: '/design',
         name: 'design',
-        component: page('design/design.vue'),
+        component: page('design/design-dashboard.vue'),
         children: [
             { path: 'buttons', name: 'design.buttons', component: page('design/buttons.vue') },
-            { path: 'colour', name: 'design.colour', component: page('design/colour.vue') },
+            { path: 'colours', name: 'design.colours', component: page('design/colours.vue') },
             { path: 'sizing', name: 'design.sizing', component: page('design/sizing.vue') },
             { path: 'typography', name: 'design.typography', component: page('design/typography.vue') },
         ],

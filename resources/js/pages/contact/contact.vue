@@ -1,7 +1,7 @@
 <template>
-    <div class="flex w-full h-auto">
-        <div class="flex flex-row w-full">
-            <a-card class="p-32 mr-16 w-768" with-geometry>
+    <div class="flex w-full h-auto xl:w-1024">
+        <div class="flex flex-col w-full xl:flex-row">
+            <a-card class="order-1 w-full p-32 mr-0 xl:mr-16" with-geometry>
                 <a-heading level="1" class="mb-16">Contact</a-heading>
 
                 <a-paragraph>
@@ -40,7 +40,7 @@
                 </div>
             </a-card>
 
-            <a-form v-slot="{ handleSubmit }" class="flex flex-col w-full ml-16">
+            <a-form v-slot="{ handleSubmit }" class="flex flex-col order-2 w-full mt-64 ml-0 xl:ml-16 xl:mt-0">
                 <a-text-input
                     v-model="message.sender_name"
                     class="mb-20"

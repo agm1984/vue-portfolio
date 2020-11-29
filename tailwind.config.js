@@ -1,53 +1,18 @@
-/**
- * You are free to add more sizes as needed, but make sure
- * they are divisible by 2, 4, 8, 16, 32, and/or 64, because
- * these are derived from 'factors of 16'.
- *
- * For example, if you are using `w-32` and you discover that
- * margin/padding of 28 or 40 will not solve your problem,
- * then maybe you need 32+2 or 32+4, so feel free to add 34 or 36.
- *
- * Try to solve your problem without adding sizes. The fact that you
- * appear to need to add a size may indicate a different solution
- * should be looked for. This is true except when working in larger
- * sizes, such as greater than 64. If 128, 256, or 512 do not meet
- * your width/height needs, try 128+64 or 256+128, etc.
- *
- * Also, try to avoid using `style=""` prop unless you know what
- * you're doing because media queries cannot be applied to them.
- *
- * In this project, font-size is 10px for the <html> element,
- * and base font-size is 1.6rem for the <body>. This means `1px`
- * is equal to `0.1rem`, so your math conversions are simple.
- * Use REM and pretend they are pixels but with the decimal shifted
- * by one place. 6.4rem is 64px.
- *
- * This base16 scaling strategy is heavily inspired by the Fibonacci
- * sequence and the golden ratio. Note that 16px to 10px is a rounded
- * version of the ratio 1.618:1. Knowing this, designs tend to be
- * pleasant on the eyes without conscious effort.
- *
- * Atomic design: http://bradfrost.com/blog/post/atomic-web-design/
- * Tailwind docs: https://next.tailwindcss.com/docs/what-is-tailwind/
- *
- */
-
 const availableSizes = {
     1: '0.1rem',
-    2: '0.2rem', // 1/8 standard-padding/margin
-    4: '0.4rem', // 1/4 standard-padding/margin
-    8: '0.8rem', // 1/2 standard-padding/margin
+    2: '0.2rem',
+    4: '0.4rem',
+    8: '0.8rem',
     10: '1.0rem',
     12: '1.2rem', // 16 minus 4
-    14: '1.4rem', // used to align checkboxes with no labels
-    16: '1.6rem', // 1x standard padding/margin, base font size
+    16: '1.6rem', // base font size
     20: '2.0rem', // 16 plus 4
     24: '2.4rem',
     28: '2.8rem',
     32: '3.2rem', // 2x standard padding/margin
     36: '3.6rem',
-    40: '4.0rem', // small row height
-    48: '4.8rem', // standard input row height
+    40: '4.0rem',
+    48: '4.8rem',
     56: '5.6rem', // 48+8=56, and 64-8=56
     64: '6.4rem', // 4x standard standard padding/margin, standard header height
     72: '7.2rem', // 80-8 (aka 64+8)

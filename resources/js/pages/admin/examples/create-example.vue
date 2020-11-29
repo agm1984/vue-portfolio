@@ -1,5 +1,5 @@
 <template>
-    <a-card class="p-32" with-geometry>
+    <a-card class="flex flex-col w-full h-auto p-32" with-geometry>
         <a-heading level="2" class="mb-16" dark>
             Create example
         </a-heading>

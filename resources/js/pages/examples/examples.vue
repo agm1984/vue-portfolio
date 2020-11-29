@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="flex flex-col w-full h-auto xl:w-1024">
         <a-heading level="1" class="mb-16">
             Examples
         </a-heading>
@@ -43,12 +43,12 @@
             </router-link>
         </div>
 
-        <a-card class="flex flex-wrap w-full mt-16">
+        <a-card class="flex flex-wrap w-full p-32 mt-16">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
                 :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
-                class="m-32"
+                class="m-16"
             >
                 <a-tilt>
                     <a-card class="">

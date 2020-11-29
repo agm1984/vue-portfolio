@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-512 h-512">
+    <div class="relative w-256 h-256 xl:w-512 xl:h-512">
         <div id="skills_scene" class="absolute inset-0 overflow-hidden"></div>
     </div>
 </template>
@@ -174,9 +174,12 @@ export default {
         },
 
         handleResize() {
+            console.log('alsdjaklsd');
             this.camera.aspect = this.width / this.height;
             this.camera.updateProjectionMatrix();
-            return this.renderer.setSize(this.width, this.height);
+            this.renderer.setSize(this.width, this.height);
+            this.stop();
+            return this.start();
         },
 
         handleDoubleClick() {
