@@ -18,7 +18,7 @@ const availableSizes = {
     72: '7.2rem', // 80-8 (aka 64+8)
     80: '8.0rem',
     88: '8.8rem', // 80+8 (aka 96-8)
-    96: '9.6rem', // header row height for H1 headings
+    96: '9.6rem',
     112: '11.2rem',
     128: '12.8rem',
     144: '14.4rem',
