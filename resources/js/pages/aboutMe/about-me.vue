@@ -118,15 +118,6 @@
             △△△
         </div>
 
-        <!-- <div class="absolute" :style="{ right: '1.6rem' }">
-            <button
-                class="flex items-center justify-center w-64 h-64 text-white bg-primary"
-                title="Back to top?"
-                @click="handleScrollBackToTop"
-            >
-                <span class="mt-4 text-lg">⇧</span>
-            </button>
-        </div> -->
     </div>
 </template>
 
@@ -161,12 +152,6 @@ export default {
             });
         },
 
-        handleScrollBackToTop() {
-            return window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            });
-        },
     },
 
 };
