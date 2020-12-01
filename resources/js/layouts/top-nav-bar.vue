@@ -16,12 +16,6 @@
             <top-nav-link :to="{ name: 'contact' }">
                 Contact
             </top-nav-link>
-            <top-nav-link :to="{ name: 'admin' }">
-                Admin
-            </top-nav-link>
-            <top-nav-link :to="{ name: 'design' }">
-                Design
-            </top-nav-link>
         </div>
 
         <div class="flex items-center justify-end w-256">
@@ -65,10 +59,12 @@
                     </div>
 
                     <b-dropdown-item custom aria-role="menuitem">
-                        <span class="whitespace-no-wrap min-w-384">Hello <strong>{{ user.name }}</strong></span>
+                        <span class="text-sm font-bold whitespace-no-wrap min-w-384">
+                            {{ user.name }}
+                        </span>
                     </b-dropdown-item>
 
-                    <hr class="m-8 bg-accent">
+                    <hr class="mx-8 mb-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" has-link>
                         <router-link :to="{ name: 'settings.profile' }">
