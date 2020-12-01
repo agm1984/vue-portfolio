@@ -28,8 +28,13 @@
             <!-- https://stackoverflow.com/questions/22735740/how-to-add-badge-on-top-of-font-awesome-symbol -->
             <template v-if="isAuthenticated">
                 <b-dropdown id="notifications" aria-role="menu" position="is-bottom-left" class="flex justify-end">
-                    <div slot="trigger" class="flex items-center justify-center w-32 h-32 text-orange-400 bg-no-repeat bg-cover rounded-full">
-                        <i class="fas fa-bell"></i>
+                    <div slot="trigger" class="flex items-center justify-center w-32 h-32" @click="hasRead = true">
+                        <i
+                            :class="['fas fa-bell', {
+                                'text-orange-400': !hasRead,
+                                'text-grey-400': hasRead,
+                            }]"
+                        ></i>
                     </div>
 
                     <b-dropdown-item
@@ -43,7 +48,7 @@
                                 <img :src="user.photo_url">
                             </div>
 
-                            <div class="flex-1">
+                            <div class="flex-1 text-sm">
                                 {{ notification.title }}
                             </div>
 
@@ -60,27 +65,33 @@
                     </div>
 
                     <b-dropdown-item custom aria-role="menuitem">
-                        <span class="whitespace-no-wrap min-w-384">Logged in as <strong>{{ user.name }}</strong></span>
+                        <span class="whitespace-no-wrap min-w-384">Hello <strong>{{ user.name }}</strong></span>
                     </b-dropdown-item>
 
                     <hr class="m-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" has-link>
-                        <router-link :to="{ name: 'settings.profile' }">Profile</router-link>
+                        <router-link :to="{ name: 'settings.profile' }">
+                            <span class="text-base font-bold">Profile</span>
+                        </router-link>
                     </b-dropdown-item>
 
                     <b-dropdown-item aria-role="listitem" has-link>
-                        <router-link :to="{ name: 'design' }">Design system</router-link>
+                        <router-link :to="{ name: 'design' }">
+                            <span class="text-base font-bold">Design system</span>
+                        </router-link>
                     </b-dropdown-item>
 
                     <b-dropdown-item aria-role="listitem" has-link>
-                        <router-link :to="{ name: 'admin' }">Admin</router-link>
+                        <router-link :to="{ name: 'admin' }">
+                            <span class="text-base font-bold">Admin</span>
+                        </router-link>
                     </b-dropdown-item>
 
                     <hr class="m-8 bg-accent">
 
                     <b-dropdown-item aria-role="listitem" @click="logout">
-                        Logout
+                        <span class="text-base font-bold">Logout</span>
                     </b-dropdown-item>
                 </b-dropdown>
             </template>
@@ -95,10 +106,6 @@
             </div>
 
         </div>
-        <!-- <Notifications
-        notifications={this.props.notifications}
-        removeFunc={this.props.removeNotification}
-        /> -->
     </div>
 </template>
 
@@ -118,6 +125,7 @@ export default {
 
     data() {
         return {
+            hasRead: false,
             notifications: [
                 { id: 1, title: 'You\'ve reached level 2!', created_at: '2020-05-10 23:47:04', updated_at: '2020-05-10 23:47:04' },
                 { id: 2, title: 'You unlocked a new section: Design System.', created_at: '2020-05-10 23:47:04', updated_at: '2020-05-10 23:47:04' },
