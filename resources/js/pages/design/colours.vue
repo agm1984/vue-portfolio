@@ -3,15 +3,21 @@
 
         <a-heading level="1" dark>Colours</a-heading>
 
-        <a-pararaph>
+        <a-paragraph>
             This site uses Tailwind to manage colours.
-        </a-pararaph>
+        </a-paragraph>
 
         <a-heading level="2" dark>Palettes</a-heading>
 
         <a-heading level="3" primary nunito>Brand</a-heading>
-        <div class="w-full h-64 p-8 text-white bg-primary">Primary</div>
-        <div class="w-full h-64 p-8 mt-16 text-white bg-secondary">Secondary</div>
+        <div class="flex flex-col w-full h-64 p-8 text-white bg-primary">
+            <span>Primary</span>
+            <span>#006666</span>
+        </div>
+        <div class="flex flex-col w-full h-64 p-8 mt-16 text-white bg-secondary">
+            <span>Secondary</span>
+            <span>#006699</span>
+        </div>
 
         <div class="flex flex-col mt-32 w-192">
             <a-heading level="3" primary nunito>Greyscale</a-heading>
