@@ -25,7 +25,6 @@
                 active-class="text-white bg-primary border-1 border-primary"
                 title="Show everything"
                 exact
-                @click="() => this.handleSetActiveCategory('viewAll')"
             >
                 View all
             </router-link>
@@ -37,7 +36,6 @@
                 class="px-16 py-8 font-bold rounded-sm"
                 active-class="text-white bg-primary border-1 border-primary"
                 :title="`Show only ${category.name}`"
-                @click="() => this.handleSetActiveCategory(category.slug)"
             >
                 {{ category.name }}
             </router-link>
@@ -65,6 +63,20 @@
                     </a-card>
                 </a-tilt>
             </router-link>
+
+            <div v-if="hasError" class="w-full">
+                <b-message type="is-danger">
+                    There was a problem loading this page.
+                    <a-button
+                        class="pt-16"
+                        type="is-danger"
+                        outlined
+                        @click="handleTryAgain"
+                    >
+                        Try again
+                    </a-button>
+                </b-message>
+            </div>
         </a-card>
 
         <div class="flex justify-center w-full mt-32 text-primary">
@@ -79,9 +91,8 @@ import axios from 'axios';
 import isUserScrolling from '../../components/mixins/isUserScrolling';
 
 const LOADING = 0;
-const SHOW_ALL_CATEGORIES = 1;
-const SHOW_SINGLE_CATEGORY = 2;
-const SHOW_NETWORK_ERRORS = 3;
+const LOADED = 1;
+const HAS_ERROR = 2;
 
 export default {
     name: 'examples',
@@ -97,29 +108,20 @@ export default {
             state: LOADING,
             categories: [],
             examples: [],
-            activeCategory: {},
         };
     },
 
     computed: {
-        isInitializing() {
+        isLoading() {
             return (this.state === LOADING);
         },
 
-        isShowingAllCategories() {
-            return (this.state === SHOW_ALL_CATEGORIES);
+        isLoaded() {
+            return (this.state === LOADED);
         },
 
-        isShowingSingleCategory() {
-            return (this.state === SHOW_SINGLE_CATEGORY);
-        },
-
-        isFetchError() {
-            return (this.state === SHOW_NETWORK_ERRORS);
-        },
-
-        title() {
-            return this.isShowingSingleCategory ? this.activeCategory.name : 'Examples';
+        hasError() {
+            return (this.state === HAS_ERROR);
         },
 
     },
@@ -142,16 +144,6 @@ export default {
             });
         },
 
-        setActiveCategory() {
-            if (this.$route.params.category) {
-                this.activeCategory = this.categories.find(category => (category.slug === this.$route.params.category));
-                this.state = SHOW_SINGLE_CATEGORY;
-            } else {
-                this.activeCategory = {};
-                this.state = SHOW_ALL_CATEGORIES;
-            }
-        },
-
         async fetchAllExamples() {
             try {
                 const [categories, examples] = await Promise.all([
@@ -163,17 +155,18 @@ export default {
                     }),
                 ]);
 
-                // console.log('categories', categories.data.categories);
-                // console.log('examples', examples.data.examples);
-
                 this.categories = categories.data.categories;
                 this.examples = examples.data.examples;
 
-                return this.setActiveCategory();
+                this.state = LOADED;
             } catch (err) {
-                this.state = SHOW_NETWORK_ERRORS;
+                this.state = HAS_ERROR;
                 throw new Error(`list-examples# Problem fetching data: ${err}`);
             }
+        },
+
+        handleTryAgain() {
+            return this.fetchAllExamples();
         },
 
     },
