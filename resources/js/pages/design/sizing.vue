@@ -1,7 +1,7 @@
 <template>
     <a-card id="design-system-typography" class="p-32" with-geometry>
 
-        <a-heading level="1" dark>Space & Size</a-heading>
+        <a-heading level="2" dark>Space & Size</a-heading>
 
         <a-paragraph>
             This site uses primarily factors of 2, 4, 8, 16, 32, 64 for sizing. This relates loosely to the golden ratio 1.618~

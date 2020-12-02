@@ -1,7 +1,7 @@
 <template>
     <a-card id="design-system-typography" class="p-32" with-geometry>
 
-        <a-heading level="1" class="mb-16" dark>Typography</a-heading>
+        <a-heading level="2" class="mb-16" dark>Typography</a-heading>
 
         <a-paragraph>
             This website uses base font-size <strong>10px</strong>, so most elements are sized with REM units because body copy is

@@ -1,7 +1,7 @@
 <template>
     <a-card id="design-system-colour" class="p-32" with-geometry>
 
-        <a-heading level="1" dark>Colours</a-heading>
+        <a-heading level="2" dark>Colours</a-heading>
 
         <a-paragraph>
             This site uses Tailwind to manage colours.
