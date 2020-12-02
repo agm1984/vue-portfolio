@@ -6,14 +6,14 @@
             </router-link>
         </div>
 
-        <div class="flex items-center justify-center flex-1">
+        <div class="flex flex-col items-center justify-center flex-1 lg:flex-row">
             <top-nav-link :to="{ name: 'about' }">
                 About me
             </top-nav-link>
-            <top-nav-link :to="{ name: 'public.examples.list' }">
+            <top-nav-link :to="{ name: 'public.examples.list' }" class="mt-16 lg:mt-0">
                 Examples
             </top-nav-link>
-            <top-nav-link :to="{ name: 'contact' }">
+            <top-nav-link :to="{ name: 'contact' }" class="mt-16 lg:mt-0">
                 Contact
             </top-nav-link>
         </div>

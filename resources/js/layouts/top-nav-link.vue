@@ -14,7 +14,7 @@
                 <slot></slot>
             </a>
 
-            <div v-show="isActive" class="absolute left-0 w-full h-4 mt-16 bg-mint-active"></div>
+            <div v-show="isActive" class="absolute left-0 w-full h-4 mt-12 bg-mint-active"></div>
         </div>
     </router-link>
 
