@@ -17,7 +17,7 @@
                 </div>
 
                 <a-card class="p-32 mt-16" with-geometry>
-                    <a-heading level="2" class="mb-16">Images</a-heading>
+                    <a-heading level="2">Images</a-heading>
 
                     <div class="flex flex-row flex-wrap justify-start">
                         <router-link
