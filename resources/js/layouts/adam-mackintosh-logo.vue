@@ -2,11 +2,11 @@
     <div class="flex items-center">
         <div class="w-20 h-20 mb-4 adam-logo"></div>
 
-        <span class="mt-4 leading-none font-aroly text-grey-500 text-md">
+        <span class="mt-4 leading-none logo__firstName font-aroly text-grey-500 text-md">
             ADAM
         </span>
 
-        <span class="ml-2 leading-none font-nunito text-primary-text text-md">
+        <span class="ml-2 leading-none logo__lastName font-nunito text-primary-text text-md">
             MACKINTOSH
         </span>
 
@@ -27,3 +27,15 @@ export default {
 
 };
 </script>
+
+<style>
+@media screen and (max-width: 700px) {
+    .logo__firstName {
+        display: none;
+    }
+
+    .logo__lastName {
+        display: none;
+    }
+}
+</style>
