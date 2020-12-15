@@ -21,7 +21,14 @@ $config = [
             Adam Mackintosh's portfolio @yield('title')
         </title>
 
-        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#006666">
+        <meta name="msapplication-TileColor" content="#006666">
+        <meta name="theme-color" content="#ffffff">
+
         <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
@@ -86,6 +93,8 @@ $config = [
         <noscript>
             You need to enable JavaScript to sample this portfolio.
         </noscript>
+
+        <img src="{{ asset('favicon.ico') }}">
 
         <div id="app"></div>
 
