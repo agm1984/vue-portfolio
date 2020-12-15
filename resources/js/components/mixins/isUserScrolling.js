@@ -19,7 +19,6 @@ const isUserScrolling = {
     methods: {
         handleScroll(e) { // eslint-disable-line no-unused-vars
             this.isUserScrolling = (window.scrollY > 0);
-            console.log('calling handleScroll');
         },
     },
 
