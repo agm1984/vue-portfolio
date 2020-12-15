@@ -57,7 +57,7 @@ export default {
 <style>
     /* default */
     .nav-link-white {
-        @apply bg-grey-400 font-aroly font-bold text-base leading-none tracking-wide rounded-sm p-8;
+        @apply bg-grey-400 font-nunito font-bold text-base leading-none tracking-wide rounded-sm p-8;
         transition: all 250ms ease-in-out;
     }
 
