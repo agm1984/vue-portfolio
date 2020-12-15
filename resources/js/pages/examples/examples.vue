@@ -51,7 +51,7 @@
                 <a-tilt>
                     <a-card class="">
                         <div
-                            class="bg-no-repeat bg-cover h-256 w-448"
+                            class="relative bg-no-repeat bg-cover h-256 w-448"
                             :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${example.images[0].filename}')` }"
                         >
                             <div class="px-16 py-8 bg-transparent-grey">
@@ -59,6 +59,12 @@
                                     {{ example.name }}
                                 </span>
                             </div>
+
+                            <b-tag
+                                class="absolute bottom-0 right-0"
+                                type="is-light"
+
+                            >{{ example.category.name }}</b-tag>
                         </div>
                     </a-card>
                 </a-tilt>
