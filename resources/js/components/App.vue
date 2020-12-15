@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <loading ref="loading"></loading>
+        <loading-bar ref="loading"></loading-bar>
 
         <component :is="layout" v-if="layout"></component>
 
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Loading from './Loading.vue';
+import LoadingBar from './loading-bar.vue';
 
 /**
  * Layouts can be programmatically changed at run-time.
@@ -23,7 +23,7 @@ const layouts = {
 
 export default {
     components: {
-        Loading,
+        LoadingBar,
     },
 
     /**

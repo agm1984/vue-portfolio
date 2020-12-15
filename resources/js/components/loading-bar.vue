@@ -1,0 +1,116 @@
+<template>
+    <div
+        class="progress"
+        :style="{
+            width: `${percent}%`,
+            height: height,
+            opacity: show ? 1 : 0,
+            'background-color': canSuccess ? color : failedColor
+        }"
+    ></div>
+</template>
+
+<script>
+export default {
+    name: 'loading-bar',
+
+    data() {
+        return {
+            percent: 0,
+            show: false,
+            canSuccess: true,
+            duration: 3000,
+            height: '0.2rem',
+            color: '#77b6ff',
+            failedColor: 'red',
+            cut: 0,
+            timer: undefined,
+        };
+    },
+
+    methods: {
+        start() {
+            this.show = true;
+            this.canSuccess = true;
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.percent = 0;
+            }
+            this.cut = 10000 / Math.floor(this.duration);
+            this.timer = setInterval(() => {
+                this.increase(this.cut * Math.random());
+                if (this.percent > 95) {
+                    this.finish();
+                }
+            }, 100);
+            return this;
+        },
+
+        set(num) {
+            this.show = true;
+            this.canSuccess = true;
+            this.percent = Math.floor(num);
+            return this;
+        },
+
+        get() {
+            return Math.floor(this.percent);
+        },
+
+        increase(num) {
+            this.percent += Math.floor(num);
+            return this;
+        },
+
+        decrease(num) {
+            this.percent -= Math.floor(num);
+            return this;
+        },
+
+        finish() {
+            this.percent = 100;
+            this.hide();
+            return this;
+        },
+
+        pause() {
+            clearInterval(this.timer);
+            return this;
+        },
+
+        hide() {
+            clearInterval(this.timer);
+            this.timer = undefined;
+
+            setTimeout(() => {
+                this.show = false;
+                return this.$nextTick(() => setTimeout(() => {
+                    this.percent = 0;
+                }, 200));
+            }, 500);
+            return this;
+        },
+
+        fail() {
+            this.canSuccess = false;
+            return this;
+        },
+
+    },
+};
+</script>
+
+<style scoped>
+    .progress {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        height: 2px;
+        width: 0%;
+        transition: width 0.2s, opacity 0.4s;
+        opacity: 1;
+        background-color: #efc14e;
+        z-index: 999999;
+    }
+</style>
