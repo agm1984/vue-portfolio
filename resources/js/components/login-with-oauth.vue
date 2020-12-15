@@ -39,7 +39,7 @@ export default {
         },
 
         buttonStyles() {
-            const styles = ['h-40'];
+            const styles = ['h-40 text-white'];
 
             styles.push(`bg-${this.provider} hover:bg-${this.provider}-hover active:bg-${this.provider}-active`);
 
