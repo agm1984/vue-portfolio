@@ -2,7 +2,7 @@
     <div class="flex items-center">
         <div class="w-20 h-20 mb-4 adam-logo"></div>
 
-        <span class="mt-4 leading-none logo__firstName font-aroly text-grey-500 text-md">
+        <span class="leading-none logo__firstName font-aroly text-grey-500 text-md" style="margin-top: 0.3rem;">
             ADAM
         </span>
 
