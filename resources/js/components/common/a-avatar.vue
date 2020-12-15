@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    name: 'a-profile-image',
+    name: 'a-avatar',
 
     props: {
         size: {
@@ -45,11 +45,11 @@ export default {
 
     computed: {
         hasImage() {
-            return (this.user.avatar_url.length > 0);
+            return (this.user.avatar_url && (this.user.avatar_url.length > 0));
         },
 
         firstLetterOfName() {
-            return (this.user.name.charAt(0));
+            return (this.user.name && this.user.name.charAt(0));
         },
 
         containerStyles() {
@@ -64,6 +64,12 @@ export default {
 
     created() {
         console.log('user', this.user);
+    },
+
+    watch: {
+        user() {
+            console.log('user changed!', this.user);
+        },
     },
 
     methods: {},

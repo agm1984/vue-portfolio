@@ -1,7 +1,8 @@
 <template>
     <a-card class="p-32" with-geometry>
-        <div class="relative flex items-center justify-between">
-            <a-heading level="2" class="mb-16">
+        <div class="relative flex items-center mb-16">
+            <a-avatar :size="64" :user.sync="user"></a-avatar>
+            <a-heading level="2" class="ml-8">
                 {{ user.name }}
             </a-heading>
         </div>
