@@ -94,8 +94,6 @@ $config = [
             You need to enable JavaScript to sample this portfolio.
         </noscript>
 
-        <img src="{{ asset('favicon.ico') }}">
-
         <div id="app"></div>
 
         <script>
