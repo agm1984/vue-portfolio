@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row items-center w-full px-16 pt-32 mb-64 lg:px-32 z-1" role="navigation">
-        <div class="flex items-center w-256">
+        <div class="flex items-center w-32 lg:w-224">
             <router-link :to="{ name: 'home' }" title="View home" role="banner">
                 <adam-mackintosh-logo></adam-mackintosh-logo>
             </router-link>
@@ -18,7 +18,7 @@
             </top-nav-link>
         </div>
 
-        <div class="flex items-center justify-end w-256">
+        <div class="flex items-center justify-end w-64 lg:w-224">
             <!-- https://stackoverflow.com/questions/22735740/how-to-add-badge-on-top-of-font-awesome-symbol -->
             <template v-if="isAuthenticated">
                 <b-dropdown id="notifications" aria-role="menu" position="is-bottom-left" class="flex justify-end">
@@ -92,11 +92,11 @@
                 </b-dropdown>
             </template>
 
-            <div v-else class="flex items-center">
-                <top-nav-link :to="{ name: 'register' }">
+            <div v-else class="flex flex-col items-center lg:flex-row">
+                <top-nav-link :to="{ name: 'register' }" class="mt-16 lg:mt-0">
                     Register
                 </top-nav-link>
-                <top-nav-link :to="{ name: 'login' }" class="ml-16">
+                <top-nav-link :to="{ name: 'login' }" class="mt-16 ml-0 lg:ml-16 lg:mt-0">
                     Login
                 </top-nav-link>
             </div>
