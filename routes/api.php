@@ -21,6 +21,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('/user/profile', 'Auth\UserController@editProfile')->name('user.profile.edit');
     Route::put('/user/password', 'Auth\UserController@editPassword')->name('user.password.edit');
+
+    Route::post('/comments/{example}/new', 'User\CommentController@create')->name('user.comments.create');
+    Route::put('/comments/{comment}', 'User\CommentController@edit')->name('user.comments.edit');
+    Route::delete('/comments/{comment}/delete', 'User\CommentController@delete')->name('user.comments.delete');
 });
 
 
@@ -49,9 +53,10 @@ Route::group(['prefix' => 'public'], function () {
     Route::get('/examples', 'ExampleController@index')->name('public.examples.list');
     Route::get('/examples/{example}', 'ExampleController@show')->name('public.examples.show');
     Route::get('/examples/{example}/images/{exampleImage}', 'ExampleController@image')->name('public.examples.images');
+    Route::get('/examples/{example}/comments', 'ExampleController@listComments')->name('public.examples.listComments');
 
-    Route::get('/users', 'UserController@index')->name('public.users.list');
-    Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
+    // Route::get('/users', 'UserController@index')->name('public.users.list');
+    // Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\Example;
 use App\ExampleImage;
 use Illuminate\Http\Request;
@@ -26,8 +27,6 @@ class ExampleController extends Controller
 
     public function show(Request $request, Example $example)
     {
-        \Log::debug($request->all());
-
         return response()->json([
             'example' => $example->load(['category', 'images', 'links', 'tags']),
         ]);
@@ -47,6 +46,15 @@ class ExampleController extends Controller
         return response()->json([
             'image' => $exampleImage,
             'image_url' => "/storage/examples/{$example->slug}/{$exampleImage->filename}",
+        ]);
+    }
+
+    public function listComments(Example $example)
+    {
+        $comments = Comment::query()->where('example_id', $example->id)->get();
+
+        return response()->json([
+            'comments' => $comments->load('author'),
         ]);
     }
 

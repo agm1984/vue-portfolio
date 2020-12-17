@@ -1,19 +1,17 @@
 <template>
-    <div v-if="isLoaded" class="container flex flex-col w-full h-auto xl:w-1024 ">
+    <div v-if="isLoaded" class="container flex flex-col w-full h-auto xl:w-1024">
         <a-heading level="1" class="main__heading" dark>
             {{ example.name }}
         </a-heading>
 
         <a-card class="p-32 main" with-geometry>
             <a-heading level="2" class="mb-16">Summary</a-heading>
-
             <a-paragraph>
                 {{ example.summary }}
             </a-paragraph>
 
 
             <a-heading level="2" class="mt-32 mb-16">Images</a-heading>
-
             <div class="images__container">
                 <router-link
                     v-for="image in example.images"
@@ -26,10 +24,12 @@
             </div>
 
             <a-heading level="2" class="mt-32 mb-16">Conclusion</a-heading>
-
             <a-paragraph>
                 {{ example.conclusion }}
             </a-paragraph>
+
+            <a-heading level="2" class="mt-32 mb-16">Feedback</a-heading>
+            <comments-manager></comments-manager>
         </a-card>
 
         <a-card class="p-32 links" with-geometry>
@@ -68,12 +68,17 @@
 
 <script>
 import axios from 'axios';
+import CommentsManager from './comments-manager.vue';
 
 const IS_LOADING = 0;
 const IS_LOADED = 1;
 
 export default {
     name: 'show-example',
+
+    components: {
+        CommentsManager,
+    },
 
     props: {},
 
@@ -113,11 +118,7 @@ export default {
             try {
                 const example = await axios.get(route('public.examples.show', this.$route.params.example));
 
-                // console.log('params', this.$route.params);
-                console.log('example', example.data);
-
                 this.example = example.data.example;
-
                 this.state = IS_LOADED;
 
                 return undefined; // resolve promise, and do nothing
