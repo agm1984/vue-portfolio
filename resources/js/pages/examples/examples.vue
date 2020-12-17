@@ -4,20 +4,6 @@
             Examples
         </a-heading>
 
-        <button
-            v-if="!isUserScrolling"
-            class="absolute flex items-center justify-center w-64 h-64 text-white bg-primary"
-            tabindex="0"
-            title="Click or scroll down to see more"
-            :style="{
-                top: 'calc(100vh - 6.4rem)',
-                right: '1.6rem',
-            }"
-            @click="handleScrollDown"
-        >
-            <span class="mt-4 text-lg">⇩</span>
-        </button>
-
         <div class="flex items-center justify-end">
             <router-link
                 :to="{ name: 'public.examples.list' }"
