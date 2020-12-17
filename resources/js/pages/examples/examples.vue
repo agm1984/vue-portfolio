@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full h-auto xl:w-1024">
+    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
         <a-heading level="1" class="mb-16">
             Examples
         </a-heading>
@@ -27,7 +27,7 @@
             </router-link>
         </div>
 
-        <a-card class="flex flex-wrap w-full p-32 mt-16">
+        <a-card class="flex flex-wrap w-full p-16 mt-16 md:p-32">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
@@ -37,7 +37,7 @@
                 <a-tilt>
                     <a-card class="">
                         <div
-                            class="relative bg-no-repeat bg-cover h-256 w-448"
+                            class="relative bg-no-repeat bg-cover h-128 w-224 md:h-256 md:w-448"
                             :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${example.images[0].filename}')` }"
                         >
                             <div class="px-16 py-8 bg-transparent-grey">

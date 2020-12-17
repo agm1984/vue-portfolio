@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-col w-full h-auto xl:w-1024">
+    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
         <a-card class="p-32">
             <a-heading level="1" class="mb-16">About me</a-heading>
 
-            <div class="flex flex-row h-auto">
-                <div class="w-1/2">
+            <div class="flex flex-col h-auto md:flex-row">
+                <div class="w-full md:w-1/2">
                     <a-paragraph>
                         I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
                         but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
@@ -38,10 +38,9 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col items-start w-1/2">
+                <div class="w-full mt-32 md:w-1/2 md:mt-0">
 
-                    <!-- <button @click="$root.$emit('animate-it')">Interact</button> -->
-                    <adam-scene></adam-scene>
+                    <img src="adam-center.png" class="w-full h-auto px-0 md:px-32" alt="">
                 </div>
             </div>
 
@@ -52,7 +51,9 @@
 
             <div class="flex flex-col w-full xl:flex-row">
                 <a-card class="order-1 p-32 mr-0 xl:mr-16" fill primary>
-                    <a-heading level="2" class="mb-16" light>To programmers</a-heading>
+                    <a-heading level="2" class="mb-16" light>
+                        To programmers
+                    </a-heading>
 
                     <a-paragraph light>
                         What can I say? I like to use Mealy finite state machines, predicates and booleans,
