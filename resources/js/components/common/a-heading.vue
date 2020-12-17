@@ -40,6 +40,12 @@ export default {
             required: false,
             default: () => false,
         },
+
+        isBold: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
     },
 
     data() {
@@ -51,14 +57,14 @@ export default {
 
         const Heading = `h${props.level}`;
 
-        const getStylesForHeadingLevel = ({ level, dark, light, primary, nunito, inline }) => {
+        const getStylesForHeadingLevel = ({ level, dark, light, primary, nunito, inline, isBold }) => {
             const styles = [''];
 
             if (inline) styles.push('inline tracking-wide');
 
             if (+level === 1) styles.push('text-2xl');
             if (+level === 2) styles.push('text-xl');
-            if (+level === 3) styles.push('text-md font-bold');
+            if (+level === 3) styles.push('text-md');
             if (+level === 4) styles.push('text-base');
             if (+level === 5) styles.push('text-sm');
             if (+level === 6) styles.push('text-xs');
@@ -70,6 +76,8 @@ export default {
             if (primary) styles.push('text-primary');
             else if (light) styles.push('text-white');
             else if (dark) styles.push('text-black');
+
+            if (isBold) styles.push('font-bold');
 
             return styles;
         };
