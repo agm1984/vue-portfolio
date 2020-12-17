@@ -30,7 +30,6 @@ class User extends Authenticatable //, MustVerifyEmail
 
     protected $appends = [
         'status_nice',
-        'photo_url',
         'avatar_url',
         'roles_list',
         'created_at_nice',
@@ -64,15 +63,11 @@ class User extends Authenticatable //, MustVerifyEmail
     }
 
     /**
-     * Get the profile photo URL attribute.
+     * Adds `avatar_url` field to the `user` record to make it easier
+     * for the client-side to handle avatar images.
      *
      * @return string
      */
-    public function getPhotoUrlAttribute()
-    {
-        return 'https://www.gravatar.com/avatar/'.md5(strtolower($this->email)).'.jpg?s=200&d=mm';
-    }
-
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar_filename) {
