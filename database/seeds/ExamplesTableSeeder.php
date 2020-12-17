@@ -25,6 +25,32 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
+                'name' => 'CommuniHelp',
+                'images' => [
+                    'communihelp1.png',
+                    'communihelp2.jpeg',
+                    'communihelp3.jpeg',
+                ],
+                'summary' => 'I originally applied to CommuniHelp as a software developer, but they were looking for pro bono work. Rather than reject their need, I chose to do work for them for free. I built their MVP iOS and Android app in React Native.',
+                'conclusion' => 'I am still in contact with CommuniHelp, and I may do more pro bono work for them in the future. I love their stack which is node.js, Prisma, React, and React Native.',
+                'links' => [
+                    [
+                        'name' => 'View website',
+                        'url' => 'https://communihelp.ca',
+                    ],
+                ],
+                'tags' => [
+                    'ES6+ JavaScript',
+                    'React JS',
+                    'React Native',
+                    'Node.js',
+                    'GraphQL',
+                    'Prisma',
+                ],
+            ],
+            [
+                'status' => Example::STATUS_ACTIVE,
+                'category_id' => $projects_id,
                 'name' => 'Content Management System',
                 'images' => [
                     'cms-articles.gif',
