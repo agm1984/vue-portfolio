@@ -62,16 +62,6 @@ export default {
         },
     },
 
-    created() {
-        console.log('user', this.user);
-    },
-
-    watch: {
-        user() {
-            console.log('user changed!', this.user);
-        },
-    },
-
     methods: {},
 
 };
