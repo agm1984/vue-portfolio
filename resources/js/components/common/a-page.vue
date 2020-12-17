@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center flex-1 px:16 lg:px-32"
+        class="flex flex-col items-center flex-1 pb-64 px:16 lg:px-32"
         style="background-image: radial-gradient(#e2e8f0, #edf2f7, #f7fafc);"
     >
         <!-- page -->
