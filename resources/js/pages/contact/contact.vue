@@ -1,5 +1,9 @@
 <template>
-    <div class="flex w-full h-auto xl:w-1024">
+    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
+        <b-message v-show="showSuccessMessage" type="is-success">
+            {{ successMessage }}
+        </b-message>
+
         <div class="flex flex-col w-full xl:flex-row">
             <a-card class="order-1 w-full p-32 mr-0 xl:mr-16" with-geometry>
                 <a-heading level="1" class="mb-16">Contact</a-heading>
@@ -104,6 +108,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 const INITIAL = 0;
 const IS_DISPLAYING_SUCCESS_MESSAGE = 1;
 
@@ -134,6 +140,7 @@ export default {
                 answer: '',
             },
             isFormVerified: false,
+            successMessage: '',
         };
     },
 
@@ -152,6 +159,10 @@ export default {
 
         verificationText() {
             return `${this.num1} + ${this.num2} =`;
+        },
+
+        showSuccessMessage() {
+            return (this.successMessage.length > 0);
         },
 
     },
@@ -189,6 +200,15 @@ export default {
         async sendMessage() {
             try {
                 console.log('FORM SENT');
+                const { data } = await axios.post(route('public.contact.send'), this.message);
+
+                console.log('message sent:', data);
+                if (data.success === true) {
+                    this.successMessage = data.message;
+                    return undefined;
+                }
+
+                throw new Error(`contact# Unexpected error: ${data}.`);
             } catch (err) {
                 throw new Error(`contact# Problem submitting contact form: ${err}.`);
             }

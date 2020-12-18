@@ -55,6 +55,8 @@ Route::group(['prefix' => 'public'], function () {
     Route::get('/examples/{example}/images/{exampleImage}', 'ExampleController@image')->name('public.examples.images');
     Route::get('/examples/{example}/comments', 'ExampleController@listComments')->name('public.examples.listComments');
 
+    Route::post('/contact', 'ContactController@send')->name('public.contact.send');
+
     // Route::get('/users', 'UserController@index')->name('public.users.list');
     // Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
 });
