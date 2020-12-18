@@ -1,79 +1,170 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Adam Mackintosh's portfolio
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+> Welcome to Adam Mackintosh's portfolio site. The site seeks to demonstrate both PHP and JavaScript skill with focus on functional-reactive programming techniques.
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Multiple types of users (user personas) browse this portfolio for an array of reasons. The two primary supported user types are:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **business stakeholders and recruiters**: for them this application demonstrates production-grade control over contemporary PHP and JavaScript;
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **other developers**: for them this application illustrates software design patterns, functional-reactive programming ways of thinking, and logic examples.
 
-## Learning Laravel
+### Code formatting
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This repository **doesn't** use `prettier` for code formatting. Instead, religious formatting-idiology is used to intentionally-place every character and symbol according to patterns that maximally-cater to both code readability and ease of understanding data flow through logic. Additionally, PSR-2 and ES Lint with Airbnb config are used for
+detecting logical anomalies. Lint settings can be ascertained via the `phpcs.xml` and `.eslintrc.json` files in the project root. The main motivation for the repository to exemplify idiomatic best-practices for Object-Oriented Programming and Functional Programming.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+> This repository aims to foster unidirectional data flow and immutability, function composition, and atomic-design principles.
 
-## Laravel Sponsors
+As a result of considerations such as these, this repository and application aims to supercharge the content of a portfolio site with meta information that services business stakeholders & recruiters and other developers. For example, this repository has inbound links from StackOverflow, blog articles, and other sources of information, so any extra-verbose documentation exists to service the perceived desires of business stakeholders & recruiters and other developers. In this way, hopefully questions that arise while browsing the portfolio can be answered by browsing the portfolio.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+###
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+
+## Localhost installation
+
+1. Clone and install the project:
+
+```
+$ git clone https://github.com/agm1984/vue-portfolio.git
+
+$ cd vue-portfolio
+
+$ composer install
+
+$ npm install
+
+$ npm run update-ide-helper
+```
+
+1. SQL instructions:
+
+``` sql
+CREATE DATABASE portfolio;
+
+CREATE USER 'portfolio'@'localhost' IDENTIFIED BY 'portfolio';
+
+GRANT ALL PRIVILEGES ON portfolio.* TO 'portfolio'@'localhost';
+```
+
+2. Copy `./.env.example` to `./env`.
+
+``` bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=portfolio
+DB_USERNAME=portfolio
+DB_PASSWORD=portfolio
+```
+
+3. Create symbolic link to storage folder:
+
+``` bash
+$ php artisan storage:link
+```
+
+## Unit testing
+
+I wrote a blog post about this unit test config and methodology: https://medium.com/@agm1984/how-to-setup-unit-testing-in-a-laravel-and-vue-mono-repo-application-with-phpunit-and-jest-674df367959
+
+### Laravel
+
+The server-side of this application uses `PHPUnit` for unit testing.
+
+Execute:
+
+``` bash
+$ php artisan test
+```
+
+Browse `./phpunit.xml` for config settings.
+
+### Vue
+
+The client-side of this application uses `Jest` for unit testing.
+
+Execute:
+
+``` bash
+$ npm run test
+```
+
+To watch tests, execute:
+
+``` bash
+$ npm test -- --watch
+```
+
+This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) for mocking client-side requests.
+
+## Production installation
+
+1. On the first production run, generate encryption keys:
+
+``` bash
+$ php artisan storage:link
+```
+
+## Static analysis
+
+This project uses PHP Code Sniffer set to `PSR-2`, and ES Lint set to `vue/recommended` and `airbnb-base`.
+
+For config, see `./phpcs.xml` and `./eslintrc.json`.
+
+## Notes
+
+- Event analytics: https://stackoverflow.com/questions/18963817/designing-database-schema-for-event-based-analytics
+- GraphQL: https://github.com/rebing/graphql-laravel
+- Geometry: https://codepen.io/EntropyReversed/pen/YBEwXV
+- Flipping animations: https://github.com/davidkpiano/flipping
+- Splatter animation: https://codepen.io/tmrDevelops/pen/jEbbOa
+- Blog article reading-percent meter: https://github.com/webnoobcodes/webnoob.dev
+- Impersonate user: https://mauricius.dev/easily-impersonate-any-user-in-a-laravel-application/
+
+## Feature requests
+
+To request a feature, use the Contact page at: https://www.adammackintosh.net/contact.
+
+## Bug reports
+
+To report a bug, open a new issue here on GitHub: https://github.com/agm1984/vue-portfolio/issues
+
+Please be verbose when describing the context of the bug. The more accurate and precise the bug description, the more effective and efficient our solution can be.
+
+Importantly, please use this template:
+
+```
+Steps to reproduce:
+
+Actual results:
+
+Expected results:
+```
+
+See if you can cause the bug to occur two times in a row. Include those steps. If you include the actual results and expected results, observers can use those pieces of information to help deduce solutions that involve optimal developer experience (DX) and user experience (UX).
+
+Here is an example bug report:
+
+```
+Steps to reproduce:
+- Navigate to /page
+- Click on edit icon button near page title
+
+Actual results: nothing happened
+
+Expected results: a modal should have loaded, but I find that annoying too; most websites use an invasive dialog.
+```
+
+## Contact
+
+**Email**: adam@adammackintosh.net
+
+**Twitter**: @agm1984
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Pull requests are welcome. Please understand the GitHub community guidelines for contributing to open source, and cater to those ideals while seeking to contribute here.
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+In general, you will find that
