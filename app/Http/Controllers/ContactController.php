@@ -33,7 +33,7 @@ class ContactController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Your message has been sent successfully.'
+            'message' => 'Your message has been sent successfully.',
         ]);
     }
 
