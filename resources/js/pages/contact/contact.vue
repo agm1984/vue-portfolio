@@ -15,7 +15,7 @@
                 <a-paragraph>
                     Send a message here, or email me at <a :href="`mailto:${myEmail}`">{{ myEmail }}</a>
                     <span
-                        v-if="isDisplayingSuccessMessage"
+                        v-if="isCopiedToClipboard"
                         class="text-sm"
                     >
                         Copied to Clipboard
@@ -111,7 +111,7 @@
 import axios from 'axios';
 
 const INITIAL = 0;
-const IS_DISPLAYING_SUCCESS_MESSAGE = 1;
+const IS_COPIED_TO_CLIPBOARD = 1;
 
 /**
  * Creates a random number used for creation of mathematical solutions
@@ -149,8 +149,8 @@ export default {
             return (this.state === INITIAL);
         },
 
-        isDisplayingSuccessMessage() {
-            return (this.state === IS_DISPLAYING_SUCCESS_MESSAGE);
+        isCopiedToClipboard() {
+            return (this.state === IS_COPIED_TO_CLIPBOARD);
         },
 
         messageAnswer() {
@@ -188,9 +188,9 @@ export default {
             document.execCommand('copy');
             textField.remove();
 
-            if (this.isDisplayingSuccessMessage) return undefined;
+            if (this.isCopiedToClipboard) return undefined;
 
-            this.state = IS_DISPLAYING_SUCCESS_MESSAGE;
+            this.state = IS_COPIED_TO_CLIPBOARD;
 
             return setTimeout(() => {
                 this.state = INITIAL;
