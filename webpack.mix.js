@@ -23,10 +23,10 @@ mix.js('resources/js/app.js', 'public/dist/js')
 // .disableNotifications()
 
 if (mix.inProduction()) {
-    mix
-    // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889
-    // .version() // Use `laravel-mix-versionhash` for the generating correct Laravel Mix manifest file.
-        .versionHash();
+    // mix
+    // // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889
+    // // .version() // Use `laravel-mix-versionhash` for the generating correct Laravel Mix manifest file.
+    //     .versionHash();
 } else {
     mix.sourceMaps();
 }
