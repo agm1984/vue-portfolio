@@ -15,52 +15,52 @@
 
 
 
-html {
-    font-size: 10px;
-}
+// html {
+//     font-size: 10px;
+// }
 
-body {
-    min-height: 100%;
-    font-size: 1.6rem;
-}
-#app {
-    // height: 100%;
-    @apply flex flex-col w-full min-h-screen;
-}
+// body {
+//     min-height: 100%;
+//     font-size: 1.6rem;
+// }
+// #app {
+//     // height: 100%;
+//     @apply flex flex-col w-full min-h-screen;
+// }
 
 
-// brand
-.adam-logo {
-    border-radius: 50%;
-    background-image: url('/adam.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-}
+// // brand
+// .adam-logo {
+//     border-radius: 50%;
+//     background-image: url('/adam.png');
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     background-position: center center;
+// }
 
-// buttons
-button {
-    font-weight: bold;
-}
+// // buttons
+// button {
+//     font-weight: bold;
+// }
 
-// layout
-hr {
-    @apply m-0 opacity-50 bg-accent;
-}
+// // layout
+// hr {
+//     @apply m-0 opacity-50 bg-accent;
+// }
 
-// cards
-.dark-card {
-    background: rgba(29, 38, 47, 0.96);
-}
+// // cards
+// .dark-card {
+//     background: rgba(29, 38, 47, 0.96);
+// }
 
-.light-card {
-    background: rgba(255, 255, 245, 0.96);
-}
+// .light-card {
+//     background: rgba(255, 255, 245, 0.96);
+// }
 
-// buefy
-.dropdown-content {
-    @apply .light-card;
-}
+// // buefy
+// .dropdown-content {
+//     @apply .light-card;
+// }
 
 
 
