@@ -30,6 +30,14 @@ export default {
 
 <style>
 @media screen and (max-width: 700px) {
+    .adam-logo {
+        border-radius: 50%;
+        background-image: url('/adam.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+    }
+
     .logo__firstName {
         display: none;
     }
