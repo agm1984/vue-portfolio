@@ -5,19 +5,20 @@ const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 require('laravel-mix-bundle-analyzer');
 
-// function publishAssets() {
-//     const publicDir = path.resolve(__dirname, './public');
+function publishAssets() {
+    const publicDir = path.resolve(__dirname, './public');
 
-//     if (mix.inProduction()) {
-//         fs.removeSync(path.join(publicDir, 'dist'));
-//     }
+    if (mix.inProduction()) {
+        fs.removeSync(path.join(publicDir, 'dist'));
+    }
 
-//     fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'));
-//     fs.removeSync(path.join(publicDir, 'build'));
-// }
+    fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'));
+    fs.removeSync(path.join(publicDir, 'build'));
+}
 
 mix.js('resources/js/app.js', 'public/dist/js')
-    .sass('resources/sass/app.scss', 'public/dist/css').options({
+    .sass('resources/sass/app.scss', 'public/dist/css')
+    .options({
         postCss: [tailwindcss('./tailwind.config.js')],
         processCssUrls: false,
     });
@@ -59,11 +60,11 @@ mix.webpackConfig({
     },
 });
 
-// mix.then(() => {
-//     if (!mix.config.hmr) {
-//         process.nextTick(() => publishAssets());
-//     }
-// });
+mix.then(() => {
+    if (!mix.config.hmr) {
+        process.nextTick(() => publishAssets());
+    }
+});
 
 // manually run analyzer at http://localhost:8888
 // mix.bundleAnalyzer({

@@ -46,6 +46,7 @@
         "sass": "^1.26.5",
         "sass-loader": "^8.0.0",
         "sweetalert2": "^9.10.12",
+        "tailwindcss": "^1.4.6",
         "three": "^0.91.0",
         "three-orbit-controls": "^82.1.0",
         "vee-validate": "^3.3.0",
@@ -61,7 +62,6 @@
     },
     "dependencies": {
         "apexcharts": "^3.22.0",
-        "tailwindcss": "^1.9.6",
         "vue-apexcharts": "^1.6.0"
     }
 }
