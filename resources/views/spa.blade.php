@@ -61,6 +61,8 @@ $config = [
         <meta itemprop="image" url="https://adammackintosh.net/adam.png">
         <meta itemprop="author" content="Adam Mackintosh">
 
+         <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <script type="application/ld+json">
             {
                 "@context": "http://schema.org",
