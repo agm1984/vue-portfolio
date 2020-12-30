@@ -29,7 +29,6 @@ export default {
 </script>
 
 <style>
-@media screen and (max-width: 700px) {
     .adam-logo {
         border-radius: 50%;
         background-image: url('/adam.png');
@@ -38,12 +37,14 @@ export default {
         background-position: center center;
     }
 
-    .logo__firstName {
-        display: none;
-    }
+    @media screen and (max-width: 700px) {
 
-    .logo__lastName {
-        display: none;
+        .logo__firstName {
+            display: none;
+        }
+
+        .logo__lastName {
+            display: none;
+        }
     }
-}
 </style>
