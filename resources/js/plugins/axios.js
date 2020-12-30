@@ -78,24 +78,8 @@ axios.interceptors.response.use(response => response, (error) => {
         });
     }
 
-    // if ((status === 401) && (data.error === 'token_expired_and_refreshed')) {
-    //     store.commit('auth/LOGIN');
-    //     error.config.headers.Authorization = `Bearer: ${store.getters['auth/token']}`;
-
-    //     return axios.request(config); // re-try the request
-    // }
-
-    // if ((status === 401) && (data.error === 'token_expired')) {
-    //     store.commit('auth/LOGOUT');
-
-    //     if (router.currentRoute.name !== 'login') {
-    //         router.push({ name: 'login' }).catch(() => {});
-    //     }
-    // }
-
     if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
         if (config.url.name === 'logout') {
-            console.log('running this 2');
             // if the user tries to log out with a stale-expired session, go to login page
             return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
         }
@@ -105,7 +89,6 @@ axios.interceptors.response.use(response => response, (error) => {
             return Promise.resolve();
         }
 
-        console.log('definitely ran this:::');
         store.commit('auth/LOGOUT');
 
         if (router.currentRoute.name !== 'login') {
