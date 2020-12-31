@@ -33,17 +33,20 @@ if (mix.inProduction()) {
     mix.sourceMaps();
 }
 
-// use named JS bundles
-// mix.config.webpackConfig.output = {
-//     chunkFilename: 'js/[name].bundle.js',
-//     publicPath: '/',
-// };
+// reduce main bundle size
+mix.extract([
+    'axios',
+    'buefy',
+    'sweetalert2',
+    'vee-validate',
+    'vue-meta',
+    'vue-router',
+    'vuex',
+]);
 
 // alias the ~/resources folder
 mix.webpackConfig({
-    plugins: [
-        // new BundleAnalyzerPlugin()
-    ],
+    plugins: [],
 
     resolve: {
         extensions: ['.js', '.json', '.vue'],
@@ -67,7 +70,7 @@ mix.then(() => {
 });
 
 // manually run analyzer at http://localhost:8888
-// mix.bundleAnalyzer({
-//     analyzerPort: 8888,
-//     openAnalyzer: false,
-// });
+mix.bundleAnalyzer({
+    analyzerPort: 8888,
+    openAnalyzer: false,
+});
