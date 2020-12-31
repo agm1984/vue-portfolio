@@ -1,7 +1,7 @@
 {
     "private": true,
     "version": "1.0.1",
-    "author" : "Adam Mackintosh <adam@adammackintosh.net>",
+    "author": "Adam Mackintosh <adam@adammackintosh.net>",
     "scripts": {
         "dev": "npm run development",
         "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
