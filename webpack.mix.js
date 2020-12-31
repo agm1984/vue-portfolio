@@ -70,7 +70,7 @@ mix.then(() => {
 });
 
 // manually run analyzer at http://localhost:8888
-mix.bundleAnalyzer({
-    analyzerPort: 8888,
-    openAnalyzer: false,
-});
+// mix.bundleAnalyzer({
+//     analyzerPort: 8888,
+//     openAnalyzer: false,
+// });
