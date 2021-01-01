@@ -33,17 +33,6 @@ if (mix.inProduction()) {
     mix.sourceMaps();
 }
 
-// reduce main bundle size
-mix.extract([
-    'axios',
-    'buefy',
-    'sweetalert2',
-    'vee-validate',
-    'vue-meta',
-    'vue-router',
-    'vuex',
-]);
-
 // alias the ~/resources folder
 mix.webpackConfig({
     plugins: [],
@@ -68,6 +57,17 @@ mix.then(() => {
         process.nextTick(() => publishAssets());
     }
 });
+
+// reduce main bundle size
+// mix.extract([
+//     'axios',
+//     'buefy',
+//     'sweetalert2',
+//     'vee-validate',
+//     'vue-meta',
+//     'vue-router',
+//     'vuex',
+// ]);
 
 // manually run analyzer at http://localhost:8888
 // mix.bundleAnalyzer({
