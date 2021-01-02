@@ -79,8 +79,8 @@
                     has-counter
                 ></a-text-input>
 
-                <div class="flex flex-row items-center justify-end">
-                    <span class="mr-8">
+                <div class="flex flex-row justify-end">
+                    <span class="mt-8 mr-8">
                         {{ verificationText }}
                     </span>
 
@@ -94,7 +94,6 @@
                     <a-button
                         native-type="submit"
                         :disabled="!isFormVerified"
-                        style="margin-top: -0.2rem;"
                         expanded
                         @click="handleSubmit(sendMessage)"
                     >
