@@ -104,7 +104,12 @@ This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-moc
 1. On the first production run, generate encryption keys:
 
 ``` bash
+$ npm install
+$ cd public
+$ rm storage
+$ cd ..
 $ php artisan storage:link
+$ npm run production
 ```
 
 ## Static analysis
