@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-card class="p-32">
+        <a-card class="p-32" with-geometry>
             <a-heading level="1" class="mb-16">About me</a-heading>
 
             <div class="flex flex-col h-auto md:flex-row">
@@ -66,7 +66,7 @@
                     </a-paragraph>
                 </a-card>
 
-                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill>
+                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
                     <a-heading level="2" class="mb-16">To non-programmers</a-heading>
 
                     <div class="flex flex-col w-full">
