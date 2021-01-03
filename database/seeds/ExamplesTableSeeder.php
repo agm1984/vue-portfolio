@@ -25,6 +25,37 @@ class ExamplesTableSeeder extends Seeder
             [
                 'status' => Example::STATUS_ACTIVE,
                 'category_id' => $projects_id,
+                'name' => 'Vue Portfolio',
+                'images' => [
+                    '01-vp-main.gif',
+                    '02-vp-comments.gif',
+                    '03-vp-oauth.gif',
+                    '04-vp-admin.gif',
+                    '05-vp-design-system.gif',
+                ],
+                'summary' => 'After working with Laravel/PHP and Vue JS for almost two years, I decided to make my portfolio in Laravel and Vue. It features Oauth, a backend admin area, and an atomic design system.',
+                'conclusion' => 'I plan to keep adding stuff to my portfolio over time. This design should last a while. In the future, I hope to add more elements of gamification; I want it to be enjoyable to browse.',
+                'links' => [
+                    [
+                        'name' => 'View source code',
+                        'url' => 'https://www.github.com/agm1984/vue-portfolio',
+                    ],
+                    [
+                        'name' => 'View site',
+                        'url' => 'https://adammackintosh.net',
+                    ],
+                ],
+                'tags' => [
+                    'PHP',
+                    'Laravel',
+                    'ES6+ JavaScript',
+                    'Vue JS',
+                    'Vuex',
+                ],
+            ],
+            [
+                'status' => Example::STATUS_ACTIVE,
+                'category_id' => $projects_id,
                 'name' => 'CommuniHelp',
                 'images' => [
                     'communihelp1.png',
