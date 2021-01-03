@@ -104,7 +104,12 @@ This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-moc
 1. On the first production run, generate encryption keys:
 
 ``` bash
+$ npm install
+$ cd public
+$ rm storage
+$ cd ..
 $ php artisan storage:link
+$ npm run production
 ```
 
 ## Static analysis
@@ -165,6 +170,4 @@ Expected results: a modal should have loaded, but I find that annoying too; most
 
 ## Contributing
 
-Pull requests are welcome. Please understand the GitHub community guidelines for contributing to open source, and cater to those ideals while seeking to contribute here.
-
-In general, you will find that
+In the rare chance an anomaly is spotted, pull requests are welcome. Please understand the GitHub community guidelines for contributing to open source, and cater to those ideals while seeking to contribute here.

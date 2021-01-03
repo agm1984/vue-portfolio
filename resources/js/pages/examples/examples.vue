@@ -27,7 +27,7 @@
             </router-link>
         </div>
 
-        <a-card class="flex flex-wrap w-full p-16 mt-16 md:p-32">
+        <a-card class="flex flex-wrap w-full p-16 mt-16 md:p-32" with-geometry>
             <router-link
                 v-for="example in examples"
                 :key="example.slug"

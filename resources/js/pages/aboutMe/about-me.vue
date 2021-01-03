@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-card class="p-32">
+        <a-card class="p-32" with-geometry>
             <a-heading level="1" class="mb-16">About me</a-heading>
 
             <div class="flex flex-col h-auto md:flex-row">
-                <div class="w-full md:w-1/2">
+                <div class="w-full mr-0 md:w-1/2 md:mr-16">
                     <a-paragraph>
                         I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
                         but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
@@ -39,8 +39,7 @@
                 </div>
 
                 <div class="w-full mt-32 md:w-1/2 md:mt-0">
-
-                    <img src="adam-center.png" class="w-full h-auto px-0 md:px-32" alt="">
+                    <img src="adam-center.png" class="w-full h-auto pl-0 md:pl-16" alt="">
                 </div>
             </div>
 
@@ -67,7 +66,7 @@
                     </a-paragraph>
                 </a-card>
 
-                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill>
+                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
                     <a-heading level="2" class="mb-16">To non-programmers</a-heading>
 
                     <div class="flex flex-col w-full">

@@ -24,7 +24,6 @@ const Roles = {
  * @return {Function}
  */
 const roleAdmin = (to, from, next) => {
-    console.log('roleAdmin@ running');
     if (store.getters['auth/check'] && store.getters['auth/user'].roles_list.includes(Roles.ADMIN)) {
         return next();
     }
