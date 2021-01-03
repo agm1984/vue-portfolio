@@ -1,52 +1,78 @@
 <template>
-  <div class="row">
-    <div class="m-auto col-lg-8">
-      <card title="Reset password">
-        <form @submit.prevent="send" @keydown="form.onKeydown($event)">
-          <alert-success :form="form" :message="status" />
+    <a-card class="p-32">
+        <a-heading level="1">Reset password</a-heading>
 
-          <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Email</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
+        <div class="flex justify-center py-16">
+            <div class="w-2/3 text-center">
+                Enter your email address, and a reset link will be sent to you.
             </div>
-          </div>
+        </div>
 
-          <!-- Submit Button -->
-          <div class="form-group row">
-            <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy">
+        <a-form v-slot="{ handleSubmit }" class="pt-16">
+            <a-text-input
+                v-model="email"
+                vid="email"
+                rules="required|max:255"
+                placeholder="Email"
+                required
+            ></a-text-input>
+
+            <a-button
+                class="mt-8"
+                :loading="isSubmitting"
+                expanded
+                @click="handleSubmit(register)"
+            >
                 Send password reset link
-              </v-button>
-            </div>
-          </div>
-        </form>
-      </card>
-    </div>
-  </div>
+            </a-button>
+        </a-form>
+
+    </a-card>
 </template>
 
 <script>
-import Form from 'vform'
+// import axios from 'axios';
+
+const INITIAL = 'INITIAL';
+const SUBMITTING = 'SUBMITTING';
+
 export default {
-  middleware: 'guest',
-  metaInfo () {
-    return { title: 'Reset password' }
-  },
-  data: () => ({
-    status: '',
-    form: new Form({
-      email: ''
-    })
-  }),
-  methods: {
-    async send () {
-      const { data } = await this.form.post('/api/password/email')
-      this.status = data.status
-      this.form.reset()
-    }
-  }
-}
+    middleware: 'guest',
+
+    metaInfo() {
+        return { title: 'Reset password' };
+    },
+
+    data() {
+        return {
+            state: INITIAL,
+            email: '',
+        };
+    },
+
+    computed: {
+        isInitial() {
+            return (this.state === INITIAL);
+        },
+
+        isSubmitting() {
+            return (this.state === SUBMITTING);
+        },
+    },
+
+    methods: {
+        async submitForm() {
+            try {
+                this.state = SUBMITTING;
+
+                // todo (this isn't really needed)
+            } catch (err) {
+                this.state = INITIAL;
+
+                throw new Error(`email# Problem registering new user: ${err}.`);
+            }
+        },
+
+    },
+};
 </script>

@@ -35,9 +35,9 @@
                 Remember me
             </a-checkbox>
 
-            <router-link :to="{ name: 'password.request' }">
+            <!-- <router-link :to="{ name: 'password.request' }">
                 Forgot password?
-            </router-link>
+            </router-link> -->
         </div>
     </a-form>
 </template>
