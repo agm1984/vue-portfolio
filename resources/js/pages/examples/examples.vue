@@ -36,9 +36,12 @@
             >
                 <a-tilt>
                     <a-card class="">
-                        <div
-                            class="relative bg-no-repeat bg-cover h-128 w-224 md:h-256 md:w-448"
-                            :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${example.images[0].filename}')` }"
+                        <a-image
+                            :src="`/storage/examples/${example.slug}/${example.images[0].filename}`"
+                            width="448"
+                            height="256"
+                            background="#ffffff"
+                            alt="example image"
                         >
                             <div class="px-16 py-8 bg-transparent-grey">
                                 <span class="text-white font-nunito">
@@ -51,7 +54,7 @@
                                 type="is-light"
 
                             >{{ example.category.name }}</b-tag>
-                        </div>
+                        </a-image>
                     </a-card>
                 </a-tilt>
             </router-link>

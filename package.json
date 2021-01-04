@@ -27,7 +27,7 @@
         "babel-core": "^7.0.0-bridge.0",
         "babel-eslint": "^10.1.0",
         "babel-jest": "^26.1.0",
-        "buefy": "^0.8.17",
+        "buefy": "^0.8.20",
         "bulma": "^0.8.2",
         "cross-env": "^7.0",
         "eslint": "^6.8.0",
