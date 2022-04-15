@@ -107,13 +107,6 @@ $ npm test -- --watch
 
 This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) for mocking client-side requests.
 
-## How to run locally
-
-To run this app after installing everything, run:
-
-``` bash
-$ npm run dev
-```
 ## Production installation
 
 1. On the first production run, generate encryption keys:
