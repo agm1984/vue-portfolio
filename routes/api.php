@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'public'], function () {
 
     Route::post('/contact', 'ContactController@send')->name('public.contact.send');
 
+    // not used
     // Route::get('/users', 'UserController@index')->name('public.users.list');
     // Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
 });

@@ -19,9 +19,6 @@ detecting logical anomalies. Lint settings can be ascertained via the `phpcs.xml
 
 As a result of considerations such as these, this repository and application aims to supercharge the content of a portfolio site with meta information that services business stakeholders & recruiters and other developers. For example, this repository has inbound links from StackOverflow, blog articles, and other sources of information, so any extra-verbose documentation exists to service the perceived desires of business stakeholders & recruiters and other developers. In this way, hopefully questions that arise while browsing the portfolio can be answered by browsing the portfolio.
 
-###
-
-
 ## Localhost installation
 
 1. Clone and install the project:
@@ -65,6 +62,17 @@ DB_PASSWORD=portfolio
 $ php artisan storage:link
 ```
 
+## Localhost development
+
+1. Ensure `valet` is setup. Park the site and enable HTTPS.
+
+2. In the CLI, run:
+``` bash
+$ npm run watch
+```
+
+3. Navigate to `https://vue-portfolio.test/`
+
 ## Unit testing
 
 I wrote a blog post about this unit test config and methodology: https://medium.com/@agm1984/how-to-setup-unit-testing-in-a-laravel-and-vue-mono-repo-application-with-phpunit-and-jest-674df367959
@@ -99,6 +107,13 @@ $ npm test -- --watch
 
 This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) for mocking client-side requests.
 
+## How to run locally
+
+To run this app after installing everything, run:
+
+``` bash
+$ npm run dev
+```
 ## Production installation
 
 1. On the first production run, generate encryption keys:
