@@ -63,7 +63,7 @@
         "vuex-router-sync": "^5.0.0"
     },
     "dependencies": {
-        "apexcharts": "^3.22.0",
+        "apexcharts": "^3.24.0",
         "vue-apexcharts": "^1.6.0"
     }
 }
