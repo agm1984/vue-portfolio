@@ -16,7 +16,7 @@ function publishAssets() {
     fs.removeSync(path.join(publicDir, 'build'));
 }
 
-mix.js('resources/js/app.js', 'public/dist/js')
+mix.js('resources/js/app.js', 'public/dist/js').vue({ version: 2 })
     .sass('resources/sass/app.scss', 'public/dist/css')
     .options({
         postCss: [tailwindcss('./tailwind.config.js')],
@@ -48,12 +48,12 @@ mix.webpackConfig({
 
     output: {
         chunkFilename: 'dist/js/[chunkhash].js',
-        path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build'),
+        path: mix.inProduction() ? '/' : path.resolve(__dirname, './public/build'),
     },
 });
 
 mix.then(() => {
-    if (!mix.config.hmr) {
+    if (mix.inProduction()) {
         process.nextTick(() => publishAssets());
     }
 });
