@@ -20,6 +20,7 @@
         "@babel/preset-env": "^7.10.4",
         "@vue/babel-plugin-transform-vue-jsx": "^1.1.2",
         "@vue/test-utils": "^1.0.3",
+        "autoprefixer": "^10.4.19",
         "axios": "^1.6",
         "axios-mock-adapter": "^1.18.1",
         "babel-core": "^7.0.0-bridge.0",
@@ -41,6 +42,8 @@
         "laravel-mix-bundle-analyzer": "^1.0.5",
         "lodash.clonedeep": "^4.5.0",
         "lodash.debounce": "^4.0.8",
+        "postcss": "^8.4.38",
+        "postcss-import": "^16.1.0",
         "prism-es6": "^1.2.0",
         "prismjs": "^1.27.0",
         "resolve-url-loader": "^5.0.0",
@@ -64,6 +67,7 @@
     },
     "dependencies": {
         "apexcharts": "^3.24.0",
+        "mix-tailwindcss": "^1.3.0",
         "vue-apexcharts": "^1.6.0"
     }
 }

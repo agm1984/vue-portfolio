@@ -41,10 +41,11 @@ const availableSizes = {
 };
 
 module.exports = {
+    mode: 'jit',
     prefix: '',
     important: false,
     separator: ':',
-    purge: [
+    content: [
         './src/**/*.html',
         './src/**/*.vue',
         './src/**/*.jsx',
