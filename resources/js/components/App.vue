@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         TEST
+        <div class="text-red-400 text-xl">test</div>
         <loading-bar ref="loading"></loading-bar>
 
         <!-- <component :is="layout" v-if="layout"></component> -->
