@@ -1,8 +1,9 @@
 <template>
     <div id="app">
+        TEST
         <loading-bar ref="loading"></loading-bar>
 
-        <component :is="layout" v-if="layout"></component>
+        <!-- <component :is="layout" v-if="layout"></component> -->
 
     </div>
 </template>
@@ -17,8 +18,8 @@ import LoadingBar from './loading-bar.vue';
  * The `basic` layout shows only the page content.
  */
 const layouts = {
-    default: () => import('~/layouts/default.vue').then(m => m.default || m),
-    basic: () => import('~/layouts/basic.vue').then(m => m.default || m),
+    default: () => import('~/layouts/default.vue'),
+    basic: () => import('~/layouts/basic.vue'),
 };
 
 export default {

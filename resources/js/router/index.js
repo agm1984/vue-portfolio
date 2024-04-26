@@ -1,14 +1,10 @@
-import Vue from 'vue';
 import Router from 'vue-router';
-import { sync } from 'vuex-router-sync';
-import store from '~/store/index';
+// import store from '~/store/index';
 import routes from './routes';
 import auth from '~/middleware/auth';
 import checkAuth from '~/middleware/check-auth';
 import guest from '~/middleware/guest';
 import roleAdmin from '~/middleware/role-admin';
-
-Vue.use(Router);
 
 // define middleware that runs on every page in the application
 const globalMiddleware = ['check-auth'];
@@ -53,8 +49,6 @@ function createRouter() {
 }
 
 const router = createRouter();
-
-sync(store, router);
 
 export default router;
 

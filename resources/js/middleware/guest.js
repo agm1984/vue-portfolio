@@ -1,4 +1,4 @@
-import store from '~/store/index';
+// import store from '~/store/index';
 
 /**
  * Checks if a guest is authenticated,
@@ -9,9 +9,9 @@ import store from '~/store/index';
  * @param {Function} next
  */
 const guest = (to, from, next) => {
-    if (store.getters['auth/check']) {
-        return next({ name: 'home' });
-    }
+    // if (store.getters['auth/check']) {
+    //     return next({ name: 'home' });
+    // }
 
     return next();
 };

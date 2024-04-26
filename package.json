@@ -49,10 +49,12 @@
         "tailwindcss": "^3.4.3",
         "three": "^0.137.0",
         "three-orbit-controls": "^82.1.0",
+        "unplugin-vue-components": "^0.26.0",
         "vform": "^1.0.1",
         "vue-loader": "^15.11.1",
         "vue-meta": "^2.3.3",
-        "vue-router": "^3.1.6"
+        "vue-router": "^3.1.6",
+        "vuex": "^4.1.0"
     },
     "dependencies": {
         "apexcharts": "^3.24.0",

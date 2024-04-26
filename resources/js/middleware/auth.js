@@ -1,4 +1,4 @@
-import store from '~/store/index';
+// import store from '~/store/index';
 
 
 /**
@@ -10,14 +10,14 @@ import store from '~/store/index';
  * @param {Function} next
  */
 const auth = async (to, from, next) => {
-    if (store.getters['auth/check']) {
-        return next();
-    }
+    // if (store.getters['auth/check']) {
+    //     return next();
+    // }
 
     const intendedUrl = to.fullPath;
 
     if (intendedUrl.length > 1) {
-        store.dispatch('auth/setIntendedUrl', intendedUrl);
+        // store.dispatch('auth/setIntendedUrl', intendedUrl);
     }
 
     return next({ name: 'login' });

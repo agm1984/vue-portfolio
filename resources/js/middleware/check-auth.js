@@ -1,4 +1,4 @@
-import store from '~/store/index';
+// import store from '~/store/index';
 
 /**
  * CHECK AUTH:
@@ -24,12 +24,12 @@ import store from '~/store/index';
  * @throws {Function} calls `commit(FETCH_USER_FAILED)` which will trigger the `auth/logout` action.
  */
 const checkAuth = async (to, from, next) => {
-    if (store.getters['auth/check']) {
-        return next();
-    }
+    // if (store.getters['auth/check']) {
+    //     return next();
+    // }
 
     try {
-        await store.dispatch('auth/fetchUser');
+        // await store.dispatch('auth/fetchUser');
     } catch (e) {} // eslint-disable-line no-empty
 
     return next();

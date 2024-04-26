@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import store from '~/store/index';
+// import store from '~/store/index';
 
 const Roles = {
     ADMIN: 'admin',
@@ -24,9 +24,9 @@ const Roles = {
  * @return {Function}
  */
 const roleAdmin = (to, from, next) => {
-    if (store.getters['auth/check'] && store.getters['auth/user'].roles_list.includes(Roles.ADMIN)) {
-        return next();
-    }
+    // if (store.getters['auth/check'] && store.getters['auth/user'].roles_list.includes(Roles.ADMIN)) {
+    //     return next();
+    // }
 
     return Swal.fire({
         icon: 'warning',

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
-import store from '~/store';
+// import store from '~/store';
 import router from '~/router';
 
 /**
@@ -36,7 +36,7 @@ axios.interceptors.response.use(response => response, (error) => {
     const { config, data, status } = error.response;
 
     // for debugging:
-    // console.log('ERROR RESPONSE', error.response);
+    console.log('ERROR RESPONSE', error.response);
 
     if (status >= 500) {
         Swal.fire({
@@ -89,7 +89,7 @@ axios.interceptors.response.use(response => response, (error) => {
             return Promise.resolve();
         }
 
-        store.commit('auth/LOGOUT');
+        // store.commit('auth/LOGOUT');
 
         if (router.currentRoute.name !== 'login') {
             return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
