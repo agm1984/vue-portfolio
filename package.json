@@ -53,6 +53,7 @@
         "@tailwindcss/vite": "^4.1.17",
         "@unhead/vue": "^2.0.19",
         "apexcharts": "^3.24.0",
+        "pinia": "^3.0.4",
         "tailwindcss": "^4.1.17",
         "vee-validate": "^4.15.1",
         "vite": "^5.2.10",
