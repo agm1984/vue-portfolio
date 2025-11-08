@@ -1,5 +1,5 @@
 const routes = [
-    { path: '/', name: 'home', component: () => import('../pages/home/Home.vue') },
+    { path: '/', name: 'home', component: () => import('../pages/home/home.vue') },
     { path: '/about', name: 'about', component: () => import('../pages/aboutMe/about-me.vue') },
     { path: '/skills', name: 'skills', component: () => import('../pages/skills/skills.vue') },
     {
@@ -15,7 +15,7 @@ const routes = [
 
     { path: '/contact', name: 'contact', component: () => import('../pages/contact/contact.vue') },
 
-    { path: '/login', name: 'login', component: () => import('../pages/auth/Login.vue') },
+    { path: '/login', name: 'login', component: () => import('../pages/auth/login.vue') },
     { path: '/register', name: 'register', component: () => import('../pages/auth/register.vue') },
     { path: '/password/reset', name: 'password.request', component: () => import('../pages/auth/password/email.vue') },
     { path: '/password/reset/:token', name: 'password.reset', component: () => import('../pages/auth/password/reset.vue') },

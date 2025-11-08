@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import Buefy from 'buefy';
 import route from 'ziggy';
 import routes from '~/router/routes';
-import Login from './Login.vue';
+import Login from './login.vue';
 import ACard from '~/components/common/a-card.vue';
 
 const localVue = createLocalVue();

@@ -11,7 +11,6 @@
         "php": "^8.3",
         "abraham/twitteroauth": "^2.0",
         "fakerphp/faker": "^1.24",
-        "fideloper/proxy": "^4.2",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.20",
         "laravel/sanctum": "^2.15",

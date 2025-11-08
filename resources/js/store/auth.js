@@ -47,6 +47,7 @@ export const useAuthStore = defineStore('auth', {
     // --- actions (1:1 with your Vuex actions) ---
     async register(payload) {
       try {
+        await axios.get('/sanctum/csrf-cookie');
         const { data } = await axios.post(route('register'), payload);
         this._setUser(data.user);
         this._login();
@@ -73,6 +74,7 @@ export const useAuthStore = defineStore('auth', {
 
     async login(payload) {
       try {
+        await axios.get('/sanctum/csrf-cookie')
         const { data } = await axios.post(route('login'), {
           ...payload,
           remember: payload.remember || undefined,

@@ -1,28 +1,33 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import Swal from 'sweetalert2';
-// import store from '~/store';
+import { toast } from 'vue3-toastify';
 import router from '~/router';
+
+axios.defaults.withCredentials = true;          // send cookies
+axios.defaults.xsrfCookieName = 'XSRF-TOKEN';   // Laravel's cookie
+axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN'; // header Laravel expects
 
 /**
  * Request interceptor: for each request to the server,
  * attach the CSRF token if it exists.
  */
-axios.interceptors.request.use((request) => {
-    try {
-        const csrf = Cookies.get('XSRF-TOKEN');
+// axios.interceptors.request.use((request) => {
+//     try {
+//         console.log('TESTING');
+//         const csrf = Cookies.get('XSRF-TOKEN');
+//         console.log('CSRF Token:', csrf);
 
-        request.withCredentials = true;
+//         request.withCredentials = true;
 
-        if (csrf) {
-            request.headers.common['XSRF-TOKEN'] = csrf;
-        }
+//         if (csrf) {
+//             request.headers.common['XSRF-TOKEN'] = csrf;
+//         }
 
-        return request;
-    } catch (err) {
-        throw new Error(`axios# Problem with request during pre-flight phase: ${err}.`);
-    }
-});
+//         return request;
+//     } catch (err) {
+//         throw new Error(`axios# Problem with request during pre-flight phase: ${err}.`);
+//     }
+// });
 
 /**
  * Response interceptor: for each server error response,
@@ -37,24 +42,15 @@ axios.interceptors.response.use(response => response, (error) => {
 
     // for debugging:
     console.log('ERROR RESPONSE', error.response);
+    toast.error(`Error ${status}: ${data.message || 'An error occurred.'}`);
 
     if (status >= 500) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong! Please try again.',
-            confirmButtonText: 'Ok',
-        });
-    }
+        toast.error('Oops... Something went wrong! Please try again.');
+        }
 
     if (status === 429) {
         // @TODO: needs more testing
-        Swal.fire({
-            icon: 'error',
-            title: 'Slow down...',
-            text: 'You\'ve been throttled.',
-            confirmButtonText: 'Ok',
-        });
+        toast.error('Slow down... You\'ve been throttled.');
     }
 
     if (status === 422) {
@@ -70,12 +66,7 @@ axios.interceptors.response.use(response => response, (error) => {
         }
 
         // @TODO: needs more testing
-        Swal.fire({
-            icon: 'error',
-            title: 'Page expired',
-            text: 'Refresh the page and try again.',
-            confirmButtonText: 'Ok',
-        });
+        toast.error('Page expired. Refresh the page and try again.');
     }
 
     if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
