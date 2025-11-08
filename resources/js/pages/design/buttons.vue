@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-auto">
         <a-card id="design-system-buttons" class="p-32" with-geometry>
-            <a-heading level="2" dark>Buttons</a-heading>
+            <h2 level="2" dark>Buttons</h2>
 
             <div class="flex flex-row flex-wrap">
                 <a-button class="m-8" type="is-primary">Primary</a-button>
@@ -29,7 +29,7 @@
         </a-card>
 
         <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Light buttons</a-heading>
+            <h2 level="2" dark>Light buttons</h2>
 
             <div class="flex flex-row flex-wrap">
                 <a-button class="m-8" type="is-primary is-light">Primary</a-button>
@@ -50,7 +50,7 @@
         </a-card>
 
         <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Outlined buttons</a-heading>
+            <h2 level="2" dark>Outlined buttons</h2>
 
             <div class="flex flex-row flex-wrap">
                 <a-button class="m-8" type="is-primary" outlined>Primary</a-button>
@@ -71,7 +71,7 @@
         </a-card>
 
         <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Size</a-heading>
+            <h2 level="2" dark>Size</h2>
 
             <div class="flex flex-row flex-wrap">
                 <a-button class="m-8" type="is-default" size="is-small">Small</a-button>
@@ -89,7 +89,7 @@
         </a-card>
 
         <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Links</a-heading>
+            <h2 level="2" dark>Links</h2>
 
             <div class="flex flex-row flex-wrap">
                 <a href="#">Link</a>

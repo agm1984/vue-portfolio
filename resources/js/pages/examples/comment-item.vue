@@ -22,7 +22,7 @@
 
         <div v-show="isEditing">
             <div>
-                <a-heading level="4" class="mb-8" nunito>Update comment</a-heading>
+                <h2 level="4" class="mb-8" nunito>Update comment</h2>
             </div>
             <a-text-input
                 v-model="data.body"

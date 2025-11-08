@@ -2,9 +2,9 @@
     <div>
         <a-card class="p-32" with-geometry>
             <div class="flex items-center pb-16">
-                <a-heading level="2" dark>
+                <h2 level="2" dark>
                     {{ example.name }}
-                </a-heading>
+                </h2>
 
                 <a-button v-if="isShowing" class="ml-16" outlined @click="toggleEdit">
                     Edit
@@ -98,9 +98,9 @@
         </a-card>
 
         <a-card class="p-32 mt-16">
-            <a-heading level="2" class="mb-16">
+            <h2 level="2" class="mb-16">
                 Add images
-            </a-heading>
+            </h2>
 
             <a-form v-slot="{ handleSubmit }" has-files>
                 <a-multi-image-input

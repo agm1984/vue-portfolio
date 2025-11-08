@@ -12,9 +12,9 @@
                 >
                     <div class="">
                         <div class="block">
-                            <a-heading level="1">
+                            <h2 level="1">
                                 Design
-                            </a-heading>
+                            </h2>
                         </div>
                         <b-menu class="is-custom-mobile">
                             <b-menu-list :label="currentDate">
@@ -96,9 +96,9 @@
                             </b-icon>
                         </div>
                         <div class="flex items-center ml-16">
-                            <a-heading level="2">
+                            <h2 level="2">
                                 Buttons
-                            </a-heading>
+                            </h2>
                         </div>
                     </a-card>
                 </router-link>
@@ -114,9 +114,9 @@
                             </b-icon>
                         </div>
                         <div class="flex items-center ml-16">
-                            <a-heading level="2">
+                            <h2 level="2">
                                 Colours
-                            </a-heading>
+                            </h2>
                         </div>
                     </a-card>
                 </router-link>
@@ -132,9 +132,9 @@
                             </b-icon>
                         </div>
                         <div class="flex items-center ml-16">
-                            <a-heading level="2">
+                            <h2 level="2">
                                 Space & Size
-                            </a-heading>
+                            </h2>
                         </div>
                     </a-card>
                 </router-link>
@@ -150,9 +150,9 @@
                             </b-icon>
                         </div>
                         <div class="flex items-center ml-16">
-                            <a-heading level="2">
+                            <h2 level="2">
                                 Typography
-                            </a-heading>
+                            </h2>
                         </div>
                     </a-card>
                 </router-link>

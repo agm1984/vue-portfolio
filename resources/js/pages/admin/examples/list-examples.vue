@@ -1,8 +1,8 @@
 <template>
     <a-card class="p-32" with-geometry>
-        <a-heading level="2" class="mb-16">
+        <h2 level="2" class="mb-16">
             Examples
-        </a-heading>
+        </h2>
 
         <b-table
             :data="examples"

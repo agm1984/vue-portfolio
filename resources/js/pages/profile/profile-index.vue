@@ -1,9 +1,9 @@
 <template>
     <div>
         <a-card class="p-32 w-512">
-            <a-heading level="1" class="mb-32">
+            <h2 level="1" class="mb-32">
                 Settings
-            </a-heading>
+            </h2>
 
             <div class="flex items-center justify-center pb-16">
                 <router-link

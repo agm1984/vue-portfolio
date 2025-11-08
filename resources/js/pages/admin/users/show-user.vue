@@ -2,9 +2,9 @@
     <a-card class="p-32" with-geometry>
         <div class="relative flex items-center mb-16">
             <a-avatar :size="64" :user.sync="user"></a-avatar>
-            <a-heading level="2" class="ml-8">
+            <h2 level="2" class="ml-8">
                 {{ user.name }}
-            </a-heading>
+            </h2>
         </div>
 
         <div v-if="isShowing">

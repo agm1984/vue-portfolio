@@ -1,8 +1,8 @@
 <template>
     <a-card class="p-32" with-geometry>
-        <a-heading level="2" class="mb-16" dark>
+        <h2 level="2" class="mb-16" dark>
             Create category
-        </a-heading>
+        </h2>
 
         <a-form v-slot="{ handleSubmit }">
             <a-input-row type="is-wider-right" heading="Status">

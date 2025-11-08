@@ -19,7 +19,9 @@ export default defineConfig({
             },
         }),
 
-        Components(),
+        Components({
+            dirs: ['resources/js/components'],
+        }),
     ],
 
     resolve: {

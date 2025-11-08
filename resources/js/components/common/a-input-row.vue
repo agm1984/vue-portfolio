@@ -3,9 +3,9 @@
         <!-- top row -->
         <div :class="topRowStyles">
             <div :class="leftSideStyles">
-                <a-heading level="4">
+                <h2 level="4">
                     {{ heading }}
-                </a-heading>
+                </h2>
             </div>
             <div :class="rightSideStyles">
                 <slot v-if="!hasContent"></slot>

@@ -1,17 +1,17 @@
 <template>
     <div v-if="isLoaded" class="container flex flex-col w-full h-auto xl:w-1024">
-        <a-heading level="1" class="main__heading" dark>
+        <h2 level="1" class="main__heading" dark>
             {{ example.name }}
-        </a-heading>
+        </h2>
 
         <a-card class="p-32 main" with-geometry>
-            <a-heading level="2" class="mb-16">Summary</a-heading>
+            <h2 level="2" class="mb-16">Summary</h2>
             <a-paragraph>
                 {{ example.summary }}
             </a-paragraph>
 
 
-            <a-heading level="2" class="mt-32 mb-16">Images</a-heading>
+            <h2 level="2" class="mt-32 mb-16">Images</h2>
             <div class="images__container">
                 <router-link
                     v-for="image in example.images"
@@ -23,17 +23,17 @@
                 ></router-link>
             </div>
 
-            <a-heading level="2" class="mt-32 mb-16">Conclusion</a-heading>
+            <h2 level="2" class="mt-32 mb-16">Conclusion</h2>
             <a-paragraph>
                 {{ example.conclusion }}
             </a-paragraph>
 
-            <a-heading level="2" class="mt-32 mb-16">Feedback</a-heading>
+            <h2 level="2" class="mt-32 mb-16">Feedback</h2>
             <comments-manager></comments-manager>
         </a-card>
 
         <a-card class="p-32 links" with-geometry>
-            <a-heading level="2">Links</a-heading>
+            <h2 level="2">Links</h2>
 
             <a-button
                 v-for="link in example.links"
@@ -49,7 +49,7 @@
         </a-card>
 
         <a-card class="p-32 tags" with-geometry>
-            <a-heading level="2" class="mb-16">Tags</a-heading>
+            <h2 level="2" class="mb-16">Tags</h2>
 
             <b-taglist>
                 <b-tag

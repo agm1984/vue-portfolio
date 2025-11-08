@@ -1,9 +1,9 @@
 <template>
     <div class="flex justify-center w-full h-auto">
         <a-card class="flex flex-col h-auto p-32 w-384">
-            <a-heading level="1" class="mb-16 text-center">
+            <h2 level="1" class="mb-16 text-center">
                 Register
-            </a-heading>
+            </h2>
 
             <div class="flex flex-col">
                 <login-with-oauth provider="github"></login-with-oauth>

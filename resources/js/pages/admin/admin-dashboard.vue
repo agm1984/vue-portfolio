@@ -12,9 +12,9 @@
                 >
                     <div class="">
                         <div class="block">
-                            <a-heading level="1">
+                            <h2 level="1">
                                 Admin
-                            </a-heading>
+                            </h2>
                         </div>
 
                         <b-menu class="is-custom-mobile">
@@ -74,30 +74,30 @@
         <div class="w-full h-auto pt-64 pl-32">
             <div v-if="isDashboard" class="flex items-center pb-16">
                 <a-card class="flex flex-row items-center justify-between w-1/3 p-32" with-geometry>
-                    <a-heading level="2">
+                    <h2 level="2">
                         Categories
-                    </a-heading>
+                    </h2>
                     <span class="text-xl">8</span>
                 </a-card>
 
                 <a-card class="flex flex-row items-center justify-between w-1/3 p-32 mx-16" with-geometry>
-                    <a-heading level="2">
+                    <h2 level="2">
                         Examples
-                    </a-heading>
+                    </h2>
                     <span class="text-xl">12</span>
                 </a-card>
 
                 <a-card class="flex flex-row items-center justify-between w-1/3 p-32" with-geometry>
-                    <a-heading level="2">
+                    <h2 level="2">
                         Users
-                    </a-heading>
+                    </h2>
                     <span class="text-xl">32</span>
                 </a-card>
             </div>
             <a-card v-if="isDashboard" class="p-32" with-geometry>
-                <a-heading level="2">
+                <h2 level="2">
                     Dashboard
-                </a-heading>
+                </h2>
 
                 <div>
                     <apexchart
@@ -112,7 +112,7 @@
         </div>
 
         <!-- <div class="flex flex-col p-32">
-            <a-heading level="1">Categories</a-heading>
+            <h2 level="1">Categories</h2>
 
             <router-link :to="{ name: 'admin.categories.list' }" class="ml-16 nav-link-white">
                 List categories
@@ -121,7 +121,7 @@
         </div>
 
         <div class="flex flex-col p-32">
-            <a-heading level="1">Examples</a-heading>
+            <h2 level="1">Examples</h2>
 
             <router-link :to="{ name: 'admin.examples.list' }" class="ml-16 nav-link-white">
                 List examples
@@ -130,7 +130,7 @@
         </div>
 
         <div class="flex flex-col p-32">
-            <a-heading level="1">Users</a-heading>
+            <h2 level="1">Users</h2>
 
             <router-link :to="{ name: 'admin.users.list' }" class="ml-16 nav-link-white">
                 List users

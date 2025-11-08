@@ -1,6 +1,6 @@
 <template>
     <a-card class="p-32">
-        <a-heading level="1">Reset password</a-heading>
+        <h2 level="1">Reset password</h2>
 
         <div class="flex justify-center py-16">
             <div class="w-2/3 text-center">

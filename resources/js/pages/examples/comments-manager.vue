@@ -26,7 +26,7 @@
                 </template>
             </div>
 
-            <a-heading level="3" class="" nunito>{{ commentCount }} {{ commentCountPluralization }}</a-heading>
+            <h2 level="3" class="" nunito>{{ commentCount }} {{ commentCountPluralization }}</h2>
 
             <comment-item
                 v-for="comment in comments"

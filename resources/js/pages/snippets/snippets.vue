@@ -52,9 +52,9 @@
             }
         </a-code>
 
-        <a-heading level="2">
+        <h2 level="2">
             Parse a JSON Web Token (JWT)
-        </a-heading>
+        </h2>
 
         We might have some text around here. We might have some text around here. We might have some text around here.
 

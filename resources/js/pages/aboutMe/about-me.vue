@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
         <a-card class="p-32" with-geometry>
-            <a-heading level="1" class="mb-16">About me</a-heading>
+            <h2 level="1" class="mb-16">About me</h2>
 
             <div class="flex flex-col h-auto md:flex-row">
                 <div class="w-full mr-0 md:w-1/2 md:mr-16">
@@ -28,9 +28,9 @@
                     </a-paragraph>
 
                     <div class="flex flex-col pb-8 bg-grey-200">
-                        <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
+                        <h2 level="4" class="px-16 py-8 bg-primary" nunito light>
                             Find me on social media
-                        </a-heading>
+                        </h2>
                         <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
                         <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
                         <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
@@ -46,13 +46,13 @@
         </a-card>
 
         <div class="w-full">
-            <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
+            <h2 level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</h2>
 
             <div class="flex flex-col w-full xl:flex-row">
                 <a-card class="order-1 p-32 mr-0 xl:mr-16" fill primary>
-                    <a-heading level="2" class="mb-16" light>
+                    <h2 level="2" class="mb-16" light>
                         To programmers
-                    </a-heading>
+                    </h2>
 
                     <a-paragraph light>
                         What can I say? I like to use Mealy finite state machines, predicates and booleans,
@@ -67,11 +67,11 @@
                 </a-card>
 
                 <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
-                    <a-heading level="2" class="mb-16">To non-programmers</a-heading>
+                    <h2 level="2" class="mb-16">To non-programmers</h2>
 
                     <div class="flex flex-col w-full">
                         <div class="w-full">
-                            <a-heading level="3" primary nunito>Work</a-heading>
+                            <h2 level="3" primary nunito>Work</h2>
                             <a-paragraph class="pr-32">
                                 As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
                                 thorough technical documentation. I am always curious to learn new tools and techniques.
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="w-full mt-16">
-                            <a-heading level="3" primary nunito>Life</a-heading>
+                            <h2 level="3" primary nunito>Life</h2>
                             <a-paragraph class="pr-32">
                                 I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
                                 from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="w-full mt-16">
-                            <a-heading level="3" primary nunito>Balance</a-heading>
+                            <h2 level="3" primary nunito>Balance</h2>
                             <a-paragraph>
                                 Fitness & nutrition has been a way of life for me for the past ten years. A healthy mind and
                                 optimized metabolic processes both start with optimized nutrient-intake.

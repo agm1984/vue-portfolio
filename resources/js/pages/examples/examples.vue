@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-heading level="1" class="mb-16">
+        <h2 level="1" class="mb-16">
             Examples
-        </a-heading>
+        </h2>
 
         <div class="flex items-center justify-end">
             <router-link

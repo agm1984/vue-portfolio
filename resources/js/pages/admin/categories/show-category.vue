@@ -2,9 +2,9 @@
     <div class="">
         <a-card class="p-32" with-geometry>
             <div class="relative flex items-center mb-16">
-                <a-heading level="2">
+                <h2 level="2">
                     {{ category.name }}
-                </a-heading>
+                </h2>
 
                 <a-button v-if="isShowing" class="ml-16" outlined @click="toggleEdit">
                     Edit
@@ -51,9 +51,9 @@
         </a-card>
 
         <a-card class="p-32 mt-16">
-            <a-heading level="2" class="mb-16">
+            <h2 level="2" class="mb-16">
                 Examples
-            </a-heading>
+            </h2>
 
             <div class="flex flex-wrap w-full">
                 <router-link

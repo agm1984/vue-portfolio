@@ -6,7 +6,7 @@
 
         <div class="flex flex-col w-full xl:flex-row">
             <a-card class="order-1 w-full p-32 mr-0 xl:mr-16" with-geometry>
-                <a-heading level="1" class="mb-16">Contact</a-heading>
+                <h2 level="1" class="mb-16">Contact</h2>
 
                 <a-paragraph>
                     Ready to get in touch?
@@ -34,9 +34,9 @@
                 </a-paragraph>
 
                 <div class="flex flex-col pb-8 bg-grey-200">
-                    <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
+                    <h2 level="4" class="px-16 py-8 bg-primary" nunito light>
                         Find me on social media
-                    </a-heading>
+                    </h2>
                     <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
                     <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
                     <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>

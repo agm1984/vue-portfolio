@@ -53,14 +53,15 @@
         "vform": "^1.0.1",
         "vue-loader": "^15.11.1",
         "vue-meta": "^2.3.3",
-        "vue-router": "^3.1.6",
         "vuex": "^4.1.0"
     },
     "dependencies": {
         "apexcharts": "^3.24.0",
         "mix-tailwindcss": "^1.3.0",
+        "vee-validate": "^4.15.1",
         "vite": "^5.2.10",
         "vue": "^3.4.25",
-        "vue-apexcharts": "^1.6.0"
+        "vue-apexcharts": "^1.6.0",
+        "vue-router": "^4.6.3"
     }
 }
