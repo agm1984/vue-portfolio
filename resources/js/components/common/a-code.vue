@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Prism from 'prism-es6';
+// import Prism from 'prism-es6';
 import 'prismjs/plugins/custom-class/prism-custom-class';
 import 'prismjs/plugins/line-highlight/prism-line-highlight';
 import 'prismjs/plugins/line-highlight/prism-line-highlight.css';
@@ -28,7 +28,7 @@ import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace';
 import 'prism-es6/components/prism-markup-templating';
 import 'prism-es6/components/prism-php';
 
-Prism.plugins.customClass.prefix('prism--');
+// Prism.plugins.customClass.prefix('prism--');
 
 // TODO: make it so the user gets an achievement if they hover over the OSX window buttons
 // while in `is-fancy` mode
