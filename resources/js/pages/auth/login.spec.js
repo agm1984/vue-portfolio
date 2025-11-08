@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import Buefy from 'buefy';
 import route from 'ziggy';
 import routes from '~/router/routes';
-import Login from './login.vue';
+import Login from './Login.vue';
 import ACard from '~/components/common/a-card.vue';
 
 const localVue = createLocalVue();
@@ -23,7 +23,7 @@ localVue.use(Vuex);
 
 // const router = new VueRouter({ routes });
 
-describe('login.vue', () => {
+describe('Login.vue', () => {
     it('ignores intendedUrl when it is empty', () => {
         const getters = {
             'auth/intendedUrl': () => '',
