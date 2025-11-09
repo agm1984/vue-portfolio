@@ -47,10 +47,10 @@ const logout = async () => {
             </div>
 
             <!-- Authenticated -->
-            <ul v-if="auth.isAuthenticated" class="flex flex-col">
+            <ul v-if="auth.isAuthenticated" class="w-48 flex flex-col">
                 <li class="min-w-8 max-w-8 min-h-8 max-h-8 flex">
                     <img :src="auth.user.avatar_url" class="object-cover rounded-full" alt="User avatar">
-                    <span class="">{{ auth.user.name }}</span>
+                    <span class="whitespace-nowrap">{{ auth.user.name }}</span>
                 </li>
 
                 <li>
