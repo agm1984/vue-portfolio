@@ -104,32 +104,30 @@ const handleSubmit = async () => {
 
             <a-input-field class="mt-4" input-id="profile-password-confirmation" title="Confirm Password" required />
 
-                <Password
-                    v-model="v$.password_confirmation.$model"
-                    input-id="profile-password-confirmation"
-                    class="w-full"
-                    input-class="w-full"
-                    :feedback="false"
-                    toggle-mask
-                    aria-haspopup="false"
-                    :invalid="v$.password_confirmation.$invalid && submitted"
-                />
+            <Password
+                v-model="v$.password_confirmation.$model"
+                input-id="profile-password-confirmation"
+                class="w-full"
+                input-class="w-full"
+                :feedback="false"
+                toggle-mask
+                aria-haspopup="false"
+                :invalid="v$.password_confirmation.$invalid && submitted"
+            />
 
-                <a-field-errors
-                    v-if="v$.password_confirmation.$error && submitted"
-                    :errors="v$.password_confirmation.$errors"
-                    name="Password Confirmation"
-                />
+            <a-field-errors
+                v-if="v$.password_confirmation.$error && submitted"
+                :errors="v$.password_confirmation.$errors"
+                name="Password Confirmation"
+            />
 
-            <div class="flex items-center justify-end pt-16">
-                <Button
-                    type="submit"
-                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                    label="Update Password"
-                    class="mt-8 w-full"
-                    :disabled="isSubmitting"
-                />
-            </div>
+            <Button
+                type="submit"
+                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                label="Update Password"
+                class="mt-8 w-full"
+                :disabled="isSubmitting"
+            />
         </form>
     </div>
 </template>

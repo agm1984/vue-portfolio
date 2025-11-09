@@ -110,15 +110,13 @@ const handleSubmit = async () => {
                 name="Email"
             />
 
-            <div class="flex items-center justify-end pt-16">
-                <Button
-                    type="submit"
-                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                    label="Save"
-                    class="mt-8 w-full"
-                    :disabled="isSubmitting"
-                />
-            </div>
+            <Button
+                type="submit"
+                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                label="Save"
+                class="mt-8 w-full"
+                :disabled="isSubmitting"
+            />
         </form>
 
     </div>
