@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-card class="p-32 w-512">
+        <a-card class="p-32 w-full">
             <h2 level="1" class="mb-32">
                 Settings
             </h2>
@@ -12,16 +12,14 @@
                     :to="{ name: link.to }"
                     tag="a"
                     class="px-16 py-8 font-bold rounded-sm"
-                    active-class="text-white bg-primary border-1 border-primary"
+                    active-class="bg-grey-900 border-1 border-primary"
                 >
                     {{ link.name }}
                 </router-link>
             </div>
 
             <div class="col-md-9">
-                <transition name="fade" mode="out-in">
-                    <router-view></router-view>
-                </transition>
+                <router-view></router-view>
             </div>
         </a-card>
     </div>

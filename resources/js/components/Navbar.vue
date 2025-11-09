@@ -47,31 +47,26 @@ const logout = async () => {
             </div>
 
             <!-- Authenticated -->
-            <div v-if="auth.isAuthenticated" class="nav-item dropdown">
-                <a
-                    class="nav-link dropdown-toggle text-dark"
-                    href="#"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                >
-                    <img :src="auth.user.photo_url" class="mr-1 rounded-circle profile-photo">
-                    {{ auth.user.name }}
-                </a>
-                <div>
-                    <router-link :to="{ name: 'settings.profile' }" class="pl-3 dropdown-item">
+            <ul v-if="auth.isAuthenticated" class="flex flex-col">
+                <li class="min-w-8 max-w-8 min-h-8 max-h-8 flex">
+                    <img :src="auth.user.avatar_url" class="object-cover rounded-full" alt="User avatar">
+                    <span class="">{{ auth.user.name }}</span>
+                </li>
+
+                <li>
+                    <router-link :to="{ name: 'settings.profile' }" class="">
                         <!-- <fa icon="cog" fixed-width /> -->
                         Settings
                     </router-link>
+                </li>
 
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="pl-3 dropdown-item" @click.prevent="logout">
+                <li>
+                    <a href="#" class="" @click.prevent="logout">
                         <!-- <fa icon="sign-out-alt" fixed-width /> -->
                         Logout
                     </a>
-                </div>
-            </div>
+                </li>
+            </ul>
 
             <!-- Guest -->
             <ul v-else>
