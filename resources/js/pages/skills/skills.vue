@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="p-8">
         <!-- <user-details></user-details> -->
 
         <!-- <scene></scene> -->
@@ -7,7 +7,7 @@
         <div id="skills-leftScrollZone"></div>
         <div id="skills-rightScrollZone"></div>
 
-        <!-- <stat-cluster
+        <stat-cluster
             id="cluster_javascript"
             category="skill ratios"
         >
@@ -28,15 +28,17 @@
             <stat-bar label="INDESIGN" :points="75"></stat-bar>
             <stat-bar label="THREE.JS" :points="30"></stat-bar>
             <stat-bar label="BLENDER" :points="25"></stat-bar>
-        </stat-cluster> -->
+        </stat-cluster>
 
-        <a
-            class="btn resumeButton"
-            href="/adamMackintoshResumeApr2018.docx"
-            download
-        >
-            DOWNLOAD RESUME
-        </a>
+        <div class="mt-4">
+            <a
+                class="font-semibold hover:underline"
+                href="/adamMackintoshResumeApr2018.docx"
+                download
+            >
+                Download Resume
+            </a>
+        </div>
     </div>
 </template>
 

@@ -23,10 +23,26 @@ const logout = async () => {
             <div>
                 <router-link
                     :to="{ name: 'about' }"
-                    class="nav-link inline-block mr-4 text-dark"
+                    class="nav-link inline-block text-dark"
                     active-class="active"
                 >
                     About Me
+                </router-link>
+
+                <router-link
+                    :to="{ name: 'skills' }"
+                    class="nav-link inline-block ml-4 text-dark"
+                    active-class="active"
+                >
+                    Skills
+                </router-link>
+
+                <router-link
+                    :to="{ name: 'public.examples.list' }"
+                    class="nav-link inline-block ml-4 text-dark"
+                    active-class="active"
+                >
+                    Examples
                 </router-link>
             </div>
 
