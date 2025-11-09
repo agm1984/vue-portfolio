@@ -2,13 +2,14 @@
 import { ref, reactive, computed, onBeforeMount } from 'vue';
 import { required, email, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
 
+const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 
@@ -32,19 +33,6 @@ const loginRules = {
 
 const v$ = useVuelidate(loginRules, form);
 
-const hasIntendedUrl = computed(() => auth.intendedUrl.length > 0);
-
-onBeforeMount(async () => {
-    if (hasIntendedUrl.value) {
-        await router.replace({
-            name: 'login',
-            query: {
-                redirect: auth.intendedUrl,
-            },
-        });
-    }
-});
-
 const login = async () => {
     try {
         state.value = SUBMITTING;
@@ -66,7 +54,7 @@ const login = async () => {
 
         await auth.login(form);
 
-        await router.push(hasIntendedUrl.value ? auth.intendedUrl : { name: 'home' });
+        await router.push(route.query.redirect ? route.query.redirect : { name: 'home' });
     } catch (error) {
         console.error(error);
     } finally {

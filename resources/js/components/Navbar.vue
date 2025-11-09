@@ -14,9 +14,9 @@ const logout = async () => {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="sticky top-0 z-10 bg-white">
         <div class="w-full flex justify-between">
-            <router-link :to="{ name: auth.isLoggedIn ? 'home' : 'home' }" class="navbar-brand">
+            <router-link :to="{ name: auth.isAuthenticated ? 'home' : 'home' }" class="navbar-brand">
                 {{ appName }}
             </router-link>
 
@@ -31,7 +31,7 @@ const logout = async () => {
             </div>
 
             <!-- Authenticated -->
-            <div v-if="auth.isLoggedIn" class="nav-item dropdown">
+            <div v-if="auth.isAuthenticated" class="nav-item dropdown">
                 <a
                     class="nav-link dropdown-toggle text-dark"
                     href="#"

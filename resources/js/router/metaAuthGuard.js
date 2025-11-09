@@ -4,27 +4,19 @@ import { toast } from 'vue3-toastify';
 export async function metaAuthGuard(to, from, next) {
   const auth = useAuthStore();
 
-  // Only try to preload "me" if:
-  // - the route requires auth, or
-  // - we already think we’re logged in (persisted state)
-  if (to.meta?.requiresAuth && !auth.check) {
-    try {
-      await auth.fetchUser();   // your Pinia action
-    } catch (_) {
-      // fetchUser() already does _logout(); swallow 401 quietly
-    }
-  }
+  await auth.fetchUser();
 
   // guest-only
-  if (to.meta?.guestOnly && auth.check) {
-    await auth.fetchUser();
+  if (to.meta?.guestOnly) {
+    if (!auth.isAuthenticated) return next();
     return next(to.meta.redirectLoggedInTo ?? { name: 'home' });
   }
 
   // require auth
-  if (to.meta?.requiresAuth && !auth.check) {
+  if (to.meta?.requiresAuth && !auth.isAuthenticated) {
+    console.log('fullPath', to.fullPath);
     if (to.fullPath?.length > 1) auth.setIntendedUrl(to.fullPath);
-    return next({ name: 'login' });
+    return next({ name: 'login', query: { redirect: to.fullPath } });
   }
 
   // roles

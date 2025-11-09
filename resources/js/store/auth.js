@@ -1,129 +1,101 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const IS_LOGGED_IN = 'IS_LOGGED_IN';
-const IS_LOGGED_OUT = 'IS_LOGGED_OUT';
-
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    fsm: IS_LOGGED_OUT, // previously: state.state
-    user: {},
-    intendedUrl: '',
-  }),
+    state: () => ({
+        isAuthenticated: false,
+        user: {},
+        intendedUrl: '',
+    }),
 
-  getters: {
-    // was: getters.check
-    check: (state) => state.fsm === IS_LOGGED_IN,
-    // alias if you prefer
-    isLoggedIn() {
-      return this.check;
-    },
-    // Vuex had a getter named 'intendedUrl' with special casing.
-    // In Pinia we can’t use the same name as a state key, so:
-    sanitizedIntendedUrl: (state) =>
-      state.intendedUrl.length === 1 ? '' : state.intendedUrl,
-  },
+    getters: {},
 
-  actions: {
-    // --- internal helpers (replace Vuex mutations) ---
-    _login() {
-      this.fsm = IS_LOGGED_IN
-    },
-    _logout() {
-      this.fsm = IS_LOGGED_OUT
-      this.user = {}
-    },
-    _setUser(user) {
-      this.user = user
-      this.fsm = IS_LOGGED_IN
-    },
-    _setIntendedUrl(url) {
-      this.intendedUrl = url ?? ''
-    },
-    _clearIntendedUrl() {
-      this.intendedUrl = ''
-    },
+    actions: {
+        setUser(user) {
+            this.user = user;
+            this.isAuthenticated = true;
+        },
 
-    // --- actions (1:1 with your Vuex actions) ---
-    async register(payload) {
-      try {
-        await axios.get('/sanctum/csrf-cookie');
-        const { data } = await axios.post(route('register'), payload);
-        this._setUser(data.user);
-        this._login();
-      } catch (err) {
-        this._logout();
-        throw new Error(`auth/register# Problem registering new user: ${err}.`);
-      }
-    },
+        async register(payload) {
+            try {
+                await axios.get('/sanctum/csrf-cookie');
+                const { data } = await axios.post(route('register'), payload);
 
-    async fetchUser() {
-      try {
-        const { data } = await axios.get(route('me'));
-        this._setUser(data);
-      } catch {
-        this._logout();
-      }
-    },
+                this.setUser(data.user);
+                this.isAuthenticated = true;
+            } catch (err) {
+                this.isAuthenticated = false;
+                this.user = {};
+                throw new Error(`auth/register# Problem registering new user: ${err}.`);
+            }
+        },
 
-    updateUser(payload) {
-      // accepts { user } like before, or the user object directly
-      const user = payload?.user ?? payload;
-      this._setUser(user);
-    },
+        async fetchUser() {
+            try {
+                const { data } = await axios.get(route('me'));
 
-    async login(payload) {
-      try {
-        await axios.get('/sanctum/csrf-cookie')
-        const { data } = await axios.post(route('login'), {
-          ...payload,
-          remember: payload.remember || undefined,
-        });
-        this._setUser(data.user);
-        this._login();
-        this._clearIntendedUrl();
-      } catch (err) {
-        this._logout();
-        throw new Error(`auth/login# Problem logging user in: ${err}.`);
-      }
-    },
+                this.setUser(data);
+                this.isAuthenticated = true;
+            } catch {
+                this.isAuthenticated = false;
+                this.user = {};
+            }
+        },
 
-    async logout() {
-      try {
-        await axios.post(route('logout'));
-        this._logout();
-      } catch (err) {
-        this._logout();
-        throw new Error(`auth/logout# Problem logging user out: ${err}.`);
-      }
-    },
+        updateUser(payload) {
+            // accepts { user } like before, or the user object directly
+            const user = payload?.user ?? payload;
+            this.setUser(user);
+        },
 
-    async fetchOauthUrl({ provider }) {
-      try {
-        const { data } = await axios.post(route('oauth.redirect', provider));
-        return data.url;
-      } catch (err) {
-        throw new Error(
-          `auth/fetchOauthUrl# Problem redirecting to OAuth provider '${provider}': ${err}.`
-        );
-      }
-    },
+        async login(payload) {
+            try {
+                await axios.get('/sanctum/csrf-cookie')
+                const { data } = await axios.post(route('login'), {
+                  ...payload,
+                  remember: payload.remember || undefined,
+                });
 
-    setIntendedUrl(url) {
-      this._setIntendedUrl(url);
-    },
+                this.setUser(data.user);
+                this.isAuthenticated = true;
+            } catch (err) {
+                this.isAuthenticated = false;
+                this.user = {};
+                throw new Error(`auth/login# Problem logging user in: ${err}.`);
+            }
+        },
 
-    clearIntendedUrl() {
-      this._clearIntendedUrl();
-    },
+        async logout() {
+            try {
+                await axios.post(route('logout'));
+            } catch (error) {
+                console.error(error);
+            } finally {
+                this.isAuthenticated = false;
+                this.user = {};
+            }
+        },
 
-    async forgotPassword(payload) {
-      try {
-        const response = await axios.post(route('password.email'), payload);
-        console.log('response:', response);
-      } catch (err) {
-        throw new Error(`auth/forgotPassword# Problem during forgot password: ${err}.`);
-      }
+        async fetchOauthUrl({ provider }) {
+            try {
+                const { data } = await axios.post(route('oauth.redirect', provider));
+
+                return data.url;
+            } catch (err) {
+                throw new Error(
+                    `auth/fetchOauthUrl# Problem redirecting to OAuth provider '${provider}': ${err}.`
+                );
+            }
+        },
+
+        async forgotPassword(payload) {
+            try {
+                const response = await axios.post(route('password.email'), payload);
+
+                console.log('response:', response);
+            } catch (err) {
+                throw new Error(`auth/forgotPassword# Problem during forgot password: ${err}.`);
+            }
+        },
     },
-  },
 });

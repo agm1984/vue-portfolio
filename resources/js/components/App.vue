@@ -7,9 +7,6 @@ useHead({
 </script>
 
 <template>
-    <div>
-        <Navbar />
-
-        <router-view></router-view>
-    </div>
+    <Navbar />
+    <router-view></router-view>
 </template>
