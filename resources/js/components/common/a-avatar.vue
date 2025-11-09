@@ -1,68 +1,42 @@
-<template>
-    <div
-        :class="[containerStyles, {
-            'bg-grey-400': !hasImage
-        }]"
-    >
-        <img
-            v-if="hasImage"
-            class="bg-no-repeat bg-cover rounded-full"
-            :src="user.avatar_url"
-        >
+<script setup>
+import { computed } from 'vue';
 
-        <!-- <b-icon
-            v-else
-            pack="fas"
-            icon="user"
-            size="is-small"
-        ></b-icon> -->
-        <div v-else class="mt-2 font-aroly">
-            {{ firstLetterOfName }}
-        </div>
-    </div>
-</template>
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 32,
+  },
+  user: {
+    type: Object,
+    required: true,
+  },
+});
 
-<script>
-export default {
-    name: 'a-avatar',
+const size = computed(() => props.size);
+const user = computed(() => props.user);
 
-    props: {
-        size: {
-            type: Number,
-            required: false,
-            default: () => 32,
-        },
-
-        user: {
-            type: Object,
-            required: true,
-        },
-    },
-
-    data() {
-        return {};
-    },
-
-    computed: {
-        hasImage() {
-            return (this.user.avatar_url && (this.user.avatar_url.length > 0));
-        },
-
-        firstLetterOfName() {
-            return (this.user.name && this.user.name.charAt(0));
-        },
-
-        containerStyles() {
-            const styles = ['flex items-center justify-center rounded-full border-1 border-primary'];
-
-            if (this.size) styles.push(`w-${this.size} h-${this.size}`);
-            else styles.push('w-32 h-32');
-
-            return styles;
-        },
-    },
-
-    methods: {},
-
-};
+const hasImage = computed(() => !!(user.value?.avatar_url && user.value.avatar_url.length > 0));
+const firstLetterOfName = computed(() => (user.value?.name ? user.value.name.charAt(0) : ''));
+const containerStyles = computed(() => ['flex items-center justify-center rounded-full border']);
 </script>
+
+<template>
+  <div
+    :class="[containerStyles, {
+      'w-8 h-8 min-w-8 min-h-8 max-w-8 max-h-8': size === 32,
+      'w-16 h-16 min-w-16 min-h-16 max-w-16 max-h-16': size === 64,
+      'bg-grey-400': !hasImage
+    }]"
+  >
+    <img
+      v-if="hasImage"
+      class="bg-no-repeat bg-cover rounded-full"
+      :src="user.avatar_url"
+      :alt="`Avatar of ${user.name}`"
+    >
+
+    <div v-else class="font-aroly">
+      {{ firstLetterOfName }}
+    </div>
+  </div>
+</template>

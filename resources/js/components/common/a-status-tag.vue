@@ -1,18 +1,20 @@
 <template>
-    <div>
-        <b-tag
-            v-if="status"
-            :type="type"
-            rounded
-        >
-            {{ status }}
-        </b-tag>
-    </div>
+    <Tag
+        v-if="status"
+        :value="status"
+        rounded
+    />
 </template>
 
 <script>
+import Tag from 'primevue/tag';
+
 export default {
     name: 'a-status-tag',
+
+    components: {
+        Tag,
+    },
 
     props: {
         /**

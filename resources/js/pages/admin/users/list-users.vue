@@ -1,92 +1,65 @@
-<template>
-    <a-card with-geometry class="p-32">
-        <h2 level="2" class="mb-16">
-            Users
-        </h2>
-
-        <b-table
-            :data="users"
-            :loading="isInitializing"
-        >
-            <template slot-scope="{ row }">
-                <b-table-column field="name" label="Name">
-                    <div class="flex items-center">
-                        <a-avatar :size="24" :user="row" class="mr-4"></a-avatar>
-                        <router-link :to="{ name: 'admin.users.show', params: { user: row.id } }">
-                            {{ row.name }}
-                        </router-link>
-                    </div>
-                </b-table-column>
-
-                <b-table-column field="email" label="Email">
-                    {{ row.email }}
-                </b-table-column>
-
-                <b-table-column field="created_at" label="Created" width="128" numeric>
-                    {{ row.created_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="updated_at" label="Last updated" width="128" numeric>
-                    {{ row.updated_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="status" label="Status" width="1" numeric>
-                    <a-status-tag :status="row.status_nice"></a-status-tag>
-                </b-table-column>
-            </template>
-        </b-table>
-
-    </a-card>
-</template>
-
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 import axios from 'axios';
 
-const INITIAL = 'INITIAL';
-const LIST = 'LIST';
+const LOADING = 'is-loading';
+const LOADED = 'is-loaded';
 
-export default {
-    name: 'list-users',
+const state = ref(LOADING);
+const users = ref([]);
 
-    metaInfo() {
-        return { title: 'List users' };
-    },
+const isLoading = computed(() => state.value === LOADING);
+// const isLoaded = computed(() => state.value === LOADED);
 
-    data() {
-        return {
-            state: INITIAL,
-            users: [],
-        };
-    },
+async function fetchAllUsers() {
+    try {
+        state.value = LOADING;
 
-    computed: {
-        isInitializing() {
-            return (this.state === INITIAL);
-        },
+        const { data } = await axios.get(route('admin.users.list'));
 
-        isListing() {
-            return (this.state === LIST);
-        },
-    },
+        users.value = data.users;
+        state.value = LOADED;
+    } catch (err) {
+        throw new Error(`list-users# Problem fetching all users: ${err}.`);
+    }
+}
 
-    mounted() {
-        return this.fetchAllUsers();
-    },
-
-    methods: {
-        async fetchAllUsers() {
-            try {
-                const { data } = await axios.get(route('admin.users.list'));
-
-                console.log('users', data);
-
-                this.users = data.users;
-                this.state = LIST;
-            } catch (err) {
-                throw new Error(`list-users# Problem fetching all users: ${err}.`);
-            }
-        },
-    },
-
-};
+onMounted(fetchAllUsers);
 </script>
+
+<template>
+    <a-card with-geometry class="p-8">
+        <DataTable :value="users" :loading="isLoading">
+            <template #header>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-3xl font-bold">Users</span>
+                </div>
+            </template>
+            <Column field="name" header="Name">
+                <template #body="slotProps">
+                    <div class="flex items-center gap-2">
+                        <a-avatar :size="32" :user="slotProps.data"></a-avatar>
+                        <router-link
+                            class="font-semibold hover:underline"
+                            :to="{
+                                name: 'admin.users.show',
+                                params: { user: slotProps.data.id },
+                            }"
+                        >{{ slotProps.data.name }}</router-link>
+                    </div>
+                </template>
+            </Column>
+            <Column field="email" header="Email"></Column>
+            <Column field="created_at_diff" header="Created"></Column>
+            <Column field="updated_at_diff" header="Last Updated"></Column>
+            <Column field="status_nice" header="Status">
+                <template #body="slotProps">
+                    <a-status-tag :status="slotProps.data.status_nice"></a-status-tag>
+                </template>
+            </Column>
+            <template #footer>{{ users ? users.length : 0 }} users total</template>
+        </DataTable>
+    </a-card>
+</template>

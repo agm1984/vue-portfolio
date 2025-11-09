@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -37,6 +38,31 @@ class CategoryController extends Controller
 
         return response()->json([
             'category' => $category->load(['examples.category', 'examples.images']),
+        ]);
+    }
+
+    public function edit(Request $request, Category $category)
+    {
+        \Log::debug($request->all());
+
+        // OPTIONAL: if you use policies
+        // $this->authorize('update', $category);
+
+        $data = $request->validate([
+            'status' => ['sometimes', 'integer', Rule::in([Category::STATUS_INACTIVE, Category::STATUS_ACTIVE])],
+            'slug'   => ['sometimes', 'string', 'max:255', Rule::unique('categories', 'slug')->ignore($category->id)],
+            'name'   => ['sometimes', 'string', 'max:255'],
+        ]);
+
+        // If your Category model has $fillable for these keys, you can fill() directly:
+        $category->fill($data)->save();
+
+        // If you don't use $fillable, assign individually:
+        // foreach ($data as $k => $v) { $category->{$k} = $v; }
+        // $category->save();
+
+        return response()->json([
+            'category' => $category->fresh(['examples.category', 'examples.images']),
         ]);
     }
 

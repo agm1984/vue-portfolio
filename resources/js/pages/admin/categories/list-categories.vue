@@ -1,111 +1,62 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import axios from 'axios';
+
+const LOADING = 'is-loading';
+const LOADED = 'is-loaded';
+
+const state = ref(LOADING);
+const categories = ref([]);
+
+const isLoading = computed(() => state.value === LOADING);
+// const isLoaded = computed(() => state.value === LOADED);
+
+async function fetchAllCategories() {
+    try {
+        state.value = LOADING;
+
+        const { data } = await axios.get(route('admin.categories.list'));
+
+        categories.value = data.categories;
+        state.value = LOADED;
+    } catch (err) {
+        throw new Error(`list-categories# Problem fetching all categories: ${err}.`);
+    }
+}
+
+onMounted(fetchAllCategories);
+</script>
+
 <template>
-    <a-card class="p-32" with-geometry>
-        <h2 level="2" class="mb-16">
-            Categories
-        </h2>
-
-        <b-table
-            :data="categories"
-            :loading="isInitializing"
-        >
-            <template slot-scope="{ row }">
-                <b-table-column field="name" label="Name">
-                    <router-link :to="{ name: 'admin.categories.show', params: { category: row.slug } }">
-                        {{ row.name }}
-                    </router-link>
-                </b-table-column>
-
-                <b-table-column field="slug" label="Slug">
-                    {{ row.slug }}
-                </b-table-column>
-
-                <b-table-column field="created_at" label="Created" width="128" numeric>
-                    {{ row.created_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="updated_at" label="Last updated" width="128" numeric>
-                    {{ row.updated_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="status" label="Status" width="1" numeric>
-                    <a-status-tag :status="row.status_nice"></a-status-tag>
-                </b-table-column>
+    <a-card class="p-8">
+        <DataTable :value="categories" :loading="isLoading">
+            <template #header>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-3xl font-bold">Categories</span>
+                </div>
             </template>
-        </b-table>
-
+            <Column field="name" header="Name">
+                <template #body="slotProps">
+                    <router-link
+                        class="font-semibold hover:underline"
+                        :to="{
+                            name: 'admin.categories.show',
+                            params: { category: slotProps.data.slug },
+                        }"
+                    >{{ slotProps.data.name }}</router-link>
+                </template>
+            </Column>
+            <Column field="slug" header="Slug"></Column>
+            <Column field="created_at_diff" header="Created"></Column>
+            <Column field="updated_at_diff" header="Last Updated"></Column>
+            <Column field="status_nice" header="Status">
+                <template #body="slotProps">
+                    <a-status-tag :status="slotProps.data.status_nice"></a-status-tag>
+                </template>
+            </Column>
+            <template #footer>{{ categories ? categories.length : 0 }} categories total</template>
+        </DataTable>
     </a-card>
 </template>
-
-<script>
-import axios from 'axios';
-import CreateCategory from './create-category.vue';
-
-const INITIAL = 'INITIAL';
-const LIST = 'LIST';
-const CREATE = 'CREATE';
-
-export default {
-    name: 'list-categories',
-
-    middleware: ['auth', 'role-admin'],
-
-    metaInfo() {
-        return { title: 'List categories' };
-    },
-
-    data() {
-        return {
-            state: INITIAL,
-            categories: [],
-        };
-    },
-
-    computed: {
-        isInitializing() {
-            return (this.state === INITIAL);
-        },
-
-        isListing() {
-            return (this.state === LIST);
-        },
-
-        // isCreating() {
-        //     return (this.state === CREATE);
-        // },
-
-    },
-
-    mounted() {
-        return this.fetchAllCategories();
-    },
-
-    methods: {
-        async fetchAllCategories() {
-            try {
-                const { data } = await axios.get(route('admin.categories.list'));
-
-                this.categories = data.categories;
-                this.state = LIST;
-            } catch (err) {
-                throw new Error(`list-categories# Problem fetching all categories: ${err}.`);
-            }
-        },
-
-        // resetCreate() {
-        //     this.state = LIST;
-        // },
-
-        // use as reference for modals?
-        // handleCreate() {
-        //     this.state = CREATE;
-
-        //     return this.$buefy.modal.open({
-        //         parent: this,
-        //         component: CreateCategory,
-        //         onCancel: this.resetCreate,
-        //     });
-        // },
-    },
-
-};
-</script>

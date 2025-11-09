@@ -1,7 +1,41 @@
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+
+defineOptions({ name: 'show-user' });
+
+const INITIAL = 'INITIAL';
+const SHOWING = 'SHOWING';
+
+const state = ref(INITIAL);
+const user = ref({});
+
+const isInitializing = computed(() => state.value === INITIAL);
+const isShowing = computed(() => state.value === SHOWING);
+
+const currentRoute = useRoute()
+
+async function fetchUser() {
+    try {
+        state.value = INITIAL;
+
+        const { data } = await axios.get(route('admin.users.show', currentRoute.params.user))
+
+        user.value = data.user
+        state.value = SHOWING
+    } catch (err) {
+        console.error(`show-user# Problem fetching user: ${err}.`)
+    }
+}
+
+onMounted(fetchUser)
+</script>
+
 <template>
-    <a-card class="p-32" with-geometry>
+    <a-card class="p-8" with-geometry>
         <div class="relative flex items-center mb-16">
-            <a-avatar :size="64" :user.sync="user"></a-avatar>
+            <a-avatar :size="64" :user="user"></a-avatar>
             <h2 level="2" class="ml-8">
                 {{ user.name }}
             </h2>
@@ -13,7 +47,7 @@
             </a-input-row>
 
             <a-input-row class="pt-8" type="is-wider-right" heading="Status">
-                <span>{{ user.status }}</span>
+                <a-status-tag v-if="user.status === 1" status="Active"></a-status-tag>
             </a-input-row>
 
             <a-input-row class="pt-8" type="is-wider-right" heading="Name">
@@ -22,6 +56,11 @@
 
             <a-input-row class="pt-8" type="is-wider-right" heading="Email">
                 <span>{{ user.email }}</span>
+                <i
+                    v-if="user.email_verified_at"
+                    class="pi pi-check-circle text-green-600 ml-2"
+                    title="Verified"
+                ></i>
             </a-input-row>
 
             <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
@@ -32,60 +71,5 @@
                 <span>{{ user.updated_at_nice }} ({{ user.updated_at_diff }})</span>
             </a-input-row>
         </div>
-
-    </a-card>
+  </a-card>
 </template>
-
-<script>
-import axios from 'axios';
-
-const INITIAL = 'INITIAL';
-const SHOWING = 'SHOWING';
-
-export default {
-    name: 'show-user',
-
-    components: {},
-
-    middleware: ['auth', 'role-admin'],
-
-    data() {
-        return {
-            state: INITIAL,
-            user: {},
-        };
-    },
-
-    computed: {
-        isInitializing() {
-            return (this.state === INITIAL);
-        },
-
-        isShowing() {
-            return (this.state === SHOWING);
-        },
-
-    },
-
-    mounted() {
-        return this.fetchUser();
-    },
-
-    methods: {
-        async fetchUser() {
-            try {
-                const { data } = await axios.get(route('admin.users.show', this.$route.params.user));
-
-                console.log('user', data.user);
-
-                this.user = data.user;
-                this.state = SHOWING;
-            } catch (err) {
-                throw new Error(`show-user# Problem fetching user: ${err}.`);
-            }
-        },
-
-    },
-
-};
-</script>

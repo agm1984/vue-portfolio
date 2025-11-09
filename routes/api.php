@@ -31,7 +31,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin', 'transformTypes']], function () {
     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
     Route::get('/categories/all', 'Admin\CategoryController@getAll')->name('admin.categories.getAll');
-    Route::get('/categories/{category}', 'Admin\CategoryController@show')->name('admin.categories.show');
+    Route::get('/categories/{category:slug}', 'Admin\CategoryController@show')->name('admin.categories.show');
+    Route::patch('/categories/{category:slug}', 'Admin\CategoryController@edit')->name('admin.categories.edit');
+    Route::post('/categories', 'Admin\CategoryController@create')->name('admin.categories.create');
 
     Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.list');
     Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');

@@ -26,6 +26,12 @@ class Category extends Model
         'examples_count',
     ];
 
+    protected $fillable = [
+        'status',
+        'slug',
+        'name',
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';

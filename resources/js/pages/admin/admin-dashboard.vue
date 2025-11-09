@@ -1,110 +1,85 @@
 <template>
-    <div class="flex w-full h-auto xl:w-1280">
-        <div class="sidebar-page">
-            <section class="sidebar-layout">
-                <b-sidebar
-                    type="is-light"
-                    mobile="reduce"
-                    position="static"
-                    expand-on-hover
-                    open
-                    reduce
-                >
-                    <div class="">
-                        <div class="block">
-                            <h2 level="1">
-                                Admin
-                            </h2>
-                        </div>
+    <div class="flex w-full h-auto p-8">
+        <div class="flex flex-col gap-4">
+            <h1 level="1">Admin</h1>
 
-                        <b-menu class="is-custom-mobile">
-                            <b-menu-list :label="currentDate">
-                                <b-menu-item
-                                    label="Dashboard"
-                                    tag="router-link"
-                                    :to="{ name: 'admin' }"
-                                    :active="$router.currentRoute.name === 'admin'"
-                                ></b-menu-item>
-                            </b-menu-list>
-                            <b-menu-list label="Users">
-                                <b-menu-item
-                                    label="List"
-                                    tag="router-link"
-                                    :to="{ name: 'admin.users.list' }"
-                                    :active="$router.currentRoute.name === 'admin.users.list'"
-                                ></b-menu-item>
-                            </b-menu-list>
+            <div>
+                <router-link
+                    :to="{ name: 'admin' }"
+                    :active="$router.currentRoute.name === 'admin'"
+                >Admin Dashboard</router-link>
+            </div>
 
-                            <b-menu-list label="Categories">
-                                <b-menu-item
-                                    label="List"
-                                    tag="router-link"
-                                    :to="{ name: 'admin.categories.list' }"
-                                    :active="$router.currentRoute.name === 'admin.categories.list'"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Add"
-                                    tag="router-link"
-                                    :to="{ name: 'admin.categories.create' }"
-                                    :active="$router.currentRoute.name === 'admin.categories.create'"
-                                ></b-menu-item>
-                            </b-menu-list>
+            <div>
+                <router-link
+                    :to="{ name: 'admin.users.list' }"
+                    :active="$router.currentRoute.name === 'admin.users.list'"
+                >List Users</router-link>
+            </div>
 
-                            <b-menu-list label="Examples">
-                                <b-menu-item
-                                    label="List"
-                                    tag="router-link"
-                                    :to="{ name: 'admin.examples.list' }"
-                                    :active="$router.currentRoute.name === 'admin.examples.list'"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Add"
-                                    tag="router-link"
-                                    :to="{ name: 'admin.examples.create' }"
-                                    :active="$router.currentRoute.name === 'admin.examples.create'"
-                                ></b-menu-item>
-                            </b-menu-list>
+            <div>
+                <router-link
+                    :to="{ name: 'admin.categories.list' }"
+                    :active="$router.currentRoute.name === 'admin.categories.list'"
+                >List Categories</router-link>
+            </div>
 
-                        </b-menu>
-                    </div>
-                </b-sidebar>
-            </section>
+            <div>
+                <router-link
+                    :to="{ name: 'admin.categories.create' }"
+                    :active="$router.currentRoute.name === 'admin.categories.create'"
+                >Add Category</router-link>
+            </div>
+
+            <div>
+                <router-link
+                    :to="{ name: 'admin.examples.list' }"
+                    :active="$router.currentRoute.name === 'admin.examples.list'"
+                >List Examples</router-link>
+            </div>
+
+            <div>
+                <router-link
+                    :to="{ name: 'admin.examples.create' }"
+                    :active="$router.currentRoute.name === 'admin.examples.create'"
+                >Add Example</router-link>
+            </div>
         </div>
 
-        <div class="w-full h-auto pt-64 pl-32">
-            <div v-if="isDashboard" class="flex items-center pb-16">
-                <a-card class="flex flex-row items-center justify-between w-1/3 p-32" with-geometry>
+        <div class="w-full h-auto ml-8">
+            <div v-if="isDashboard" class="w-full grid grid-cols-3 gap-8">
+                <a-card class="flex flex-row items-center justify-between p-16">
                     <h2 level="2">
                         Categories
                     </h2>
-                    <span class="text-xl">8</span>
+                    <span class="text-5xl">8</span>
                 </a-card>
 
-                <a-card class="flex flex-row items-center justify-between w-1/3 p-32 mx-16" with-geometry>
+                <a-card class="flex flex-row items-center justify-between p-16">
                     <h2 level="2">
                         Examples
                     </h2>
-                    <span class="text-xl">12</span>
+                    <span class="text-5xl">12</span>
                 </a-card>
 
-                <a-card class="flex flex-row items-center justify-between w-1/3 p-32" with-geometry>
+                <a-card class="flex flex-row items-center justify-between p-16">
                     <h2 level="2">
                         Users
                     </h2>
-                    <span class="text-xl">32</span>
+                    <span class="text-5xl">32</span>
                 </a-card>
             </div>
-            <a-card v-if="isDashboard" class="p-32" with-geometry>
+            <a-card v-if="isDashboard" class="p-32 mt-8" with-geometry>
                 <h2 level="2">
                     Dashboard
                 </h2>
 
                 <div>
-                    <apexchart
+                    <!-- <apexchart
                         type="line"
                         :options="options"
                         :series="series"
-                    ></apexchart>
+                    ></apexchart> -->
                 </div>
             </a-card>
 
@@ -141,7 +116,7 @@
 </template>
 
 <script>
-import VueApexCharts from 'vue-apexcharts';
+// import VueApexCharts from 'vue-apexcharts';
 
 const INITIAL = 'INITIAL';
 const LOADED = 'LOADED';
@@ -150,10 +125,8 @@ export default {
     name: 'admin-dashboard',
 
     components: {
-        apexchart: VueApexCharts,
+        // apexchart: VueApexCharts,
     },
-
-    middleware: ['auth', 'role-admin'],
 
     metaInfo() {
         return { title: 'Dashboard' };
