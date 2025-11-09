@@ -1,13 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Example;
+use App\Models\Category;
+use App\Models\Example;
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Link extends Model
+class Tag extends Model
 {
     use TimestampAttributes;
 
@@ -15,6 +16,13 @@ class Link extends Model
     const STATUS_ACTIVE = 1;
 
     protected $guarded = [];
+
+    /**
+     * Update parent model(s) when this model is updated.
+     *
+     * @var array
+     */
+    protected $touches = ['category'];
 
     /**
      * The accessors to append to the model's array form.
@@ -29,8 +37,18 @@ class Link extends Model
         'updated_at_diff',
     ];
 
-    public function example() {
-        return $this->belongsTo(Example::class);
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function examples() {
+        return $this->belongsToMany(Example::class);
     }
 
     public function getStatusNiceAttribute()
@@ -41,29 +59,23 @@ class Link extends Model
     }
 
     public static function generate(
-        int $example_id,
         string $name,
-        string $url,
         ?array $attributes = []
     ) : self
     {
-        $link = self::query()->firstOrNew([
-            'example_id' => $example_id,
-            'name' => $name,
-            'url' => $url,
-        ]);
+        $tag = self::query()->firstOrNew([ 'name' => $name ]);
 
-        $link->fill([
+        $tag->fill([
             'status' => self::STATUS_ACTIVE,
         ]);
 
         foreach ($attributes as $key => $attribute) {
-            $link->{$key} = $attribute;
+            $tag->{$key} = $attribute;
         }
 
-        $link->save();
+        $tag->save();
 
-        return $link;
+        return $tag;
     }
 
     public function scopeActive($query)

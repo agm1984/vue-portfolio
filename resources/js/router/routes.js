@@ -1,7 +1,7 @@
 const routes = [
-    { path: '/', name: 'home', component: () => import('../pages/home/home.vue') },
-    { path: '/about', name: 'about', component: () => import('../pages/aboutMe/about-me.vue') },
-    { path: '/skills', name: 'skills', component: () => import('../pages/skills/skills.vue') },
+    { path: '/', name: 'home', meta: { preloadOnly: true }, component: () => import('../pages/home/home.vue') },
+    { path: '/about', name: 'about', meta: { requiresAuth: true }, component: () => import('../pages/aboutMe/about-me.vue') },
+    { path: '/skills', name: 'skills', meta: { preloadOnly: true }, component: () => import('../pages/skills/skills.vue') },
     {
         path: '/examples/:category?',
         name: 'public.examples.list',
@@ -15,8 +15,8 @@ const routes = [
 
     { path: '/contact', name: 'contact', component: () => import('../pages/contact/contact.vue') },
 
-    { path: '/login', name: 'login', component: () => import('../pages/auth/login.vue') },
-    { path: '/register', name: 'register', component: () => import('../pages/auth/register.vue') },
+    { path: '/login', name: 'login', meta: { guestOnly: true }, component: () => import('../pages/auth/login.vue') },
+    { path: '/register', name: 'register', meta: { guestOnly: true }, component: () => import('../pages/auth/register.vue') },
     { path: '/password/reset', name: 'password.request', component: () => import('../pages/auth/password/email.vue') },
     { path: '/password/reset/:token', name: 'password.reset', component: () => import('../pages/auth/password/reset.vue') },
     { path: '/email/verify/:id', name: 'verification.verify', component: () => import('../pages/auth/verification/verify.vue') },
@@ -24,6 +24,7 @@ const routes = [
 
     {
         path: '/settings',
+        meta: { requiresAuth: true },
         component: () => import('../pages/profile/profile-index.vue'),
         children: [
             { path: '', redirect: { name: 'settings.profile' } },
@@ -35,6 +36,7 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
+        meta: { requiresAuth: true, roles: ['admin'] },
         component: () => import('../pages/admin/admin-dashboard.vue'),
         children: [
             { path: '/admin/users', name: 'admin.users.list', component: () => import('../pages/admin/users/list-users.vue') },

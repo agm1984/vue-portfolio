@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Example;
-use App\ExampleImage;
-use App\Link;
-use App\Tag;
+use App\Models\Category;
+use App\Models\Example;
+use App\Models\ExampleImage;
+use App\Models\Link;
+use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

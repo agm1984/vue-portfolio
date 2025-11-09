@@ -116,5 +116,14 @@ export const useAuthStore = defineStore('auth', {
     clearIntendedUrl() {
       this._clearIntendedUrl();
     },
+
+    async forgotPassword(payload) {
+      try {
+        const response = await axios.post(route('password.email'), payload);
+        console.log('response:', response);
+      } catch (err) {
+        throw new Error(`auth/forgotPassword# Problem during forgot password: ${err}.`);
+      }
+    },
   },
 });

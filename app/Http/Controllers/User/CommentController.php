@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Comment;
-use App\Example;
-use App\User;
+use App\Models\Comment;
+use App\Models\Example;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;

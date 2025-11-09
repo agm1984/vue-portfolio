@@ -1,40 +1,40 @@
 <template>
     <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-card class="p-32" with-geometry>
-            <h2 level="1" class="mb-16">About me</h2>
+        <a-card class="p-32">
+            <h1 class="mb-16">About me</h1>
 
             <div class="flex flex-col h-auto md:flex-row">
                 <div class="w-full mr-0 md:w-1/2 md:mr-16">
-                    <a-paragraph>
+                    <p>
                         I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
                         but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
                         for coding around that time. I'm an autodidact-type person. All I need is a topic and an impetus, and
                         I can start researching it. Google really is a magical thing.
-                    </a-paragraph>
+                    </p>
 
-                    <a-paragraph>
+                    <p>
                         My list of hobbies is quite short because my main hobby is programming. Beyond that,
                         I enjoy working out. I've been working out for the past 10 years. I didn't go to the gym much in 2019,
                         but I've been going again four times a week, and it feels great.
-                    </a-paragraph>
+                    </p>
 
-                    <a-paragraph>
+                    <p>
                         I have a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
                         you can find me out driving with my friends, listening to music, and finding new places to visit.
-                    </a-paragraph>
+                    </p>
 
-                    <a-paragraph>
+                    <p>
                         Check out my <router-link :to="{ name: 'contact' }">Contact</router-link> page.
-                    </a-paragraph>
+                    </p>
 
                     <div class="flex flex-col pb-8 bg-grey-200">
                         <h2 level="4" class="px-16 py-8 bg-primary" nunito light>
                             Find me on social media
                         </h2>
-                        <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link>
+                        <!-- <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link> -->
+                        <!-- <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link> -->
+                        <!-- <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link> -->
+                        <!-- <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link> -->
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
 
         </a-card>
 
-        <div class="w-full">
+        <!-- <div class="w-full">
             <h2 level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</h2>
 
             <div class="flex flex-col w-full xl:flex-row">
@@ -98,7 +98,7 @@
                 </a-card>
             </div>
 
-        </div>
+        </div> -->
 
         <div class="flex justify-center w-full mt-32 text-primary">
             △△△
@@ -108,17 +108,17 @@
 </template>
 
 <script>
-import AdamScene from './adam-scene.vue';
-import isUserScrolling from '../../components/mixins/isUserScrolling';
+// import AdamScene from './adam-scene.vue';
+// import isUserScrolling from '../../components/mixins/isUserScrolling';
 
 export default {
     name: 'about-me',
 
     components: {
-        AdamScene,
+        // AdamScene,
     },
 
-    mixins: [isUserScrolling],
+    // mixins: [isUserScrolling],
 
     metaInfo() {
         return { title: 'About me' };

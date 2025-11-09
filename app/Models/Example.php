@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Category;
-use App\ExampleImage;
-use App\Tag;
+use App\Models\Category;
+use App\Models\ExampleImage;
+use App\Models\Tag;
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;

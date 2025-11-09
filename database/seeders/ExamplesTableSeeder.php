@@ -1,10 +1,12 @@
 <?php
 
-use App\Category;
-use App\Example;
-use App\ExampleImage;
-use App\Link;
-use App\Tag;
+namespace Database\Seeders;
+
+use App\Models\Category;
+use App\Models\Example;
+use App\Models\ExampleImage;
+use App\Models\Link;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -17,9 +19,12 @@ class ExamplesTableSeeder extends Seeder
      */
     public function run()
     {
-        $projects_id = Category::query()->firstWhere('name', 'Projects');
-        $courses_id = Category::query()->firstWhere('name', 'Courses');
-        // $university_id = Category::query()->firstWhere('name', 'University');
+        $projects_id = Category::where('name', 'Projects')->value('id');
+        $courses_id = Category::where('name', 'Courses')->value('id');
+
+        if (!$projects_id || !$courses_id) {
+            throw new \RuntimeException('Required categories missing. Seed CategoriesTableSeeder first.');
+        }
 
         $examples = [
             [
@@ -459,42 +464,37 @@ class ExamplesTableSeeder extends Seeder
             // ],
         ];
 
-        foreach ($examples as $example) {
-            $exists = Example::query()->firstWhere('name', $example['name']);
+        foreach ($examples as $data) {
+            // Skip if an example with this name already exists
+            if (Example::query()->where('name', $data['name'])->exists()) {
+                continue;
+            }
 
-            if (!$exists) {
-                $new_example = factory(Example::class, 1)->create([
-                    'status' => $example['status'],
-                    'category_id' => $example['category_id'],
-                    'slug' => Str::slug($example['name']),
-                    'name' => $example['name'],
-                    'summary' => $example['summary'],
-                    'conclusion' => $example['conclusion'],
-                ])->first();
+            // Create the Example (ensure fillable or use forceCreate)
+            $example = Example::query()->create([
+                'status'      => $data['status'],
+                'category_id' => $data['category_id'],
+                'slug'        => Str::slug($data['name']),
+                'name'        => $data['name'],
+                'summary'     => $data['summary'] ?? null,
+                'conclusion'  => $data['conclusion'] ?? null,
+            ]);
 
-                foreach ($example['images'] as $filename) {
-                    ExampleImage::generate($new_example->id, $filename);
-                }
+            // Images (only if provided)
+            foreach (($data['images'] ?? []) as $filename) {
+                ExampleImage::generate($example->id, $filename);
+            }
 
-                foreach ($example['links'] as $link) {
-                    $link = Link::generate(
-                        $new_example->id,
-                        $link['name'],
-                        $link['url']
-                    );
-                }
+            // Links
+            foreach (($data['links'] ?? []) as $link) {
+                Link::generate($example->id, $link['name'], $link['url']);
+            }
 
-                foreach ($example['tags'] as $tagname) {
-                    $tag = Tag::query()->firstWhere('name', $tagname);
-
-                    if (!$tag) {
-                        $new_tag = Tag::generate($tagname);
-                    }
-
-                    $new_example->tags()->attach($tag ? $tag : $new_tag);
-                }
+            // Tags (idempotent)
+            foreach (($data['tags'] ?? []) as $tagName) {
+                $tag = Tag::query()->firstWhere('name', $tagName) ?? Tag::generate($tagName);
+                $example->tags()->syncWithoutDetaching([$tag->id]);
             }
         }
-
     }
 }

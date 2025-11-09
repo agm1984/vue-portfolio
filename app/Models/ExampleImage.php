@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Example;
+use App\Models\Example;
 use Illuminate\Database\Eloquent\Model;
 
 class ExampleImage extends Model

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Comment;
-use App\Example;
-use App\ExampleImage;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Example;
+use App\Models\ExampleImage;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -36,8 +36,8 @@ class ExampleController extends Controller
      * Retrieves one ExampleImage and generates its URL for the client.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Example $example
-     * @param \App\ExampleImage $exampleImage
+     * @param \App\Models\Example $example
+     * @param \App\Models\ExampleImage $exampleImage
      *
      * @return void
      */

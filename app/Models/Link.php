@@ -1,15 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Category;
-use App\ExampleImage;
-use App\Tag;
+use App\Models\Example;
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Comment extends Model
+class Link extends Model
 {
     use TimestampAttributes;
 
@@ -31,11 +29,6 @@ class Comment extends Model
         'updated_at_diff',
     ];
 
-    public function author()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function example() {
         return $this->belongsTo(Example::class);
     }
@@ -48,32 +41,29 @@ class Comment extends Model
     }
 
     public static function generate(
-        int $author_id,
         int $example_id,
-        string $body,
+        string $name,
+        string $url,
         ?array $attributes = []
     ) : self
     {
-        $comment = self::query()->firstOrNew([
-            'author_id' => $author_id,
+        $link = self::query()->firstOrNew([
             'example_id' => $example_id,
-            'body' => $body,
+            'name' => $name,
+            'url' => $url,
         ]);
 
-        $comment->fill([
+        $link->fill([
             'status' => self::STATUS_ACTIVE,
-            'author_id' => $author_id,
-            'example_id' => $example_id,
-            'body' => $body,
         ]);
 
         foreach ($attributes as $key => $attribute) {
-            $comment->{$key} = $attribute;
+            $link->{$key} = $attribute;
         }
 
-        $comment->save();
+        $link->save();
 
-        return $comment;
+        return $link;
     }
 
     public function scopeActive($query)

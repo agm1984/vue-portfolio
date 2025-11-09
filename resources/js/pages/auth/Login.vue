@@ -65,6 +65,8 @@ const login = async () => {
         }
 
         await auth.login(form);
+
+        await router.push(hasIntendedUrl.value ? auth.intendedUrl : { name: 'home' });
     } catch (error) {
         console.error(error);
     } finally {

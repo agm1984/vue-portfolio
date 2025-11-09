@@ -1,14 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Category;
-use App\Example;
+use App\Models\Category;
+use App\Models\ExampleImage;
+use App\Models\Tag;
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Tag extends Model
+class Comment extends Model
 {
     use TimestampAttributes;
 
@@ -16,13 +17,6 @@ class Tag extends Model
     const STATUS_ACTIVE = 1;
 
     protected $guarded = [];
-
-    /**
-     * Update parent model(s) when this model is updated.
-     *
-     * @var array
-     */
-    protected $touches = ['category'];
 
     /**
      * The accessors to append to the model's array form.
@@ -37,18 +31,13 @@ class Tag extends Model
         'updated_at_diff',
     ];
 
-    public function getRouteKeyName()
+    public function author()
     {
-        return 'slug';
+        return $this->belongsTo(User::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function examples() {
-        return $this->belongsToMany(Example::class);
+    public function example() {
+        return $this->belongsTo(Example::class);
     }
 
     public function getStatusNiceAttribute()
@@ -59,23 +48,32 @@ class Tag extends Model
     }
 
     public static function generate(
-        string $name,
+        int $author_id,
+        int $example_id,
+        string $body,
         ?array $attributes = []
     ) : self
     {
-        $tag = self::query()->firstOrNew([ 'name' => $name ]);
+        $comment = self::query()->firstOrNew([
+            'author_id' => $author_id,
+            'example_id' => $example_id,
+            'body' => $body,
+        ]);
 
-        $tag->fill([
+        $comment->fill([
             'status' => self::STATUS_ACTIVE,
+            'author_id' => $author_id,
+            'example_id' => $example_id,
+            'body' => $body,
         ]);
 
         foreach ($attributes as $key => $attribute) {
-            $tag->{$key} = $attribute;
+            $comment->{$key} = $attribute;
         }
 
-        $tag->save();
+        $comment->save();
 
-        return $tag;
+        return $comment;
     }
 
     public function scopeActive($query)

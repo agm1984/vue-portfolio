@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;

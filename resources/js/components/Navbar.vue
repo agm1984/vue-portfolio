@@ -16,9 +16,19 @@ const logout = async () => {
 <template>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="w-full flex justify-between">
-            <router-link :to="{ name: auth.user ? 'home' : 'home' }" class="navbar-brand">
+            <router-link :to="{ name: auth.isLoggedIn ? 'home' : 'home' }" class="navbar-brand">
                 {{ appName }}
             </router-link>
+
+            <div>
+                <router-link
+                    :to="{ name: 'about' }"
+                    class="nav-link inline-block mr-4 text-dark"
+                    active-class="active"
+                >
+                    About Me
+                </router-link>
+            </div>
 
             <!-- Authenticated -->
             <div v-if="auth.isLoggedIn" class="nav-item dropdown">

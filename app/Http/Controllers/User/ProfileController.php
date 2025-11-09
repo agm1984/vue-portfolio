@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller

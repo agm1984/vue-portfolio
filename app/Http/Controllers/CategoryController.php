@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Example;
+use App\Models\Category;
+use App\Models\Example;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 

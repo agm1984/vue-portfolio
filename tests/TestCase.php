@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -51,7 +51,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Creates and/or returns the designated admin user for unit testing
      *
-     * @return \App\User
+     * @return \App\Models\User
      */
     public function adminUser() : User
     {
@@ -71,7 +71,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Creates and/or returns the designated regular user for unit testing
      *
-     * @return \App\User
+     * @return \App\Models\User
      */
     public function user() : User
     {
