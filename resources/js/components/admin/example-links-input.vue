@@ -43,6 +43,7 @@ function handleAddAnother() {
 
             <Button
                 type="button"
+                severity="danger"
                 label="Remove"
                 @click="handleRemove(i)"
             />
@@ -51,6 +52,7 @@ function handleAddAnother() {
         <div class="flex items-center justify-end">
             <Button
                 type="button"
+                severity="secondary"
                 :label="addButtonText"
                 @click="handleAddAnother"
             />

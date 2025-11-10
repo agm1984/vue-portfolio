@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin'
     Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.list');
     Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');
     Route::post('/examples', 'Admin\ExampleController@create')->name('admin.examples.create');
-    Route::put('/examples/{example}', 'Admin\ExampleController@edit')->name('admin.examples.edit');
+    Route::patch('/examples/{example:slug}', 'Admin\ExampleController@edit')->name('admin.examples.edit');
     Route::post('/examples/{example}/images/append', 'Admin\ExampleController@appendImages')->name('admin.examples.appendImages');
     Route::put('/examples/{example}/images/delete/{exampleImage}', 'Admin\ExampleController@removeImage')->name('admin.examples.removeImage');
 

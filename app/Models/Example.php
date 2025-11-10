@@ -112,4 +112,15 @@ class Example extends Model
         return $query->where('status', '=', self::STATUS_ACTIVE);
     }
 
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        // If tags relation is loaded, use it; otherwise pluck via query.
+        $array['tags'] = $this->relationLoaded('tags')
+            ? $this->tags->pluck('name')->values()->all()
+            : $this->tags()->pluck('name')->values()->all();
+
+        return $array;
+    }
 }
