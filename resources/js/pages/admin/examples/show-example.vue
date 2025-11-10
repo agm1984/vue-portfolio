@@ -55,18 +55,19 @@ const handleExampleSaved = (updatedExample) => {
     state.value = SHOWING;
 };
 
-const submitNewImages = async () => {
-    try {
-        const payload = new FormData();
-        newImages.value.forEach((image) => payload.append('images[]', image));
+// todo: delete soon
+// const submitNewImages = async () => {
+//     try {
+//         const payload = new FormData();
+//         newImages.value.forEach((image) => payload.append('images[]', image));
 
-        await axios.post(route('admin.examples.appendImages', example.value.slug), payload);
-        await fetchExample();
-        newImages.value = [];
-    } catch (err) {
-        console.error(`show-example# Problem adding images: ${err}.`);
-    }
-};
+//         await axios.post(route('admin.examples.appendImages', example.value.slug), payload);
+//         await fetchExample();
+//         newImages.value = [];
+//     } catch (err) {
+//         console.error(`show-example# Problem adding images: ${err}.`);
+//     }
+// };
 
 onMounted(fetchExample);
 </script>
@@ -172,20 +173,6 @@ onMounted(fetchExample);
                 @reset="handleReset"
                 @save="handleExampleSaved"
           />
-        </a-card>
-
-        <a-card v-if="!isEditing" class="p-8 mt-16">
-            <h2 level="2" class="mb-8">Add images</h2>
-
-            <form @submit.prevent="submitNewImages">
-                <a-multi-image-input v-model="newImages" />
-
-                <div class="flex items-center justify-end">
-                    <Button type="submit">
-                        Upload
-                    </Button>
-                </div>
-            </form>
         </a-card>
     </div>
 </template>

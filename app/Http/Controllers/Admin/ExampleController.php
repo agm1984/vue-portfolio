@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Support\Arr;
@@ -131,8 +132,13 @@ class ExampleController extends Controller
             'tags'   => ['sometimes', 'array'],
             'tags.*' => ['nullable'],
 
-            // (You’re handling images via a separate append endpoint,
-            // so omitted here on purpose.)
+            // remove old images
+            'images_to_remove'   => ['sometimes', 'array'],
+            'images_to_remove.*' => ['integer', 'exists:example_images,' . (new ExampleImage)->getKeyName()],
+
+            // add new images
+            'images'   => ['sometimes', 'array'],
+            'images.*' => ['file', 'image', 'max:5120'], // 5MB each
         ]);
 
         $updated = DB::transaction(function () use ($request, $example, $data) {
@@ -188,13 +194,66 @@ class ExampleController extends Controller
                 $example->tags()->sync($tagIds);
             }
 
-            // Return fresh model with the same relations as `create`
+            // 4) OLD images: delete when requested
+            $ids = collect(Arr::wrap($request->input('images_to_remove', [])))
+                ->map(static fn ($v) => is_scalar($v) ? (int) $v : 0)
+                ->filter()
+                ->unique()
+                ->values();
+
+            if ($ids->isNotEmpty()) {
+                $pk = (new ExampleImage)->getKeyName();
+
+                $images = $example->images()
+                    ->whereIn($pk, $ids->all())
+                    ->get([$pk, 'filename']);
+
+                if ($images->isNotEmpty()) {
+                    $paths = $images->map(fn ($img) => "examples/{$example->slug}/{$img->filename}")->all();
+
+                    Storage::disk('public')->delete($paths);
+                    $example->images()->whereIn($pk, $images->pluck($pk)->all())->delete();
+                }
+            }
+
+            // 5) NEW image uploads
+            $files = $request->file('images', []);
+            if (!empty($files)) {
+                foreach ($files as $file) {
+                    // build a collision-safe filename, preserve extension
+                    $orig = $file->getClientOriginalName();
+                    $ext  = $file->getClientOriginalExtension();
+                    $base = $ext
+                        ? Str::slug(pathinfo($orig, PATHINFO_FILENAME))
+                        : Str::slug($orig);
+                    $base = $base ?: 'image';
+
+                    $dir = "examples/{$example->slug}";
+                    $name = $base . '.' . ($ext ?: $file->guessExtension() ?: 'bin');
+
+                    // ensure uniqueness under public disk
+                    $candidate = $name;
+                    $i = 1;
+                    while (Storage::disk('public')->exists("{$dir}/{$candidate}")) {
+                        $candidate = "{$base}-{$i}." . ($ext ?: $file->guessExtension() ?: 'bin');
+                        $i++;
+                    }
+
+                    $file->storeAs($dir, $candidate, 'public');
+
+                    $example->images()->create([
+                        'filename' => $candidate,
+                        'status' => ExampleImage::STATUS_ACTIVE,
+                    ]);
+                }
+            }
+
             return $example->fresh(['category', 'images', 'links', 'tags']);
         });
 
         return response()->json([
             'example' => $updated,
-        ], 201);
+        ], 200);
     }
 
     public function appendImages(Request $request, Example $example)

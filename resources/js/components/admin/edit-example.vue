@@ -50,6 +50,7 @@ const isCreateMode = computed(() => props.mode === 'create');
 const categories = ref([]);
 const allTags = ref([]);
 const filteredTags = ref([]);
+const imagesToRemove = ref([]);
 
 const form = reactive({
     status: props.initialExample.status,
@@ -82,7 +83,7 @@ const statuses = computed(() => ([
   { status: Example.STATUS_ACTIVE, label: 'Active' },
 ]));
 
-async function fetchAllCategories() {
+const fetchAllCategories = async () => {
   try {
     const { data } = await axios.get(route('admin.categories.getAll'))
     categories.value = data.categories || []
@@ -97,7 +98,7 @@ async function fetchAllCategories() {
 
 onMounted(fetchAllCategories);
 
-async function fetchAllTags() {
+const fetchAllTags = async () => {
     try {
         const { data } = await axios.get(route('admin.tags.getAll'));
         allTags.value = data.tags || [];
@@ -173,7 +174,14 @@ const handleSubmit = async () => {
                 },
             });
         } else {
-            const { data } = await axios.patch(route('admin.examples.edit', props.initialExample.slug), form);
+            payload.append('_method', 'PATCH');
+
+            console.log('imagesToRemove', imagesToRemove.value);
+            imagesToRemove.value.forEach((imageId, index) => {
+                payload.append(`images_to_remove[${index}]`, imageId);
+            });
+
+            const { data } = await axios.post(route('admin.examples.edit', props.initialExample.slug), payload);
 
             await router.replace({
                 name: 'admin.examples.show',
@@ -183,6 +191,7 @@ const handleSubmit = async () => {
             });
 
             emit('save', data.example);
+            imagesToRemove.value = [];
         }
 
     } catch (err) {
@@ -323,7 +332,14 @@ const handleSubmit = async () => {
             <a-input-row class="pt-4" type="is-wider-right" heading="Images">
                 <a-multi-image-input
                     v-model="v$.images.$model"
+                    :example-slug="initialExample.slug"
+                    :existing-images="initialExample.images"
                     id="edit-example-images"
+                    @remove-existing-image="(imageId) => {
+                        // Remove image from form.images
+                        form.images = form.images.filter(image => image.id !== imageId);
+                        imagesToRemove.push(imageId);
+                    }"
                 />
             </a-input-row>
 

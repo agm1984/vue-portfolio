@@ -6,13 +6,27 @@ import Message from 'primevue/message';
 import Badge from 'primevue/badge';
 
 const props = defineProps({
+    exampleSlug: {
+        type: String,
+        required: true,
+    },
+
+    existingImages: {
+        type: Array,
+        required: false,
+        default: () => [],
+    },
+
     modelValue: {
         type: Array,
         required: true,
     },
 });
 
-const emit = defineEmits(['update:model-value']);
+const emit = defineEmits([
+    'update:model-value',
+    'remove-existing-image',
+]);
 
 const files = ref([]);
 const src = ref([]);
@@ -32,29 +46,30 @@ const readAsDataURL = (file) => {
 };
 
 const onSelectedFiles = async (event) => {
-  // Works with <input type="file"> (event.target.files) and libs like PrimeVue (event.files)
-  const list = event?.files ?? []
-  const fileArr = Array.from(list)
+  const list = event?.files ?? [];
+  const fileArr = Array.from(list);
 
-  files.value = fileArr
+  files.value = fileArr;
   emit('update:model-value', files.value);
 
   if (fileArr.length === 0) {
-    src.value = [] // or {}
-    return
+    src.value = [];
+    return;
   }
 
-  // --- OPTION A: src.value as an ARRAY of data URLs (in the same order) ---
-  src.value = await Promise.all(fileArr.map(readAsDataURL))
-
-  // --- OPTION B: src.value as an OBJECT keyed by filename ---
-  // const entries = await Promise.all(
-  //   fileArr.map(async (f) => [f.name, await readAsDataURL(f)])
-  // )
-  // src.value = Object.fromEntries(entries)
+  src.value = await Promise.all(fileArr.map(readAsDataURL));
 }
 
-const handleRemoveImage = (index) => {
+const handleRemoveExistingImage = async (imageId) => {
+    try {
+        console.log('imageId', imageId);
+        emit('remove-existing-image', imageId);
+    } catch (err) {
+        console.error(`a-multi-image-input# Problem removing existing image: ${err}.`);
+    }
+};
+
+const handleRemoveNewImage = (index) => {
     files.value.splice(index, 1);
     src.value.splice(index, 1);
     emit('update:model-value', files.value);
@@ -63,12 +78,24 @@ const handleRemoveImage = (index) => {
 
 <template>
     <div class="w-full grid grid-cols-2 gap-4 mb-4">
+        <div v-for="image in existingImages" :key="image.name">
+            <img :src="`/storage/examples/${exampleSlug}/${image.filename}`" />
+            <Button
+                type="button"
+                severity="danger"
+                icon="pi pi-times"
+                @click="handleRemoveExistingImage(image.id)"
+            />
+
+        </div>
+
         <div v-for="(item, index) in src" :key="index">
             <img :src="item" />
             <Button
-                icon="pi pi-times"
-                @click="handleRemoveImage(index)"
+                type="button"
                 severity="danger"
+                icon="pi pi-times"
+                @click="handleRemoveNewImage(index)"
             />
         </div>
 
@@ -79,35 +106,6 @@ const handleRemoveImage = (index) => {
             accept="image/*"
             :max-file-size="10000000"
             @select="onSelectedFiles"
-        >
-            <template #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback, messages }">
-                <div class="flex flex-col gap-8 pt-4">
-                    <Message v-for="message of messages" :key="message" :class="{ 'mb-8': !files.length && !uploadedFiles.length}" severity="error">
-                        {{ message }}
-                    </Message>
-
-                    <div v-if="files.length > 0">
-                        <h5>Pending</h5>
-                        <div class="flex flex-wrap gap-4">
-                            <div v-for="(file, index) of files" :key="file.name + file.type + file.size" class="p-8 rounded-border flex flex-col border border-surface items-center gap-4">
-                                <div>
-                                    <img role="presentation" :alt="file.name" :src="file.objectURL" width="100" height="50" />
-                                </div>
-                                <span class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{ file.name }}</span>
-                                <div>{{ formatSize(file.size) }}</div>
-                                <Badge value="Pending" severity="warn" />
-                                <Button icon="pi pi-times" @click="onRemoveTemplatingFile(file, removeFileCallback, index)" variant="outlined" rounded severity="danger" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-            <template #empty>
-                <div class="flex items-center justify-center flex-col">
-                    <i class="pi pi-cloud-upload border p-4" />
-                    <p class="mt-6 mb-0">Drag and drop files to here to upload.</p>
-                </div>
-            </template>
-        </FileUpload>
+        />
     </div>
 </template>
