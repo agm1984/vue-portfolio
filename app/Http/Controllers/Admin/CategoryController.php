@@ -41,6 +41,23 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function create(Request $request)
+    {
+        \Log::debug($request->all());
+
+        $data = $request->validate([
+            'status' => ['required', 'integer', Rule::in([Category::STATUS_INACTIVE, Category::STATUS_ACTIVE])],
+            'slug'   => ['required', 'string', 'max:255', 'unique:categories,slug'],
+            'name'   => ['required', 'string', 'max:255'],
+        ]);
+
+        $category = Category::create($data);
+
+        return response()->json([
+            'category' => $category->fresh(['examples.category', 'examples.images']),
+        ]);
+    }
+
     public function edit(Request $request, Category $category)
     {
         \Log::debug($request->all());

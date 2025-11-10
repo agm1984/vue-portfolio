@@ -37,7 +37,6 @@ async function fetchExample () {
     const res = await axios.get(route('public.examples.show', currentRoute.params.example));
     example.value = res.data.example;
     state.value = IS_LOADED;
-    document.title = example.value?.name || 'Example';
   } catch (err) {
     console.error(`show-example# Problem fetching example:`, err);
   }
