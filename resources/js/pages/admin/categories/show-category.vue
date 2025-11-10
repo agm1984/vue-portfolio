@@ -30,8 +30,8 @@ const isEditing = computed(() => state.value === EDITING)
 async function fetchCategory() {
   try {
     const { data } = await axios.get(route('admin.categories.show', currentRoute.params.category))
+
     category.value = data.category
-    // state remains whatever user set (SHOWING/EDITING)
   } catch (err) {
     console.error(`show-category# Problem fetching category: ${err}.`)
   }
@@ -47,6 +47,11 @@ function toggleEdit() {
 }
 
 onMounted(fetchCategory)
+
+const handleCategorySaved = (updatedCategory) => {
+    category.value = updatedCategory;
+    state.value = SHOWING;
+};
 </script>
 
 <template>
@@ -100,7 +105,7 @@ onMounted(fetchCategory)
         <edit-category
           :category="category"
           @reset="handleReset"
-          @save="(updatedCategory) => { category = updatedCategory; state = SHOWING; }"
+          @save="handleCategorySaved"
         />
       </div>
     </a-card>

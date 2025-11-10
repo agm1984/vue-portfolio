@@ -54,12 +54,7 @@ class CategoryController extends Controller
             'name'   => ['sometimes', 'string', 'max:255'],
         ]);
 
-        // If your Category model has $fillable for these keys, you can fill() directly:
         $category->fill($data)->save();
-
-        // If you don't use $fillable, assign individually:
-        // foreach ($data as $k => $v) { $category->{$k} = $v; }
-        // $category->save();
 
         return response()->json([
             'category' => $category->fresh(['examples.category', 'examples.images']),

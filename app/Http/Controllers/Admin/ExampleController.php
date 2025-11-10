@@ -9,6 +9,7 @@ use App\Models\Link;
 use App\Models\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -38,39 +39,67 @@ class ExampleController extends Controller
     public function create(Request $request)
     {
         \Log::debug($request->all());
-        // \Log::debug($request->headers->all());
 
-        $example = Example::generate(
-            $request->input('category_id'),
-            $request->input('name'),
-            $request->input('slug'),
-            $request->input('summary'),
-            $request->input('conclusion'),
-            $request->input('images'),
-        );
+        $data = $request->validate([
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'name'        => ['required', 'string', 'max:255'],
+            'slug'        => ['required', 'string', 'max:255', 'unique:examples,slug'],
+            'summary'     => ['required', 'string', 'max:2000'],
+            'conclusion'  => ['required', 'string', 'max:2000'],
 
-        foreach ($request->input('links') as $link) {
-            Link::generate(
-                $example->id,
-                $link['name'],
-                $link['url']
-            );
-        }
+            'links'         => ['sometimes', 'array'],
+            'links.*.name'  => ['required_with:links', 'string', 'max:255'],
+            'links.*.url'   => ['required_with:links', 'url', 'max:2048'],
 
-        $tags = [];
-        foreach ($request->input('tags') as $tag) {
-            if (!is_array($tag)) {
-                $new_tag = Tag::generate($tag);
-                array_push($tags, $new_tag->id);
-            } else {
-                array_push($tags, $tag['id']);
-            }
-        }
-        $example->tags()->sync($tags);
+            'tags'          => ['sometimes', 'array'],
+            'tags.*'        => ['nullable'], // string or {id: ...}
 
-        return response()->json([
-            'example' => $example,
+            'images'        => ['sometimes', 'array'],
+            'images.*'      => ['file', 'image', 'max:5120'], // KB -> 5MB
         ]);
+
+        $example = DB::transaction(function () use ($request, $data) {
+            // Create the Example (pass FILES, not input strings)
+            $example = Example::generate(
+                $data['category_id'],
+                $data['name'],
+                $data['slug'],
+                $data['summary'],
+                $data['conclusion'],
+                $request->file('images', [])
+            );
+
+            // Links
+            foreach ($request->input('links', []) as $link) {
+                Link::generate(
+                    $example->id,
+                    $link['name'] ?? '',
+                    $link['url']  ?? ''
+                );
+            }
+
+            // Tags (support strings or objects with id)
+            $tagIds = collect($request->input('tags', []))
+                ->map(function ($tag) {
+                    if (is_array($tag) && isset($tag['id'])) {
+                        return (int) $tag['id'];
+                    }
+                    if (is_string($tag) && $tag !== '') {
+                        return Tag::firstOrCreate(['name' => $tag])->id; // or Tag::generate($tag)->id
+                    }
+                    return null;
+                })
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
+
+            $example->tags()->sync($tagIds);
+
+            return $example->fresh(['category', 'images', 'links', 'tags']);
+        });
+
+        return response()->json(['example' => $example], 201);
     }
 
     public function edit(Request $request, Example $example)

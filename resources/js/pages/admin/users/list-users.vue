@@ -27,6 +27,8 @@ async function fetchAllUsers() {
 }
 
 onMounted(fetchAllUsers);
+
+// todo: hide email address for non-admin users
 </script>
 
 <template>

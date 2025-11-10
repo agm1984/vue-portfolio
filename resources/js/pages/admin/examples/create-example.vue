@@ -1,243 +1,322 @@
-<template>
-    <a-card class="flex flex-col w-full h-auto p-32" with-geometry>
-        <h2 level="2" class="mb-16" dark>
-            Create example
-        </h2>
-
-        <div class="">
-            <a-form v-slot="{ handleSubmit }" has-files>
-                <a-input-row type="is-wider-right" heading="Status">
-                    <a-select
-                        v-model="example.status"
-                        vid="status"
-                        rules="required"
-                        :expanded="false"
-                    >
-                        <option
-                            v-for="status in statuses"
-                            :key="status.status"
-                            :value="status.status"
-                        >
-                            {{ status.label }}
-                        </option>
-                    </a-select>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Category">
-                    <a-select
-                        v-model="example.category_id"
-                        vid="category"
-                        rules="required"
-                        :expanded="false"
-                    >
-                        <option
-                            v-for="category in categories"
-                            :key="category.id"
-                            :value="category.id"
-                        >
-                            {{ category.name }}
-                        </option>
-                    </a-select>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Name">
-                    <a-text-input
-                        v-model="example.name"
-                        vid="name"
-                        rules="required"
-                    ></a-text-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
-                    <a-text-input
-                        v-model="example.slug"
-                        vid="slug"
-                        rules="required"
-                    ></a-text-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
-                    <a-text-input
-                        v-model="example.summary"
-                        rules="required"
-                        vid="summary"
-                        type="textarea"
-                        maxlength="2000"
-                        has-counter
-                    ></a-text-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
-                    <a-text-input
-                        v-model="example.conclusion"
-                        rules="required"
-                        vid="conclusion"
-                        type="textarea"
-                        placeholder="Type your message here"
-                        maxlength="2000"
-                        has-counter
-                    ></a-text-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
-                    <example-links-input
-                        v-model="example.links"
-                    ></example-links-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
-                    <a-tags-input
-                        v-model="example.tags"
-                        vid="tags"
-                        field="name"
-                        :fetch-endpoint="route('admin.tags.getAll')"
-                        allow-new
-                    ></a-tags-input>
-                </a-input-row>
-
-                <a-input-row class="pt-16" type="is-wider-right" heading="Images">
-                    <a-multi-image-input
-                        v-model="example.images"
-                        vid="images"
-                        rules="required"
-                    ></a-multi-image-input>
-                </a-input-row>
-
-                <div class="flex items-center justify-end">
-                    <a-button @click="handleSubmit(submitForm)">
-                        Create
-                    </a-button>
-                </div>
-            </a-form>
-        </div>
-
-    </a-card>
-</template>
-
-<script>
+<script setup>
+import { ref, reactive, computed, onMounted } from 'vue';
+import { required } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+import { useRouter } from 'vue-router';
+import Select from 'primevue/select';
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
+import Autocomplete from 'primevue/autocomplete';
+import Button from 'primevue/button';
 import axios from 'axios';
 import ExampleLinksInput from './example-links-input.vue';
 import { Example } from '~/globalModelTypes';
+import { escapeRegExpChars } from '~/utils/formatting';
 
-const INITIAL = 'INITIAL';
-const CREATE = 'CREATE';
-
-export default {
-    name: 'create-example',
-
-    components: {
-        ExampleLinksInput,
+const props = defineProps({
+    initialCategory: {
+        type: Object,
+        required: false,
+        default: () => ({
+            status: Example.STATUS_ACTIVE,
+            category_id: undefined,
+            name: '',
+            slug: '',
+            summary: '',
+            conclusion: '',
+            links: [],
+            tags: [],
+            images: [],
+        }),
     },
+});
 
-    props: {},
+const router = useRouter();
 
-    data() {
-        return {
-            state: INITIAL,
-            categories: [],
-            example: {
-                status: Example.STATUS_ACTIVE,
-                category_id: undefined,
-                slug: '',
-                name: '',
-                links: [],
-                tags: [],
-                images: [],
-            },
-        };
-    },
+const INITIAL = 'is-initial';
+const SUBMITTING = 'is-submitting';
+const state = ref(INITIAL);
+const isSubmitting = computed(() => state.value === SUBMITTING);
+const submitted = ref(false);
+const categories = ref([]);
+const allTags = ref([]);
+const filteredTags = ref([]);
 
-    computed: {
-        statuses() {
-            return [
-                { status: Example.STATUS_INACTIVE, label: 'Inactive' },
-                { status: Example.STATUS_ACTIVE, label: 'Active' },
-            ];
-        },
-    },
+const form = reactive({
+    status: props.initialCategory.status,
+    category_id: props.initialCategory.category_id,
+    name: props.initialCategory.name,
+    slug: props.initialCategory.slug,
+    summary: props.initialCategory.summary,
+    conclusion: props.initialCategory.conclusion,
+    links: props.initialCategory.links,
+    tags: props.initialCategory.tags,
+    images: props.initialCategory.images,
+});
 
-    mounted() {
-        return this.fetchAllCategories();
-    },
+const editExampleRules = {
+    status: { required },
+    category_id: { required },
+    name: { required },
+    slug: { required },
+    summary: { required },
+    conclusion: { required },
+    links: {},
+    tags: {},
+    images: {},
+};
 
-    methods: {
-        async fetchAllCategories() {
-            try {
-                const { data } = await axios.get(route('admin.categories.getAll'));
+const v$ = useVuelidate(editExampleRules, form);
 
-                // console.log('catz', data.categories);
+// const example = ref({
+//   status: Example.STATUS_ACTIVE,
+//   category_id: undefined,
+//   name: '',
+//   slug: '',
+//   summary: '',
+//   conclusion: '',
+//   links: [],
+//   tags: [],
+//   images: [],
+// });
 
-                this.categories = data.categories;
-                this.example.category_id = 1;
-                this.state = CREATE;
-            } catch (err) {
-                throw new Error(`create-example# Problem fetching all active categories: ${err}.`);
-            }
-        },
+const statuses = computed(() => ([
+  { status: Example.STATUS_INACTIVE, label: 'Inactive' },
+  { status: Example.STATUS_ACTIVE, label: 'Active' },
+]));
 
-        async submitForm() {
-            try {
-                const payload = new FormData();
+async function fetchAllCategories() {
+  try {
+    const { data } = await axios.get(route('admin.categories.getAll'))
+    categories.value = data.categories || []
+    // Default to first category if available
+    if (!form.category_id && categories.value.length) {
+      form.category_id = categories.value[0].id
+    }
+  } catch (err) {
+    console.error(`create-example# Problem fetching all active categories: ${err}.`)
+  }
+}
 
-                Object.keys(this.example).forEach(field => payload.append(field, this.example[field]));
+onMounted(fetchAllCategories);
 
-                this.example.links.forEach((link, i) => {
-                    console.log('LINK', link);
-                    Object.keys(link).forEach(field => {
-                        payload.append(`links[${i}][${field}]`, link[field]);
-                    });
-                });
+async function fetchAllTags() {
+    try {
+        const { data } = await axios.get(route('admin.tags.getAll'));
+        allTags.value = data.tags || [];
+    } catch (err) {
+        console.error(`create-example# Problem fetching all tags: ${err}.`);
+    }
+}
 
-                this.example.tags.forEach((tag, i) => {
-                    if (Object.prototype.toString.call(tag) === '[object String]') {
-                        payload.append(`tags[${i}]`, tag);
-                    } else {
-                        Object.keys(tag).forEach(field => payload.append(`tags[${i}][${field}]`, tag[field]));
-                    }
-                });
+onMounted(fetchAllTags);
 
-                this.example.images.forEach(image => payload.append('images[]', image));
+const handleTagMatches = (event) => {
+    const matches = allTags.value
+        .map(tag => tag.name)
+        .filter(tagName => new RegExp(escapeRegExpChars(event.query), 'i').test(tagName));
 
-                const response = await axios.post(route('admin.examples.create'), payload);
+    filteredTags.value = matches;
+};
 
-                // console.log('newExample form submitted', response.data.example);
-                return this.$router.push({ name: 'admin.examples.show', params: { example: response.data.example.slug } }).catch(() => {});
-            } catch (err) {
-                throw new Error(`create-example# Problem creating new example: ${err}.`);
-            }
-        },
+const handleSubmit = async () => {
+  try {
+        state.value = SUBMITTING;
+        submitted.value = true;
 
-        uploadImageSuccess(formData, index, fileList) {
-            console.log('uploadImageSuccess', formData);
-            this.example.images = fileList;
-        },
+        const isFormValid = await v$.value.$validate();
 
-        beforeRemove(index, done, fileList) {
-            console.log('index', index, fileList);
-            const r = confirm('remove image');
-            if (r == true) {
-                done();
-            } else {
-                // do nothing
-            }
-        },
+        if (!isFormValid) {
+            console.log('Form is invalid');
+            state.value = INITIAL;
+            return;
+        }
 
-        editImage(formData, index, fileList) {
-            console.log('editImage', formData);
-            console.log('index', index);
-            console.log('fileList', fileList);
-            this.example.images = fileList;
-        },
+        const payload = new FormData();
 
-        dataChange(data) {
-            console.log('data change', data);
-        },
+        // Append simple scalar fields
+        ['status', 'category_id', 'name', 'slug', 'summary', 'conclusion'].forEach((field) => {
+        payload.append(field, form[field] ?? '');
+        });
 
-        limitExceeded(amount) {
-            console.log(amount);
-        },
+        // Append links
+        form.links.forEach((link, i) => {
+        if (link && typeof link === 'object') {
+            Object.keys(link).forEach((field) => {
+            payload.append(`links[${i}][${field}]`, link[field]);
+            })
+        }
+        });
 
-    },
+        // Append tags (supports both strings and objects)
+        form.tags.forEach((tag, i) => {
+        if (Object.prototype.toString.call(tag) === '[object String]') {
+            payload.append(`tags[${i}]`, tag)
+        } else if (tag && typeof tag === 'object') {
+            Object.keys(tag).forEach((field) => {
+            payload.append(`tags[${i}][${field}]`, tag[field])
+            })
+        }
+        });
 
+        // Append images (files)
+        form.images.forEach((image, i) => payload.append(`images[${i}]`, image));
+
+        const { data } = await axios.post(route('admin.examples.create'), payload);
+
+        await router.push({ name: 'admin.examples.show', params: { example: data.example.slug } });
+    } catch (err) {
+        console.error(`create-example# Problem creating new example: ${err}.`);
+    } finally {
+        state.value = INITIAL;
+    }
 };
 </script>
+
+<template>
+    <a-card class="flex flex-col w-full h-auto p-8" with-geometry>
+        <h2 level="2" class="mb-16" dark>Create example</h2>
+
+        <form @submit.prevent="handleSubmit">
+            <a-input-row type="is-wider-right" heading="Status">
+                <Select
+                    v-model="v$.status.$model"
+                    id="edit-example-status"
+                    :options="statuses"
+                    option-value="status"
+                    option-label="label"
+                    :invalid="v$.status.$error && submitted"
+                />
+
+                <a-field-errors
+                    v-if="v$.status.$error && submitted"
+                    :errors="v$.status.$errors"
+                    name="Status"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Category">
+                <Select
+                    v-model="v$.category_id.$model"
+                    id="edit-example-category-id"
+                    :options="categories"
+                    option-value="id"
+                    option-label="name"
+                    :invalid="v$.category_id.$error && submitted"
+                />
+
+                <a-field-errors
+                    v-if="v$.category_id.$error && submitted"
+                    :errors="v$.category_id.$errors"
+                    name="Category"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Name">
+                <InputText
+                    v-model="v$.name.$model"
+                    id="edit-example-name"
+                    :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
+                    autocomplete="off"
+                />
+
+                <a-field-errors
+                    v-if="v$.name.$error && submitted"
+                    :errors="v$.name.$errors"
+                    name="Name"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Slug">
+                <InputText
+                    v-model="v$.slug.$model"
+                    id="edit-example-slug"
+                    :class="['w-full', { 'p-invalid': v$.slug.$invalid && submitted }]"
+                    autocomplete="off"
+                />
+
+                <a-field-errors
+                    v-if="v$.slug.$error && submitted"
+                    :errors="v$.slug.$errors"
+                    name="Slug"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Summary" is-tall>
+                <Textarea
+                    v-model="v$.summary.$model"
+                    id="edit-example-summary"
+                    :class="['w-full', { 'p-invalid': v$.summary.$invalid && submitted }]"
+                    rows="6"
+                    autocomplete="off"
+                    maxlength="2000"
+                />
+
+                <a-field-errors
+                    v-if="v$.summary.$error && submitted"
+                    :errors="v$.summary.$errors"
+                    name="Summary"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Conclusion" is-tall>
+                <Textarea
+                    v-model="v$.conclusion.$model"
+                    id="edit-example-conclusion"
+                    :class="['w-full', { 'p-invalid': v$.conclusion.$invalid && submitted }]"
+                    rows="6"
+                    autocomplete="off"
+                    maxlength="2000"
+                />
+
+                <a-field-errors
+                    v-if="v$.conclusion.$error && submitted"
+                    :errors="v$.conclusion.$errors"
+                    name="Conclusion"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Links" is-tall>
+                <example-links-input
+                    v-model="v$.links.$model"
+                    :submitted="submitted"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Tags" is-tall>
+                <Autocomplete
+                    v-model="v$.tags.$model"
+                    input-id="edit-example-tags"
+                    class="w-full"
+                    :invalid="v$.tags.$error && submitted"
+                    :suggestions="filteredTags"
+                    placeholder="Type a tag..."
+                    multiple
+                    @complete="handleTagMatches"
+                />
+
+                <a-field-errors
+                    v-if="v$.tags.$error && submitted"
+                    :errors="v$.tags.$errors"
+                    name="Tags"
+                />
+            </a-input-row>
+
+            <a-input-row class="pt-4" type="is-wider-right" heading="Images">
+                <a-multi-image-input
+                    v-model="v$.images.$model"
+                    id="edit-example-images"
+                />
+            </a-input-row>
+
+            <div class="flex items-center justify-end">
+                <Button
+                    type="submit"
+                    icon="pi pi-check"
+                    label="Create"
+                    :disabled="isSubmitting"
+                />
+            </div>
+      </form>
+  </a-card>
+</template>

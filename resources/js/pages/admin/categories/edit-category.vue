@@ -74,7 +74,7 @@ const handleSubmit = async () => {
             return;
         }
 
-        const { data } =await axios.patch(route('admin.categories.edit', { category: props.category.slug }), form);
+        const { data } = await axios.patch(route('admin.categories.edit', { category: props.category.slug }), form);
         emit('save', data.category);
     } catch (error) {
         console.error(error);

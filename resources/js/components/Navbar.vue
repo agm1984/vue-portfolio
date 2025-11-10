@@ -44,12 +44,20 @@ const logout = async () => {
                 >
                     Examples
                 </router-link>
+
+                <router-link
+                    :to="{ name: 'admin' }"
+                    class="nav-link inline-block ml-4 text-dark"
+                    active-class="active"
+                >
+                    Admin Area
+                </router-link>
             </div>
 
             <!-- Authenticated -->
             <ul v-if="auth.isAuthenticated" class="w-48 flex flex-col">
                 <li class="min-w-8 max-w-8 min-h-8 max-h-8 flex">
-                    <img :src="auth.user.avatar_url" class="object-cover rounded-full" alt="User avatar">
+                    <a-avatar :size="32" :user="auth.user" />
                     <span class="whitespace-nowrap">{{ auth.user.name }}</span>
                 </li>
 
