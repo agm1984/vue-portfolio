@@ -56,7 +56,7 @@ const handleCategorySaved = (updatedCategory) => {
 
 <template>
   <div class="">
-    <a-card class="p-32" with-geometry>
+    <a-card class="p-8" with-geometry>
       <div class="relative flex items-center mb-16">
         <h2 level="2">
           {{ category.name }}

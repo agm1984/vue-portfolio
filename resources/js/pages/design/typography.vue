@@ -1,5 +1,5 @@
 <template>
-    <a-card id="design-system-typography" class="p-32" with-geometry>
+    <a-card id="design-system-typography" class="p-8" with-geometry>
 
         <h2 level="2" class="mb-16" dark>Typography</h2>
 

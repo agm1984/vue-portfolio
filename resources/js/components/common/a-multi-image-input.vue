@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import FileUpload from 'primevue/fileupload';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
 import Badge from 'primevue/badge';
 
-defineProps({
+const props = defineProps({
     modelValue: {
         type: Array,
         required: true,
@@ -15,7 +15,12 @@ defineProps({
 const emit = defineEmits(['update:model-value']);
 
 const files = ref([]);
-const src = ref([]); // can be Array or Object
+const src = ref([]);
+
+watch(props.modelValue, (newVal) => {
+    files.value = newVal || [];
+    src.value = [];
+}, { immediate: true });
 
 const readAsDataURL = (file) => {
     return new Promise((resolve, reject) => {
@@ -54,7 +59,6 @@ const handleRemoveImage = (index) => {
     src.value.splice(index, 1);
     emit('update:model-value', files.value);
 };
-
 </script>
 
 <template>

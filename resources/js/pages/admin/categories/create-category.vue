@@ -1,5 +1,5 @@
 <template>
-    <a-card class="p-32" with-geometry>
+    <a-card class="p-8" with-geometry>
         <h2 level="2" class="mb-16" dark>
             Create category
         </h2>
@@ -18,7 +18,7 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Name">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="category.name"
                     vid="name"
@@ -26,7 +26,7 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="category.slug"
                     vid="slug"
@@ -34,7 +34,7 @@
                 ></a-text-input>
             </a-input-row>
 
-            <div class="flex items-center justify-end pt-16">
+            <div class="flex items-center justify-end pt-8">
                 <a-button @click="handleSubmit(submitForm)">
                     Create
                 </a-button>

@@ -1,5 +1,5 @@
 <template>
-    <a-form v-slot="{ handleSubmit }" class="pt-16">
+    <a-form v-slot="{ handleSubmit }" class="pt-8">
         <a-text-input
             v-model="credentials.email"
             vid="email"
@@ -28,7 +28,7 @@
             Login
         </a-button>
 
-        <div class="flex items-center justify-between pt-16">
+        <div class="flex items-center justify-between pt-8">
             <a-checkbox
                 v-model="credentials.remember"
             >

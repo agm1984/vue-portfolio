@@ -1,5 +1,5 @@
 <template>
-    <a-card id="design-system-colour" class="p-32" with-geometry>
+    <a-card id="design-system-colour" class="p-8" with-geometry>
 
         <h2 level="2" dark>Colours</h2>
 

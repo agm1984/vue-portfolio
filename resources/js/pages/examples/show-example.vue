@@ -3,27 +3,27 @@ import { ref, computed, watch } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import Tag from 'primevue/tag';
 // import CommentsManager from './comments-manager.vue';
 
 useHead({
     title: 'Example',
 });
 
-defineOptions({ name: 'show-example' });
-
 const IS_LOADING = 0;
 const IS_LOADED = 1;
 
 const state = ref(IS_LOADING);
 const example = ref({
-  name: '',
-  slug: '',
-  summary: '',
-  conclusion: '',
-  images: [],
-  links: [],
-  tags: [],
-  category: {},
+    status: null,
+    category: {},
+    name: '',
+    slug: '',
+    summary: '',
+    conclusion: '',
+    images: [],
+    links: [],
+    tags: [],
 });
 
 const isLoading = computed(() => state.value === IS_LOADING);
@@ -55,19 +55,19 @@ watch(
   <div v-if="isLoaded" class="container flex flex-col w-full">
     <h1 class="main__heading">{{ example.name }}</h1>
 
-    <a-card class="p-32 main">
+    <a-card class="p-8 main">
       <h2 level="2" class="mb-16">Summary</h2>
       <p>
         {{ example.summary }}
       </p>
 
       <h2 level="2" class="mt-32 mb-16">Images</h2>
-      <div class="images__container">
+      <div class="w-full grid grid-cols-2 gap-4">
         <router-link
           v-for="image in example.images"
           :key="image.image_id"
           :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
-          class="relative block bg-no-repeat bg-cover cursor-pointer border w-32 h-32"
+          class="relative block bg-no-repeat bg-cover cursor-pointer w-full aspect-video"
           title="Click to enlarge"
           :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
         ></router-link>
@@ -82,7 +82,7 @@ watch(
       <!-- <comments-manager></comments-manager> -->
     </a-card>
 
-    <a-card class="p-32 links">
+    <a-card class="p-8 links">
       <h2 level="2">Links</h2>
 
       <a
@@ -95,17 +95,16 @@ watch(
       </a>
     </a-card>
 
-    <a-card class="p-32 tags">
+    <a-card class="p-8 tags">
       <h2 level="2" class="mb-16">Tags</h2>
 
       <div class="flex flex-wrap gap-4">
-        <div
-          v-for="tag in example.tags"
-          :key="`tag-${tag.name}`"
-          class="bg-blue-700 text-white"
-        >
-          {{ tag.name }}
-        </div>
+        <Tag
+            v-for="tag in example.tags"
+            :key="`tag-${tag.name}`"
+            :value="tag.name"
+            rounded
+        />
       </div>
     </a-card>
   </div>

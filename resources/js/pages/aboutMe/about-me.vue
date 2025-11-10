@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-card class="p-32">
+    <div class="flex flex-col w-full h-auto p-8 xl:w-1024 xl:p-0">
+        <a-card class="p-8">
             <h1 class="mb-16">About me</h1>
 
             <div class="flex flex-col h-auto md:flex-row">
@@ -49,7 +49,7 @@
             <h2 level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</h2>
 
             <div class="flex flex-col w-full xl:flex-row">
-                <a-card class="order-1 p-32 mr-0 xl:mr-16" fill primary>
+                <a-card class="order-1 p-8 mr-0 xl:mr-16" fill primary>
                     <h2 level="2" class="mb-16" light>
                         To programmers
                     </h2>
@@ -66,7 +66,7 @@
                     </a-paragraph>
                 </a-card>
 
-                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
+                <a-card class="order-2 p-8 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
                     <h2 level="2" class="mb-16">To non-programmers</h2>
 
                     <div class="flex flex-col w-full">

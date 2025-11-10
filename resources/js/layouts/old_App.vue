@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full min-h-screen p-32 bg-black">
+    <div class="flex flex-col w-full min-h-screen p-8 bg-black">
         <!-- <top-nav-bar></top-nav-bar> -->
 
         <!-- TODO:  make it so non-logged-in users are encouraged to sign up -->

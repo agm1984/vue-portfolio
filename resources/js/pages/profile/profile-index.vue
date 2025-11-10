@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-card class="p-32 w-full">
+        <a-card class="p-8 w-full">
             <h2 level="1" class="mb-32">
                 Settings
             </h2>

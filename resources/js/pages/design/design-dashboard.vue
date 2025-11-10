@@ -86,7 +86,7 @@
         <div class="w-full h-auto pt-64 pl-32">
             <template v-if="isDashboard">
                 <router-link :to="{ name: 'design.buttons' }">
-                    <a-card class="flex flex-wrap p-32" with-geometry>
+                    <a-card class="flex flex-wrap p-8" with-geometry>
                         <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
                             <b-icon
                                 pack="fas"
@@ -104,7 +104,7 @@
                 </router-link>
 
                 <router-link :to="{ name: 'design.colours' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
+                    <a-card class="flex flex-wrap p-8 mt-16" with-geometry>
                         <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
                             <b-icon
                                 pack="fas"
@@ -122,7 +122,7 @@
                 </router-link>
 
                 <router-link :to="{ name: 'design.sizing' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
+                    <a-card class="flex flex-wrap p-8 mt-16" with-geometry>
                         <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
                             <b-icon
                                 pack="fas"
@@ -140,7 +140,7 @@
                 </router-link>
 
                 <router-link :to="{ name: 'design.typography' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
+                    <a-card class="flex flex-wrap p-8 mt-16" with-geometry>
                         <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
                             <b-icon
                                 pack="fas"

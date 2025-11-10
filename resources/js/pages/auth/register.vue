@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center w-full h-auto">
-        <a-card class="flex flex-col h-auto p-32 w-384">
+        <a-card class="flex flex-col h-auto p-8 w-384">
             <h2 level="1" class="mb-16 text-center">
                 Register
             </h2>
@@ -10,13 +10,13 @@
                 <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth>
             </div>
 
-            <div class="flex items-center pt-16">
+            <div class="flex items-center pt-8">
                 <hr class="inline w-full">
                 <span class="mx-8">or</span>
                 <hr class="inline w-full">
             </div>
 
-            <a-form v-slot="{ handleSubmit }" class="pt-16">
+            <a-form v-slot="{ handleSubmit }" class="pt-8">
                 <a-text-input
                     v-model="newUser.name"
                     vid="name"

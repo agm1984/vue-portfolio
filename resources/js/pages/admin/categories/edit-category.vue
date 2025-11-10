@@ -103,7 +103,7 @@ const handleSubmit = async () => {
         />
       </a-input-row>
 
-      <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
+      <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
         <!-- <a-text-input v-model="modifiedCategory.slug" vid="slug" rules="required" /> -->
         <InputText
             v-model="v$.slug.$model"
@@ -119,7 +119,7 @@ const handleSubmit = async () => {
         />
       </a-input-row>
 
-      <a-input-row class="pt-16" type="is-wider-right" heading="Name">
+      <a-input-row class="pt-8" type="is-wider-right" heading="Name">
         <!-- <a-text-input v-model="modifiedCategory.name" vid="name" rules="required" /> -->
         <InputText
             v-model="v$.name.$model"
@@ -136,7 +136,7 @@ const handleSubmit = async () => {
         />
       </a-input-row>
 
-      <div class="flex items-center justify-end gap-4 pt-16">
+      <div class="flex items-center justify-end gap-4 pt-8">
         <Button type="button" outlined @click="onReset">
           Cancel
         </Button>

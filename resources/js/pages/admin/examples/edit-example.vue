@@ -16,7 +16,7 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Category">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Category">
                 <a-select
                     v-model="modifiedExample.category.id"
                     :expanded="false"
@@ -31,19 +31,19 @@
                 </a-select>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Name">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Name">
                 <a-text-input
                     v-model="modifiedExample.name"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Slug">
+            <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
                 <a-text-input
                     v-model="modifiedExample.slug"
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Summary" is-tall>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Summary" is-tall>
                 <a-text-input
                     v-model="modifiedExample.summary"
                     rules="required"
@@ -54,7 +54,7 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Conclusion" is-tall>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Conclusion" is-tall>
                 <a-text-input
                     v-model="modifiedExample.conclusion"
                     rules="required"
@@ -66,13 +66,13 @@
                 ></a-text-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Links" is-tall>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Links" is-tall>
                 <example-links-input
                     v-model="modifiedExample.links"
                 ></example-links-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Tags" is-tall>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Tags" is-tall>
                 <a-tags-input
                     v-model="modifiedExample.tags"
                     vid="tags"
@@ -82,7 +82,7 @@
                 ></a-tags-input>
             </a-input-row>
 
-            <a-input-row class="pt-16" type="is-wider-right" heading="Images" is-tall>
+            <a-input-row class="pt-8" type="is-wider-right" heading="Images" is-tall>
                 <example-images-editor
                     v-model="modifiedExample.images"
                     vid="images"

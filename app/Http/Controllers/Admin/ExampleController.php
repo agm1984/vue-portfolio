@@ -99,7 +99,9 @@ class ExampleController extends Controller
             return $example->fresh(['category', 'images', 'links', 'tags']);
         });
 
-        return response()->json(['example' => $example], 201);
+        return response()->json([
+            'example' => $example,
+        ], 201);
     }
 
     public function edit(Request $request, Example $example)

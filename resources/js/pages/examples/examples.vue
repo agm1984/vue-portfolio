@@ -75,7 +75,7 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-auto p-32">
+  <div class="flex flex-col w-full h-auto p-8">
     <h1>Examples</h1>
 
     <div class="flex items-center justify-end gap-4">
@@ -101,12 +101,11 @@ watch(
       </router-link>
     </div>
 
-    <a-card class="w-full grid grid-cols-2">
+    <a-card class="w-full grid grid-cols-2 gap-4">
       <router-link
         v-for="example in examples"
         :key="example.slug"
         :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
-        class="m-16"
       >
         <a-tilt>
           <a-card class="">
@@ -133,7 +132,7 @@ watch(
         <div class="bg-red-700 text-white">
           There was a problem loading this page.
           <Button
-            class="pt-16"
+            class="pt-8"
             label="Try again"
             @click="handleTryAgain"
           />

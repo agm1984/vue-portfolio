@@ -69,7 +69,7 @@
                     <span class="text-5xl">32</span>
                 </a-card>
             </div>
-            <a-card v-if="isDashboard" class="p-32 mt-8" with-geometry>
+            <a-card v-if="isDashboard" class="p-8 mt-8" with-geometry>
                 <h2 level="2">
                     Dashboard
                 </h2>
@@ -86,7 +86,7 @@
             <router-view v-else></router-view>
         </div>
 
-        <!-- <div class="flex flex-col p-32">
+        <!-- <div class="flex flex-col p-8">
             <h2 level="1">Categories</h2>
 
             <router-link :to="{ name: 'admin.categories.list' }" class="ml-16 nav-link-white">
@@ -95,7 +95,7 @@
             <router-link to="/admin/categories/create" class="ml-16 nav-link-white">Add category</router-link>
         </div>
 
-        <div class="flex flex-col p-32">
+        <div class="flex flex-col p-8">
             <h2 level="1">Examples</h2>
 
             <router-link :to="{ name: 'admin.examples.list' }" class="ml-16 nav-link-white">
@@ -104,7 +104,7 @@
             <router-link to="/admin/examples/create" class="ml-16 nav-link-white">Add example</router-link>
         </div>
 
-        <div class="flex flex-col p-32">
+        <div class="flex flex-col p-8">
             <h2 level="1">Users</h2>
 
             <router-link :to="{ name: 'admin.users.list' }" class="ml-16 nav-link-white">

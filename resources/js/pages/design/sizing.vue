@@ -1,5 +1,5 @@
 <template>
-    <a-card id="design-system-typography" class="p-32" with-geometry>
+    <a-card id="design-system-typography" class="p-8" with-geometry>
 
         <h2 level="2" dark>Space & Size</h2>
 

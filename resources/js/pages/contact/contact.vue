@@ -1,11 +1,11 @@
 <template>
-    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
+    <div class="flex flex-col w-full h-auto p-8 xl:w-1024 xl:p-0">
         <b-message v-show="showSuccessMessage" type="is-success">
             {{ successMessage }}
         </b-message>
 
         <div class="flex flex-col w-full xl:flex-row">
-            <a-card class="order-1 w-full p-32 mr-0 xl:mr-16" with-geometry>
+            <a-card class="order-1 w-full p-8 mr-0 xl:mr-16" with-geometry>
                 <h2 level="1" class="mb-16">Contact</h2>
 
                 <a-paragraph>

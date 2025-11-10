@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, useAttrs, defineOptions } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, useAttrs } from 'vue';
 
 // Vue 3.3+ — lets us keep attrs off the root like in the original
 defineOptions({ name: 'AppImg', inheritAttrs: false });
@@ -15,20 +15,6 @@ const attrs = useAttrs();
 const rootRef = ref(null);
 const imgRef = ref(null);
 const placeholderRef = ref(null);
-
-const dataUrl = computed(() => {
-  const width = Number(attrs.width);
-  const height = Number(attrs.height);
-  if (!width || !height || Number.isNaN(width) || Number.isNaN(height)) return '';
-  if (typeof window === 'undefined') return '';
-
-  const w = 100;
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = (height / width) * w;
-
-  return canvas.toDataURL();
-});
 
 let observer;
 let timeOut;
@@ -73,7 +59,7 @@ onBeforeUnmount(() => {
     <slot></slot>
 
     <div
-      v-if="dataUrl"
+      v-if="src"
       :style="{ background: props.background }"
       class="app-img__placeholder"
       ref="placeholderRef"
@@ -83,10 +69,10 @@ onBeforeUnmount(() => {
 
     <img
       ref="imgRef"
-      :src="dataUrl"
+      :src="src"
       :alt="attrs.alt || ''"
       v-bind="attrs"
-      class="app-img__img"
+      class="w-full aspect-video"
     >
   </div>
 </template>

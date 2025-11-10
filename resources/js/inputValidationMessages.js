@@ -1,16 +1,6 @@
-import {
-    alpha_dash,
-    between,
-    email,
-    image,
-    max,
-    max_value,
-    min,
-    numeric,
-    oneOf,
-    required,
-} from 'vee-validate/dist/rules';
-
+const extend = (input) => {
+    console.log('input', input);
+};
 const loadInputValidationMessages = (extend) => {
     extend('alpha_dash', {
         ...alpha_dash,

@@ -1,5 +1,5 @@
 <template>
-    <a-card class="p-32">
+    <a-card class="p-8">
         <img :src="imageUrl">
     </a-card>
 </template>
