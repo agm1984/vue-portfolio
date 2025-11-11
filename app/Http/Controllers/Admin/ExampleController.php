@@ -175,24 +175,23 @@ class ExampleController extends Controller
             }
 
             // 3) Tags — sync when provided (strings or objects with id)
-            if ($request->has('tags')) {
-                $tagIds = collect($request->input('tags', []))
-                    ->map(function ($tag) {
-                        if (is_array($tag) && isset($tag['id'])) {
-                            return (int) $tag['id'];
-                        }
-                        if (is_string($tag) && $tag !== '') {
-                            return Tag::firstOrCreate(['name' => $tag])->id;
-                        }
-                        return null;
-                    })
-                    ->filter()
-                    ->unique()
-                    ->values()
-                    ->all();
+            \Log::debug('Tags input: ' . print_r($request->input('tags', []), true));
+            $tagIds = collect($request->input('tags', []))
+                ->map(function ($tag) {
+                    if (is_array($tag) && isset($tag['id'])) {
+                        return (int) $tag['id'];
+                    }
+                    if (is_string($tag) && $tag !== '') {
+                        return Tag::firstOrCreate(['name' => $tag])->id;
+                    }
+                    return null;
+                })
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
 
-                $example->tags()->sync($tagIds);
-            }
+            $example->tags()->sync($tagIds);
 
             // 4) OLD images: delete when requested
             $ids = collect(Arr::wrap($request->input('images_to_remove', [])))

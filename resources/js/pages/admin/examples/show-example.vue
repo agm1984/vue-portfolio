@@ -91,7 +91,7 @@ onMounted(fetchExample);
                 <span>{{ example.conclusion }}</span>
 
                 <a-input-field title="Links"></a-input-field>
-                <div class="w-full grid grid-cols-[200px_1fr] gap-2">
+                <div v-if="example.links.length" class="w-full grid grid-cols-[200px_1fr] gap-2">
                     <template
                         v-for="(link, i) in example.links"
                         :key="`link-${link.url}`"
@@ -100,9 +100,10 @@ onMounted(fetchExample);
                         <span>{{ link.url }}</span>
                     </template>
                 </div>
+                <a-area-empty v-else>No links yet</a-area-empty>
 
                 <a-input-field title="Tags"></a-input-field>
-                <div class="w-full flex flex-wrap gap-2">
+                <div v-if="example.tags.length" class="w-full flex flex-wrap gap-2">
                     <Tag
                         v-for="(tag, index) in example.tags"
                         :key="`example-tag-${index}`"
@@ -110,9 +111,10 @@ onMounted(fetchExample);
                         rounded
                     />
                 </div>
+                <a-area-empty v-else>No tags yet</a-area-empty>
 
                 <a-input-field title="Images"></a-input-field>
-                <div class="w-full grid grid-cols-2 gap-4">
+                <div v-if="example.images.length" class="w-full grid grid-cols-2 gap-4">
                     <router-link
                         v-for="image in example.images"
                         :key="`example-image-${image.id}`"
@@ -129,6 +131,7 @@ onMounted(fetchExample);
                         :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
                     />
                 </div>
+                <a-area-empty v-else>No images yet</a-area-empty>
 
                 <a-input-field title="Created at"></a-input-field>
                 <span>{{ example.created_at_nice }} ({{ example.created_at_diff }})</span>

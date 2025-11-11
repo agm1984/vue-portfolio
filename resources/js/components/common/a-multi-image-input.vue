@@ -78,7 +78,6 @@ const handleRemoveNewImage = (index) => {
 
 <template>
     <div class="w-full flex flex-col gap-4">
-        {{ alreadyUploadedImages }}
         <div class="w-full grid grid-cols-2 gap-4">
             <div
                 v-for="image in alreadyUploadedImages"
