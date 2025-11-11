@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import axios from 'axios';
@@ -13,7 +14,7 @@ const categories = ref([]);
 const isLoading = computed(() => state.value === LOADING);
 // const isLoaded = computed(() => state.value === LOADED);
 
-async function fetchAllCategories() {
+const fetchAllCategories = async () => {
     try {
         state.value = LOADING;
 
@@ -31,32 +32,45 @@ onMounted(fetchAllCategories);
 
 <template>
     <a-card class="p-8">
-        <DataTable :value="categories" :loading="isLoading">
-            <template #header>
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <span class="text-3xl font-bold">Categories</span>
-                </div>
-            </template>
+        <div class="w-full flex items-center justify-between gap-4">
+            <h2>Categories</h2>
+
+            <Button as-child v-slot="slotProps">
+                <router-link
+                    :to="{ name: 'admin.categories.create' }"
+                    :class="slotProps.class"
+                ><i class="pi pi-plus"></i>Add Category</router-link>
+            </Button>
+        </div>
+
+        <DataTable class="mt-8" :value="categories" :loading="isLoading">
             <Column field="name" header="Name">
-                <template #body="slotProps">
+                <template #body="{ data }">
                     <router-link
                         class="font-semibold hover:underline"
                         :to="{
                             name: 'admin.categories.show',
-                            params: { category: slotProps.data.slug },
+                            params: { category: data.slug },
                         }"
-                    >{{ slotProps.data.name }}</router-link>
+                    >{{ data.name }}</router-link>
                 </template>
             </Column>
+
             <Column field="slug" header="Slug"></Column>
+
             <Column field="created_at_diff" header="Created"></Column>
+
             <Column field="updated_at_diff" header="Last Updated"></Column>
+
             <Column field="status_nice" header="Status">
-                <template #body="slotProps">
-                    <a-status-tag :status="slotProps.data.status_nice"></a-status-tag>
+                <template #body="{ data }">
+                    <a-status-tag :status="data.status_nice"></a-status-tag>
                 </template>
             </Column>
-            <template #footer>{{ categories ? categories.length : 0 }} categories total</template>
+
+            <template #footer>
+                <span>{{ categories.length === 1 ? '1 category' : `${categories.length} categories` }}</span>
+            </template>
         </DataTable>
     </a-card>
 </template>

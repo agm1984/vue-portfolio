@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import axios from 'axios';
@@ -31,29 +32,45 @@ onMounted(fetchAllExamples);
 
 <template>
     <a-card class="p-8">
-        <DataTable :value="examples" :loading="isLoading">
-            <template #header>
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <span class="text-3xl font-bold">Examples</span>
-                </div>
-            </template>
+        <div class="w-full flex items-center justify-between gap-4">
+            <h2>Examples</h2>
+
+            <Button as-child v-slot="slotProps">
+                <router-link
+                    :to="{ name: 'admin.examples.create' }"
+                    :class="slotProps.class"
+                ><i class="pi pi-plus"></i>Add Example</router-link>
+            </Button>
+        </div>
+
+        <DataTable class="mt-8" :value="examples" :loading="isLoading">
             <Column field="name" header="Name">
-                <template #body="slotProps">
-                    <router-link class="font-semibold hover:underline" :to="{ name: 'admin.examples.show', params: { example: slotProps.data.slug } }">
-                        {{ slotProps.data.name }}
-                    </router-link>
+                <template #body="{ data }">
+                    <router-link
+                        class="font-semibold hover:underline"
+                        :to="{ name: 'admin.examples.show', params: { example: data.slug } }"
+                    >{{ data.name }}</router-link>
                 </template>
             </Column>
+
             <Column field="slug" header="Slug"></Column>
+
             <Column field="category.name" header="Category"></Column>
+
             <Column field="created_at_diff" header="Created"></Column>
+
             <Column field="updated_at_diff" header="Last Updated"></Column>
+
             <Column field="status_nice" header="Status">
-                <template #body="slotProps">
-                    <a-status-tag :status="slotProps.data.status_nice"></a-status-tag>
+                <template #body="{ data }">
+                    <a-status-tag v-if="data.status === 0" severity="danger" label="Inactive"></a-status-tag>
+                    <a-status-tag v-if="data.status === 1" severity="success" label="Active"></a-status-tag>
                 </template>
             </Column>
-            <template #footer>{{ examples ? examples.length : 0 }} examples total</template>
+
+            <template #footer>
+                <span>{{ examples.length === 1 ? '1 example' : `${examples.length} examples` }}</span>
+            </template>
         </DataTable>
     </a-card>
 </template>

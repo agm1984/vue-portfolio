@@ -4,6 +4,7 @@ import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import Tag from 'primevue/tag';
+import ProgressSpinner from 'primevue/progressspinner';
 // import CommentsManager from './comments-manager.vue';
 
 useHead({
@@ -31,7 +32,7 @@ const isLoaded = computed(() => state.value === IS_LOADED);
 
 const currentRoute = useRoute();
 
-async function fetchExample () {
+const fetchExample = async () => {
   try {
     state.value = IS_LOADING;
     const res = await axios.get(route('public.examples.show', currentRoute.params.example));
@@ -42,17 +43,12 @@ async function fetchExample () {
   }
 }
 
-// Fetch initially and whenever the route param changes (e.g., in-view navigation)
-watch(
-  () => currentRoute.params.example,
-  () => { fetchExample() },
-  { immediate: true },
-);
+watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 </script>
 
 <template>
   <div v-if="isLoaded" class="container flex flex-col w-full">
-    <h1 class="main__heading">{{ example.name }}</h1>
+    <h1>{{ example.name }}</h1>
 
     <a-card class="p-8 main">
       <h2 level="2" class="mb-16">Summary</h2>
@@ -89,6 +85,7 @@ watch(
         :key="`link-${link.url}`"
         class="mt-16"
         :href="link.url"
+        target="_blank"
       >
         {{ link.name }}
       </a>
@@ -99,12 +96,14 @@ watch(
 
       <div class="flex flex-wrap gap-4">
         <Tag
-            v-for="tag in example.tags"
-            :key="`tag-${tag.name}`"
-            :value="tag.name"
+            v-for="(tag, index) in example.tags"
+            :key="`example-tag-${index}`"
+            :value="tag"
             rounded
         />
       </div>
     </a-card>
   </div>
+
+  <ProgressSpinner v-else />
 </template>

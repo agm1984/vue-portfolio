@@ -65,7 +65,7 @@ export default {
 
     computed: {
         containerStyles() {
-            const styles = ['relative h-auto rounded'];
+            const styles = ['relative h-auto rounded-xl'];
 
             if (this.fill) styles.push('w-full');
 

@@ -56,11 +56,13 @@ watch(() => form.link_url, (val) => emit('update:url', val));
             :errors="v$.link_name.$errors"
             name="Name"
         />
+    </div>
 
+    <div>
         <InputText
             v-model="v$.link_url.$model"
             id="example-link-url"
-            :class="['w-full mt-4', { 'p-invalid': v$.link_url.$invalid && submitted }]"
+            :class="['w-full', { 'p-invalid': v$.link_url.$invalid && submitted }]"
             autocomplete="off"
             placeholder="URL"
         />

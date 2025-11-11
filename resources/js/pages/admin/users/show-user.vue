@@ -33,43 +33,38 @@ onMounted(fetchUser)
 </script>
 
 <template>
-    <a-card class="p-8" with-geometry>
-        <div class="relative flex items-center mb-16">
+    <a-card class="p-8">
+        <div class="relative flex items-center gap-8">
             <a-avatar :size="64" :user="user"></a-avatar>
-            <h2 level="2" class="ml-8">
-                {{ user.name }}
-            </h2>
+            <h2>{{ user.name }}</h2>
         </div>
 
-        <div v-if="isShowing">
-            <a-input-row type="is-wider-right" heading="ID">
-                <span>{{ user.id }}</span>
-            </a-input-row>
+        <div v-if="isShowing" class="w-full grid grid-cols-[100px_1fr] gap-4 mt-8">
+            <a-input-field title="ID"></a-input-field>
+            <span>{{ user.id }}</span>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Status">
-                <a-status-tag v-if="user.status === 1" status="Active"></a-status-tag>
-            </a-input-row>
+            <a-input-field title="Status"></a-input-field>
+            <a-status-tag v-if="user.status === 0" severity="danger" label="Inactive"></a-status-tag>
+            <a-status-tag v-if="user.status === 1" severity="success" label="Active"></a-status-tag>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Name">
-                <span>{{ user.name }}</span>
-            </a-input-row>
+            <a-input-field title="Name"></a-input-field>
+            <span>{{ user.name }}</span>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Email">
+            <a-input-field title="Email"></a-input-field>
+            <div class="flex items-center gap-2">
                 <span>{{ user.email }}</span>
                 <i
                     v-if="user.email_verified_at"
                     class="pi pi-check-circle text-green-600 ml-2"
                     title="Verified"
                 ></i>
-            </a-input-row>
+            </div>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
-                <span>{{ user.created_at_nice }} ({{ user.created_at_diff }})</span>
-            </a-input-row>
+            <a-input-field title="Created at"></a-input-field>
+            <span>{{ user.created_at_nice }} ({{ user.created_at_diff }})</span>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
-                <span>{{ user.updated_at_nice }} ({{ user.updated_at_diff }})</span>
-            </a-input-row>
+            <a-input-field title="Updated at"></a-input-field>
+            <span>{{ user.updated_at_nice }} ({{ user.updated_at_diff }})</span>
         </div>
   </a-card>
 </template>

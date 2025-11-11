@@ -112,9 +112,9 @@ const handleSubmit = async () => {
 
             <Button
                 type="submit"
+                class="mt-8 w-full"
                 :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
                 label="Save"
-                class="mt-8 w-full"
                 :disabled="isSubmitting"
             />
         </form>

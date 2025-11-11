@@ -2,8 +2,6 @@
 import { ref, watch } from 'vue';
 import FileUpload from 'primevue/fileupload';
 import Button from 'primevue/button';
-import Message from 'primevue/message';
-import Badge from 'primevue/badge';
 
 const props = defineProps({
     exampleSlug: {
@@ -28,6 +26,7 @@ const emit = defineEmits([
     'remove-existing-image',
 ]);
 
+const alreadyUploadedImages = ref(props.existingImages);
 const files = ref([]);
 const src = ref([]);
 
@@ -63,6 +62,7 @@ const onSelectedFiles = async (event) => {
 const handleRemoveExistingImage = async (imageId) => {
     try {
         console.log('imageId', imageId);
+        alreadyUploadedImages.value = alreadyUploadedImages.value.filter(image => image.id !== imageId);
         emit('remove-existing-image', imageId);
     } catch (err) {
         console.error(`a-multi-image-input# Problem removing existing image: ${err}.`);
@@ -77,26 +77,46 @@ const handleRemoveNewImage = (index) => {
 </script>
 
 <template>
-    <div class="w-full grid grid-cols-2 gap-4 mb-4">
-        <div v-for="image in existingImages" :key="image.name">
-            <img :src="`/storage/examples/${exampleSlug}/${image.filename}`" />
-            <Button
-                type="button"
-                severity="danger"
-                icon="pi pi-times"
-                @click="handleRemoveExistingImage(image.id)"
-            />
+    <div class="w-full flex flex-col gap-4">
+        {{ alreadyUploadedImages }}
+        <div class="w-full grid grid-cols-2 gap-4">
+            <div
+                v-for="image in alreadyUploadedImages"
+                :key="`existing-image-${image.name}`"
+            >
+                <img
+                    class="w-full aspect-video object-cover"
+                    :src="`/storage/examples/${exampleSlug}/${image.filename}`"
+                    :alt="image.filename"
+                />
+                <Button
+                    type="button"
+                    class="mt-2"
+                    severity="danger"
+                    icon="pi pi-trash"
+                    label="Remove"
+                    @click="handleRemoveExistingImage(image.id)"
+                />
+            </div>
 
-        </div>
-
-        <div v-for="(item, index) in src" :key="index">
-            <img :src="item" />
-            <Button
-                type="button"
-                severity="danger"
-                icon="pi pi-times"
-                @click="handleRemoveNewImage(index)"
-            />
+            <div
+                v-for="(item, index) in src"
+                :key="`new-image-${index}`"
+            >
+                <img
+                    class="w-full aspect-video object-cover"
+                    :src="item"
+                    :alt="`Selected image ${index + 1}`"
+                />
+                <Button
+                    type="button"
+                    class="mt-2"
+                    severity="danger"
+                    icon="pi pi-trash"
+                    label="Remove"
+                    @click="handleRemoveNewImage(index)"
+                />
+            </div>
         </div>
 
         <FileUpload

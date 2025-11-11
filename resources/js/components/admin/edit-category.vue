@@ -37,7 +37,7 @@ const state = ref(INITIAL);
 const isSubmitting = computed(() => state.value === SUBMITTING);
 const submitted = ref(false);
 const isCreateMode = computed(() => props.mode === 'create');
-// const isEditMode = computed(() => props.mode === 'edit');
+const isEditMode = computed(() => props.mode === 'edit');
 
 const form = reactive({
     status: props.initialCategory.status,
@@ -105,71 +105,73 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <div class="relative">
-        <form @submit.prevent="handleSubmit">
-            <a-input-row type="is-wider-right" heading="Status">
-                <Select
-                    v-model="v$.status.$model"
-                    id="edit-category-status"
-                    :options="statuses"
-                    option-value="status"
-                    option-label="label"
-                    :invalid="v$.status.$error && submitted"
-                />
+    <form class="w-full grid grid-cols-[100px_1fr] gap-4 mt-8" @submit.prevent="handleSubmit">
+        <a-input-field class="mt-2" input-id="edit-category-status" title="Status" required></a-input-field>
+        <div>
+            <Select
+                v-model="v$.status.$model"
+                id="edit-category-status"
+                :options="statuses"
+                option-value="status"
+                option-label="label"
+                :invalid="v$.status.$error && submitted"
+            />
 
-                <a-field-errors
-                    v-if="v$.status.$error && submitted"
-                    :errors="v$.status.$errors"
-                    name="Status"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.status.$error && submitted"
+                :errors="v$.status.$errors"
+                name="Status"
+            />
+        </div>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
-                <InputText
-                    v-model="v$.slug.$model"
-                    id="edit-category-slug"
-                    :class="['w-full', { 'p-invalid': v$.slug.$invalid && submitted }]"
-                    autocomplete="off"
-                />
+        <a-input-field class="mt-2" input-id="edit-category-slug" title="Slug" required></a-input-field>
+        <div>
+            <InputText
+                v-model="v$.slug.$model"
+                id="edit-category-slug"
+                :class="['w-full', { 'p-invalid': v$.slug.$invalid && submitted }]"
+                autocomplete="off"
+            />
 
-                <a-field-errors
-                    v-if="v$.slug.$error && submitted"
-                    :errors="v$.slug.$errors"
-                    name="Slug"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.slug.$error && submitted"
+                :errors="v$.slug.$errors"
+                name="Slug"
+            />
+        </div>
 
-            <a-input-row class="pt-8" type="is-wider-right" heading="Name">
-                <InputText
-                    v-model="v$.name.$model"
-                    id="edit-category-name"
-                    :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
-                    autocomplete="off"
-                    placeholder=""
-                />
+        <a-input-field class="mt-2" input-id="edit-category-name" title="Name" required></a-input-field>
+        <div>
+            <InputText
+                v-model="v$.name.$model"
+                id="edit-category-name"
+                :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
+                autocomplete="off"
+                placeholder=""
+            />
 
-                <a-field-errors
-                    v-if="v$.name.$error && submitted"
-                    :errors="v$.name.$errors"
-                    name="Name"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.name.$error && submitted"
+                :errors="v$.name.$errors"
+                name="Name"
+            />
+        </div>
 
-            <div class="flex items-center justify-end gap-4 pt-8">
-                <Button
-                    type="button"
-                    severity="secondary"
-                    label="Cancel"
-                    @click="onReset"
-                />
+        <div class="col-span-2 w-full flex items-center justify-end gap-4">
+            <Button
+                v-if="isEditMode"
+                type="button"
+                severity="secondary"
+                label="Cancel"
+                @click="onReset"
+            />
 
-                <Button
-                    type="submit"
-                    :disabled="isSubmitting"
-                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'icon-check'"
-                    label="Save"
-                />
-            </div>
-        </form>
-    </div>
+            <Button
+                type="submit"
+                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                label="Save"
+                :disabled="isSubmitting"
+            />
+        </div>
+    </form>
 </template>

@@ -13,7 +13,7 @@ const users = ref([]);
 const isLoading = computed(() => state.value === LOADING);
 // const isLoaded = computed(() => state.value === LOADED);
 
-async function fetchAllUsers() {
+const fetchAllUsers = async () => {
     try {
         state.value = LOADING;
 
@@ -32,36 +32,41 @@ onMounted(fetchAllUsers);
 </script>
 
 <template>
-    <a-card with-geometry class="p-8">
-        <DataTable :value="users" :loading="isLoading">
-            <template #header>
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <span class="text-3xl font-bold">Users</span>
-                </div>
-            </template>
+    <a-card class="p-8">
+        <h2>Users</h2>
+
+        <DataTable class="mt-8" :value="users" :loading="isLoading">
             <Column field="name" header="Name">
-                <template #body="slotProps">
+                <template #body="{ data }">
                     <div class="flex items-center gap-2">
-                        <a-avatar :size="32" :user="slotProps.data"></a-avatar>
+                        <a-avatar :size="32" :user="data"></a-avatar>
                         <router-link
                             class="font-semibold hover:underline"
                             :to="{
                                 name: 'admin.users.show',
-                                params: { user: slotProps.data.id },
+                                params: { user: data.id },
                             }"
-                        >{{ slotProps.data.name }}</router-link>
+                        >{{ data.name }}</router-link>
                     </div>
                 </template>
             </Column>
+
             <Column field="email" header="Email"></Column>
+
             <Column field="created_at_diff" header="Created"></Column>
+
             <Column field="updated_at_diff" header="Last Updated"></Column>
+
             <Column field="status_nice" header="Status">
-                <template #body="slotProps">
-                    <a-status-tag :status="slotProps.data.status_nice"></a-status-tag>
+                <template #body="{ data }">
+                    <a-status-tag v-if="data.status === 0" severity="danger" label="Inactive"></a-status-tag>
+                    <a-status-tag v-if="data.status === 1" severity="success" label="Active"></a-status-tag>
                 </template>
             </Column>
-            <template #footer>{{ users ? users.length : 0 }} users total</template>
+
+            <template #footer>
+                <span>{{ users.length === 1 ? '1 user' : `${users.length} users` }}</span>
+            </template>
         </DataTable>
     </a-card>
 </template>

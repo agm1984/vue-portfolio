@@ -136,33 +136,36 @@ const handleSubmit = async () => {
 
         const payload = new FormData();
 
-        // Append simple scalar fields
+        // scalar fields
         ['status', 'category_id', 'name', 'slug', 'summary', 'conclusion'].forEach((field) => {
-        payload.append(field, form[field] ?? '');
+            payload.append(field, form[field] ?? '');
         });
 
-        // Append links
+        // links
         form.links.forEach((link, i) => {
-        if (link && typeof link === 'object') {
-            Object.keys(link).forEach((field) => {
-            payload.append(`links[${i}][${field}]`, link[field]);
-            })
-        }
+            if (link && typeof link === 'object') {
+                Object.keys(link).forEach((field) => {
+                payload.append(`links[${i}][${field}]`, link[field]);
+                })
+            }
         });
 
-        // Append tags (supports both strings and objects)
+        // tags
         form.tags.forEach((tag, i) => {
-        if (Object.prototype.toString.call(tag) === '[object String]') {
-            payload.append(`tags[${i}]`, tag)
-        } else if (tag && typeof tag === 'object') {
-            Object.keys(tag).forEach((field) => {
-            payload.append(`tags[${i}][${field}]`, tag[field])
-            })
-        }
+            if (Object.prototype.toString.call(tag) === '[object String]') {
+                payload.append(`tags[${i}]`, tag)
+            } else if (tag && typeof tag === 'object') {
+                Object.keys(tag).forEach((field) => {
+                payload.append(`tags[${i}][${field}]`, tag[field])
+                })
+            }
         });
 
-        // Append images (files)
-        form.images.forEach((image, i) => payload.append(`images[${i}]`, image));
+        // images
+        console.log('form.images', form.images);
+        form.images.forEach((image, i) => {
+            if (!image.id) payload.append(`images[${i}]`, image); // only include new images
+        });
 
         if (isCreateMode.value) {
             const { data } = await axios.post(route('admin.examples.create'), payload);
@@ -176,7 +179,6 @@ const handleSubmit = async () => {
         } else {
             payload.append('_method', 'PATCH');
 
-            console.log('imagesToRemove', imagesToRemove.value);
             imagesToRemove.value.forEach((imageId, index) => {
                 payload.append(`images_to_remove[${index}]`, imageId);
             });
@@ -203,161 +205,163 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <div class="relative">
-        <form @submit.prevent="handleSubmit">
-            <a-input-row type="is-wider-right" heading="Status">
-                <Select
-                    v-model="v$.status.$model"
-                    id="edit-example-status"
-                    :options="statuses"
-                    option-value="status"
-                    option-label="label"
-                    :invalid="v$.status.$error && submitted"
-                />
+    <form class="w-full grid grid-cols-[100px_1fr] gap-4 mt-8" @submit.prevent="handleSubmit">
+        <a-input-field class="mt-2" input-id="edit-example-status" title="Status" required></a-input-field>
+        <div>
+            <Select
+                v-model="v$.status.$model"
+                id="edit-example-status"
+                :options="statuses"
+                option-value="status"
+                option-label="label"
+                :invalid="v$.status.$error && submitted"
+            />
 
-                <a-field-errors
-                    v-if="v$.status.$error && submitted"
-                    :errors="v$.status.$errors"
-                    name="Status"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.status.$error && submitted"
+                :errors="v$.status.$errors"
+                name="Status"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Category">
-                <Select
-                    v-model="v$.category_id.$model"
-                    id="edit-example-category-id"
-                    :options="categories"
-                    option-value="id"
-                    option-label="name"
-                    :invalid="v$.category_id.$error && submitted"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-category-id" title="Category" required></a-input-field>
+        <div>
+            <Select
+                v-model="v$.category_id.$model"
+                id="edit-example-category-id"
+                :options="categories"
+                option-value="id"
+                option-label="name"
+                :invalid="v$.category_id.$error && submitted"
+            />
 
-                <a-field-errors
-                    v-if="v$.category_id.$error && submitted"
-                    :errors="v$.category_id.$errors"
-                    name="Category"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.category_id.$error && submitted"
+                :errors="v$.category_id.$errors"
+                name="Category"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Name">
-                <InputText
-                    v-model="v$.name.$model"
-                    id="edit-example-name"
-                    :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
-                    autocomplete="off"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-name" title="Name" required></a-input-field>
+        <div>
+            <InputText
+                v-model="v$.name.$model"
+                id="edit-example-name"
+                :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
+                autocomplete="off"
+            />
 
-                <a-field-errors
-                    v-if="v$.name.$error && submitted"
-                    :errors="v$.name.$errors"
-                    name="Name"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.name.$error && submitted"
+                :errors="v$.name.$errors"
+                name="Name"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Slug">
-                <InputText
-                    v-model="v$.slug.$model"
-                    id="edit-example-slug"
-                    :class="['w-full', { 'p-invalid': v$.slug.$invalid && submitted }]"
-                    autocomplete="off"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-slug" title="Slug" required></a-input-field>
+        <div>
+            <InputText
+                v-model="v$.slug.$model"
+                id="edit-example-slug"
+                :class="['w-full', { 'p-invalid': v$.slug.$invalid && submitted }]"
+                autocomplete="off"
+            />
 
-                <a-field-errors
-                    v-if="v$.slug.$error && submitted"
-                    :errors="v$.slug.$errors"
-                    name="Slug"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.slug.$error && submitted"
+                :errors="v$.slug.$errors"
+                name="Slug"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Summary" is-tall>
-                <Textarea
-                    v-model="v$.summary.$model"
-                    id="edit-example-summary"
-                    :class="['w-full', { 'p-invalid': v$.summary.$invalid && submitted }]"
-                    rows="6"
-                    autocomplete="off"
-                    maxlength="2000"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-summary" title="Summary" required></a-input-field>
+        <div>
+            <Textarea
+                v-model="v$.summary.$model"
+                id="edit-example-summary"
+                :class="['w-full', { 'p-invalid': v$.summary.$invalid && submitted }]"
+                rows="6"
+                autocomplete="off"
+                maxlength="2000"
+            />
 
-                <a-field-errors
-                    v-if="v$.summary.$error && submitted"
-                    :errors="v$.summary.$errors"
-                    name="Summary"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.summary.$error && submitted"
+                :errors="v$.summary.$errors"
+                name="Summary"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Conclusion" is-tall>
-                <Textarea
-                    v-model="v$.conclusion.$model"
-                    id="edit-example-conclusion"
-                    :class="['w-full', { 'p-invalid': v$.conclusion.$invalid && submitted }]"
-                    rows="6"
-                    autocomplete="off"
-                    maxlength="2000"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-conclusion" title="Conclusion" required></a-input-field>
+        <div>
+            <Textarea
+                v-model="v$.conclusion.$model"
+                id="edit-example-conclusion"
+                :class="['w-full', { 'p-invalid': v$.conclusion.$invalid && submitted }]"
+                rows="6"
+                autocomplete="off"
+                maxlength="2000"
+            />
 
-                <a-field-errors
-                    v-if="v$.conclusion.$error && submitted"
-                    :errors="v$.conclusion.$errors"
-                    name="Conclusion"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.conclusion.$error && submitted"
+                :errors="v$.conclusion.$errors"
+                name="Conclusion"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Links" is-tall>
-                <example-links-input
-                    v-model="v$.links.$model"
-                    :submitted="submitted"
-                />
-            </a-input-row>
+        <a-input-field class="mt-2" input-id="edit-example-links" title="Links"></a-input-field>
+        <example-links-input
+            v-model="v$.links.$model"
+            :submitted="submitted"
+        />
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Tags" is-tall>
-                <Autocomplete
-                    v-model="v$.tags.$model"
-                    input-id="edit-example-tags"
-                    class="w-full"
-                    :invalid="v$.tags.$error && submitted"
-                    :suggestions="filteredTags"
-                    placeholder="Type a tag..."
-                    multiple
-                    @complete="handleTagMatches"
-                />
+        <a-input-field class="mt-2" input-id="edit-example-tags" title="Tags"></a-input-field>
+        <div>
+            <Autocomplete
+                v-model="v$.tags.$model"
+                input-id="edit-example-tags"
+                class="w-full"
+                :invalid="v$.tags.$error && submitted"
+                :suggestions="filteredTags"
+                placeholder="Type a tag..."
+                multiple
+                @complete="handleTagMatches"
+            />
 
-                <a-field-errors
-                    v-if="v$.tags.$error && submitted"
-                    :errors="v$.tags.$errors"
-                    name="Tags"
-                />
-            </a-input-row>
+            <a-field-errors
+                v-if="v$.tags.$error && submitted"
+                :errors="v$.tags.$errors"
+                name="Tags"
+            />
+        </div>
 
-            <a-input-row class="pt-4" type="is-wider-right" heading="Images">
-                <a-multi-image-input
-                    v-model="v$.images.$model"
-                    :example-slug="initialExample.slug"
-                    :existing-images="initialExample.images"
-                    id="edit-example-images"
-                    @remove-existing-image="(imageId) => {
-                        // Remove image from form.images
-                        form.images = form.images.filter(image => image.id !== imageId);
-                        imagesToRemove.push(imageId);
-                    }"
-                />
-            </a-input-row>
+        <a-input-field class="mt-2" input-id="edit-example-images" title="Images"></a-input-field>
+        <a-multi-image-input
+            v-model="v$.images.$model"
+            :example-slug="initialExample.slug"
+            :existing-images="initialExample.images"
+            id="edit-example-images"
+            @remove-existing-image="(imageId) => {
+                form.images = form.images.filter(image => image.id !== imageId);
+                imagesToRemove.push(imageId);
+            }"
+        />
 
-            <div class="flex items-center justify-end gap-4">
-                <Button
-                    type="button"
-                    severity="secondary"
-                    label="Cancel"
-                    @click="onReset"
-                />
+        <div class="col-span-2 w-full flex items-center justify-end gap-4">
+            <Button
+                type="button"
+                severity="secondary"
+                label="Cancel"
+                @click="onReset"
+            />
 
-                <Button
-                    type="submit"
-                    icon="pi pi-check"
-                    label="Save"
-                    :disabled="isSubmitting"
-                />
-            </div>
-        </form>
-    </div>
+            <Button
+                type="submit"
+                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                label="Save"
+                :disabled="isSubmitting"
+            />
+        </div>
+    </form>
 </template>
