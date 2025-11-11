@@ -31,6 +31,7 @@ const files = ref([]);
 const src = ref([]);
 
 watch(props.modelValue, (newVal) => {
+    alreadyUploadedImages.value = props.existingImages;
     files.value = newVal || [];
     src.value = [];
 }, { immediate: true });
@@ -45,24 +46,19 @@ const readAsDataURL = (file) => {
 };
 
 const onSelectedFiles = async (event) => {
-  const list = event?.files ?? [];
-  const fileArr = Array.from(list);
+    const list = event?.files ?? [];
+    const fileArr = Array.from(list);
+    files.value = fileArr;
 
-  files.value = fileArr;
-  emit('update:model-value', files.value);
+    emit('update:model-value', files.value);
 
-  if (fileArr.length === 0) {
-    src.value = [];
-    return;
-  }
-
-  src.value = await Promise.all(fileArr.map(readAsDataURL));
+    src.value = await Promise.all(fileArr.map(readAsDataURL));
 }
 
 const handleRemoveExistingImage = async (imageId) => {
     try {
-        console.log('imageId', imageId);
         alreadyUploadedImages.value = alreadyUploadedImages.value.filter(image => image.id !== imageId);
+
         emit('remove-existing-image', imageId);
     } catch (err) {
         console.error(`a-multi-image-input# Problem removing existing image: ${err}.`);
@@ -72,6 +68,7 @@ const handleRemoveExistingImage = async (imageId) => {
 const handleRemoveNewImage = (index) => {
     files.value.splice(index, 1);
     src.value.splice(index, 1);
+
     emit('update:model-value', files.value);
 };
 </script>

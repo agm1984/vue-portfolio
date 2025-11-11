@@ -118,7 +118,7 @@ const handleCategorySaved = (updatedCategory) => {
                                 <span>{{ example.name }}</span>
                             </div>
 
-                            <div  class="absolute bottom-0 right-0 p-2">
+                            <div class="absolute bottom-0 right-0 p-2">
                                 <a-status-tag v-if="example.status === 1" severity="success" :label="example.status_nice" />
                                 <a-status-tag v-else severity="danger" :label="example.status_nice" />
                             </div>

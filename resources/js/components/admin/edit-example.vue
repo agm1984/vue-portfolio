@@ -46,7 +46,7 @@ const state = ref(INITIAL);
 const isSubmitting = computed(() => state.value === SUBMITTING);
 const submitted = ref(false);
 const isCreateMode = computed(() => props.mode === 'create');
-// const isEditMode = computed(() => props.mode === 'edit');
+const isEditMode = computed(() => props.mode === 'edit');
 const categories = ref([]);
 const allTags = ref([]);
 const filteredTags = ref([]);
@@ -350,6 +350,7 @@ const handleSubmit = async () => {
 
         <div class="col-span-2 w-full flex items-center justify-end gap-4">
             <Button
+                v-if="isEditMode"
                 type="button"
                 severity="secondary"
                 label="Cancel"

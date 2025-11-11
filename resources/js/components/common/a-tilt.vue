@@ -5,7 +5,6 @@
         @mouseleave="handleMouseLeave"
     >
         <slot></slot>
-
     </div>
 </template>
 

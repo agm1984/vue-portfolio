@@ -69,7 +69,7 @@ export default {
 
             if (this.fill) styles.push('w-full');
 
-            if (this.light) styles.push('light-card');
+            if (this.light) styles.push('bg-white');
             else if (this.dark) styles.push('dark-card');
 
             return styles;
