@@ -102,7 +102,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
                 class="w-full inline-flex bg-gray-100"
                 :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
             >
-                <a-tilt v-if="example.images?.length > 0" class="self-stretch">
+                <a-tilt v-if="example.images?.length > 0">
                     <a-image
                         :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
                         class="w-full object-cover aspect-video"
@@ -144,7 +144,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </div>
         </a-card>
 
-        <div class="flex justify-center w-full mt-32 text-primary">
+        <div class="flex justify-center w-full mt-8 text-primary">
             △△△
         </div>
   </div>
