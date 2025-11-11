@@ -1,13 +1,13 @@
 <template>
     <div class="flex w-full h-auto p-8">
-        <div class="flex flex-col gap-4">
-            <h1 level="1">Admin</h1>
+        <div class="min-w-[125px] flex flex-col gap-4">
+            <h1>Admin</h1>
 
             <div>
                 <router-link
                     :to="{ name: 'admin' }"
                     :active="$router.currentRoute.name === 'admin'"
-                >Admin Dashboard</router-link>
+                >Dashboard</router-link>
             </div>
 
             <div>

@@ -14,13 +14,13 @@ const logout = async () => {
 </script>
 
 <template>
-    <nav class="sticky top-0 z-10 bg-white">
-        <div class="w-full flex justify-between">
-            <router-link :to="{ name: auth.isAuthenticated ? 'home' : 'home' }" class="navbar-brand">
+    <nav class="sticky top-0 z-10 bg-white py-2 px-8">
+        <div class="w-full flex items-center justify-between">
+            <router-link :to="{ name: auth.isAuthenticated ? 'admin' : 'home' }" class="navbar-brand">
                 {{ appName }}
             </router-link>
 
-            <div>
+            <div class="flex items-center gap-4">
                 <router-link
                     :to="{ name: 'about' }"
                     class="nav-link inline-block text-dark"
@@ -31,7 +31,7 @@ const logout = async () => {
 
                 <router-link
                     :to="{ name: 'skills' }"
-                    class="nav-link inline-block ml-4 text-dark"
+                    class="nav-link inline-block text-dark"
                     active-class="active"
                 >
                     Skills
@@ -39,7 +39,7 @@ const logout = async () => {
 
                 <router-link
                     :to="{ name: 'public.examples.list' }"
-                    class="nav-link inline-block ml-4 text-dark"
+                    class="nav-link inline-block text-dark"
                     active-class="active"
                 >
                     Examples
@@ -47,34 +47,15 @@ const logout = async () => {
 
                 <router-link
                     :to="{ name: 'admin' }"
-                    class="nav-link inline-block ml-4 text-dark"
+                    class="nav-link inline-block text-dark"
                     active-class="active"
                 >
-                    Admin Area
+                    Admin
                 </router-link>
             </div>
 
             <!-- Authenticated -->
-            <ul v-if="auth.isAuthenticated" class="w-48 flex flex-col">
-                <li class="min-w-8 max-w-8 min-h-8 max-h-8 flex">
-                    <a-avatar :size="32" :user="auth.user" />
-                    <span class="whitespace-nowrap">{{ auth.user.name }}</span>
-                </li>
-
-                <li>
-                    <router-link :to="{ name: 'settings.profile' }" class="">
-                        <!-- <fa icon="cog" fixed-width /> -->
-                        Settings
-                    </router-link>
-                </li>
-
-                <li>
-                    <a href="#" class="" @click.prevent="logout">
-                        <!-- <fa icon="sign-out-alt" fixed-width /> -->
-                        Logout
-                    </a>
-                </li>
-            </ul>
+            <user-menu v-if="auth.isAuthenticated" />
 
             <!-- Guest -->
             <ul v-else>
@@ -92,11 +73,3 @@ const logout = async () => {
         </div>
     </nav>
 </template>
-
-<style scoped>
-  .profile-photo {
-      width: 2rem;
-      height: 2rem;
-      margin: -.375rem 0;
-  }
-</style>

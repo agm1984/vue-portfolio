@@ -27,3 +27,10 @@ h5 {
 h6 { 
     @apply text-base font-semibold;
 }
+
+/* CHROMIUM ICON BUG FIX */
+.pi:before {
+    --webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: relative;
+}

@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
       class="app-img__placeholder"
       ref="placeholderRef"
     >
-      <img :src="props.placeholder || dataUrl" alt v-bind="attrs">
+      <img :src="props.placeholder" alt v-bind="attrs">
     </div>
 
     <img
