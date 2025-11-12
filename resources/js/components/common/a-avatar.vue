@@ -17,7 +17,7 @@ const user = computed(() => props.user);
 
 const hasImage = computed(() => !!(user.value?.avatar_url && user.value.avatar_url.length > 0));
 const firstLetterOfName = computed(() => (user.value?.name ? user.value.name.charAt(0) : ''));
-const containerStyles = computed(() => ['flex items-center justify-center rounded-full border']);
+const containerStyles = computed(() => ['flex items-center justify-center rounded-full border border-2']);
 </script>
 
 <template>

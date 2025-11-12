@@ -27,8 +27,8 @@ const toggleMenu = (event) => {
 </script>
 
 <template>
-    <div>
-        <Button
+    <div class="w-48 h-full flex items-center justify-end gap-4">
+        <button
             type="button"
             severity="secondary"
             aria-haspopup="true"
@@ -36,8 +36,8 @@ const toggleMenu = (event) => {
             @click="toggleMenu"
         >
             <a-avatar :size="32" :user="auth.user" />
-            <span>{{ auth.user.name }}</span>
-        </Button>
+            <!-- <span class="font-semibold">{{ auth.user.name }}</span> -->
+        </button>
     </div>
 
     <Menu ref="userMenu" :model="menuItems" popup>

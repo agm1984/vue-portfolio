@@ -1,6 +1,6 @@
 <template>
     <a
-        class="inline"
+        class="inline-flex items-center gap-2"
         :href="profileUrl"
         rel="noopener noreferrer"
         target="_blank"
@@ -100,8 +100,6 @@
 </template>
 
 <script>
-import tailwind from '../../../../tailwind.config';
-
 export default {
     name: 'a-social-icon',
 
@@ -114,7 +112,7 @@ export default {
 
     data() {
         return {
-            fillColor: tailwind.theme.colors.primary,
+            fillColor: '#000000',
         };
     },
 
@@ -145,7 +143,7 @@ export default {
         },
 
         svgStyles() {
-            const styles = ['inline mb-4'];
+            const styles = ['inline'];
 
             return styles;
         },

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 html {
-    background-color: #f6f4f3;
+    @apply bg-gray-100;
 }
 
 h1 { 

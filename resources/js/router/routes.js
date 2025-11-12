@@ -3,15 +3,16 @@ const routes = [
     { path: '/about', name: 'about', meta: { requiresAuth: true }, component: () => import('../pages/aboutMe/about-me.vue') },
     { path: '/skills', name: 'skills', meta: { preloadOnly: true }, component: () => import('../pages/skills/skills.vue') },
     {
-        path: '/examples/:category?',
-        name: 'public.examples.list',
+        path: '/examples',
+        name: 'public.examples',
         component: () => import('../pages/examples/examples.vue'),
+        redirect: { name: 'public.examples.list' },
         children: [
-            { path: '/examples/:category?', name: 'public.examples.filtered', component: () => import('../pages/examples/show-example.vue') },
+            { path: ':category?', name: 'public.examples.list', component: () => import('../pages/examples/list-examples.vue') },
+            { path: ':category/:example', name: 'public.examples.show', component: () => import('../pages/examples/show-example.vue') },
+            { path: ':category/:example/images/:filename', name: 'public.examples.images', component: () => import('../pages/examples/show-example-images.vue') },
         ],
     },
-    { path: '/examples/:category/:example', name: 'public.examples.show', component: () => import('../pages/examples/show-example.vue') },
-    { path: '/examples/:category/:example/images/:filename', name: 'public.examples.images', component: () => import('../pages/examples/show-example-images.vue') },
 
     { path: '/contact', name: 'contact', component: () => import('../pages/contact/contact.vue') },
 

@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-col w-full h-auto p-8 xl:w-1024 xl:p-0">
-        <a-card class="p-8">
-            <h1 class="mb-16">About me</h1>
+    <div class="flex flex-col w-full h-auto p-8">
+        <h1>About me</h1>
 
-            <div class="flex flex-col h-auto md:flex-row">
-                <div class="w-full mr-0 md:w-1/2 md:mr-16">
+        <a-card class="p-8">
+            <div class="flex flex-col">
+                <div class="w-full">
                     <p>
                         I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
                         but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
@@ -27,26 +27,26 @@
                         Check out my <router-link :to="{ name: 'contact' }">Contact</router-link> page.
                     </p>
 
-                    <div class="flex flex-col pb-8 bg-grey-200">
+                    <div class="flex flex-col pb-8 bg-gray-200">
                         <h2 level="4" class="px-16 py-8 bg-primary" nunito light>
                             Find me on social media
                         </h2>
-                        <!-- <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link> -->
-                        <!-- <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link> -->
-                        <!-- <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link> -->
-                        <!-- <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link> -->
+                        <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
+                        <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link>
                     </div>
                 </div>
 
-                <div class="w-full mt-32 md:w-1/2 md:mt-0">
-                    <img src="adam-center.png" class="w-full h-auto pl-0 md:pl-16" alt="">
+                <div class="w-full">
+                    <img src="adam-center.png" class="aspect-square" alt="Image of Adam Mackintosh">
                 </div>
             </div>
 
         </a-card>
 
-        <!-- <div class="w-full">
-            <h2 level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</h2>
+        <div class="w-full">
+            <h2>A BRIEF WORD</h2>
 
             <div class="flex flex-col w-full xl:flex-row">
                 <a-card class="order-1 p-8 mr-0 xl:mr-16" fill primary>
@@ -98,7 +98,7 @@
                 </a-card>
             </div>
 
-        </div> -->
+        </div>
 
         <div class="flex justify-center w-full mt-32 text-primary">
             △△△
