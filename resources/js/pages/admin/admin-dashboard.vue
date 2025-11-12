@@ -1,49 +1,54 @@
+<script setup>
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const isDashboard = computed(() => route.name === 'admin');
+</script>
+
 <template>
     <div class="flex w-full h-auto p-8">
         <div class="min-w-[125px] flex flex-col gap-4">
             <h1>Admin</h1>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin' }"
-                    :active="$router.currentRoute.name === 'admin'"
-                >Dashboard</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin' }"
+                :class="['w-full inline-flex items-center font-semibold', {
+                    'border-r-2': isDashboard,
+                }]"
+                active-class=""
+            >Dashboard</router-link>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin.users.list' }"
-                    :active="$router.currentRoute.name === 'admin.users.list'"
-                >List Users</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin.users.list' }"
+                class="w-full inline-flex items-center font-semibold"
+                active-class="border-r-2"
+            >List Users</router-link>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin.categories.list' }"
-                    :active="$router.currentRoute.name === 'admin.categories.list'"
-                >List Categories</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin.categories.list' }"
+                class="w-full inline-flex items-center font-semibold"
+                active-class="border-r-2"
+            >List Categories</router-link>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin.categories.create' }"
-                    :active="$router.currentRoute.name === 'admin.categories.create'"
-                >Add Category</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin.categories.create' }"
+                class="w-full inline-flex items-center font-semibold"
+                active-class="border-r-2"
+            >Add Category</router-link>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin.examples.list' }"
-                    :active="$router.currentRoute.name === 'admin.examples.list'"
-                >List Examples</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin.examples.list' }"
+                class="w-full inline-flex items-center font-semibold"
+                active-class="border-r-2"
+            >List Examples</router-link>
 
-            <div>
-                <router-link
-                    :to="{ name: 'admin.examples.create' }"
-                    :active="$router.currentRoute.name === 'admin.examples.create'"
-                >Add Example</router-link>
-            </div>
+            <router-link
+                :to="{ name: 'admin.examples.create' }"
+                class="w-full inline-flex items-center font-semibold"
+                active-class="border-r-2"
+            >Add Example</router-link>
         </div>
 
         <div class="w-full h-auto ml-8">
@@ -114,78 +119,3 @@
         </div> -->
     </div>
 </template>
-
-<script>
-// import VueApexCharts from 'vue-apexcharts';
-
-const INITIAL = 'INITIAL';
-const LOADED = 'LOADED';
-
-export default {
-    name: 'admin-dashboard',
-
-    components: {
-        // apexchart: VueApexCharts,
-    },
-
-    metaInfo() {
-        return { title: 'Dashboard' };
-    },
-
-    data() {
-        return {
-            state: INITIAL,
-            options: {
-                chart: {
-                    id: 'vuechart-example',
-                },
-                xaxis: {
-                    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-                },
-            },
-            series: [{
-                name: 'series-1',
-                data: [30, 40, 45, 50, 49, 60, 70, 91],
-            }],
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        };
-    },
-
-    computed: {
-        isDashboard() {
-            return (this.$route.matched.length === 1);
-        },
-
-        isLoaded() {
-            return (this.state === LOADED);
-        },
-
-        currentDate() {
-            const d = new Date();
-            return `${this.months[d.getMonth()]} ${d.getDate()}`;
-        },
-    },
-
-    mounted() {
-        // this.renderChart(this.chartdata, this.options);
-    },
-
-    methods: {
-        async fetchChart() {
-            try {
-                // const { data } = await axios.get(route('admin.categories.list'));
-
-                const data = [40, 20];
-
-                console.log('chart data', data);
-
-                this.chartdata.datasets[0].data = data;
-                this.state = LOADED;
-            } catch (err) {
-                throw new Error(`admin-dashboard# Problem fetching chart data: ${err}.`);
-            }
-        },
-    },
-
-};
-</script>
