@@ -7,7 +7,7 @@ useHead({
 </script>
 
 <template>
-    <div class="p-8">
+    <div class="flex-1 flex flex-col p-8">
         <div class="relative">
             <div
                 class="bg-no-repeat bg-cover rounded-full h-16 w-16 border"

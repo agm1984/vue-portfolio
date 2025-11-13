@@ -12,8 +12,6 @@ useHead({
     title: 'Profile',
 });
 
-defineOptions({ name: 'edit-profile' });
-
 const auth = useAuthStore();
 
 const INITIAL = 'is-initial';
@@ -44,7 +42,6 @@ const handleSubmit = async () => {
         const isFormValid = await v$.value.$validate();
 
         if (!isFormValid) {
-            console.log('Form is invalid');
             state.value = INITIAL;
             return;
         }
@@ -57,8 +54,6 @@ const handleSubmit = async () => {
 
         const { data } = await axios.post(route('user.profile.edit'), payload);
 
-        console.log('data', data.user);
-
         auth.updateUser(data);
     } catch (error) {
         console.error(error);
@@ -69,55 +64,52 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <div class="">
-        <form @submit.prevent="handleSubmit">
-            <div class="flex items-center justify-center">
-                <a-single-image-input
-                    v-model="form.avatar"
-                    :user="auth.user"
-                ></a-single-image-input>
-            </div>
+    <form class="mt-4" @submit.prevent="handleSubmit">
+        <div class="flex items-center justify-center">
+            <a-single-image-input
+                v-model="form.avatar"
+                :user="auth.user"
+            ></a-single-image-input>
+        </div>
 
-            <a-input-field input-id="profile-name" title="Name" required />
+        <a-input-field class="mt-4" input-id="profile-name" title="Name" required />
 
-            <InputText
-                v-model="v$.name.$model"
-                id="profile-name"
-                :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
-                autocomplete="name"
-                placeholder=""
-            />
+        <InputText
+            v-model="v$.name.$model"
+            id="profile-name"
+            :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
+            autocomplete="name"
+            placeholder=""
+        />
 
-            <a-field-errors
-                v-if="v$.name.$error && submitted"
-                :errors="v$.name.$errors"
-                name="Name"
-            />
+        <a-field-errors
+            v-if="v$.name.$error && submitted"
+            :errors="v$.name.$errors"
+            name="Name"
+        />
 
-            <a-input-field input-id="profile-email" title="Email" required />
+        <a-input-field class="mt-4" input-id="profile-email" title="Email" required />
 
-            <InputText
-                v-model="v$.email.$model"
-                id="profile-email"
-                :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
-                autocomplete="email"
-                placeholder=""
-            />
+        <InputText
+            v-model="v$.email.$model"
+            id="profile-email"
+            :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+            autocomplete="email"
+            placeholder=""
+        />
 
-            <a-field-errors
-                v-if="v$.email.$error && submitted"
-                :errors="v$.email.$errors"
-                name="Email"
-            />
+        <a-field-errors
+            v-if="v$.email.$error && submitted"
+            :errors="v$.email.$errors"
+            name="Email"
+        />
 
-            <Button
-                type="submit"
-                class="mt-8 w-full"
-                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                label="Save"
-                :disabled="isSubmitting"
-            />
-        </form>
-
-    </div>
+        <Button
+            type="submit"
+            class="w-full mt-4"
+            :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+            label="Save"
+            :disabled="isSubmitting"
+        />
+    </form>
 </template>

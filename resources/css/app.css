@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-html {
-    @apply bg-gray-100;
-}
-
 h1 { 
     @apply text-4xl font-semibold;
 }

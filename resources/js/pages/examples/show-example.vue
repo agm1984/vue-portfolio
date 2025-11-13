@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import Tag from 'primevue/tag';
 import ProgressSpinner from 'primevue/progressspinner';
-// import CommentsManager from './comments-manager.vue';
 
 useHead({
     title: 'Example',
@@ -47,16 +46,14 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 </script>
 
 <template>
-  <div v-if="isLoaded" class="container flex flex-col w-full">
+  <div v-if="isLoaded" class="flex flex-col w-full p-8">
     <h1>{{ example.name }}</h1>
 
-    <a-card class="p-8 main">
-      <h2 level="2" class="mb-16">Summary</h2>
-      <p>
-        {{ example.summary }}
-      </p>
+    <a-card class="p-8 main mt-8">
+      <h2>Summary</h2>
+      <p>{{ example.summary }}</p>
 
-      <h2 level="2" class="mt-32 mb-16">Images</h2>
+      <h2 class="mt-4">Images</h2>
       <div class="w-full grid grid-cols-2 gap-4">
         <router-link
           v-for="image in example.images"
@@ -68,17 +65,15 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
         ></router-link>
       </div>
 
-      <h2 level="2" class="mt-32 mb-16">Conclusion</h2>
-      <p>
-        {{ example.conclusion }}
-      </p>
+      <h2 class="mt-4">Conclusion</h2>
+      <p>{{ example.conclusion }}</p>
 
-      <h2 level="2" class="mt-32 mb-16">Feedback</h2>
-      <!-- <comments-manager></comments-manager> -->
+      <h2 class="mt-4">Feedback</h2>
+      <comments-manager></comments-manager>
     </a-card>
 
-    <a-card class="p-8 links">
-      <h2 level="2">Links</h2>
+    <a-card class="p-8 mt-4">
+      <h2 class="mt-4">Links</h2>
 
       <a
         v-for="link in example.links"
@@ -91,8 +86,8 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
       </a>
     </a-card>
 
-    <a-card class="p-8 tags">
-      <h2 level="2" class="mb-16">Tags</h2>
+    <a-card class="p-8 mt-4">
+      <h2>Tags</h2>
 
       <div class="flex flex-wrap gap-4">
         <Tag

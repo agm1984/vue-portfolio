@@ -38,10 +38,10 @@ function onFileSelect(event) {
     <div>
         <div
             v-if="imagePreview"
-            class="flex items-center justify-center p-8"
+            class="flex items-center justify-center"
         >
             <img
-                class="bg-no-repeat bg-cover rounded-full w-32 h-32"
+                class="w-32 h-32 bg-cover rounded-full"
                 :src="imagePreview"
                 alt="User avatar"
             >
@@ -56,12 +56,11 @@ function onFileSelect(event) {
         </div>
 
         <FileUpload
+            class="p-button-secondary mt-2"
             mode="basic"
             @select="onFileSelect"
             customUpload
             auto
-            severity="secondary"
-            class="p-button-outlined"
         />
     </div>
 </template>

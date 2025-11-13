@@ -4,6 +4,7 @@ import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import Button from 'primevue/button';
+import Tag from 'primevue/tag';
 
 useHead({
     title: 'Examples',
@@ -60,7 +61,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 </script>
 
 <template>
-    <div class="flex flex-col w-full h-auto p-8">
+    <div class="max-w-5xl mx-auto flex flex-col w-full h-auto p-8">
         <div class="w-full h-10 flex items-center justify-between gap-4">
             <h1>Examples</h1>
 
@@ -89,11 +90,11 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </div>
         </div>
 
-        <a-card v-if="examples.length" class="w-full grid grid-cols-2 xl:grid-cols-3 gap-4 p-4 mt-4">
+        <div v-if="examples.length" class="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
-                class="w-full inline-flex bg-gray-100"
+                class="w-full inline-flex bg-gray-200"
                 :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
             >
                 <a-tilt v-if="example.images?.length > 0">
@@ -103,28 +104,28 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
                         background="#ffffff"
                         alt="Example image"
                     >
-                        <div class="w-full bg-gray-900 text-white p-2">
-                            <span>{{ example.name }}</span>
+                        <div class="w-full bg-white text-gray-900 p-2">
+                            <span class="font-semibold">{{ example.name }}</span>
                         </div>
 
-                        <div class="absolute bottom-0 right-0 bg-gray-100 text-gray-900 p-2">
-                            <span>{{ example.category.name }}</span>
+                        <div class="absolute bottom-0 right-0 p-2">
+                            <Tag :value="example.category.name" severity="info" />
                         </div>
                     </a-image>
                 </a-tilt>
 
-                <a-area-empty v-else class="w-full flex items-center justify-center bg-gray-100 relative">
+                <div v-else class="w-full flex items-center justify-center relative">
                     <i class="pi pi-image text-6xl! text-gray-900"></i>
-                    <div class="absolute top-0 left-0 right-0 w-full bg-gray-900 text-white text-left p-2">
-                        <span>{{ example.name }}</span>
+                    <div class="absolute top-0 left-0 right-0 w-full bg-white text-gray-900 text-left p-2">
+                        <span class="font-semibold">{{ example.name }}</span>
                     </div>
 
-                    <div class="absolute bottom-0 right-0 bg-gray-100 text-gray-900 p-2">
-                        <span>{{ example.category.name }}</span>
+                    <div class="absolute bottom-0 right-0 p-2">
+                        <Tag :value="example.category.name" severity="info" />
                     </div>
-                </a-area-empty>
+                </div>
             </router-link>
-        </a-card>
+        </div>
 
         <a-card v-else class="p-8">
             <a-area-empty>No matching examples</a-area-empty>
@@ -141,7 +142,5 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
                 />
             </div>
         </div>
-
-        <div class="flex justify-center w-full mt-8 text-primary">△△△</div>
     </div>
 </template>

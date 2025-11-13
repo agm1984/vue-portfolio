@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col w-full h-auto p-8">
+    <div class="w-full max-w-5xl mx-auto flex flex-col p-8">
         <h1>About me</h1>
 
-        <a-card class="p-8">
+        <a-card class="p-8 mt-4">
             <div class="flex flex-col">
                 <div class="w-full">
                     <p>
@@ -97,13 +97,7 @@
                     </div>
                 </a-card>
             </div>
-
         </div>
-
-        <div class="flex justify-center w-full mt-32 text-primary">
-            △△△
-        </div>
-
     </div>
 </template>
 

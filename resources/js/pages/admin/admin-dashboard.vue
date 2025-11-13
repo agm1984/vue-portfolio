@@ -8,7 +8,7 @@ const isDashboard = computed(() => route.name === 'admin');
 </script>
 
 <template>
-    <div class="flex w-full h-auto p-8">
+    <div class="flex-1 flex w-full h-auto p-8">
         <div class="min-w-[125px] flex flex-col gap-4">
             <h1>Admin</h1>
 

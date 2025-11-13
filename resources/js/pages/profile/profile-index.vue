@@ -1,56 +1,36 @@
-<template>
-    <div>
-        <a-card class="p-8 w-full">
-            <h2 level="1" class="mb-32">
-                Settings
-            </h2>
+<script setup>
+import { computed } from 'vue';
 
-            <div class="flex items-center justify-center pb-16">
+const links = computed(() => [
+    {
+        name: 'Profile',
+        to: 'settings.profile',
+    },
+    {
+        name: 'Password',
+        to: 'settings.password',
+    },
+]);
+</script>
+
+<template>
+    <div class="max-w-xl mx-auto flex-1 flex flex-col p-8">
+        <h1>Settings</h1>
+
+        <a-card class="w-full p-8 mt-4">
+            <div class="h-10 flex items-center justify-center gap-4">
                 <router-link
                     v-for="link in links"
                     :key="`link-${link.name}`"
                     :to="{ name: link.to }"
-                    tag="a"
-                    class="px-16 py-8 font-bold rounded-sm"
-                    active-class="bg-grey-900 border-1 border-primary"
+                    class="h-full inline-flex items-center font-semibold"
+                    active-class="border-b-2 mt-0.5"
                 >
                     {{ link.name }}
                 </router-link>
             </div>
 
-            <div class="col-md-9">
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </a-card>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'profile-index',
-
-    middleware: 'auth',
-
-    data() {
-        return {};
-    },
-
-    computed: {
-        links() {
-            return [
-                {
-                    name: 'Profile',
-                    to: 'settings.profile',
-                },
-                {
-                    name: 'Password',
-                    to: 'settings.password',
-                },
-            ];
-        },
-    },
-
-    methods: {},
-
-};
-</script>

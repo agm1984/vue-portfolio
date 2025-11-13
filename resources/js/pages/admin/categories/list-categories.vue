@@ -1,9 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import axios from 'axios';
+import Tag from 'primevue/tag';
 
 const LOADING = 'is-loading';
 const LOADED = 'is-loaded';
@@ -64,7 +65,8 @@ onMounted(fetchAllCategories);
 
             <Column field="status_nice" header="Status">
                 <template #body="{ data }">
-                    <a-status-tag :status="data.status_nice"></a-status-tag>
+                    <Tag v-if="data.status === 0" severity="danger" value="Inactive" />
+                    <Tag v-if="data.status === 1" severity="success" value="Active" />
                 </template>
             </Column>
 
