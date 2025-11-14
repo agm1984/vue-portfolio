@@ -98,7 +98,15 @@ const sendMessage = async () => {
         const { data } = await axios.post(route('public.contact.send'), formData);
 
         successMessage.value = data.message;
-    } catch (err) {
+        form.name = '';
+        form.email = '';
+        form.subject = '';
+        form.content = '';
+        form.answer = '';
+        submitted.value = false;
+        num1.value = generateRandom();
+        num2.value = generateRandom();
+    } catch (error) {
         console.error(error);
     } finally {
         state.value = INITIAL;
@@ -108,7 +116,7 @@ const sendMessage = async () => {
 
 <template>
     <div class="w-full max-w-5xl mx-auto h-auto flex-1 flex flex-col p-8">
-        <Message v-show="showSuccessMessage" severity="success">
+        <Message v-show="showSuccessMessage" class="mb-4" severity="success">
             {{ successMessage }}
         </Message>
 
@@ -136,7 +144,6 @@ const sendMessage = async () => {
                         </Button>
                     </div>
                 </div>
-
 
                 <div class="flex flex-col bg-gray-200 rounded-md p-4">
                     <h3 class="whitespace-nowrap">Find me on social media</h3>
@@ -189,7 +196,7 @@ const sendMessage = async () => {
                     v-model="v$.subject.$model"
                     id="contact-subject"
                     :class="['w-full', { 'p-invalid': v$.subject.$invalid && submitted }]"
-                    autocomplete="email"
+                    autocomplete="off"
                     placeholder=""
                 />
 
