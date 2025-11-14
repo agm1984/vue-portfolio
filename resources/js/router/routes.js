@@ -1,6 +1,6 @@
 const routes = [
     { path: '/', name: 'home', meta: { preloadOnly: true }, component: () => import('../pages/home/home.vue') },
-    { path: '/about', name: 'about', meta: { requiresAuth: true }, component: () => import('../pages/aboutMe/about-me.vue') },
+    { path: '/about', name: 'about', meta: { preloadOnly: true }, component: () => import('../pages/aboutMe/about-me.vue') },
     { path: '/skills', name: 'skills', meta: { preloadOnly: true }, component: () => import('../pages/skills/skills.vue') },
     {
         path: '/examples',

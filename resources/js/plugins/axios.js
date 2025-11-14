@@ -1,33 +1,10 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { toast } from 'vue3-toastify';
 import router from '~/router';
 
 axios.defaults.withCredentials = true;          // send cookies
 axios.defaults.xsrfCookieName = 'XSRF-TOKEN';   // Laravel's cookie
 axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN'; // header Laravel expects
-
-/**
- * Request interceptor: for each request to the server,
- * attach the CSRF token if it exists.
- */
-// axios.interceptors.request.use((request) => {
-//     try {
-//         console.log('TESTING');
-//         const csrf = Cookies.get('XSRF-TOKEN');
-//         console.log('CSRF Token:', csrf);
-
-//         request.withCredentials = true;
-
-//         if (csrf) {
-//             request.headers.common['XSRF-TOKEN'] = csrf;
-//         }
-
-//         return request;
-//     } catch (err) {
-//         throw new Error(`axios# Problem with request during pre-flight phase: ${err}.`);
-//     }
-// });
 
 /**
  * Response interceptor: for each server error response,
