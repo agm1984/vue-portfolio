@@ -16,7 +16,7 @@ const logout = async () => {
 <template>
     <nav class="sticky top-0 z-10 w-full h-[66px] flex items-center justify-between gap-4 bg-white px-8">
         <div class="w-48 h-full flex items-center">
-            <router-link :to="{ name: auth.isAuthenticated ? 'admin' : 'home' }" class="navbar-brand">
+            <router-link :to="{ name: auth.isAuthenticated ? 'home' : 'home' }" class="navbar-brand">
                 {{ appName }}
             </router-link>
         </div>
@@ -52,6 +52,14 @@ const logout = async () => {
                 active-class="border-b-2 mt-0.5"
             >
                 Admin
+            </router-link>
+
+            <router-link
+                :to="{ name: 'contact' }"
+                class="h-full inline-flex items-center font-semibold"
+                active-class="border-b-2 mt-0.5"
+            >
+                Contact Me
             </router-link>
         </div>
 

@@ -14,7 +14,7 @@ const routes = [
         ],
     },
 
-    { path: '/contact', name: 'contact', component: () => import('../pages/contact/contact.vue') },
+    { path: '/contact', name: 'contact', meta: { preloadOnly: true }, component: () => import('../pages/contact/contact.vue') },
 
     { path: '/login', name: 'login', meta: { guestOnly: true }, component: () => import('../pages/auth/login.vue') },
     { path: '/register', name: 'register', meta: { guestOnly: true }, component: () => import('../pages/auth/register.vue') },

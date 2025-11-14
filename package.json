@@ -1,6 +1,6 @@
 {
     "private": false,
-    "version": "1.0.1",
+    "version": "2.0.0",
     "author": "Adam Mackintosh <adam@adammackintosh.net>",
     "type": "module",
     "scripts": {
