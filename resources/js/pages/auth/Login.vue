@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, computed, onBeforeMount } from 'vue';
+import { useHead } from '@unhead/vue';
 import { required, email, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { useRoute, useRouter } from 'vue-router';
@@ -8,6 +9,10 @@ import Password from 'primevue/password';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+
+useHead({
+    title: 'Login',
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -41,7 +46,6 @@ const login = async () => {
         const isFormValid = await v$.value.$validate();
 
         if (!isFormValid) {
-            console.log('Form is invalid');
             state.value = INITIAL;
             return;
         }
@@ -64,9 +68,10 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="flex justify-center p-16">
-        <a-card class="w-full max-w-3xl flex flex-col p-8">
-            <h1>Login</h1>
+    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col justify-center p-8">
+        <h1>Login</h1>
+
+        <a-card class="w-full flex flex-col p-8 mt-4 self-start">
 
             <div class="flex flex-col">
                 <!-- <login-with-oauth provider="github"></login-with-oauth> -->

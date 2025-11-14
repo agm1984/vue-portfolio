@@ -1,13 +1,81 @@
-<template>
-    <div class="flex justify-center w-full h-auto">
-        <a-card class="flex flex-col h-auto p-8 w-384">
-            <h2 level="1" class="mb-16 text-center">
-                Register
-            </h2>
+<script setup>
+import { ref, reactive, computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import { required, email, minLength, maxLength, sameAs } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+import { useRoute, useRouter } from 'vue-router';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import Button from 'primevue/button';
+import { useAuthStore } from '~/store/auth';
 
+useHead({
+    title: 'Register',
+});
+
+const route = useRoute();
+const router = useRouter();
+const auth = useAuthStore();
+
+const INITIAL = 'is-initial';
+const SUBMITTING = 'is-submitting';
+const state = ref(INITIAL);
+const isSubmitting = computed(() => state.value === SUBMITTING);
+const submitted = ref(false);
+
+const newPassword = computed(() => form.password);
+
+const form = reactive({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+});
+
+const registerRules = {
+    name: { required, maxLength: maxLength(255) },
+    email: { required, email, maxLength: maxLength(255) },
+    password: { required, minLength: minLength(6) },
+    password_confirmation: { required, sameAs: sameAs(newPassword) },
+};
+
+const v$ = useVuelidate(registerRules, form);
+
+const register = async () => {
+    try {
+        state.value = SUBMITTING;
+        submitted.value = true;
+
+        const isFormValid = await v$.value.$validate();
+
+        if (!isFormValid) {
+            state.value = INITIAL;
+            return;
+        }
+
+        const formData = {
+            ...form,
+        };
+
+        await auth.register(formData);
+
+        await router.replace(route.query.redirect ? route.query.redirect : { name: 'home' });
+    } catch (error) {
+        console.error(error);
+    } finally {
+        state.value = INITIAL;
+    }
+};
+</script>
+
+<template>
+    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col justify-center p-8">
+        <h1>Register</h1>
+
+        <a-card class="w-full flex flex-col p-8 mt-4 self-start">
             <div class="flex flex-col">
-                <login-with-oauth provider="github"></login-with-oauth>
-                <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth>
+                <!-- <login-with-oauth provider="github"></login-with-oauth> -->
+                <!-- <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth> -->
             </div>
 
             <div class="flex items-center pt-8">
@@ -16,116 +84,89 @@
                 <hr class="inline w-full">
             </div>
 
-            <a-form v-slot="{ handleSubmit }" class="pt-8">
-                <a-text-input
-                    v-model="newUser.name"
-                    vid="name"
-                    rules="required|max:255"
-                    placeholder="Name"
-                    required
-                ></a-text-input>
+            <form class="pt-8" @submit.prevent="register">
+                <a-input-field input-id="register-name" title="Name" required />
 
-                <a-text-input
-                    v-model="newUser.email"
-                    class="mt-8"
-                    vid="email"
-                    rules="required|email|max:255"
-                    placeholder="Email"
-                    required
-                ></a-text-input>
+                <InputText
+                    v-model="v$.name.$model"
+                    id="register-name"
+                    :class="['w-full', { 'p-invalid': v$.name.$invalid && submitted }]"
+                    autocomplete="name"
+                    placeholder=""
+                />
 
-                <a-text-input
-                    v-model="newUser.password"
-                    class="mt-8"
-                    type="password"
-                    vid="password"
-                    rules="required|min:8"
-                    placeholder="Password"
-                    password-reveal
-                    required
-                ></a-text-input>
+                <a-field-errors
+                    v-if="v$.name.$error && submitted"
+                    :errors="v$.name.$errors"
+                    name="Name"
+                />
 
-                <a-button
-                    class="mt-8"
-                    :loading="isAuthenticating"
-                    expanded
-                    @click="handleSubmit(register)"
-                >
-                    Register
-                </a-button>
-            </a-form>
+                <a-input-field class="mt-4" input-id="register-email" title="Email" required />
 
+                <InputText
+                    v-model="v$.email.$model"
+                    id="register-email"
+                    :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+                    autocomplete="email"
+                    placeholder=""
+                />
+
+                <a-field-errors
+                    v-if="v$.email.$error && submitted"
+                    :errors="v$.email.$errors"
+                    name="Email"
+                />
+
+                <a-input-field class="mt-4" input-id="register-password" title="Password" required />
+
+                <Password
+                    v-model="v$.password.$model"
+                    input-id="register-password"
+                    class="w-full"
+                    input-class="w-full"
+                    placeholder=""
+                    autocomplete="current-password"
+                    :feedback="false"
+                    toggle-mask
+                    aria-haspopup="false"
+                    :invalid="v$.password.$invalid && submitted"
+                />
+
+                <a-field-errors
+                    v-if="v$.password.$error && submitted"
+                    :errors="v$.password.$errors"
+                    name="Password"
+                />
+
+                <a-input-field class="mt-4" input-id="register-confirm-password" title="Confirm Password" required />
+
+                <Password
+                    v-model="v$.password_confirmation.$model"
+                    input-id="register-confirm-password"
+                    class="w-full"
+                    input-class="w-full"
+                    placeholder=""
+                    autocomplete="current-password"
+                    :feedback="false"
+                    toggle-mask
+                    aria-haspopup="false"
+                    :invalid="v$.password_confirmation.$invalid && submitted"
+                />
+
+                <a-field-errors
+                    v-if="v$.password_confirmation.$error && submitted"
+                    :errors="v$.password_confirmation.$errors"
+                    name="Password confirmation"
+                />
+
+                <Button
+                    type="submit"
+                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                    label="Register"
+                    class="w-full mt-4"
+                    :disabled="isSubmitting"
+                />
+            </form>
         </a-card>
     </div>
 </template>
-
-<script>
-import LoginWithOauth from '~/components/login-with-oauth.vue';
-
-const INITIAL = 'INITIAL';
-const AUTHENTICATING = 'AUTHENTICATING';
-
-export default {
-    middleware: 'guest',
-
-    components: {
-        LoginWithOauth,
-    },
-
-    metaInfo() {
-        return { title: 'Register' };
-    },
-
-    data() {
-        return {
-            state: INITIAL,
-            newUser: {
-                email: '',
-                password: '',
-            },
-        };
-    },
-
-    computed: {
-        isInitial() {
-            return (this.state === INITIAL);
-        },
-
-        isAuthenticating() {
-            return (this.state === AUTHENTICATING);
-        },
-
-        intendedUrl() {
-            return this.$route.query.redirect;
-        },
-
-    },
-
-    methods: {
-        /**
-         * Register a new user.
-         *
-         * @return {Function} Navigation event
-         */
-        async register() {
-            try {
-                this.state = AUTHENTICATING;
-
-                await this.$store.dispatch('auth/register', this.newUser);
-
-                if (this.intendedUrl) {
-                    return this.$router.push(this.intendedUrl);
-                }
-
-                return this.$router.push({ name: 'home' });
-            } catch (err) {
-                this.state = INITIAL;
-
-                throw new Error(`register# Problem registering new user: ${err}.`);
-            }
-        },
-
-    },
-
-};
-</script>

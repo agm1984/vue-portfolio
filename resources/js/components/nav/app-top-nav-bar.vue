@@ -67,17 +67,22 @@ const logout = async () => {
         <user-menu v-if="auth.isAuthenticated" />
 
         <!-- Guest -->
-        <ul v-else>
-            <li class="nav-item">
-                <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
-                    Login
-                </router-link>
-            </li>
-            <li class="nav-item">
-                <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-                    Register
-                </router-link>
-            </li>
-        </ul>
+        <div v-else class="h-full flex items-center gap-4">
+            <router-link
+                :to="{ name: 'register' }"
+                class="h-full inline-flex items-center font-semibold"
+                active-class="border-b-2 mt-0.5"
+            >
+                Register
+            </router-link>
+
+            <router-link
+                :to="{ name: 'login' }"
+                class="h-full inline-flex items-center font-semibold"
+                active-class="border-b-2 mt-0.5"
+            >
+                Login
+            </router-link>
+        </div>
     </nav>
 </template>
