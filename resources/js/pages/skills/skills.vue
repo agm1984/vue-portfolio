@@ -22,38 +22,30 @@ defineOptions({ name: 'skills' });
     <div id="skills-leftScrollZone"></div>
     <div id="skills-rightScrollZone"></div>
 
-    <stat-cluster
-      id="cluster_javascript"
-      category="skill ratios"
-    >
-      <stat-bar label="JAVASCRIPT" :points="90"></stat-bar>
-      <stat-bar label="REACT" :points="90"></stat-bar>
-      <stat-bar label="NODE.JS" :points="80"></stat-bar>
-      <stat-bar label="GIT" :points="60"></stat-bar>
-      <stat-bar label="LINUX" :points="70"></stat-bar>
-      <stat-bar label="DOCKER" :points="35"></stat-bar>
-      <stat-bar label="GRAPHQL" :points="85"></stat-bar>
-      <stat-bar label="NEO4J" :points="85"></stat-bar>
-      <stat-bar label="MONGO DB" :points="70"></stat-bar>
-      <stat-bar label="SQL" :points="60"></stat-bar>
-      <stat-bar label="PHP" :points="25"></stat-bar>
-      <stat-bar label="HTML" :points="75"></stat-bar>
-      <stat-bar label="CSS" :points="80"></stat-bar>
-      <stat-bar label="PHOTOSHOP" :points="65"></stat-bar>
-      <stat-bar label="INDESIGN" :points="75"></stat-bar>
-      <stat-bar label="THREE.JS" :points="30"></stat-bar>
-      <stat-bar label="BLENDER" :points="25"></stat-bar>
-    </stat-cluster>
-
-    <div class="mt-4">
-      <a
-        class="font-semibold hover:underline"
-        href="/adamMackintoshResumeApr2018.docx"
-        download
+    <a-card class="p-8">
+      <stat-cluster
+        id="cluster_javascript"
+        category="skill ratios"
       >
-        Download Resume
-      </a>
-    </div>
+        <stat-bar label="JAVASCRIPT" :points="90"></stat-bar>
+        <stat-bar label="REACT" :points="90"></stat-bar>
+        <stat-bar label="NODE.JS" :points="80"></stat-bar>
+        <stat-bar label="GIT" :points="60"></stat-bar>
+        <stat-bar label="LINUX" :points="70"></stat-bar>
+        <stat-bar label="DOCKER" :points="35"></stat-bar>
+        <stat-bar label="GRAPHQL" :points="85"></stat-bar>
+        <stat-bar label="NEO4J" :points="85"></stat-bar>
+        <stat-bar label="MONGO DB" :points="70"></stat-bar>
+        <stat-bar label="SQL" :points="60"></stat-bar>
+        <stat-bar label="PHP" :points="25"></stat-bar>
+        <stat-bar label="HTML" :points="75"></stat-bar>
+        <stat-bar label="CSS" :points="80"></stat-bar>
+        <stat-bar label="PHOTOSHOP" :points="65"></stat-bar>
+        <stat-bar label="INDESIGN" :points="75"></stat-bar>
+        <stat-bar label="THREE.JS" :points="30"></stat-bar>
+        <stat-bar label="BLENDER" :points="25"></stat-bar>
+      </stat-cluster>
+    </a-card>
   </div>
 </template>
 

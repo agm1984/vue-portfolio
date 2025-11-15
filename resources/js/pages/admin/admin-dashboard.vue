@@ -9,7 +9,7 @@ const isDashboard = computed(() => route.name === 'admin');
 
 <template>
     <div class="flex-1 flex w-full h-auto p-8">
-        <div class="min-w-[125px] flex flex-col gap-4">
+        <div class="min-w-[125px] max-w-[125px] flex flex-col gap-4">
             <h1>Admin</h1>
 
             <router-link

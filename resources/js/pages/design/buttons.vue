@@ -1,123 +1,33 @@
+<script setup>
+import Button from 'primevue/button';
+</script>
+
 <template>
     <div class="flex flex-col h-auto">
-        <a-card id="design-system-buttons" class="p-8" with-geometry>
-            <h2 level="2" dark>Buttons</h2>
+        <a-card class="p-8">
+            <h2>Buttons</h2>
 
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary">Primary</a-button>
-                <a-button class="m-8" type="is-default">Default</a-button>
-                <a-button class="m-8" type="is-info">Info</a-button>
-                <a-button class="m-8" type="is-warning">Warning</a-button>
-                <a-button class="m-8" type="is-danger">Danger</a-button>
-                <a-button class="m-8" type="is-success">Success</a-button>
-                <b-button class="m-8" type="is-link">Link</b-button>
-                <b-button class="m-8" type="is-light">Light</b-button>
-                <b-button class="m-8" type="is-dark">Dark</b-button>
-                <b-button class="m-8" type="is-text">Text</b-button>
+            <div class="flex flex-row flex-wrap gap-4 mt-4">
+                <Button label="Primary" />
+                <Button label="Secondary" severity="secondary" />
+                <Button label="Success" severity="success" />
+                <Button label="Info" severity="info" />
+                <Button label="Warn" severity="warn" />
+                <Button label="Help" severity="help" />
+                <Button label="Danger" severity="danger" />
+                <Button label="Contrast" severity="contrast" />
             </div>
 
-            <a-code language="html">
-                &lt;a-button type="is-primary" size="is-default"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
+            <a-code
+                class="mt-4"
+                language="javascript"
+                :code="`&lt;Button label=&quot;Primary&quot; /&gt;`"
+            />
 
-            <a-paragraph>
-                For all permutations, see the <a href="https://buefy.org/documentation/button">Buefy button docs</a>.
-            </a-paragraph>
-
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-8 mt-32" with-geometry>
-            <h2 level="2" dark>Light buttons</h2>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary is-light">Primary</a-button>
-                <a-button class="m-8" type="is-default is-light">Default</a-button>
-                <a-button class="m-8" type="is-info is-light">Info</a-button>
-                <a-button class="m-8" type="is-warning is-light">Warning</a-button>
-                <a-button class="m-8" type="is-danger is-light">Danger</a-button>
-                <a-button class="m-8" type="is-success is-light">Success</a-button>
-                <b-button class="m-8" type="is-link is-light">Link Light</b-button>
-            </div>
-
-            <a-code language="html">
-                &lt;a-button type="is-primary is-light" size="is-default"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
-
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-8 mt-32" with-geometry>
-            <h2 level="2" dark>Outlined buttons</h2>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary" outlined>Primary</a-button>
-                <a-button class="m-8" type="is-default" outlined>Default</a-button>
-                <a-button class="m-8" type="is-info" outlined>Info</a-button>
-                <a-button class="m-8" type="is-warning" outlined>Warning</a-button>
-                <a-button class="m-8" type="is-danger" outlined>Danger</a-button>
-                <a-button class="m-8" type="is-success" outlined>Success</a-button>
-                <b-button class="m-8" type="is-link" outlined>Link Light</b-button>
-            </div>
-
-            <a-code language="html">
-                &lt;a-button type="is-primary" outlined&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
-
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-8 mt-32" with-geometry>
-            <h2 level="2" dark>Size</h2>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-default" size="is-small">Small</a-button>
-                <a-button class="m-8" type="is-default" size="is-default">Default</a-button>
-                <a-button class="m-8" type="is-default" size="is-medium">Medium</a-button>
-                <a-button class="m-8" type="is-default" size="is-large">Large</a-button>
-            </div>
-
-            <a-code language="html">
-                &lt;a-button type="is-primary" size="is-medium"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
-
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-8 mt-32" with-geometry>
-            <h2 level="2" dark>Links</h2>
-
-            <div class="flex flex-row flex-wrap">
-                <a href="#">Link</a>
-                <!-- <a-button class="m-8" type="is-default" size="is-small">Small</a-button>
-                <a-button class="m-8" type="is-default" size="is-default">Default</a-button>
-                <a-button class="m-8" type="is-default" size="is-medium">Medium</a-button>
-                <a-button class="m-8" type="is-default" size="is-large">Large</a-button> -->
-            </div>
-
-            <a-code language="html">
-                &lt;a href="#"&gt;Link&lt;/a&gt;
-            </a-code>
-
+            <p class="mt-4">
+                For all permutations, see the
+                <a class="font-semibold hover:underline" href="https://primevue.org/button/">PrimeVue</a>  button docs.
+            </p>
         </a-card>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'buttons',
-
-    data() {
-        return {};
-    },
-
-    computed: {},
-
-    methods: {},
-
-};
-</script>

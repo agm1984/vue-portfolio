@@ -1,7 +1,9 @@
 <template>
-    <a-card class="p-8">
-        <img :src="imageUrl">
-    </a-card>
+    <div class="flex-1 w-full max-w-5xl mx-auto flex flex-col p-8">
+        <a-card class="p-8">
+            <img :src="imageUrl" class="w-full aspect-video" alt="Example image">
+        </a-card>
+    </div>
 </template>
 
 <script>
@@ -11,10 +13,6 @@ const IS_LOADING = 0;
 const IS_LOADED = 1;
 
 export default {
-    name: 'show-example-images',
-
-    props: {},
-
     data() {
         return {
             state: IS_LOADING,
@@ -23,10 +21,7 @@ export default {
         };
     },
 
-    computed: {},
-
     created() {
-        console.log('filename', this.$route.params.filename);
         this.initialFilename = this.$route.params.filename;
     },
 
@@ -39,15 +34,10 @@ export default {
             try {
                 const images = await axios.get(route('public.examples.images', [this.$route.params.example, this.$route.params.filename]));
 
-                // console.log('params', this.$route.params);
-                // console.log('image', images.data);
-
                 this.image = images.data.image;
                 this.imageUrl = images.data.image_url;
 
                 this.state = IS_LOADED;
-
-                return undefined; // resolve promise, and do nothing
             } catch (err) {
                 throw new Error(`show-example-image# Problem fetching image and image URL: ${err}`);
             }

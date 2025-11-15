@@ -14,7 +14,7 @@ const links = computed(() => [
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto flex-1 flex flex-col p-8">
+    <div class="w-full max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-8">
         <h1>Settings</h1>
 
         <a-card class="w-full p-8 mt-4">

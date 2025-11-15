@@ -1,11 +1,12 @@
 <template>
-    <div class="statCluster-wrapper">
-        <div class="statCluster-line"></div>
+    <div class="">
+        <div class="w-full">
+            <h2 class="">{{ category }}</h2>
 
-        <div class="statCluster">
-            <h2 class="statHeading">{{ category }}</h2>
+            <div class="grid grid-cols-[200px_1fr] items-center">
 
-            <slot></slot>
+              <slot></slot>
+            </div>
         </div>
 
     </div>

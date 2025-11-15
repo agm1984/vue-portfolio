@@ -54,7 +54,7 @@ const routes = [
     {
         path: '/design',
         name: 'design',
-        component: import('../pages/design/design-dashboard.vue'),
+        component: () => import('../pages/design/design-dashboard.vue'),
         children: [
             { path: 'buttons', name: 'design.buttons', component: () => import('../pages/design/buttons.vue') },
             { path: 'colours', name: 'design.colours', component: () => import('../pages/design/colours.vue') },

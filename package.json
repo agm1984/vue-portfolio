@@ -50,6 +50,7 @@
     },
     "dependencies": {
         "@primeuix/themes": "^1.2.5",
+        "@primevue/themes": "^4.4.1",
         "@tailwindcss/vite": "^4.1.17",
         "@unhead/vue": "^2.0.19",
         "@vuelidate/core": "^2.0.3",
