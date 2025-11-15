@@ -31,14 +31,6 @@ const logout = async () => {
             </router-link>
 
             <router-link
-                :to="{ name: 'skills' }"
-                class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
-            >
-                Skills
-            </router-link>
-
-            <router-link
                 :to="{ name: 'public.examples' }"
                 class="h-full inline-flex items-center font-semibold"
                 active-class="border-b-2 mt-0.5"
