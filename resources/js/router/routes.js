@@ -56,15 +56,15 @@ const routes = [
         name: 'design',
         component: import('../pages/design/design-dashboard.vue'),
         children: [
-            { path: 'buttons', name: 'design.buttons', component: import('../pages/design/buttons.vue') },
-            { path: 'colours', name: 'design.colours', component: import('../pages/design/colours.vue') },
-            { path: 'sizing', name: 'design.sizing', component: import('../pages/design/sizing.vue') },
-            { path: 'typography', name: 'design.typography', component: import('../pages/design/typography.vue') },
+            { path: 'buttons', name: 'design.buttons', component: () => import('../pages/design/buttons.vue') },
+            { path: 'colours', name: 'design.colours', component: () => import('../pages/design/colours.vue') },
+            { path: 'sizing', name: 'design.sizing', component: () => import('../pages/design/sizing.vue') },
+            { path: 'typography', name: 'design.typography', component: () => import('../pages/design/typography.vue') },
         ],
     },
-    { path: '/snippets', name: 'snippets', component: import('../pages/snippets/snippets.vue') },
 
-    { path: '/:catchAll(.*)', name: 'splat', component: import('../pages/errors/404.vue') },
+    { path: '/forbidden', name: '403', component: () => import('../pages/errors/403.vue') },
+    { path: '/:catchAll(.*)', name: 'splat', component: () => import('../pages/errors/404.vue') },
 ];
 
 export default routes;

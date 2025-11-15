@@ -28,8 +28,7 @@ export async function metaAuthGuard(to, from, next) {
     const hasRole = to.meta.roles.some(r => userRoles.includes(r));
     if (!hasRole) {
       toast.warning('Permission denied');
-      // todo: show a 403 page instead
-      return next(from.fullPath ? { path: from.fullPath } : { name: 'home' });
+      return next({ name: '403' });
     }
   }
 

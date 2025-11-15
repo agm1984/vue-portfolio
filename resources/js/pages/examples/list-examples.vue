@@ -22,6 +22,7 @@ const examples = ref([]);
 const isLoading = computed(() => state.value === LOADING);
 const isLoaded = computed(() => state.value === LOADED);
 const hasError = computed(() => state.value === HAS_ERROR);
+const hasExamples = computed(() => examples.value.length > 0);
 
 const fetchAllExamples = async () => {
     try {
@@ -38,7 +39,6 @@ const fetchAllExamples = async () => {
 
         categories.value = categoriesRes.data.categories;
         examples.value = examplesRes.data.examples;
-
         state.value = LOADED;
     } catch (err) {
         state.value = HAS_ERROR;
@@ -79,7 +79,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 
                 <router-link
                     v-for="category in categories"
-                    :key="category.slug"
+                    :key="`example-category-${category.slug}`"
                     :to="{ name: 'public.examples.list', params: { category: category.slug } }"
                     class="h-full inline-flex items-center font-semibold"
                     active-class="border-b-2 mt-0.5"
@@ -90,7 +90,9 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </div>
         </div>
 
-        <div v-if="examples.length" class="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
+        <a-area-loading v-if="isLoading" class="w-full h-64 mt-4" />
+
+        <div v-else-if="isLoaded && hasExamples" class="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
             <router-link
                 v-for="example in examples"
                 :key="example.slug"
@@ -127,20 +129,22 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </router-link>
         </div>
 
-        <a-card v-else class="p-8">
+        <a-card v-else-if="isLoaded && !hasExamples" class="p-8 mt-4">
             <a-area-empty>No matching examples</a-area-empty>
         </a-card>
 
-        <div v-if="hasError" class="w-full">
-            <div class="bg-red-700 text-white">
+        <a-area-empty v-else-if="hasError" class="w-full mt-4">
+            <div class="flex flex-col items-center justify-center">
                 There was a problem loading this page.
                 <Button
                     type="button"
-                    class="pt-8"
+                    class="mt-4"
+                    severity="danger"
+                    icon="pi pi-refresh"
                     label="Try again"
                     @click="handleTryAgain"
                 />
             </div>
-        </div>
+        </a-area-empty>
     </div>
 </template>
