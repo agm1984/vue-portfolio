@@ -11,13 +11,13 @@
         "php": "^8.3",
         "abraham/twitteroauth": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.2",
         "spatie/laravel-permission": "^6.0",
-        "spatie/laravel-query-builder": "^5.0",
+        "spatie/laravel-query-builder": "^6.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
