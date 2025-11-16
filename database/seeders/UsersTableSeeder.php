@@ -18,16 +18,17 @@ class UsersTableSeeder extends Seeder
     {
         $user_count = 10;
 
-        User::factory($user_count)->create();
+        User::factory($user_count)->create()->each(function ($user) {
+            $user->assignRole('standard');
+        });
 
-        // Create a specific user
+        // Create root admin
         $adam = User::factory()->create([
-            'status' => User::STATUS_ACTIVE, // adjust if your app uses a different field/value
+            'status' => User::STATUS_ACTIVE,
             'name' => 'Adam Mackintosh',
             'email' => 'agm1984@gmail.com',
             'email_verified_at' => now(),
         ]);
-
         $adam->assignRole('admin');
     }
 }

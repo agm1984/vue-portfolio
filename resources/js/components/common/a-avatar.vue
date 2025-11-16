@@ -30,7 +30,10 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
     >
         <img
             v-if="hasImage"
-            class="bg-cover rounded-full"
+            :class="['bg-cover rounded-full', {
+                'w-8 h-8 min-w-8 min-h-8 max-w-8 max-h-8': size === 32,
+                'w-16 h-16 min-w-16 min-h-16 max-w-16 max-h-16': size === 64,
+            }]"
             :src="user.avatar_url"
             :alt="`Avatar of ${user.name}`"
         >

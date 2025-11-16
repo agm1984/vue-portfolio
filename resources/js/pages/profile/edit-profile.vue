@@ -75,7 +75,7 @@ const handleResendVerificationEmail = async () => {
 
 <template>
     <form class="mt-4" @submit.prevent="handleSubmit">
-        <div v-if="auth.user.email_verified_at" class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-500">
+        <div v-if="auth.user.email_verified_at" class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700">
             <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
                 <i class="pi pi-check" style="font-size: 12px;"></i>
             </span>
@@ -125,6 +125,7 @@ const handleResendVerificationEmail = async () => {
             :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
             autocomplete="email"
             placeholder=""
+            disabled
         />
 
         <a-field-errors

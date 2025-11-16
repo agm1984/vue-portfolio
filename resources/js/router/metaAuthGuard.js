@@ -17,13 +17,8 @@ export async function metaAuthGuard(to, from, next) {
     }
 
     // roles
-    if (Array.isArray(to.meta?.roles) && to.meta.roles.length) {
-        const userRoles =
-            auth.user?.roles_list ??
-            auth.user?.roles?.map(r => (typeof r === 'string' ? r : r.name)) ??
-            [];
-
-        const hasRole = to.meta.roles.some(r => userRoles.includes(r));
+    if (to.meta?.roles?.length) {
+        const hasRole = to.meta.roles.some(r => auth.user.roles_list.includes(r));
 
         if (!hasRole) {
             toast.warning('Permission denied');

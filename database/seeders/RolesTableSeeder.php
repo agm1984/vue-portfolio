@@ -32,10 +32,6 @@ class RolesTableSeeder extends Seeder
         // delete all blog
 
         $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo(Permission::create(['name' => 'edit users']));
-        $role->givePermissionTo(Permission::create(['name' => 'edit examples']));
-        $role->givePermissionTo(Permission::create(['name' => 'edit categories']));
-        $role->givePermissionTo(Permission::create(['name' => 'edit blogs']));
-
+        $role = Role::create(['name' => 'standard']);
     }
 }

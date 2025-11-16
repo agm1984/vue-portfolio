@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Tag from 'primevue/tag';
 import axios from 'axios';
 
 const LOADING = 'is-loading';
@@ -52,6 +53,16 @@ onMounted(fetchAllUsers);
             </Column>
 
             <Column field="email" header="Email"></Column>
+
+            <Column field="roles_list" header="Role">
+                <template #body="{ data }">
+                    <Tag
+                        v-for="role in data.roles_list"
+                        :key="`user-role-${data.id}-${role}`"
+                        class="capitalize"
+                    >{{ role }}</Tag>
+                </template>
+            </Column>
 
             <Column field="created_at_diff" header="Created"></Column>
 

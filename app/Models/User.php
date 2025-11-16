@@ -126,6 +126,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $user->save();
 
+        $user->assignRole('standard');
+
         return $user;
     }
 

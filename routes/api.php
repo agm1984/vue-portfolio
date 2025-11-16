@@ -28,19 +28,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'role:admin', 'transformTypes']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'transformTypes']], function () {
     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
     Route::get('/categories/all', 'Admin\CategoryController@getAll')->name('admin.categories.getAll');
     Route::get('/categories/{category:slug}', 'Admin\CategoryController@show')->name('admin.categories.show');
-    Route::patch('/categories/{category:slug}', 'Admin\CategoryController@edit')->name('admin.categories.edit');
-    Route::post('/categories', 'Admin\CategoryController@create')->name('admin.categories.create');
+    Route::patch('/categories/{category:slug}', 'Admin\CategoryController@edit')->middleware('role:admin')->name('admin.categories.edit');
+    Route::post('/categories', 'Admin\CategoryController@create')->middleware('role:admin')->name('admin.categories.create');
 
     Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.list');
     Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');
-    Route::post('/examples', 'Admin\ExampleController@create')->name('admin.examples.create');
-    Route::patch('/examples/{example:slug}', 'Admin\ExampleController@edit')->name('admin.examples.edit');
-    Route::post('/examples/{example}/images/append', 'Admin\ExampleController@appendImages')->name('admin.examples.appendImages');
-    Route::put('/examples/{example}/images/delete/{exampleImage}', 'Admin\ExampleController@removeImage')->name('admin.examples.removeImage');
+    Route::post('/examples', 'Admin\ExampleController@create')->middleware('role:admin')->name('admin.examples.create');
+    Route::patch('/examples/{example:slug}', 'Admin\ExampleController@edit')->middleware('role:admin')->name('admin.examples.edit');
+    Route::post('/examples/{example}/images/append', 'Admin\ExampleController@appendImages')->middleware('role:admin')->name('admin.examples.appendImages');
+    Route::put('/examples/{example}/images/delete/{exampleImage}', 'Admin\ExampleController@removeImage')->middleware('role:admin')->name('admin.examples.removeImage');
 
     Route::get('/users', 'Admin\UserController@index')->name('admin.users.list');
     Route::get('/users/{user}', 'Admin\UserController@show')->name('admin.users.show');
