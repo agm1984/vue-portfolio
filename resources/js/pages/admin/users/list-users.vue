@@ -7,7 +7,6 @@ import axios from 'axios';
 
 const LOADING = 'is-loading';
 const LOADED = 'is-loaded';
-
 const state = ref(LOADING);
 const users = ref([]);
 

@@ -4,10 +4,12 @@ import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import axios from 'axios';
+import { useAuthStore } from '~/store/auth';
+
+const auth = useAuthStore();
 
 const LOADING = 'is-loading';
 const LOADED = 'is-loaded';
-
 const state = ref(LOADING);
 const examples = ref([]);
 
@@ -35,7 +37,7 @@ onMounted(fetchAllExamples);
         <div class="w-full flex items-center justify-between gap-4">
             <h2>Examples</h2>
 
-            <Button as-child v-slot="slotProps">
+            <Button v-if="auth.isAdmin" as-child v-slot="slotProps">
                 <router-link
                     :to="{ name: 'admin.examples.create' }"
                     :class="slotProps.class"
