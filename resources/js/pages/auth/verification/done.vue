@@ -70,9 +70,10 @@ const goToLogin = async () => {
                 </p>
 
                 <Button
-                    label="Go to login"
+                    type="button"
                     class="w-full mt-4"
                     icon="pi pi-sign-in"
+                    :label="auth.isAuthenticated ? 'Go to home' : 'Go to login'"
                     @click="goToLogin"
                 />
             </div>

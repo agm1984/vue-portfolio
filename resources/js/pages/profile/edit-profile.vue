@@ -3,7 +3,9 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
+import Message from 'primevue/message';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
@@ -12,6 +14,7 @@ useHead({
     title: 'Profile',
 });
 
+const router = useRouter();
 const auth = useAuthStore();
 
 const INITIAL = 'is-initial';
@@ -61,11 +64,30 @@ const handleSubmit = async () => {
         state.value = INITIAL;
     }
 };
+
+const handleResendVerificationEmail = async () => {
+    await router.push({
+        name: 'verification.verify',
+        query: { email: auth.user.email },
+    });
+};
 </script>
 
 <template>
     <form class="mt-4" @submit.prevent="handleSubmit">
-        <div class="flex items-center justify-center">
+        <Message v-if="!auth.user.email_verified_at" severity="info">
+            <span>Your email isn't verified yet.</span>
+            <Button
+                type="button"
+                severity="info"
+                class="ml-4"
+                label="Resend verification email"
+                text
+                @click="handleResendVerificationEmail"
+            />
+        </Message>
+
+        <div class="flex items-center justify-center mt-4">
             <a-single-image-input
                 v-model="form.avatar"
                 :user="auth.user"
