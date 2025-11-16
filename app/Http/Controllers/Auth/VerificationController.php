@@ -59,24 +59,22 @@ class VerificationController extends Controller
      */
     public function resend(Request $request)
     {
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
 
         $user = User::where('email', $request->email)->first();
 
-        if (is_null($user)) {
-            throw ValidationException::withMessages([
-                'email' => [trans('verification.user')],
-            ]);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            throw ValidationException::withMessages([
-                'email' => [trans('verification.already_verified')],
-            ]);
-        }
+        if (! $user || $user->hasVerifiedEmail()) {
+        return response()->json([
+            'message' => trans('verification.sent_generic'),
+        ]);
+    }
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json(['status' => trans('verification.sent')]);
+        return response()->json([
+            'status' => trans('verification.sent'),
+        ]);
     }
 }

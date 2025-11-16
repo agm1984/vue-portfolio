@@ -59,7 +59,10 @@ const register = async () => {
 
         await auth.register(formData);
 
-        await router.replace(route.query.redirect ? route.query.redirect : { name: 'home' });
+        await router.replace({
+            name: 'verification.verify',
+            query: { email: form.email },
+        });
     } catch (error) {
         console.error(error);
     } finally {

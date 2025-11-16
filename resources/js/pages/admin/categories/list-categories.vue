@@ -44,7 +44,7 @@ onMounted(fetchAllCategories);
             </Button>
         </div>
 
-        <DataTable class="mt-8" :value="categories" :loading="isLoading">
+        <DataTable class="mt-4" :value="categories" :loading="isLoading">
             <Column field="name" header="Name">
                 <template #body="{ data }">
                     <router-link

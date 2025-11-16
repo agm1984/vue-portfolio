@@ -90,11 +90,50 @@ export const useAuthStore = defineStore('auth', {
 
         async forgotPassword(payload) {
             try {
+                await axios.get('/sanctum/csrf-cookie');
                 const response = await axios.post(route('password.email'), payload);
 
-                console.log('response:', response);
+                return response;
             } catch (err) {
                 throw new Error(`auth/forgotPassword# Problem during forgot password: ${err}.`);
+            }
+        },
+
+        async resetPassword(payload) {
+            try {
+                await axios.get('/sanctum/csrf-cookie');
+                const response = await axios.post(route('password.reset'), payload);
+
+                return response;
+            } catch (err) {
+                throw new Error(`auth/resetPassword# Problem during reset password: ${err}.`);
+            }
+        },
+
+        async resendVerificationEmail(email) {
+            try {
+                await axios.get('/sanctum/csrf-cookie');
+                const { data } = await axios.post(route('verification.resend'), {
+                    email,
+                });
+
+                return data;
+            } catch (err) {
+                throw new Error(`auth/resendVerificationEmail# ${err}`);
+            }
+        },
+
+        async verifyEmailFromLink(userId, search) {
+            try {
+                await axios.get('/sanctum/csrf-cookie');
+                const url = `/email/verify/${userId}${search}`;
+
+                const { data } = await axios.post(url);
+
+                return data;
+            } catch (err) {
+                console.error('Error verifying email:', err);
+                throw err;
             }
         },
     },

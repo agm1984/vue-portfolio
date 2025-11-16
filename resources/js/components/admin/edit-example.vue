@@ -205,7 +205,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <form class="w-full grid grid-cols-[100px_1fr] gap-4 mt-8" @submit.prevent="handleSubmit">
+    <form class="w-full grid grid-cols-[100px_1fr] gap-4 mt-4" @submit.prevent="handleSubmit">
         <a-input-field class="mt-2" input-id="edit-example-status" title="Status" required></a-input-field>
         <div>
             <Select

@@ -1,12 +1,18 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import Menu from 'primevue/menu';
-import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
 
+const router = useRouter();
 const auth = useAuthStore();
 
 const userMenu = ref();
+
+const logout = async () => {
+    await auth.logout();
+    await router.push({ name: 'login' });
+};
 
 const menuItems = computed(() => ([
     reactive({
@@ -17,7 +23,7 @@ const menuItems = computed(() => ([
     reactive({
         label: 'Logout',
         icon: 'pi pi-sign-out',
-        command: auth.logout,
+        command: logout,
     }),
 ]));
 

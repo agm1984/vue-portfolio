@@ -35,7 +35,7 @@ onMounted(fetchAllUsers);
     <a-card class="p-8">
         <h2>Users</h2>
 
-        <DataTable class="mt-8" :value="users" :loading="isLoading">
+        <DataTable class="mt-4" :value="users" :loading="isLoading">
             <Column field="name" header="Name">
                 <template #body="{ data }">
                     <div class="flex items-center gap-2">

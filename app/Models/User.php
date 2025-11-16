@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\TimestampAttributes;
 
-class User extends Authenticatable //, MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, HasRoles, Notifiable, TimestampAttributes;
 

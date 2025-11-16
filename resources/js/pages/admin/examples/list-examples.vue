@@ -43,7 +43,7 @@ onMounted(fetchAllExamples);
             </Button>
         </div>
 
-        <DataTable class="mt-8" :value="examples" :loading="isLoading">
+        <DataTable class="mt-4" :value="examples" :loading="isLoading">
             <Column field="name" header="Name">
                 <template #body="{ data }">
                     <router-link

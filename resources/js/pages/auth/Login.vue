@@ -25,7 +25,7 @@ const isSubmitting = computed(() => state.value === SUBMITTING);
 const submitted = ref(false);
 
 const form = reactive({
-    email: localStorage.getItem('remember_me') || '',
+    email: route.query.email ||localStorage.getItem('remember_me') || '',
     password: '',
     remember: true,
 });

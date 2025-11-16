@@ -1,25 +1,29 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
-import { required, email, maxLength } from '@vuelidate/validators';
+import { required, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import Message from 'primevue/message';
 import { useAuthStore } from '~/store/auth';
 
 const auth = useAuthStore();
 
 const INITIAL = 'is-initial';
 const SUBMITTING = 'is-submitting';
+const SUCCESS = 'is-success';
 const state = ref(INITIAL);
 const isSubmitting = computed(() => state.value === SUBMITTING);
+const isSuccess = computed(() => state.value === SUCCESS);
 const submitted = ref(false);
+const successMessage = ref('');
 
 const form = reactive({
     email: '',
 });
 
 const forgotPasswordRules = {
-    email: { required, email, maxLength: maxLength(255) },
+    email: { required, email },
 };
 
 const v$ = useVuelidate(forgotPasswordRules, form);
@@ -32,57 +36,67 @@ const handleSubmit = async () => {
         const isFormValid = await v$.value.$validate();
 
         if (!isFormValid) {
-            console.log('Form is invalid');
             state.value = INITIAL;
             return;
         }
 
         await auth.forgotPassword(form);
+
+        successMessage.value = 'If your email address exists in my system, you will receive a password reset link shortly.';
+        state.value = SUCCESS;
     } catch (error) {
         console.error('Error submitting form:', error);
-    } finally {
         state.value = INITIAL;
     }
 };
 </script>
 
 <template>
-    <a-card class="w-full max-w-3xl flex flex-col p-8">
+    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col items-center justify-center p-8">
         <h1>Reset password</h1>
 
-        <div class="flex justify-center py-8">
-            <div class="w-2/3 text-center">
-                Enter your email address, and a reset link will be sent to you.
+        <a-card class="p-8 mt-4">
+            <div class="flex justify-center">
+                <Message
+                    v-if="isSuccess"
+                    class="w-full max-w-md text-center"
+                    severity="success"
+                >
+                    <i class="pi pi-envelope mr-2"></i>
+                    {{ successMessage }}
+                </Message>
+
+                <p v-else class="max-w-[250px] text-center">Enter your email address, and a reset link will be sent to you.</p>
             </div>
-        </div>
 
-        <form class="pt-8" @submit.prevent="handleSubmit">
-            <a-input-field input-id="fp-email" title="Email" required />
+            <form class="pt-4" @submit.prevent="handleSubmit">
+                <a-input-field input-id="fp-email" title="Email" required />
 
-            <InputText
-                v-model="v$.email.$model"
-                id="fp-email"
-                :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
-                autocomplete="email"
-                placeholder=""
-            />
+                <InputText
+                    v-model="v$.email.$model"
+                    id="fp-email"
+                    :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+                    autocomplete="email"
+                    placeholder=""
+                />
 
-            <a-field-errors
-                v-if="v$.email.$error && submitted"
-                :errors="v$.email.$errors"
-                name="Email"
-            />
+                <a-field-errors
+                    v-if="v$.email.$error && submitted"
+                    :errors="v$.email.$errors"
+                    name="Email"
+                />
 
-            <Button
-                type="submit"
-                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                label="Send password reset link"
-                class="mt-8 w-full"
-                :disabled="isSubmitting"
-            />
-        </form>
+                <Button
+                    type="submit"
+                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                    label="Send password reset link"
+                    class="mt-4 w-full"
+                    :disabled="isSubmitting || isSuccess"
+                />
+            </form>
 
-    </a-card>
+        </a-card>
+    </div>
 </template>
 
 <script>

@@ -19,8 +19,8 @@ const routes = [
     { path: '/register', name: 'register', meta: { guestOnly: true }, component: () => import('../pages/auth/register.vue') },
     { path: '/password/reset', name: 'password.request', component: () => import('../pages/auth/password/email.vue') },
     { path: '/password/reset/:token', name: 'password.reset', component: () => import('../pages/auth/password/reset.vue') },
-    { path: '/email/verify/:id', name: 'verification.verify', component: () => import('../pages/auth/verification/verify.vue') },
-    { path: '/email/resend', name: 'verification.resend', component: () => import('../pages/auth/verification/resend.vue') },
+    { path: '/email/verify', name: 'verification.verify', meta: { preloadOnly: true }, component: () => import('../pages/auth/verification/verify.vue') },
+    { path: '/email/verify/:id', name: 'verification.done', meta: { preloadOnly: true }, component: () => import('../pages/auth/verification/done.vue') },
 
     {
         path: '/settings',

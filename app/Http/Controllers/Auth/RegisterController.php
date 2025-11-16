@@ -59,8 +59,13 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, User $user)
     {
+        if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+        }
+
         return response()->json([
             'user' => $user,
+            'message' => 'Registration successful. We have emailed you a verification link.',
         ]);
     }
 }

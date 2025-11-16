@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "flush": "composer dumpautoload; php artisan cache:clear; php artisan config:clear; php artisan route:clear",
+        "flush": "composer dumpautoload; php artisan cache:clear; php artisan config:clear; php artisan route:clear; php artisan ziggy:generate",
         "update-ide-helper": "php artisan ide-helper:generate; php artisan ide-helper:meta",
         "test": "jest",
         "test-watch": "npm test -- --watch"
