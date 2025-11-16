@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
                 ->get();
 
         return response()->json([
-            'users' => $users,
+            'users' => UserResource::collection($users),
         ]);
     }
 
@@ -28,7 +29,7 @@ class UserController extends Controller
         \Log::debug($request->all());
 
         return response()->json([
-            'user' => $user,
+            'user' => new UserResource($user),
         ]);
     }
 
