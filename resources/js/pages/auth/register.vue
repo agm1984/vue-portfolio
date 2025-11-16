@@ -7,6 +7,7 @@ import { useRoute, useRouter } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
+import Message from 'primevue/message';
 import { useAuthStore } from '~/store/auth';
 
 useHead({
@@ -119,6 +120,8 @@ const register = async () => {
                     :errors="v$.email.$errors"
                     name="Email"
                 />
+
+                <Message class="mt-4" severity="warn"><span class="font-semibold">Note</span>: Your email is private and will not be displayed to anyone except admin users.</Message>
 
                 <a-input-field class="mt-4" input-id="register-password" title="Password" required />
 
