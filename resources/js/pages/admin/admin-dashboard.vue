@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAuthStore } from '~/store/auth';
 
 const route = useRoute();
+const auth = useAuthStore();
 
 const isDashboard = computed(() => route.name === 'admin');
 </script>
@@ -33,6 +35,7 @@ const isDashboard = computed(() => route.name === 'admin');
             >List Categories</router-link>
 
             <router-link
+                v-if="auth.isAdmin"
                 :to="{ name: 'admin.categories.create' }"
                 class="w-full inline-flex items-center font-semibold"
                 active-class="border-r-2"
@@ -45,6 +48,7 @@ const isDashboard = computed(() => route.name === 'admin');
             >List Examples</router-link>
 
             <router-link
+                v-if="auth.isAdmin"
                 :to="{ name: 'admin.examples.create' }"
                 class="w-full inline-flex items-center font-semibold"
                 active-class="border-r-2"
@@ -54,30 +58,22 @@ const isDashboard = computed(() => route.name === 'admin');
         <div class="w-full h-auto ml-8">
             <div v-if="isDashboard" class="w-full grid grid-cols-3 gap-8">
                 <a-card class="flex flex-row items-center justify-between p-16">
-                    <h2 level="2">
-                        Categories
-                    </h2>
+                    <h2>Categories</h2>
                     <span class="text-5xl">8</span>
                 </a-card>
 
                 <a-card class="flex flex-row items-center justify-between p-16">
-                    <h2 level="2">
-                        Examples
-                    </h2>
+                    <h2>Examples</h2>
                     <span class="text-5xl">12</span>
                 </a-card>
 
                 <a-card class="flex flex-row items-center justify-between p-16">
-                    <h2 level="2">
-                        Users
-                    </h2>
+                    <h2>Users</h2>
                     <span class="text-5xl">32</span>
                 </a-card>
             </div>
-            <a-card v-if="isDashboard" class="p-8 mt-8" with-geometry>
-                <h2 level="2">
-                    Dashboard
-                </h2>
+            <a-card v-if="isDashboard" class="p-8 mt-8">
+                <h2>Dashboard</h2>
 
                 <div>
                     <!-- <apexchart
@@ -90,32 +86,5 @@ const isDashboard = computed(() => route.name === 'admin');
 
             <router-view v-else></router-view>
         </div>
-
-        <!-- <div class="flex flex-col p-8">
-            <h2 level="1">Categories</h2>
-
-            <router-link :to="{ name: 'admin.categories.list' }" class="ml-16 nav-link-white">
-                List categories
-            </router-link>
-            <router-link to="/admin/categories/create" class="ml-16 nav-link-white">Add category</router-link>
-        </div>
-
-        <div class="flex flex-col p-8">
-            <h2 level="1">Examples</h2>
-
-            <router-link :to="{ name: 'admin.examples.list' }" class="ml-16 nav-link-white">
-                List examples
-            </router-link>
-            <router-link to="/admin/examples/create" class="ml-16 nav-link-white">Add example</router-link>
-        </div>
-
-        <div class="flex flex-col p-8">
-            <h2 level="1">Users</h2>
-
-            <router-link :to="{ name: 'admin.users.list' }" class="ml-16 nav-link-white">
-                List users
-            </router-link>
-            <router-link to="/admin/users/create" class="ml-16 nav-link-white">Add user</router-link>
-        </div> -->
     </div>
 </template>

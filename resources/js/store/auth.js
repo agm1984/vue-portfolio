@@ -7,7 +7,11 @@ export const useAuthStore = defineStore('auth', {
         user: {},
     }),
 
-    getters: {},
+    getters: {
+        isAdmin() {
+            return this.user.roles_list?.includes('admin');
+        },
+    },
 
     actions: {
         setUser(user) {
