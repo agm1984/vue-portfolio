@@ -75,7 +75,14 @@ const handleResendVerificationEmail = async () => {
 
 <template>
     <form class="mt-4" @submit.prevent="handleSubmit">
-        <Message v-if="!auth.user.email_verified_at" severity="info">
+        <div v-if="auth.user.email_verified_at" class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-500">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
+                <i class="pi pi-check" style="font-size: 12px;"></i>
+            </span>
+            <span>Email verified</span>
+        </div>
+
+        <Message v-else severity="info">
             <span>Your email isn't verified yet.</span>
             <Button
                 type="button"
