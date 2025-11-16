@@ -69,7 +69,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
                 <router-link
                     :to="{ name: 'public.examples.list' }"
                     :class="['h-full inline-flex items-center font-semibold', {
-                        'border-b-2 mt-0.5': !currentRoute.params.category,
+                        'border-b-2 border-gray-900 mt-0.5': !currentRoute.params.category,
                     }]"
                     active-class=""
                     title="Show everything"
@@ -82,7 +82,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
                     :key="`example-category-${category.slug}`"
                     :to="{ name: 'public.examples.list', params: { category: category.slug } }"
                     class="h-full inline-flex items-center font-semibold"
-                    active-class="border-b-2 mt-0.5"
+                    active-class="border-b-2 border-gray-900 mt-0.5"
                     :title="`Show only ${category.name}`"
                 >
                     {{ category.name }}
