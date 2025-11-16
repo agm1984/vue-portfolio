@@ -17,7 +17,7 @@ const isDashboard = computed(() => route.name === 'admin');
             <router-link
                 :to="{ name: 'admin' }"
                 :class="['w-full inline-flex items-center font-semibold', {
-                    'border-r-2': isDashboard,
+                    'border-r-2 border-gray-900': isDashboard,
                 }]"
                 active-class=""
             >Dashboard</router-link>
@@ -25,33 +25,33 @@ const isDashboard = computed(() => route.name === 'admin');
             <router-link
                 :to="{ name: 'admin.users.list' }"
                 class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2"
+                active-class="border-r-2 border-gray-900"
             >List Users</router-link>
 
             <router-link
                 :to="{ name: 'admin.categories.list' }"
                 class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2"
+                active-class="border-r-2 border-gray-900"
             >List Categories</router-link>
 
             <router-link
                 v-if="auth.isAdmin"
                 :to="{ name: 'admin.categories.create' }"
                 class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2"
+                active-class="border-r-2 border-gray-900"
             >Add Category</router-link>
 
             <router-link
                 :to="{ name: 'admin.examples.list' }"
                 class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2"
+                active-class="border-r-2 border-gray-900"
             >List Examples</router-link>
 
             <router-link
                 v-if="auth.isAdmin"
                 :to="{ name: 'admin.examples.create' }"
                 class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2"
+                active-class="border-r-2 border-gray-900"
             >Add Example</router-link>
         </div>
 

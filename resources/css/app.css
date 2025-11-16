@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-300, currentColor);
+    }
+}
+
 html {
     font-family: Lato, sans-serif;
 }

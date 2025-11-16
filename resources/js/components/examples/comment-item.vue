@@ -55,7 +55,7 @@ const deleteComment = () => {
 </script>
 
 <template>
-    <div class="mt-4 bg-grey-200">
+    <div class="mt-4">
         <div v-show="isShowing">
             <div class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-2">

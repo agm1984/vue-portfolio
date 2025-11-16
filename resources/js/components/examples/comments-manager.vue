@@ -16,6 +16,7 @@ const SUBMITTING = 'is-submitting';
 const state = ref(INITIAL);
 const isSubmitting = computed(() => state.value === SUBMITTING);
 const submitted = ref(false);
+const comments = ref([]);
 
 const form = reactive({
     body: '',
@@ -27,14 +28,6 @@ const commentRules = {
 
 const v$ = useVuelidate(commentRules, form);
 
-const newCommentForm = ref(null);
-
-const newComment = ref({
-    body: '',
-});
-
-const comments = ref([]);
-
 const commentCount = computed(() => comments.value.length);
 const commentCountPluralization = computed(() => {
     return commentCount.value === 1 ? 'comment' : 'comments';
@@ -42,9 +35,7 @@ const commentCountPluralization = computed(() => {
 
 const fetchComments = async () => {
     try {
-        const { data } = await axios.get(
-            route('public.examples.listComments', currentRoute.params.example)
-        );
+        const { data } = await axios.get(route('public.examples.listComments', currentRoute.params.example));
 
         comments.value = data.comments;
     } catch (err) {
@@ -52,10 +43,10 @@ const fetchComments = async () => {
     }
 };
 
-const updateComment = async ($event) => {
+const updateComment = async (comment) => {
     try {
-        await axios.put(route('user.comments.edit', $event.id), {
-            body: $event.body,
+        await axios.put(route('user.comments.edit', comment.id), {
+            body: comment.body,
         });
 
         await fetchComments();
@@ -64,20 +55,16 @@ const updateComment = async ($event) => {
     }
 };
 
-const deleteComment = async ($event) => {
+const deleteComment = async (comment) => {
     try {
-        await axios.delete(route('user.comments.delete', $event.id), {
-            body: $event.body,
+        await axios.delete(route('user.comments.delete', comment.id), {
+            body: comment.body,
         });
 
         await fetchComments();
     } catch (err) {
         throw new Error(`comments-manager# Problem deleting comment: ${err}.`);
     }
-};
-
-const resetForm = () => {
-    newComment.value.body = '';
 };
 
 const saveComment = async () => {
@@ -88,34 +75,24 @@ const saveComment = async () => {
         const isFormValid = await v$.value.$validate();
 
         if (!isFormValid) {
-            console.log('Form is invalid');
             state.value = INITIAL;
             return;
         }
 
         const payload = {
-            body: newComment.value.body,
+            body: form.body,
         };
 
-        await axios.post(
-            route('user.comments.create', currentRoute.params.example),
-            payload
-        );
+        await axios.post(route('user.comments.create', currentRoute.params.example), payload);
 
-        newComment.value.body = '';
+        form.body = '';
 
-        // Preserve existing behavior that uses the internal observer
-        if (newCommentForm.value?.$refs?.observer) {
-            newCommentForm.value.$refs.observer.reset();
-        }
+        const { data } = await axios.get(route('public.examples.listComments', currentRoute.params.example));
 
-        const { data } = await axios.get(
-            route('public.examples.listComments', currentRoute.params.example)
-        );
         comments.value = data.comments;
-
-        return undefined; // resolve promise and do nothing
+        state.value = INITIAL;
     } catch (err) {
+        state.value = INITIAL;
         throw new Error(`comments-manager# Problem saving new comment: ${err}.`);
     }
 };
@@ -124,42 +101,40 @@ onMounted(fetchComments);
 </script>
 
 <template>
-    <div>
-        <div class="">
-            <form v-if="auth.isAuthenticated" @submit.prevent="saveComment">
-                <Textarea
-                    v-model="v$.body.$model"
-                    class="w-full"
-                    placeholder="Add a comment"
-                    rows="6"
+    <div class="mt-2">
+        <form v-if="auth.isAuthenticated" @submit.prevent="saveComment">
+            <Textarea
+                v-model="v$.body.$model"
+                class="w-full"
+                placeholder="Add a comment"
+                rows="6"
+            />
+
+            <div class="flex items-center justify-end mt-2">
+                <Button
+                    type="submit"
+                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                    label="Save"
+                    :disabled="isSubmitting"
                 />
-
-                <div class="flex items-center justify-end mt-2">
-                    <Button
-                        type="submit"
-                        icon="pi pi-check"
-                        label="Save"
-                        :disabled="isSubmitting"
-                    />
-                </div>
-            </form>
-
-            <div v-else class="">
-                <router-link :to="{ name: 'register' }">Register</router-link> or
-                <router-link :to="{ name: 'login' }">Login</router-link>
-                to post a comment.
             </div>
+        </form>
+
+        <div v-else class="">
+            <router-link class="font-semibold hover:underline" :to="{ name: 'register' }">Register</router-link> or
+            <router-link class="font-semibold hover:underline" :to="{ name: 'login' }">Login</router-link>
+            to post a comment.
         </div>
 
-        <h3 class="mt-4">{{ commentCount }} {{ commentCountPluralization }}</h3>
+        <h3 class="mt-8">{{ commentCount }} {{ commentCountPluralization }}</h3>
 
         <comment-item
             v-for="comment in comments"
             :key="`comment-${comment.id}`"
             :user="auth.user"
             :comment="comment"
-            @comment-updated="updateComment($event)"
-            @comment-deleted="deleteComment($event)"
+            @comment-updated="updateComment(comment)"
+            @comment-deleted="deleteComment(comment)"
         ></comment-item>
 
         <a-area-empty v-if="commentCount === 0" class="mt-4">

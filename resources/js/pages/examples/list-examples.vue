@@ -61,7 +61,7 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 </script>
 
 <template>
-    <div class="max-w-5xl mx-auto flex flex-col w-full h-auto p-8">
+    <div class="flex-1 max-w-5xl mx-auto flex flex-col w-full h-auto p-8">
         <div class="w-full h-10 flex items-center justify-between gap-4">
             <h1>Examples</h1>
 

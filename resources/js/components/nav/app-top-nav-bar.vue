@@ -18,7 +18,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'about' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 About Me
             </router-link>
@@ -26,7 +26,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'public.examples' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Examples
             </router-link>
@@ -34,7 +34,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'admin' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Admin
             </router-link>
@@ -42,7 +42,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'design' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Design System
             </router-link>
@@ -50,7 +50,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'contact' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Contact Me
             </router-link>
@@ -64,7 +64,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'register' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Register
             </router-link>
@@ -72,7 +72,7 @@ const appName = window.config.appName;
             <router-link
                 :to="{ name: 'login' }"
                 class="h-full inline-flex items-center font-semibold"
-                active-class="border-b-2 mt-0.5"
+                active-class="border-b-2 border-gray-900 mt-0.5"
             >
                 Login
             </router-link>
