@@ -62,10 +62,10 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 
 <template>
     <div class="flex-1 max-w-5xl mx-auto flex flex-col w-full h-auto p-8">
-        <div class="w-full h-10 flex items-center justify-between gap-4">
+        <div class="w-full md:h-10 md:flex md:items-center md:justify-between gap-4">
             <h1>Examples</h1>
 
-            <div class="h-full flex items-center justify-end gap-4">
+            <div class="h-full flex items-center justify-end gap-4 mt-4 md:mt-0">
                 <router-link
                     :to="{ name: 'public.examples.list' }"
                     :class="['h-full inline-flex items-center font-semibold', {

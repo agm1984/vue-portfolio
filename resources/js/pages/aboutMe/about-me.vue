@@ -5,7 +5,7 @@
         <a-card class="p-8 mt-4">
             <div class="flex flex-col">
                 <div class="w-full">
-                    <img src="adam-center.png" class="float-right aspect-square rounded-md ml-8" alt="Image of Adam Mackintosh">
+                    <img src="adam-center.png" class="md:float-right aspect-square rounded-md md:ml-8 mb-4" alt="Image of Adam Mackintosh">
                     <p>
                         I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
                         but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
@@ -29,11 +29,11 @@
                     </p>
 
                     <div class="flex flex-col bg-gray-200 rounded-md p-4 mt-4">
-                        <h3 class="whitespace-nowrap">Find me on social media</h3>
-                        <a-social-link class="pt-4 pl-8" network="twitter">Twitter</a-social-link>
-                        <a-social-link class="pt-4 pl-8" network="github">GitHub</a-social-link>
-                        <a-social-link class="pt-4 pl-8" network="stackoverflow">StackOverflow</a-social-link>
-                        <a-social-link class="pt-4 pl-8" network="medium">Medium</a-social-link>
+                        <h3 class="md:whitespace-nowrap">Find me on social media</h3>
+                        <a-social-link class="pt-4 md:pl-8" network="twitter">Twitter</a-social-link>
+                        <a-social-link class="pt-4 md:pl-8" network="github">GitHub</a-social-link>
+                        <a-social-link class="pt-4 md:pl-8" network="stackoverflow">StackOverflow</a-social-link>
+                        <a-social-link class="pt-4 md:pl-8" network="medium">Medium</a-social-link>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
         <div class="w-full mt-8">
             <h2>A Brief Word</h2>
 
-            <div class="w-full grid grid-cols-2 gap-8 mt-4">
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
                 <a-card class="self-start p-8">
                     <h2>To programmers</h2>
 

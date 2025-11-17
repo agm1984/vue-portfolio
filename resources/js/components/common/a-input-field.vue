@@ -36,8 +36,8 @@ defineProps({
 
         <span v-if="required" aria-hidden="true" class="text-red-700">*</span>
 
-        <UIHelp v-if="$slots.help">
+        <!-- <UIHelp v-if="$slots.help">
             <slot name="help"></slot>
-        </UIHelp>
+        </UIHelp> -->
     </div>
 </template>

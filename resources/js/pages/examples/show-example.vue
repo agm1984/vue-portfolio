@@ -51,10 +51,12 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 
         <a-card class="p-8 main mt-4">
             <h2>Summary</h2>
+
             <p class="mt-2">{{ example.summary }}</p>
 
             <h2 class="mt-4">Images</h2>
-            <div class="w-full grid grid-cols-2 gap-4 mt-2">
+
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                 <router-link
                     v-for="image in example.images"
                     :key="image.image_id"
@@ -66,6 +68,7 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
             </div>
 
             <h2 class="mt-4">Conclusion</h2>
+
             <p class="mt-2">{{ example.conclusion }}</p>
         </a-card>
 

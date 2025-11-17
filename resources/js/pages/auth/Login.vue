@@ -68,7 +68,7 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col justify-center p-8">
+    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col items-center justify-center p-8">
         <h1>Login</h1>
 
         <a-card class="w-full flex flex-col p-8 mt-4 self-start">

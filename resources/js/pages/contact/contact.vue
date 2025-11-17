@@ -50,7 +50,7 @@ const contactRules = {
 
 const v$ = useVuelidate(contactRules, form);
 
-const isInitial = computed(() => state.value === INITIAL);
+// const isInitial = computed(() => state.value === INITIAL);
 const isCopiedToClipboard = computed(() => state.value === IS_COPIED_TO_CLIPBOARD);
 const messageAnswer = computed(() => +form.answer);
 const verificationText = computed(() => `${num1.value} + ${num2.value} =`);
@@ -123,7 +123,7 @@ const sendMessage = async () => {
         <div class="flex flex-col w-full">
             <h1>Contact Me</h1>
 
-            <a-card class="w-full flex gap-4 p-8 mt-4">
+            <a-card class="w-full flex flex-col md:flex-row gap-4 p-8 mt-4">
                 <div class="w-full flex flex-col gap-4">
                     <span class="font-semibold">Ready to get in touch?</span>
 
@@ -145,12 +145,12 @@ const sendMessage = async () => {
                     </div>
                 </div>
 
-                <div class="flex flex-col bg-gray-200 rounded-md p-4">
-                    <h3 class="whitespace-nowrap">Find me on social media</h3>
-                    <a-social-link class="pt-4 pl-8" network="twitter">Twitter</a-social-link>
-                    <a-social-link class="pt-4 pl-8" network="github">GitHub</a-social-link>
-                    <a-social-link class="pt-4 pl-8" network="stackoverflow">StackOverflow</a-social-link>
-                    <a-social-link class="pt-4 pl-8" network="medium">Medium</a-social-link>
+                <div class="flex flex-col bg-gray-200 rounded-md p-4 mt-4 md:mt-0">
+                    <h3 class="md:whitespace-nowrap">Find me on social media</h3>
+                    <a-social-link class="pt-4 md:pl-8" network="twitter">Twitter</a-social-link>
+                    <a-social-link class="pt-4 md:pl-8" network="github">GitHub</a-social-link>
+                    <a-social-link class="pt-4 md:pl-8" network="stackoverflow">StackOverflow</a-social-link>
+                    <a-social-link class="pt-4 md:pl-8" network="medium">Medium</a-social-link>
                 </div>
             </a-card>
 

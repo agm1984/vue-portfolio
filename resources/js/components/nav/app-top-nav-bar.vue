@@ -18,7 +18,7 @@ const handleLogout = async () => {
 <template>
     <nav class="sticky top-0 z-10 w-full bg-white border-b">
         <!-- desktop -->
-        <div class="flex h-[66px] items-center justify-between px-4 lg:px-8">
+        <div class="flex h-[66px] items-center justify-between px-8">
             <div class="w-8 flex items-center">
                 <router-link
                     class="text-lg font-semibold tracking-tight"
@@ -93,7 +93,7 @@ const handleLogout = async () => {
             </div>
 
             <!-- mobile -->
-            <div class="flex items-center md:hidden">
+            <div class="flex items-center md:hidden -mr-3">
                 <button
                     type="button"
                     class="inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900"
