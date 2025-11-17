@@ -1,12 +1,23 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 import { useAuthStore } from '~/store/auth';
 
-const route = useRoute();
+const currentRoute = useRoute();
 const auth = useAuthStore();
 
-const isDashboard = computed(() => route.name === 'admin');
+const metrics = ref({});
+
+const isDashboard = computed(() => currentRoute.name === 'admin');
+
+const fetchMetrics = async () => {
+    const response = await axios.get(route('admin.dashboard.metrics'));
+
+    metrics.value = response.data;
+};
+
+onMounted(fetchMetrics);
 </script>
 
 <template>
@@ -19,7 +30,6 @@ const isDashboard = computed(() => route.name === 'admin');
                 :class="['w-full inline-flex items-center font-semibold', {
                     'border-r-2 border-gray-900': isDashboard,
                 }]"
-                active-class=""
             >Dashboard</router-link>
 
             <router-link
@@ -56,31 +66,39 @@ const isDashboard = computed(() => route.name === 'admin');
         </div>
 
         <div class="w-full h-auto ml-8">
-            <div v-if="isDashboard" class="w-full grid grid-cols-3 gap-8">
-                <a-card class="flex flex-row items-center justify-between p-16">
+            <div v-if="isDashboard" class="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 md:gap-8">
+                <a-card class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 lg:p-8">
                     <h2>Categories</h2>
-                    <span class="text-5xl">8</span>
+                    <span class="text-5xl">{{ metrics.categories_count }}</span>
                 </a-card>
 
-                <a-card class="flex flex-row items-center justify-between p-16">
+                <a-card class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 lg:p-8">
                     <h2>Examples</h2>
-                    <span class="text-5xl">12</span>
+                    <span class="text-5xl">{{ metrics.examples_count }}</span>
                 </a-card>
 
-                <a-card class="flex flex-row items-center justify-between p-16">
+                <a-card class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 lg:p-8">
                     <h2>Users</h2>
-                    <span class="text-5xl">32</span>
+                    <span class="text-5xl">{{ metrics.users_count }}</span>
                 </a-card>
             </div>
             <a-card v-if="isDashboard" class="p-8 mt-8">
                 <h2>Dashboard</h2>
 
-                <div>
-                    <!-- <apexchart
-                        type="line"
-                        :options="options"
-                        :series="series"
-                    ></apexchart> -->
+                <div class="mt-2">
+                    Welcome to the admin dashboard. Use the links on the left to manage categories, examples, and users.
+                </div>
+
+                <div v-if="auth.isAuthenticated && auth.isAdmin" class="mt-4">
+                    You are logged in as <strong>{{ auth.user.name }}</strong> ({{ auth.user.email }}).
+                </div>
+                <div v-else class="mt-4">You are not logged in, or are a Standard User, so you cannot mutate any data, but you can have fun browsing the schema.</div>
+
+                <h2 class="mt-4">Metrics</h2>
+
+                <div class="flex items-center gap-1 mt-2">
+                    <span>Users signed up today:</span>
+                    <strong>{{ metrics.users_signed_up_today }}</strong>
                 </div>
             </a-card>
 

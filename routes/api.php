@@ -1,109 +1,94 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Auth\UserController as AuthUserController;
+use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Settings\PasswordController;
+use App\Http\Controllers\User\CommentController;
+
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ExampleController as AdminExampleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\TagController as AdminTagController;
+
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| These routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group.
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('user', 'Auth\UserController@me')->name('me');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', [AuthUserController::class, 'me'])->name('me');
 
-    Route::patch('settings/profile', 'Settings\ProfileController@update');
-    Route::patch('settings/password', 'Settings\PasswordController@update');
+    // Route::patch('settings/profile', [ProfileController::class, 'update'])->name('settings.profile.update');
+    // Route::patch('settings/password', [PasswordController::class, 'update'])->name('settings.password.update');
 
-    Route::post('/user/profile', 'Auth\UserController@editProfile')->name('user.profile.edit');
-    Route::put('/user/password', 'Auth\UserController@editPassword')->name('user.password.edit');
+    Route::post('user/profile', [AuthUserController::class, 'editProfile'])->name('user.profile.edit');
+    Route::put('user/password', [AuthUserController::class, 'editPassword'])->name('user.password.edit');
 
-    Route::post('/comments/{example}/new', 'User\CommentController@create')->name('user.comments.create');
-    Route::put('/comments/{comment}', 'User\CommentController@edit')->name('user.comments.edit');
-    Route::delete('/comments/{comment}/delete', 'User\CommentController@delete')->name('user.comments.delete');
+    Route::post('comments/{example}/new', [CommentController::class, 'create'])->name('user.comments.create');
+    Route::put('comments/{comment}', [CommentController::class, 'edit'])->name('user.comments.edit');
+    Route::delete('comments/{comment}/delete', [CommentController::class, 'delete'])->name('user.comments.delete');
 });
 
+Route::prefix('admin')
+    ->middleware(['transformTypes'])
+    ->group(function () {
+        Route::get('metrics', [DashboardController::class, 'metrics'])->name('admin.dashboard.metrics');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['transformTypes']], function () {
-    Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
-    Route::get('/categories/all', 'Admin\CategoryController@getAll')->name('admin.categories.getAll');
-    Route::get('/categories/{category:slug}', 'Admin\CategoryController@show')->name('admin.categories.show');
-    Route::patch('/categories/{category:slug}', 'Admin\CategoryController@edit')->middleware('role:admin')->name('admin.categories.edit');
-    Route::post('/categories', 'Admin\CategoryController@create')->middleware('role:admin')->name('admin.categories.create');
+        Route::get('categories', [AdminCategoryController::class, 'index'])->name('admin.categories.list');
+        Route::get('categories/all', [AdminCategoryController::class, 'getAll'])->name('admin.categories.getAll');
+        Route::get('categories/{category:slug}', [AdminCategoryController::class, 'show'])->name('admin.categories.show');
+        Route::patch('categories/{category:slug}', [AdminCategoryController::class, 'edit'])
+            ->middleware('role:admin')
+            ->name('admin.categories.edit');
+        Route::post('categories', [AdminCategoryController::class, 'create'])
+            ->middleware('role:admin')
+            ->name('admin.categories.create');
 
-    Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.list');
-    Route::get('/examples/{example}', 'Admin\ExampleController@show')->name('admin.examples.show');
-    Route::post('/examples', 'Admin\ExampleController@create')->middleware('role:admin')->name('admin.examples.create');
-    Route::patch('/examples/{example:slug}', 'Admin\ExampleController@edit')->middleware('role:admin')->name('admin.examples.edit');
-    Route::post('/examples/{example}/images/append', 'Admin\ExampleController@appendImages')->middleware('role:admin')->name('admin.examples.appendImages');
-    Route::put('/examples/{example}/images/delete/{exampleImage}', 'Admin\ExampleController@removeImage')->middleware('role:admin')->name('admin.examples.removeImage');
+        Route::get('examples', [AdminExampleController::class, 'index'])->name('admin.examples.list');
+        Route::get('examples/{example}', [AdminExampleController::class, 'show'])->name('admin.examples.show');
+        Route::post('examples', [AdminExampleController::class, 'create'])
+            ->middleware('role:admin')
+            ->name('admin.examples.create');
+        Route::patch('examples/{example:slug}', [AdminExampleController::class, 'edit'])
+            ->middleware('role:admin')
+            ->name('admin.examples.edit');
+        Route::post('examples/{example}/images/append', [AdminExampleController::class, 'appendImages'])
+            ->middleware('role:admin')
+            ->name('admin.examples.appendImages');
+        Route::put('examples/{example}/images/delete/{exampleImage}', [AdminExampleController::class, 'removeImage'])
+            ->middleware('role:admin')
+            ->name('admin.examples.removeImage');
 
-    Route::get('/users', 'Admin\UserController@index')->name('admin.users.list');
-    Route::get('/users/{user}', 'Admin\UserController@show')->name('admin.users.show');
+        Route::get('users', [AdminUserController::class, 'index'])->name('admin.users.list');
+        Route::get('users/{user}', [AdminUserController::class, 'show'])->name('admin.users.show');
 
-    Route::get('/tags', 'Admin\TagController@getAll')->name('admin.tags.getAll');
-});
+        Route::get('tags', [AdminTagController::class, 'getAll'])->name('admin.tags.getAll');
+    });
 
-Route::group(['prefix' => 'public'], function () {
-    Route::get('/categories', 'CategoryController@index')->name('public.categories.list');
-    Route::get('/categories/{category}', 'CategoryController@show')->name('public.categories.show');
+Route::prefix('public')->group(function () {
+    Route::get('categories', [CategoryController::class, 'index'])->name('public.categories.list');
+    Route::get('categories/{category}', [CategoryController::class, 'show'])->name('public.categories.show');
 
-    Route::get('/examples', 'ExampleController@index')->name('public.examples.list');
-    Route::get('/examples/{example}', 'ExampleController@show')->name('public.examples.show');
-    Route::get('/examples/{example}/images/{exampleImage}', 'ExampleController@image')->name('public.examples.images');
-    Route::get('/examples/{example}/comments', 'ExampleController@listComments')->name('public.examples.listComments');
+    Route::get('examples', [ExampleController::class, 'index'])->name('public.examples.list');
+    Route::get('examples/{example}', [ExampleController::class, 'show'])->name('public.examples.show');
+    Route::get('examples/{example}/images/{exampleImage}', [ExampleController::class, 'image'])->name('public.examples.images');
+    Route::get('examples/{example}/comments', [ExampleController::class, 'listComments'])->name('public.examples.listComments');
 
-    Route::post('/contact', 'ContactController@send')->name('public.contact.send');
+    Route::post('contact', [ContactController::class, 'send'])->name('public.contact.send');
 
     // not used
-    // Route::get('/users', 'UserController@index')->name('public.users.list');
-    // Route::get('/users/{user}', 'UserController@show')->name('public.users.show');
+    // Route::get('users', [UserController::class, 'index'])->name('public.users.list');
+    // Route::get('users/{user}', [UserController::class, 'show'])->name('public.users.show');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Route::get('/categories', 'CategoryController@index');
-// Route::get('/examples', 'ExampleController@index');
-
-// Route::get('/examples/{example}', 'ExampleController@show');
-
-// // Route::group(['prefix' => 'example'], function () {
-// //     Route::post('add', 'ExampleController@add');
-// //     Route::get('edit/{id}', 'ExampleController@edit');
-// //     Route::post('update/{id}', 'ExampleController@update');
-// //     Route::delete('delete/{id}', 'ExampleController@delete');
-// // });
-
-// // admin
-// Route::prefix('admin')->middleware(['auth:sanctum'])->group(function () {
-//     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.index');
-//     Route::get('/examples', 'Admin\ExampleController@index')->name('admin.examples.index');
-// });
