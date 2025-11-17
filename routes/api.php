@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('user', 'Auth\UserController@me')->name('me');
+
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
-    Route::get('user', 'Auth\UserController@me')->name('me');
 
     Route::post('/user/profile', 'Auth\UserController@editProfile')->name('user.profile.edit');
     Route::put('/user/password', 'Auth\UserController@editPassword')->name('user.password.edit');
@@ -28,7 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'transformTypes']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['transformTypes']], function () {
     Route::get('/categories', 'Admin\CategoryController@index')->name('admin.categories.list');
     Route::get('/categories/all', 'Admin\CategoryController@getAll')->name('admin.categories.getAll');
     Route::get('/categories/{category:slug}', 'Admin\CategoryController@show')->name('admin.categories.show');

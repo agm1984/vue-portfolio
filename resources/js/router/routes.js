@@ -36,7 +36,7 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        meta: { requiresAuth: true },
+        meta: { preloadOnly: true },
         component: () => import('../pages/admin/admin-dashboard.vue'),
         children: [
             { path: 'users', name: 'admin.users.list', component: () => import('../pages/admin/users/list-users.vue') },
