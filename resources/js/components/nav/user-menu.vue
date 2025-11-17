@@ -33,7 +33,7 @@ const toggleMenu = (event) => {
 </script>
 
 <template>
-    <div class="w-48 h-full flex items-center justify-end gap-4">
+    <div class="w-8 h-full flex items-center justify-end gap-4">
         <button
             type="button"
             severity="secondary"
@@ -42,7 +42,6 @@ const toggleMenu = (event) => {
             @click="toggleMenu"
         >
             <a-avatar :size="32" :user="auth.user" />
-            <!-- <span class="font-semibold">{{ auth.user.name }}</span> -->
         </button>
     </div>
 
