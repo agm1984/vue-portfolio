@@ -52,7 +52,7 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
         <a-card class="p-8 main mt-4">
             <h2>Summary</h2>
 
-            <p class="mt-2">{{ example.summary }}</p>
+            <p class="max-w-xl mt-2">{{ example.summary }}</p>
 
             <h2 class="mt-4">Images</h2>
 
@@ -69,7 +69,7 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 
             <h2 class="mt-4">Conclusion</h2>
 
-            <p class="mt-2">{{ example.conclusion }}</p>
+            <p class="max-w-xl mt-2">{{ example.conclusion }}</p>
         </a-card>
 
         <a-card class="p-8 mt-4">
@@ -100,7 +100,7 @@ watch(() => currentRoute.params.example, fetchExample, { immediate: true });
         </a-card>
 
         <a-card class="p-8 mt-4">
-            <h2 class="mt-4">Comments</h2>
+            <h2>Comments</h2>
 
             <comments-manager></comments-manager>
         </a-card>

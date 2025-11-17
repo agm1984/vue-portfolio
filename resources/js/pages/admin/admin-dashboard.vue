@@ -92,7 +92,11 @@ onMounted(fetchMetrics);
                 <div v-if="auth.isAuthenticated && auth.isAdmin" class="mt-4">
                     You are logged in as <strong>{{ auth.user.name }}</strong> ({{ auth.user.email }}).
                 </div>
-                <div v-else class="mt-4">You are not logged in, or are a Standard User, so you cannot mutate any data, but you can have fun browsing the schema.</div>
+                <div v-else class="flex gap-1 mt-4">
+                    <span v-if="!auth.isAuthenticated">You are not logged in,</span>
+                    <span v-else-if="auth.isAuthenticated">You are a Standard User,</span>
+                    <span>so you cannot mutate any data, but you can have fun browsing the schema.</span>
+                </div>
 
                 <h2 class="mt-4">Metrics</h2>
 
