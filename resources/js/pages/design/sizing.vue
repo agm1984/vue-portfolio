@@ -1,4 +1,9 @@
 <script setup>
+import { useHead } from '@unhead/vue';
+
+useHead({
+    title: 'Design System Sizing',
+});
 </script>
 
 <template>

@@ -1,3 +1,11 @@
+<script setup>
+import { useHead } from '@unhead/vue';
+
+useHead({
+    title: 'About Me',
+});
+</script>
+
 <template>
     <div class="w-full max-w-5xl mx-auto flex flex-col p-8">
         <h1>About Me</h1>
@@ -93,39 +101,3 @@
         </div>
     </div>
 </template>
-
-<script>
-// import AdamScene from './adam-scene.vue';
-// import isUserScrolling from '../../components/mixins/isUserScrolling';
-
-export default {
-    name: 'about-me',
-
-    components: {
-        // AdamScene,
-    },
-
-    // mixins: [isUserScrolling],
-
-    metaInfo() {
-        return { title: 'About me' };
-    },
-
-    data() {
-        return {};
-    },
-
-    computed: {},
-
-    methods: {
-        handleScrollDown() {
-            return window.scrollTo({
-                top: window.innerHeight / 2,
-                behavior: 'smooth',
-            });
-        },
-
-    },
-
-};
-</script>

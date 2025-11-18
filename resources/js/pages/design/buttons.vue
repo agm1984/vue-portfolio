@@ -1,5 +1,10 @@
 <script setup>
+import { useHead } from '@unhead/vue';
 import Button from 'primevue/button';
+
+useHead({
+    title: 'Design System Buttons',
+});
 </script>
 
 <template>

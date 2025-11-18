@@ -11,7 +11,7 @@ import InputNumber from 'primevue/inputnumber';
 import Button from 'primevue/button';
 
 useHead({
-    title: 'Contact',
+    title: 'Contact Me',
 });
 
 /**

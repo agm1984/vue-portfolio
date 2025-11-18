@@ -29,6 +29,10 @@ class Comment extends Model
         'created_at_diff',
         'updated_at_nice',
         'updated_at_diff',
+        'score',
+        'upvotes',
+        'downvotes',
+        'user_vote',
     ];
 
     public function author()
@@ -38,6 +42,42 @@ class Comment extends Model
 
     public function example() {
         return $this->belongsTo(Example::class);
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(CommentVote::class);
+    }
+
+    public function getScoreAttribute()
+    {
+        return (int) $this->votes()->sum('value');
+    }
+
+    public function getUpvotesAttribute()
+    {
+        return (int) $this->votes()->where('value', 1)->count();
+    }
+
+    public function getDownvotesAttribute()
+    {
+        return (int) $this->votes()->where('value', -1)->count();
+    }
+
+    public function getUserVoteAttribute()
+    {
+        $userId = auth()->id();
+
+        if (! $userId) {
+            return null;
+        }
+
+        // use loaded relation if present, otherwise query
+        $vote = $this->relationLoaded('votes')
+            ? $this->votes->firstWhere('user_id', $userId)
+            : $this->votes()->where('user_id', $userId)->first();
+
+        return $vote ? (int) $vote->value : null;
     }
 
     public function getStatusNiceAttribute()

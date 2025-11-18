@@ -51,10 +51,13 @@ class ExampleController extends Controller
 
     public function listComments(Example $example)
     {
-        $comments = Comment::query()->where('example_id', $example->id)->get();
+        $comments = $example->comments()
+            ->with('author')
+            ->with('votes')
+            ->get();
 
         return response()->json([
-            'comments' => $comments->load('author'),
+            'comments' => $comments,
         ]);
     }
 

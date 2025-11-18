@@ -1,10 +1,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import axios from 'axios';
 import { useAuthStore } from '~/store/auth';
+
+useHead({
+    title: 'Admin List Examples',
+});
 
 const auth = useAuthStore();
 

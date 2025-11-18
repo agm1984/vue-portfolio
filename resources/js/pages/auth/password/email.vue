@@ -1,11 +1,16 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
+import { useHead } from '@unhead/vue';
 import { required, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { useAuthStore } from '~/store/auth';
+
+useHead({
+    title: 'Forgot Password',
+})
 
 const auth = useAuthStore();
 

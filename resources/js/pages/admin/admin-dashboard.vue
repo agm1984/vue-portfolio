@@ -1,8 +1,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useAuthStore } from '~/store/auth';
+
+
+useHead({
+    title: 'Admin Dashboard',
+});
 
 const currentRoute = useRoute();
 const auth = useAuthStore();

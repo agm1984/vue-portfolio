@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Category;
 use App\Models\ExampleImage;
 use App\Models\Tag;
+use App\Models\Comment;
 use App\Traits\TimestampAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,11 @@ class Example extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function getStatusNiceAttribute()

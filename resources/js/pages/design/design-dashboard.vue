@@ -1,3 +1,17 @@
+<script setup>
+import { computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import { useRoute } from 'vue-router';
+
+useHead({
+    title: 'Design System Dashboard',
+});
+
+const currentRoute = useRoute();
+
+const isDashboard = computed(() => currentRoute.name === 'design');
+</script>
+
 <template>
     <div class="flex-1 w-full max-w-5xl mx-auto flex p-8">
         <div class="min-w-[125px] max-w-[125px] flex flex-col gap-4">
@@ -88,34 +102,3 @@
 
     </div>
 </template>
-
-<script>
-export default {
-    name: 'design-system',
-
-    metaInfo() {
-        return { title: 'Design system' };
-    },
-
-    data() {
-        return {
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        };
-    },
-
-
-    computed: {
-        isDashboard() {
-            return (this.$route.matched.length === 1);
-        },
-
-        currentDate() {
-            const d = new Date();
-            return `${this.months[d.getMonth()]} ${d.getDate()}`;
-        },
-    },
-
-    methods: {},
-
-};
-</script>

@@ -1,11 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
 import axios from 'axios';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 import { useAuthStore } from '~/store/auth';
+
+useHead({
+    title: 'Admin List Categories',
+});
 
 const auth = useAuthStore();
 

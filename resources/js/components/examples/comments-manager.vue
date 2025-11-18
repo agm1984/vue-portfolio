@@ -43,29 +43,7 @@ const fetchComments = async () => {
     }
 };
 
-const updateComment = async (comment) => {
-    try {
-        await axios.put(route('user.comments.edit', comment.id), {
-            body: comment.body,
-        });
-
-        await fetchComments();
-    } catch (err) {
-        throw new Error(`comments-manager# Problem updating comment: ${err}.`);
-    }
-};
-
-const deleteComment = async (comment) => {
-    try {
-        await axios.delete(route('user.comments.delete', comment.id), {
-            body: comment.body,
-        });
-
-        await fetchComments();
-    } catch (err) {
-        throw new Error(`comments-manager# Problem deleting comment: ${err}.`);
-    }
-};
+onMounted(fetchComments);
 
 const saveComment = async () => {
     try {
@@ -97,7 +75,66 @@ const saveComment = async () => {
     }
 };
 
-onMounted(fetchComments);
+const updateComment = async (payload) => {
+    try {
+        await axios.put(route('user.comments.edit', payload.id), {
+            body: payload.body,
+        });
+
+        await fetchComments();
+    } catch (err) {
+        throw new Error(`comments-manager# Problem updating comment: ${err}.`);
+    }
+};
+
+const deleteComment = async (payload) => {
+    try {
+        await axios.delete(route('user.comments.delete', payload.id));
+
+        await fetchComments();
+    } catch (err) {
+        throw new Error(`comments-manager# Problem deleting comment: ${err}.`);
+    }
+};
+
+const voteOnComment = async ({ commentId, value }) => {
+    try {
+        const { data } = await axios.post(route('user.comments.vote.store', commentId), { value });
+
+        // update that comment in-place with the new score info
+        const idx = comments.value.findIndex(c => c.id === commentId);
+        if (idx !== -1) {
+            comments.value[idx] = {
+                ...comments.value[idx],
+                score: data.score,
+                upvotes: data.upvotes,
+                downvotes: data.downvotes,
+                user_vote: value,
+            };
+        }
+    } catch (err) {
+        console.error(`comments-manager# Problem voting on comment: ${err}.`);
+    }
+};
+
+const removeVoteFromComment = async ({ commentId }) => {
+    try {
+        const { data } = await axios.delete(route('user.comments.vote.destroy', commentId));
+
+        const idx = comments.value.findIndex(c => c.id === commentId);
+        if (idx !== -1) {
+            comments.value[idx] = {
+                ...comments.value[idx],
+                score: data.score,
+                upvotes: data.upvotes,
+                downvotes: data.downvotes,
+                user_vote: null,
+            };
+        }
+    } catch (err) {
+        console.error(`comments-manager# Problem removing vote from comment: ${err}.`);
+    }
+};
 </script>
 
 <template>
@@ -133,8 +170,10 @@ onMounted(fetchComments);
             :key="`comment-${comment.id}`"
             :user="auth.user"
             :comment="comment"
-            @comment-updated="updateComment(comment)"
-            @comment-deleted="deleteComment(comment)"
+            @comment-updated="updateComment"
+            @comment-deleted="deleteComment"
+            @comment-voted="voteOnComment"
+            @comment-unvoted="removeVoteFromComment"
         ></comment-item>
 
         <a-area-empty v-if="commentCount === 0" class="mt-4">

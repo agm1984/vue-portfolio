@@ -1,4 +1,9 @@
 <script setup>
+import { useHead } from '@unhead/vue';
+
+useHead({
+    title: 'Admin Create Category',
+});
 </script>
 
 <template>

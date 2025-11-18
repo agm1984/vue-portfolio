@@ -30,6 +30,7 @@ class CommentController extends Controller
     public function edit(Request $request, Comment $comment)
     {
         \Log::debug($request->all());
+
         $comment->body = $request->input('body');
         $comment->save();
 
@@ -42,9 +43,9 @@ class CommentController extends Controller
 
     public function delete(Request $request, Comment $comment)
     {
-        \Log::debug('hittin dat');
-        $comment->delete();
         \Log::debug($request->all());
+
+        $comment->delete();
 
         return response()->json([
             'success' => true,

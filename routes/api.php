@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\UserController as AuthUserController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\User\CommentController;
+use App\Http\Controllers\User\CommentVoteController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -39,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('comments/{example}/new', [CommentController::class, 'create'])->name('user.comments.create');
     Route::put('comments/{comment}', [CommentController::class, 'edit'])->name('user.comments.edit');
     Route::delete('comments/{comment}/delete', [CommentController::class, 'delete'])->name('user.comments.delete');
+    Route::post('/comments/{comment}/vote', [CommentVoteController::class, 'store'])->name('user.comments.vote.store');
+    Route::delete('/comments/{comment}/vote', [CommentVoteController::class, 'destroy'])->name('user.comments.vote.destroy');
 });
 
 Route::prefix('admin')
