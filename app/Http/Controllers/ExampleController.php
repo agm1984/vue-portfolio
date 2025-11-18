@@ -52,8 +52,10 @@ class ExampleController extends Controller
     public function listComments(Example $example)
     {
         $comments = $example->comments()
-            ->with('author')
-            ->with('votes')
+            ->with(['author'])
+            ->withSum('votes as score', 'value')
+            ->orderByDesc('score')
+            ->orderByDesc('created_at')
             ->get();
 
         return response()->json([
