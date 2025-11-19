@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createHead } from '@unhead/vue/client';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 import { definePreset } from '@primevue/themes';
 import Aura from '@primeuix/themes/aura';
 import router from '~/router';
@@ -70,6 +71,7 @@ app.use(PrimeVue, {
         preset: Noir,
     },
 });
+app.use(ToastService);
 
 app.mount('#app');
 

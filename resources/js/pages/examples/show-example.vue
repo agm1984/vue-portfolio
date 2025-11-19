@@ -44,7 +44,7 @@ const fetchExample = async () => {
         example.value = res.data.example;
         state.value = IS_LOADED;
 
-        useHead({ title: example.value.name });
+        // useHead({ title: example.value.name });
     } catch (err) {
         console.error(`show-example# Problem fetching example:`, err);
     }
