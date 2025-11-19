@@ -24,7 +24,11 @@ class CommentController extends Controller
             $request->input('body'),
         );
 
-        return response()->json($comment, 200);
+        $comment->load('author');
+
+        return response()->json([
+            'comment' => $comment,
+        ], 200);
     }
 
     public function edit(Request $request, Comment $comment)

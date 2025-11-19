@@ -71,6 +71,8 @@ const saveComment = async () => {
 
         // IMMUTABLE UPDATE: Prepend new comment to list (New Array)
         // No need to re-fetch the whole list!
+        console.log('data', data);
+        console.log('comments', comments.value);
         comments.value = [data.comment, ...comments.value];
 
         // Reset form
