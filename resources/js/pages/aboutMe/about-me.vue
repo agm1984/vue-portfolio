@@ -1,109 +1,167 @@
 <script setup>
+import { computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import Accordion from 'primevue/accordion';
 import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
+// Use standard PrimeVue Card if your a-card is just a wrapper, 
+// otherwise keep using a-card. I will use a-card as requested.
+
 useHead({
     title: 'About Me',
 });
+
+// Functional Calculation of Experience
+// No more manual updates!
+const startYear = 2017;
+const yearsExperience = computed(() => new Date().getFullYear() - startYear);
 </script>
 
 <template>
-    <div class="w-full max-w-5xl mx-auto flex flex-col p-8">
-        <h1>About Me</h1>
+    <div class="w-full max-w-6xl mx-auto flex flex-col p-6 md:p-12 space-y-16">
+        
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4">
+                        About <span class="text-indigo-600">Me</span>
+                    </h1>
+                    <div class="h-1 w-20 bg-indigo-600 rounded-full"></div>
+                </div>
 
-        <a-card class="p-8 mt-4">
-            <div class="flex flex-col">
-                <div class="w-full">
-                    <img src="adam-center.png" class="md:float-right aspect-square rounded-md md:ml-8 mb-4" alt="Image of Adam Mackintosh">
+                <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                     <p>
-                        I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
-                        but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
-                        for coding around that time. I'm an autodidact-type person. All I need is a topic and an impetus, and
-                        I can start researching it. Google really is a magical thing.
+                        I'll keep this short. I've been programming for about 
+                        <span class="font-bold text-indigo-600">{{ yearsExperience }} years</span>,
+                        but I've been working with iOS, Android, and web apps since 2013. 
+                        I discovered my passion for coding around that time. 
                     </p>
-
-                    <p class="mt-4">
-                        My list of hobbies is quite short because my main hobby is programming. Beyond that,
-                        I enjoy working out. I've been working out for the past 10 years. I didn't go to the gym much in 2019,
-                        but I've been going again four times a week, and it feels great.
+                    <p>
+                        I'm an <span class="italic font-serif text-gray-800 dark:text-gray-200">autodidact</span>. 
+                        All I need is a topic and an impetus, and I can start researching it. 
+                        Google really is a magical thing.
                     </p>
-
-                    <p class="mt-4">
-                        I have a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
-                        you can find me out driving with my friends, listening to music, and finding new places to visit.
-                    </p>
-
-                    <p class="mt-4">
-                        Check out my <router-link class="font-semibold hover:underline" :to="{ name: 'contact' }">Contact</router-link> page.
+                    
+                    <p>
+                        My list of hobbies is short because <strong>programming is my main hobby</strong>. 
+                        Beyond that, I've been working out consistently for over a decade. 
+                        I'm currently back in the gym four times a week, and it feels great to reconnect with that discipline.
                     </p>
                 </div>
+
+                <div class="bg-gray-100 dark:bg-gray-800 border-l-4 border-red-600 p-4 rounded-r-lg mt-2">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0">
+                            <i class="pi pi-car text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide">The Weekend Ride</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken (rare) and it's clean, 
+                                you can find me out driving with friends and finding new places to visit.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
+                    <span class="text-sm font-bold uppercase tracking-widest text-gray-400">Connect:</span>
+                    <div class="flex gap-3">
+                        <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="stackoverflow" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="medium" class="hover:-translate-y-1 transition-transform duration-300" />
+                    </div>
+                </div>
             </div>
-        </a-card>
 
-        <div class="flex flex-col items-end mt-8">
-            <h3 class="text-sm font-bold mb-4">Find me on</h3>
-            <div class="flex gap-4">
-                <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
-                <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
-                <a-social-link network="stackoverflow" class="hover:translate-x-1 transition-transform" />
-                <a-social-link network="medium" class="hover:translate-x-1 transition-transform" />
+            <div class="lg:col-span-5 relative group">
+                <div class="absolute -inset-2 bg-linear-to-r from-gray-900 to-gray-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+
+                <img
+                    src="/adam-center.png"
+                    class="relative w-full aspect-4/5 object-cover rounded-xl shadow-2xl rotate-2 group-hover:rotate-0 transition-all duration-500 ease-out border-2 border-white dark:border-gray-800"
+                    alt="Adam Mackintosh"
+                >
             </div>
-        </div>
+        </section>
 
-        <div class="w-full mt-8">
-            <h2>A Brief Word</h2>
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">A Brief Word</h2>
+                <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+            </div>
 
-            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-                <a-card class="self-start p-8">
-                    <h2>To programmers</h2>
-
-                    <p class="mt-4">
-                        What can I say? I like to use Mealy finite state machines, predicates and booleans,
-                        and immutable functional-reactive programming (FRP) styles (ie: map, reduce, filter, etc).
-                    </p>
-
-                    <p class="mt-4">
-                        I often think in two modes: push and pull. Pushing is like doing & triggering.
-                        Pulling is like listening & acting. In my opinion, this is much of where the
-                        "functional-reactive" comes from in FRP. Functional can be pushing, and reactive can be pulling.
-                    </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <a-card class="h-full border-t-4 border-indigo-500 !p-0 overflow-hidden flex flex-col">
+                    <div class="bg-gray-900 p-4 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-2 font-mono text-xs text-gray-400">message_to_devs.js</span>
+                    </div>
+                    <div class="p-8 flex-1 bg-gray-50 dark:bg-gray-900/50">
+                        <h2 class="font-mono text-xl font-bold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>
+                        <div class="font-mono text-sm md:text-base text-gray-700 dark:text-gray-300 space-y-4">
+                            <p>
+                                What can I say? I like to use <span class="text-pink-600 bg-pink-50 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 
+                                predicates, and booleans.
+                            </p>
+                            <p>
+                                I'm a huge advocate for <strong>immutable functional-reactive programming (FRP)</strong>. 
+                                Give me a <span class="text-indigo-600 font-bold">map</span>, <span class="text-indigo-600 font-bold">reduce</span>, 
+                                or <span class="text-indigo-600 font-bold">filter</span> over a for-loop any day.
+                            </p>
+                            <p class="text-gray-500 italic border-l-2 border-gray-300 pl-3">
+                                // Push vs Pull<br>
+                                Pushing is doing & triggering.<br>
+                                Pulling is listening & acting.
+                            </p>
+                        </div>
+                    </div>
                 </a-card>
 
-                <a-card class="self-start p-8">
-                    <h2>To non-programmers</h2>
+                <a-card class="h-full border-t-4 border-emerald-500 p-8">
+                    <h2 class="text-2xl font-serif italic text-emerald-700 dark:text-emerald-400 mb-6">To Non-Programmers</h2>
 
-                    <div class="flex flex-col w-full mt-4">
-                        <Accordion :value="[]" multiple>
+                    <div class="w-full">
+                        <Accordion :value="['0']" multiple class="space-y-2">
                             <AccordionPanel value="0">
-                                <AccordionHeader>Work</AccordionHeader>
+                                <AccordionHeader>
+                                    <span class="font-bold text-gray-700">Work Philosophy</span>
+                                </AccordionHeader>
                                 <AccordionContent>
-                                    <p>
-                                        As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
-                                        thorough technical documentation. I am always curious to learn new tools and techniques.
+                                    <p class="leading-relaxed text-gray-600">
+                                        As a developer, I aim to write not only pragmatic code but also empathetic 
+                                        and thorough technical documentation. I believe software should be understandable by humans, not just machines.
                                     </p>
                                 </AccordionContent>
                             </AccordionPanel>
 
                             <AccordionPanel value="1">
-                                <AccordionHeader>Life</AccordionHeader>
+                                <AccordionHeader>
+                                    <span class="font-bold text-gray-700">Personality</span>
+                                </AccordionHeader>
                                 <AccordionContent>
-                                    <p>
-                                        I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
-                                        from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
-                                        balancing salty, sweet, sour, and hot.
+                                    <p class="leading-relaxed text-gray-600">
+                                        I am introverted, creative, and known for being precise. I decompress from work by 
+                                        cooking nice meals. I love the chemistry behind balancing 
+                                        <span class="italic">salty, sweet, sour, and hot</span>.
                                     </p>
                                 </AccordionContent>
                             </AccordionPanel>
 
                             <AccordionPanel value="2">
-                                <AccordionHeader>Balance</AccordionHeader>
+                                <AccordionHeader>
+                                    <span class="font-bold text-gray-700">Balance</span>
+                                </AccordionHeader>
                                 <AccordionContent>
-                                    <p>
-                                        Fitness & nutrition has been a way of life for me since 2009. A healthy mind and
-                                        optimized metabolic processes both start with optimized nutrient-intake.
+                                    <p class="leading-relaxed text-gray-600">
+                                        Fitness & nutrition have been a way of life for me since 2009. 
+                                        A healthy mind and optimized thinking both start with physical health.
                                     </p>
                                 </AccordionContent>
                             </AccordionPanel>
@@ -111,8 +169,26 @@ useHead({
                     </div>
                 </a-card>
             </div>
-        </div>
+        </section>
 
-        <interactive-timeline></interactive-timeline>
+        <section>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">My Timeline</h2>
+                <p class="text-gray-500 mt-2">A history of jobs</p>
+            </div>
+            <interactive-timeline></interactive-timeline>
+        </section>
+
+        <div class="text-center py-8">
+            <p class="text-lg text-gray-600 dark:text-gray-400">
+                Want to chat about cars or code? 
+                <router-link 
+                    :to="{ name: 'contact' }" 
+                    class="text-indigo-600 font-bold hover:underline hover:text-indigo-500 transition-colors"
+                >
+                    Drop me a message.
+                </router-link>
+            </p>
+        </div>
     </div>
 </template>

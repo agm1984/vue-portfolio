@@ -74,14 +74,7 @@ const toggleSort = () => {
 <template>
     <div class="mt-8">
         <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div>
-                <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
-                    My Journey
-                </h2>
-                <p class="text-gray-500 dark:text-gray-400 mt-1">
-                    A quick look at my history.
-                </p>
-            </div>
+            <div></div>
 
             <div class="flex flex-wrap gap-2">
                 <button
