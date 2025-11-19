@@ -29,21 +29,17 @@ const isMenuOpen = ref(false);
         <nav class="flex-1 overflow-y-auto p-4">
             <side-nav-link
                 v-for="item in navItems"
-                :key="item.route"
+                :key="`side-nav-link-${item.route}`"
                 :item="item"
             ></side-nav-link>
         </nav>
     </aside>
 
     <Drawer v-model:visible="isMenuOpen" class="w-64" :showCloseIcon="true">
-        <div class="flex flex-col h-full">
-            <nav class="flex-1 p-4">
-                <side-nav-link
-                    v-for="item in navItems"
-                    :key="item.route"
-                    :item="item"
-                ></side-nav-link>
-            </nav>
-        </div>
+        <side-nav-link
+            v-for="item in navItems"
+            :key="item.route"
+            :item="item"
+        ></side-nav-link>
     </Drawer>
 </template>

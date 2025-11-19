@@ -11,6 +11,10 @@ export const useAuthStore = defineStore('auth', {
         isAdmin() {
             return this.user.roles_list?.includes('admin');
         },
+
+        isStandard() {
+            return this.user.roles_list?.includes('standard');
+        },
     },
 
     actions: {
