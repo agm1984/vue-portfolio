@@ -107,10 +107,12 @@ watch(
 
 <template>
     <section
-        class="w-full max-w-5xl mx-auto"
+        class="w-full max-w-5xl mx-auto p-8"
         aria-label="Testimonials"
     >
         <h2>Testimonials</h2>
+
+        <p class="text-gray-600 mt-2">Hear what people are saying</p>
 
         <a-card
             class="w-full p-8 relative mt-4"

@@ -39,18 +39,19 @@ useHead({
                     <p class="mt-4">
                         Check out my <router-link class="font-semibold hover:underline" :to="{ name: 'contact' }">Contact</router-link> page.
                     </p>
-
-                    <div class="flex flex-col bg-gray-200 rounded-md p-4 mt-4">
-                        <h3 class="md:whitespace-nowrap">Find me on social media</h3>
-                        <a-social-link class="pt-4 md:pl-8" network="twitter">Twitter</a-social-link>
-                        <a-social-link class="pt-4 md:pl-8" network="github">GitHub</a-social-link>
-                        <a-social-link class="pt-4 md:pl-8" network="stackoverflow">StackOverflow</a-social-link>
-                        <a-social-link class="pt-4 md:pl-8" network="medium">Medium</a-social-link>
-                    </div>
                 </div>
             </div>
-
         </a-card>
+
+        <div class="flex flex-col items-end mt-8">
+            <h3 class="text-sm font-bold mb-4">Find me on</h3>
+            <div class="flex gap-4">
+                <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
+                <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
+                <a-social-link network="stackoverflow" class="hover:translate-x-1 transition-transform" />
+                <a-social-link network="medium" class="hover:translate-x-1 transition-transform" />
+            </div>
+        </div>
 
         <div class="w-full mt-8">
             <h2>A Brief Word</h2>

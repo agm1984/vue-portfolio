@@ -1,83 +1,88 @@
 <script setup>
-import { ref, reactive, computed, watch } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
-import { required, email, numeric, minLength, maxLength } from '@vuelidate/validators';
+import { helpers, required, email, numeric, minLength, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import axios from 'axios';
-import Message from 'primevue/message';
+
+// PrimeVue Imports
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import InputNumber from 'primevue/inputnumber';
 import Button from 'primevue/button';
+import Card from 'primevue/card';
 
 useHead({
     title: 'Contact Me',
 });
 
-/**
- * Creates a random number used for creation of mathematical solutions
- * that are used for a human verification step before submitting.
- */
+// --- PURE FUNCTIONS ---
 const generateRandom = () => Math.floor((Math.random() * 10) + 1);
 
+// --- STATE ---
 const INITIAL = 'is-initial';
-const IS_COPIED_TO_CLIPBOARD = 'is-copied-to-clipboard';
 const SUBMITTING = 'is-submitting';
-const state = ref(INITIAL);
-const isSubmitting = computed(() => state.value === SUBMITTING);
+const SUCCESS = 'is-success';
+const state = ref(INITIAL); // 'initial', 'copied', 'submitting'
 const submitted = ref(false);
+const successMessage = ref('');
 const myEmail = 'adam@adammackintosh.net';
+
+// Math Verification
 const num1 = ref(generateRandom());
 const num2 = ref(generateRandom());
-const isFormVerified = ref(false);
-const successMessage = ref('');
 
 const form = reactive({
     subject: '',
     content: '',
     sender_name: '',
     sender_email: '',
-    answer: '',
+    answer: null, // Changed to null so InputNumber starts empty
 });
 
+// --- COMPUTED ---
+const isSubmitting = computed(() => state.value === 'submitting');
+const isCopiedToClipboard = computed(() => state.value === 'copied');
+const showSuccessMessage = computed(() => successMessage.value.length > 0);
+const verificationText = computed(() => `What is ${num1.value} + ${num2.value}?`);
+
+// --- VALIDATION ---
 const contactRules = {
     subject: { required, maxLength: maxLength(255) },
     content: { required, minLength: minLength(10), maxLength: maxLength(2000) },
     sender_name: { required, maxLength: maxLength(255) },
     sender_email: { required, email, maxLength: maxLength(255) },
-    answer: { required, numeric },
+    answer: { 
+        required, 
+        numeric,
+        // Pure functional validator: Value must match the sum
+        isCorrect: helpers.withMessage('Incorrect!', (value) => {
+            if (!helpers.req(value)) return true;
+            return value === (num1.value + num2.value);
+        }),
+    },
 };
 
 const v$ = useVuelidate(contactRules, form);
 
-// const isInitial = computed(() => state.value === INITIAL);
-const isCopiedToClipboard = computed(() => state.value === IS_COPIED_TO_CLIPBOARD);
-const messageAnswer = computed(() => +form.answer);
-const verificationText = computed(() => `${num1.value} + ${num2.value} =`);
-const showSuccessMessage = computed(() => successMessage.value.length > 0);
+// --- ACTIONS ---
 
-watch(messageAnswer, (newVal) => {
-    const solution = num1.value + num2.value;
-    isFormVerified.value = newVal === solution;
-});
+/**
+ * Modern Clipboard Copy
+ */
+const copyEmailToClipboard = async () => {
+    if (state.value === 'copied') return;
 
-const copyEmailToClipboard = () => {
-    const textField = document.createElement('textarea');
-
-    textField.innerText = myEmail;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand('copy');
-    textField.remove();
-
-    if (isCopiedToClipboard.value) return;
-
-    state.value = IS_COPIED_TO_CLIPBOARD;
-
-    setTimeout(() => {
-        state.value = INITIAL;
-    }, 1618);
-}
+    try {
+        await navigator.clipboard.writeText(myEmail);
+        state.value = 'copied';
+        setTimeout(() => {
+            state.value = 'initial';
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy!', err);
+    }
+};
 
 const sendMessage = async () => {
     try {
@@ -115,147 +120,183 @@ const sendMessage = async () => {
 </script>
 
 <template>
-    <div class="w-full max-w-5xl mx-auto h-auto flex-1 flex flex-col p-8">
-        <Message v-show="showSuccessMessage" class="mb-4" severity="success">
-            {{ successMessage }}
-        </Message>
+    <div class="w-full max-w-5xl mx-auto flex items-center p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
+            <div class="lg:col-span-1 flex flex-col gap-8">
+                <div>
+                    <h1>Contact Me</h1>
 
-        <div class="flex flex-col w-full">
-            <h1>Contact Me</h1>
-
-            <a-card class="w-full flex flex-col md:flex-row gap-4 p-8 mt-4">
-                <div class="w-full flex flex-col gap-4">
-                    <span class="font-semibold">Ready to get in touch?</span>
-
-                    <p>
-                        Send a message here, or email me at
-                        <a class="font-semibold hover:underline" :href="`mailto:${myEmail}`">{{ myEmail }}</a>
-                        <span v-if="isCopiedToClipboard" class="text-green-500 ml-2">✓</span>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed mt-2">
+                        Have a project in mind? Send a message here, or reach out directly via email.
                     </p>
+                </div>
 
-                    <div v-if="!isCopiedToClipboard">
-                        <Button
-                            type="button"
-                            severity="secondary"
-                            title="Copy email address into clipboard"
-                            @click="copyEmailToClipboard"
-                        >
-                            Copy email to clipboard
-                        </Button>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <div class="flex items-center gap-2 mb-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm uppercase tracking-wide">
+                        <i class="pi pi-envelope"></i>
+                        <span>Direct Email</span>
+                    </div>
+                    <a
+                        :href="`mailto:${myEmail}`"
+                        class="text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-indigo-600 transition-colors block mb-4 break-all"
+                    >
+                        {{ myEmail }}
+                    </a>
+                    <Button
+                        type="button"
+                        :label="isCopiedToClipboard ? 'Copied!' : 'Copy to Clipboard'" 
+                        :icon="isCopiedToClipboard ? 'pi pi-check' : 'pi pi-copy'"
+                        :severity="isCopiedToClipboard ? 'success' : 'secondary'"
+                        outlined
+                        size="small"
+                        class="lg:w-full"
+                        @click="copyEmailToClipboard"
+                    />
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold mb-4">Find me on</h3>
+                    <div class="flex gap-4">
+                        <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="stackoverflow" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="medium" class="hover:translate-x-1 transition-transform" />
                     </div>
                 </div>
+            </div>
 
-                <div class="flex flex-col bg-gray-200 rounded-md p-4 mt-4 md:mt-0">
-                    <h3 class="md:whitespace-nowrap">Find me on social media</h3>
-                    <a-social-link class="pt-4 md:pl-8" network="twitter">Twitter</a-social-link>
-                    <a-social-link class="pt-4 md:pl-8" network="github">GitHub</a-social-link>
-                    <a-social-link class="pt-4 md:pl-8" network="stackoverflow">StackOverflow</a-social-link>
-                    <a-social-link class="pt-4 md:pl-8" network="medium">Medium</a-social-link>
-                </div>
-            </a-card>
+            <div class="lg:col-span-2">
+                <Card class="shadow-lg border border-gray-100 dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
+                    <template #content>
+                        <transition name="fade" mode="out-in">
+                            <div v-if="showSuccessMessage" class="flex flex-col items-center justify-center py-12 text-center space-y-4">
+                                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4 animate-bounce">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Message Sent!</h3>
+                                <p class="text-gray-600 dark:text-gray-300 max-w-md mb-6">
+                                    {{ successMessage }}
+                                </p>
+                                <Button label="Send Another Message" text @click="successMessage = ''" />
+                            </div>
 
-            <form
-                class="mt-8"
-                @submit.prevent="sendMessage"
-            >
-                <a-input-field input-id="contact-name" title="Name" required />
+                            <form v-else class="space-y-6 p-2" @submit.prevent="sendMessage">
+                                <div>
+                                    <a-input-field input-id="contact-name" title="Your Name" required />
+                                    <InputText
+                                        v-model="v$.sender_name.$model"
+                                        id="contact-name"
+                                        :class="['w-full', { 'p-invalid': v$.sender_name.$invalid && submitted }]"
+                                        autocomplete="name"
+                                        placeholder=""
+                                    />
+                                    <a-field-errors
+                                        v-if="v$.sender_name.$error && submitted"
+                                        :errors="v$.sender_name.$errors"
+                                        name="Name"
+                                    />
+                                </div>
 
-                <InputText
-                    v-model="v$.sender_name.$model"
-                    id="contact-name"
-                    :class="['w-full', { 'p-invalid': v$.sender_name.$invalid && submitted }]"
-                    autocomplete="name"
-                    placeholder=""
-                />
+                                <div>
+                                    <a-input-field input-id="contact-email" title="Email Address" required />
+                                    <InputText
+                                        v-model="v$.sender_email.$model"
+                                        id="contact-email"
+                                        :class="['w-full', { 'p-invalid': v$.sender_email.$invalid && submitted }]"
+                                        autocomplete="email"
+                                        placeholder=""
+                                    />
+                                    <a-field-errors
+                                        v-if="v$.sender_email.$error && submitted"
+                                        :errors="v$.sender_email.$errors"
+                                        name="Email"
+                                    />
+                                </div>
 
-                <a-field-errors
-                    v-if="v$.sender_name.$error && submitted"
-                    :errors="v$.sender_name.$errors"
-                    name="Name"
-                />
+                                <div>
+                                    <a-input-field input-id="contact-subject" title="Subject" required />
+                                    <InputText
+                                        v-model="v$.subject.$model"
+                                        id="contact-subject"
+                                        :class="['w-full', { 'p-invalid': v$.subject.$invalid && submitted }]"
+                                        autocomplete="off"
+                                        placeholder=""
+                                    />
+                                    <a-field-errors
+                                        v-if="v$.subject.$error && submitted"
+                                        :errors="v$.subject.$errors"
+                                        name="Subject"
+                                    />
+                                </div>
 
-                <a-input-field class="mt-4" input-id="contact-email" title="Email" required />
+                                <div>
+                                    <a-input-field input-id="contact-content" title="Message" required />
+                                    <Textarea
+                                        v-model="v$.content.$model"
+                                        id="contact-content"
+                                        :class="['w-full', { 'p-invalid': v$.content.$invalid && submitted }]"
+                                        rows="6"
+                                        maxlength="2000"
+                                        autoResize
+                                    />
+                                    <a-field-errors
+                                        v-if="v$.content.$error && submitted"
+                                        :errors="v$.content.$errors"
+                                        name="Content"
+                                    />
+                                </div>
 
-                <InputText
-                    v-model="v$.sender_email.$model"
-                    id="contact-email"
-                    :class="['w-full', { 'p-invalid': v$.sender_email.$invalid && submitted }]"
-                    autocomplete="email"
-                    placeholder=""
-                />
+                                <div class="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 mt-4">
+                                    <div class="w-full sm:w-auto">
+                                        <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                                            <span>{{ verificationText }}</span>
+                                        </label>
+                                        <div class="flex flex-col">
+                                            <InputNumber
+                                                v-model="v$.answer.$model"
+                                                input-id="contact-answer"
+                                                input-class="w-24"
+                                                class="w-24"
+                                                :invalid="v$.answer.$invalid && submitted"
+                                                placeholder=""
+                                            />
+                                            <a-field-errors
+                                                v-if="v$.answer.$error && submitted"
+                                                :errors="v$.answer.$errors"
+                                                name="Answer"
+                                            />
+                                        </div>
+                                    </div>
 
-                <a-field-errors
-                    v-if="v$.sender_email.$error && submitted"
-                    :errors="v$.sender_email.$errors"
-                    name="Email"
-                />
+                                    <div class="w-full sm:w-auto">
+                                        <Button
+                                            type="submit"
+                                            :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-send'"
+                                            label="Send Message"
+                                            :disabled="isSubmitting"
+                                            class="w-full sm:w-auto"
+                                        />
+                                    </div>
+                                </div>
 
-                <a-input-field class="mt-4" input-id="contact-subject" title="Subject" required />
-
-                <InputText
-                    v-model="v$.subject.$model"
-                    id="contact-subject"
-                    :class="['w-full', { 'p-invalid': v$.subject.$invalid && submitted }]"
-                    autocomplete="off"
-                    placeholder=""
-                />
-
-                <a-field-errors
-                    v-if="v$.subject.$error && submitted"
-                    :errors="v$.subject.$errors"
-                    name="Subject"
-                />
-
-                <a-input-field class="mt-4" input-id="contact-content" title="Content" required />
-
-                <Textarea
-                    v-model="v$.content.$model"
-                    id="contact-content"
-                    :class="['w-full', { 'p-invalid': v$.content.$invalid && submitted }]"
-                    autocomplete="off"
-                    placeholder=""
-                    rows="6"
-                    maxlength="2000"
-                />
-
-                <a-field-errors
-                    v-if="v$.content.$error && submitted"
-                    :errors="v$.content.$errors"
-                    name="Content"
-                />
-
-                <div class="flex justify-end gap-2 mt-4">
-                    <label for="contact-answer" class="mt-2">{{ verificationText }}</label>
-
-                    <div>
-                        <div class="w-full flex gap-2">
-                            <InputNumber
-                                v-model="v$.answer.$model"
-                                input-id="contact-answer"
-                                :invalid="v$.answer.$invalid && submitted"
-                                class="w-16"
-                                input-class="w-16"
-                                autocomplete="off"
-                                placeholder=""
-                            />
-
-                            <Button
-                                type="submit"
-                                :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                                label="Send"
-                                :disabled="isSubmitting"
-                            />
-                        </div>
-
-                        <a-field-errors
-                            v-if="v$.answer.$error && submitted"
-                            :errors="v$.answer.$errors"
-                            name="Correct answer"
-                        />
-                    </div>
-                </div>
-            </form>
+                            </form>
+                        </transition>
+                    </template>
+                </Card>
+            </div>
         </div>
-
     </div>
 </template>
+
+<style scoped>
+/* Simple fade transition for the success message swap */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
