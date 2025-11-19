@@ -138,7 +138,7 @@ const removeVoteFromComment = async ({ commentId }) => {
 </script>
 
 <template>
-    <div class="mt-2">
+    <div id="comments" class="mt-2">
         <form v-if="auth.isAuthenticated" @submit.prevent="saveComment">
             <Textarea
                 v-model="v$.body.$model"

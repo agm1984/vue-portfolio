@@ -107,7 +107,7 @@ watch(
 
 <template>
     <section
-        class="w-full max-w-5xl mx-auto p-8"
+        class="w-full max-w-2xl mx-auto flex flex-col items-center p-8"
         aria-label="Testimonials"
     >
         <h2>Testimonials</h2>
