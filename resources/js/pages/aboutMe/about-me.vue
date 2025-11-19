@@ -21,9 +21,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
 
 <template>
     <div class="w-full max-w-6xl mx-auto flex flex-col p-6 md:p-12 space-y-16">
-        
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
             <div class="lg:col-span-7 flex flex-col gap-6">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4">
@@ -39,13 +37,13 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
                         but I've been working with iOS, Android, and web apps since 2013. 
                         I discovered my passion for coding around that time. 
                     </p>
-                    <p>
+                    <p class="mt-4">
                         I'm an <span class="italic font-serif text-gray-800 dark:text-gray-200">autodidact</span>. 
                         All I need is a topic and an impetus, and I can start researching it. 
                         Google really is a magical thing.
                     </p>
-                    
-                    <p>
+
+                    <p class="mt-4">
                         My list of hobbies is short because <strong>programming is my main hobby</strong>. 
                         Beyond that, I've been working out consistently for over a decade. 
                         I'm currently back in the gym four times a week, and it feels great to reconnect with that discipline.
@@ -54,13 +52,13 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
 
                 <div class="bg-gray-100 dark:bg-gray-800 border-l-4 border-red-600 p-4 rounded-r-lg mt-2">
                     <div class="flex items-start gap-4">
-                        <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0">
+                        <div class="min-w-12 max-w-12 min-h-12 max-h-12 flex items-center justify-center bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0">
                             <i class="pi pi-car text-red-600 text-xl"></i>
                         </div>
                         <div>
                             <h3 class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide">The Weekend Ride</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken (rare) and it's clean, 
+                                I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
                                 you can find me out driving with friends and finding new places to visit.
                             </p>
                         </div>
@@ -68,7 +66,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-                    <span class="text-sm font-bold uppercase tracking-widest text-gray-400">Connect:</span>
+                    <h3 class="text-sm font-bold">Connect</h3>
                     <div class="flex gap-3">
                         <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
                         <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
@@ -90,7 +88,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
         </section>
 
         <section>
-            <div class="flex items-center gap-4 mb-8">
+            <div class="flex items-center gap-4 mb-4">
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white">A Brief Word</h2>
                 <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
             </div>
@@ -107,13 +105,13 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
                         <h2 class="font-mono text-xl font-bold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>
                         <div class="font-mono text-sm md:text-base text-gray-700 dark:text-gray-300 space-y-4">
                             <p>
-                                What can I say? I like to use <span class="text-pink-600 bg-pink-50 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 
-                                predicates, and booleans.
+                                I like to use <span class="text-gray-700 bg-gray-200 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 
+                                predicates, booleans, and low-arity functions.
                             </p>
                             <p>
                                 I'm a huge advocate for <strong>immutable functional-reactive programming (FRP)</strong>. 
-                                Give me a <span class="text-indigo-600 font-bold">map</span>, <span class="text-indigo-600 font-bold">reduce</span>, 
-                                or <span class="text-indigo-600 font-bold">filter</span> over a for-loop any day.
+                                Give me a <span class="text-indigo-600 font-semibold">map</span>, <span class="text-indigo-600 font-semibold">reduce</span>, 
+                                or <span class="text-indigo-600 font-semibold">filter</span> over a for-loop any day.
                             </p>
                             <p class="text-gray-500 italic border-l-2 border-gray-300 pl-3">
                                 // Push vs Pull<br>
@@ -128,10 +126,10 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
                     <h2 class="text-2xl font-serif italic text-emerald-700 dark:text-emerald-400 mb-6">To Non-Programmers</h2>
 
                     <div class="w-full">
-                        <Accordion :value="['0']" multiple class="space-y-2">
+                        <Accordion :value="[]" multiple class="space-y-2">
                             <AccordionPanel value="0">
                                 <AccordionHeader>
-                                    <span class="font-bold text-gray-700">Work Philosophy</span>
+                                    <span class="font-bold text-gray-700">Work</span>
                                 </AccordionHeader>
                                 <AccordionContent>
                                     <p class="leading-relaxed text-gray-600">
@@ -143,7 +141,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
 
                             <AccordionPanel value="1">
                                 <AccordionHeader>
-                                    <span class="font-bold text-gray-700">Personality</span>
+                                    <span class="font-bold text-gray-700">Life</span>
                                 </AccordionHeader>
                                 <AccordionContent>
                                     <p class="leading-relaxed text-gray-600">
@@ -181,9 +179,9 @@ const yearsExperience = computed(() => new Date().getFullYear() - startYear);
 
         <div class="text-center py-8">
             <p class="text-lg text-gray-600 dark:text-gray-400">
-                Want to chat about cars or code? 
-                <router-link 
-                    :to="{ name: 'contact' }" 
+                Want to chat about cars or code?
+                <router-link
+                    :to="{ name: 'contact' }"
                     class="text-indigo-600 font-bold hover:underline hover:text-indigo-500 transition-colors"
                 >
                     Drop me a message.

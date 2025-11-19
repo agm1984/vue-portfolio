@@ -126,7 +126,7 @@ const toggleSort = () => {
                     class="relative pl-8 md:pl-12"
                 >
                     <span
-                        class="absolute -left-2.5 top-6 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 shadow-sm transition-colors duration-300"
+                        class="absolute -left-2.5 top-8 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 shadow-sm transition-colors duration-300"
                         :class="event.color"
                     ></span>
 

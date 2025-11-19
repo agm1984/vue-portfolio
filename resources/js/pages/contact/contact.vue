@@ -155,7 +155,7 @@ const sendMessage = async () => {
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-bold mb-4">Find me on</h3>
+                    <h3 class="text-sm font-bold mb-4">Connect</h3>
                     <div class="flex gap-4">
                         <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
                         <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
