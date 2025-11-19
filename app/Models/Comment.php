@@ -29,7 +29,6 @@ class Comment extends Model
         'created_at_diff',
         'updated_at_nice',
         'updated_at_diff',
-        'score',
         'upvotes',
         'downvotes',
         'user_vote',
@@ -47,11 +46,6 @@ class Comment extends Model
     public function votes()
     {
         return $this->hasMany(CommentVote::class);
-    }
-
-    public function getScoreAttribute()
-    {
-        return (int) $this->votes()->sum('value');
     }
 
     public function getUpvotesAttribute()
@@ -72,7 +66,6 @@ class Comment extends Model
             return null;
         }
 
-        // use loaded relation if present, otherwise query
         $vote = $this->relationLoaded('votes')
             ? $this->votes->firstWhere('user_id', $userId)
             : $this->votes()->where('user_id', $userId)->first();

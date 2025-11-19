@@ -1,5 +1,9 @@
 <script setup>
 import { useHead } from '@unhead/vue';
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
 
 useHead({
     title: 'About Me',
@@ -71,33 +75,43 @@ useHead({
                     <h2>To non-programmers</h2>
 
                     <div class="flex flex-col w-full mt-4">
-                        <div class="w-full">
-                            <h3>Work</h3>
-                            <p class="mt-2">
-                                As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
-                                thorough technical documentation. I am always curious to learn new tools and techniques.
-                            </p>
-                        </div>
+                        <Accordion :value="[]" multiple>
+                            <AccordionPanel value="0">
+                                <AccordionHeader>Work</AccordionHeader>
+                                <AccordionContent>
+                                    <p>
+                                        As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
+                                        thorough technical documentation. I am always curious to learn new tools and techniques.
+                                    </p>
+                                </AccordionContent>
+                            </AccordionPanel>
 
-                        <div class="w-full mt-4">
-                            <h3>Life</h3>
-                            <p class="mt-2">
-                                I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
-                                from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
-                                balancing salty, sweet, sour, and hot.
-                            </p>
-                        </div>
+                            <AccordionPanel value="1">
+                                <AccordionHeader>Life</AccordionHeader>
+                                <AccordionContent>
+                                    <p>
+                                        I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
+                                        from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
+                                        balancing salty, sweet, sour, and hot.
+                                    </p>
+                                </AccordionContent>
+                            </AccordionPanel>
 
-                        <div class="w-full mt-4">
-                            <h3>Balance</h3>
-                            <p class="mt-2">
-                                Fitness & nutrition has been a way of life for me since 2009. A healthy mind and
-                                optimized metabolic processes both start with optimized nutrient-intake.
-                            </p>
-                        </div>
+                            <AccordionPanel value="2">
+                                <AccordionHeader>Balance</AccordionHeader>
+                                <AccordionContent>
+                                    <p>
+                                        Fitness & nutrition has been a way of life for me since 2009. A healthy mind and
+                                        optimized metabolic processes both start with optimized nutrient-intake.
+                                    </p>
+                                </AccordionContent>
+                            </AccordionPanel>
+                        </Accordion>
                     </div>
                 </a-card>
             </div>
         </div>
+
+        <interactive-timeline></interactive-timeline>
     </div>
 </template>

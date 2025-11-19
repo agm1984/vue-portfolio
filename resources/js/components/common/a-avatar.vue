@@ -36,6 +36,7 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
             }]"
             :src="user.avatar_url"
             :alt="`Avatar of ${user.name}`"
+            loading="lazy"
         >
 
         <span v-else>{{ firstLetterOfName }}</span>
