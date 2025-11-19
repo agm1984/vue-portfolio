@@ -2,103 +2,108 @@
 import { computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
+import Card from 'primevue/card'; // Assuming PrimeVue is available
 
 useHead({
-    title: 'Design System Dashboard',
+    title: 'Design System',
 });
 
 const currentRoute = useRoute();
-
 const isDashboard = computed(() => currentRoute.name === 'design');
+
+// 1. Single Source of Truth for Navigation (Functional Data Structure)
+// We use this to generate the Sidebar AND the Dashboard Grid cards.
+const navItems = [
+    {
+        label: 'Dashboard',
+        route: 'design',
+        icon: 'pi pi-home',
+        description: 'Overview of the design system components.',
+        visible: true,
+    },
+    {
+        label: 'Buttons',
+        route: 'design.buttons',
+        icon: 'pi pi-stop',
+        description: 'Primary, secondary, and ghost button interactions.',
+        visible: true,
+    },
+    {
+        label: 'Colours',
+        route: 'design.colours',
+        icon: 'pi pi-palette',
+        description: 'Global color palette, gradients, and semantic tones.',
+        visible: true,
+    },
+    {
+        label: 'Space & Size',
+        route: 'design.sizing',
+        icon: 'pi pi-arrows-alt',
+        description: 'Spacing scale, typography sizing, and breakpoints.',
+        visible: true,
+    },
+    {
+        label: 'Typography',
+        route: 'design.typography',
+        icon: 'pi pi-align-left',
+        description: 'Headings, body text, and font weights.',
+        visible: true,
+    },
+];
+
+// 2. Filter out 'Dashboard' for the grid view (Pure transformation)
+const gridItems = computed(() => navItems.filter(item => item.route !== 'design'));
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-5xl mx-auto flex p-8">
-        <div class="min-w-[125px] max-w-[125px] flex flex-col gap-4">
-            <h1>Design System</h1>
+    <div class="flex-1 flex flex-col md:flex-row">
+        <side-nav-pane
+            :nav-items="navItems"
+        ></side-nav-pane>
 
-            <router-link
-                :to="{ name: 'design' }"
-                :class="['w-full inline-flex items-center font-semibold', {
-                    'border-r-2 border-gray-900': isDashboard,
-                }]"
-                active-class=""
-            >Dashboard</router-link>
-
-            <router-link
-                :to="{ name: 'design.buttons' }"
-                class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2 border-gray-900"
-            >Buttons</router-link>
-
-            <router-link
-                :to="{ name: 'design.colours' }"
-                class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2 border-gray-900"
-            >Colours</router-link>
-
-            <router-link
-                :to="{ name: 'design.sizing' }"
-                class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2 border-gray-900"
-            >Space & Size</router-link>
-
-            <router-link
-                :to="{ name: 'design.typography' }"
-                class="w-full inline-flex items-center font-semibold"
-                active-class="border-r-2 border-gray-900"
-            >Typography</router-link>
-        </div>
-
-        <div class="w-full h-auto ml-8">
+        <main class="flex-1 md:ml-64 p-8 max-w-7xl mx-auto w-full">
+            
             <template v-if="isDashboard">
-                <router-link :to="{ name: 'design.buttons' }">
-                    <a-card class="flex flex-wrap p-4">
-                        <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full border">
-                            <i class="pi pi-window-minimize text-gray-500" style="font-size: 24px;"></i>
-                        </div>
-                        <div class="flex items-center ml-4">
-                            <h3>Buttons</h3>
-                        </div>
-                    </a-card>
-                </router-link>
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">System Overview</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">
+                        A centralized registry of UI components, design tokens, and usage guidelines.
+                    </p>
+                </div>
 
-                <router-link :to="{ name: 'design.colours' }">
-                    <a-card class="flex flex-wrap p-4 mt-4">
-                        <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full border">
-                            <i class="pi pi-palette text-gray-500" style="font-size: 24px;"></i>
-                        </div>
-                        <div class="flex items-center ml-4">
-                            <h3>Colours</h3>
-                        </div>
-                    </a-card>
-                </router-link>
-
-                <router-link :to="{ name: 'design.sizing' }">
-                    <a-card class="flex flex-wrap p-4 mt-4">
-                        <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full border">
-                            <i class="pi pi-external-link text-gray-500" style="font-size: 24px;"></i>
-                        </div>
-                        <div class="flex items-center ml-4">
-                            <h3>Space & Size</h3>
-                        </div>
-                    </a-card>
-                </router-link>
-
-                <router-link :to="{ name: 'design.typography' }">
-                    <a-card class="flex flex-wrap p-4 mt-4">
-                        <div class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-full border">
-                            <i class="pi pi-align-left text-gray-500" style="font-size: 24px;"></i>
-                        </div>
-                        <div class="flex items-center ml-4">
-                            <h3>Typography</h3>
-                        </div>
-                    </a-card>
-                </router-link>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <router-link 
+                        v-for="item in gridItems" 
+                        :key="item.route" 
+                        :to="{ name: item.route }"
+                        class="block group"
+                    >
+                        <Card class="h-full shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700 cursor-pointer group-hover:-translate-y-1 transform transition-transform">
+                            <template #content>
+                                <div class="flex items-start gap-5 p-2">
+                                    <div class="w-16 h-16 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center border border-gray-100 dark:border-gray-600 group-hover:bg-pink-50 dark:group-hover:bg-pink-900/20 transition-colors duration-300">
+                                        <i :class="[item.icon, 'text-2xl text-gray-400 group-hover:text-pink-500 transition-colors']"></i>
+                                    </div>
+                                    
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-pink-600 transition-colors">
+                                            {{ item.label }}
+                                        </h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">
+                                            {{ item.description }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </template>
+                        </Card>
+                    </router-link>
+                </div>
             </template>
 
-            <router-view v-else></router-view>
-        </div>
+            <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 min-h-[80vh]">
+                <router-view></router-view>
+            </div>
 
+        </main>
     </div>
 </template>

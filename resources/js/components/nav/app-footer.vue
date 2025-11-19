@@ -7,7 +7,7 @@
 
         <a-testimonials
             class="mt-8"
-            :testimonials="testimonials"
+            :testimonials="undefined"
             :interval="5000"
             auto-play
         ></a-testimonials>
