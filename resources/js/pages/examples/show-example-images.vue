@@ -63,7 +63,15 @@ const downloadImage = async () => {
     }
 };
 
-const goBack = () => router.back();
+const goBack = () => {
+    router.push({
+        name: 'public.examples.show',
+        params: {
+            category: currentRoute.params.category,
+            example: currentRoute.params.example,
+        },
+    });
+};
 
 onMounted(fetchExample);
 </script>

@@ -51,12 +51,7 @@ const fetchExample = async () => {
 watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 
 const goBack = () => {
-    // Check history or default to list
-    if (window.history.length > 2) {
-        router.back();
-    } else {
-        router.push({ name: 'public.examples.list' });
-    }
+    router.push({ name: 'public.examples.list' });
 };
 </script>
 
