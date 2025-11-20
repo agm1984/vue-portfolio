@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onBeforeMount } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
@@ -8,6 +8,8 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import { useAuthStore } from '~/store/auth';
 
 useHead({
@@ -25,9 +27,9 @@ const isSubmitting = computed(() => state.value === SUBMITTING);
 const submitted = ref(false);
 
 const form = reactive({
-    email: route.query.email ||localStorage.getItem('remember_me') || '',
+    email: route.query.email || localStorage.getItem('remember_me') || '',
     password: '',
-    remember: true,
+    remember: !!localStorage.getItem('remember_me'),
 });
 
 const loginRules = {
@@ -50,7 +52,7 @@ const login = async () => {
             return;
         }
 
-        if (form.remember_me) {
+        if (form.remember) {
             localStorage.setItem('remember_me', form.email);
         } else {
             localStorage.removeItem('remember_me');
@@ -68,83 +70,110 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-3xl mx-auto flex flex-col items-center justify-center p-8">
-        <h1>Login</h1>
-
-        <a-card class="w-full flex flex-col p-8 mt-4 self-start">
-
-            <div class="flex flex-col">
-                <!-- <login-with-oauth provider="github"></login-with-oauth> -->
-                <!-- <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth> -->
+    <div class="flex-1 flex items-center justify-center p-8">
+        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+            <div class="p-8 pb-6 text-center">
+                <h1>Login</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">
+                    Logged in users have more fun.
+                </p>
             </div>
 
-            <div class="flex items-center pt-8">
-                <hr class="inline w-full">
-                <span class="mx-8">or</span>
-                <hr class="inline w-full">
-            </div>
+            <div class="px-8 pb-8">
+                <div class="flex flex-col gap-3">
+                    <login-with-oauth provider="github"></login-with-oauth>
+                    <login-with-oauth provider="twitter"></login-with-oauth>
+                </div>
 
-            <form class="pt-8" @submit.prevent="login">
-                <a-input-field input-id="login-email" title="Email" required />
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-white dark:bg-gray-800 text-gray-500">or</span>
+                    </div>
+                </div>
 
-                <InputText
-                    v-model="v$.email.$model"
-                    id="login-email"
-                    :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
-                    autocomplete="email"
-                    placeholder=""
-                />
-
-                <a-field-errors
-                    v-if="v$.email.$error && submitted"
-                    :errors="v$.email.$errors"
-                    name="Email"
-                />
-
-                <a-input-field class="mt-4" input-id="login-password" title="Password" required />
-
-                <Password
-                    v-model="v$.password.$model"
-                    input-id="login-password"
-                    class="w-full"
-                    input-class="w-full"
-                    autocomplete="current-password"
-                    :feedback="false"
-                    toggle-mask
-                    aria-haspopup="false"
-                    :invalid="v$.password.$invalid && submitted"
-                />
-
-                <a-field-errors
-                    v-if="v$.password.$error && submitted"
-                    :errors="v$.password.$errors"
-                    name="Password"
-                />
-
-                <Button
-                    type="submit"
-                    :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
-                    label="Login"
-                    class="mt-8 w-full"
-                    :disabled="isSubmitting"
-                />
-
-                <div class="flex items-center justify-between pt-4">
-                    <div class="flex items-center">
-                        <Checkbox
-                            v-model="v$.remember.$model"
-                            input-id="login-remember"
-                            binary
+                <form @submit.prevent="login" class="space-y-5">
+                    <div>
+                        <a-input-field input-id="login-email" title="Email" required />
+                        <IconField iconPosition="left">
+                            <InputIcon class="pi pi-envelope text-gray-400" />
+                            <InputText
+                                v-model="v$.email.$model"
+                                id="login-email"
+                                :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+                                autocomplete="email"
+                                placeholder=""
+                            />
+                        </IconField>
+                        <a-field-errors
+                            v-if="v$.email.$error && submitted"
+                            :errors="v$.email.$errors"
+                            name="Email"
                         />
-                        <label for="login-remember" class="ml-2">Remember Me</label>
                     </div>
 
-                    <router-link class="font-semibold hover:underline" :to="{ name: 'password.request' }">
-                        Forgot password?
+                    <div>
+                        <a-input-field input-id="login-password" title="Password" required />
+                        <div class="relative">
+                            <Password
+                                v-model="v$.password.$model"
+                                input-id="login-password"
+                                class="w-full"
+                                input-class="w-full"
+                                autocomplete="current-password"
+                                :feedback="false"
+                                toggle-mask
+                                placeholder=""
+                                :invalid="v$.password.$invalid && submitted"
+                            />
+                        </div>
+                        <a-field-errors
+                            v-if="v$.password.$error && submitted"
+                            :errors="v$.password.$errors"
+                            name="Password"
+                        />
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <Checkbox
+                                v-model="v$.remember.$model"
+                                input-id="login-remember"
+                                binary
+                                class="mr-2"
+                            />
+                            <label for="login-remember" class="cursor-pointer select-none">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <router-link
+                            :to="{ name: 'password.request' }"
+                            class="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline"
+                        >
+                            Forgot password?
+                        </router-link>
+                    </div>
+
+                    <Button
+                        type="submit"
+                        :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
+                        label="Login"
+                        class="w-full font-bold"
+                        :disabled="isSubmitting"
+                    />
+                </form>
+
+                <div class="mt-6 text-center text-gray-600 dark:text-gray-400">
+                    Don't have an account?
+                    <router-link :to="{ name: 'register' }" class="font-bold text-indigo-600 hover:underline ml-1">
+                        Sign up
                     </router-link>
                 </div>
-            </form>
 
-        </a-card>
+            </div>
+        </div>
     </div>
 </template>

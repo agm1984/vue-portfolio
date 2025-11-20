@@ -1,17 +1,17 @@
 @php
-$config = [
-    'appName' => config('app.name'),
-    'github' => [
-        'client_id' => config('services.github.client_id'),
-        'callback_url' => config('services.github.callback_url'),
-        'provider_name' => config('services.github.provider_name'),
-    ],
-    'twitter' => [
-        'client_id' => config('services.twitter.client_id'),
-        'callback_url' => config('services.twitter.callback_url'),
-        'provider_name' => config('services.twitter.provider_name'),
-    ],
-];
+    $config = [
+        'appName' => config('app.name'),
+        'github' => [
+            'client_id' => config('services.github.client_id'),
+            'callback_url' => config('services.github.callback_url'),
+            'provider_name' => config('services.github.provider_name'),
+        ],
+        'twitter' => [
+            'client_id' => config('services.twitter.client_id'),
+            'callback_url' => config('services.twitter.callback_url'),
+            'provider_name' => config('services.twitter.provider_name'),
+        ],
+    ];
 @endphp
 
 <!DOCTYPE html>
@@ -66,8 +66,8 @@ $config = [
 
         <script type="application/ld+json">
             {
-                "@context": "http://schema.org",
-                "@type": "Person",
+                "@@context": "http://schema.org",
+                "@@type": "Person",
                 "name": "Adam Mackintosh",
                 "sameAs": [
                     "https://www.linkedin.com/in/adam-mackintosh-1540b874",
@@ -83,7 +83,7 @@ $config = [
                 "additionalName": "agm1984",
                 "url": "https://adammackintosh.net",
                 "address": {
-                    "@type": "PostalAddress",
+                    "@@type": "PostalAddress",
                     "addressLocality": "Nanaimo",
                     "addressRegion": "British Columbia"
                 }

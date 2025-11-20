@@ -77,10 +77,10 @@ const register = async () => {
         <h1>Register</h1>
 
         <a-card class="w-full flex flex-col p-8 mt-4 self-start">
-            <div class="flex flex-col">
-                <!-- <login-with-oauth provider="github"></login-with-oauth> -->
-                <!-- <login-with-oauth provider="twitter" class="mt-8"></login-with-oauth> -->
-            </div>
+            <div class="flex flex-col gap-3">
+                    <login-with-oauth provider="github"></login-with-oauth>
+                    <login-with-oauth provider="twitter"></login-with-oauth>
+                </div>
 
             <div class="flex items-center pt-8">
                 <hr class="inline w-full">

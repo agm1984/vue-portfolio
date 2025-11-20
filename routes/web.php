@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\VerificationController;
 |
 */
 
+
 Route::group(['middleware' => ['guest', 'throttle:10,5']], function () {
     Route::post('register', 'Auth\RegisterController@register')->name('register');
     Route::post('login', 'Auth\LoginController@login')->name('login');
