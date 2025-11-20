@@ -9,7 +9,7 @@ const routes = [
         children: [
             { path: ':category?', name: 'public.examples.list', component: () => import('../pages/examples/list-examples.vue') },
             { path: ':category/:example', name: 'public.examples.show', component: () => import('../pages/examples/show-example.vue') },
-            { path: ':category/:example/images/:filename', name: 'public.examples.images', component: () => import('../pages/examples/show-example-images.vue') },
+            { path: ':category/:example/images/:filename', name: 'public.examples.image', component: () => import('../pages/examples/show-example-images.vue') },
         ],
     },
 
@@ -47,6 +47,7 @@ const routes = [
             { path: 'examples', name: 'admin.examples.list', component: () => import('../pages/admin/examples/list-examples.vue') },
             { path: 'examples/create', name: 'admin.examples.create', meta: { roles: ['admin'] }, component: () => import('../pages/admin/examples/create-example.vue') },
             { path: 'examples/:example', name: 'admin.examples.show', component: () => import('../pages/admin/examples/show-example.vue') },
+            { path: 'examples/:example/images/:filename', name: 'admin.examples.image', component: () => import('../pages/examples/show-example-images.vue') },
         ],
     },
 

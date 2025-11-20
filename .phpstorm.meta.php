@@ -2400,7 +2400,7 @@ namespace PHPSTORM_META {
 'admin.categories.edit','admin.categories.create','admin.examples.list','admin.examples.show','admin.examples.create',
 'admin.examples.edit','admin.examples.appendImages','admin.examples.removeImage','admin.users.list','admin.users.show',
 'admin.tags.getAll','public.categories.list','public.categories.show','public.examples.list','public.examples.show',
-'public.examples.images','public.examples.listComments','public.contact.send','register','login','verification.verify','verification.resend','oauth.redirect',
+'public.examples.image','public.examples.listComments','public.contact.send','register','login','verification.verify','verification.resend','oauth.redirect',
 'oauth.callback','password.email','password.reset','logout',);
         registerArgumentsSet('views', 
 'contact.mail','errors.layout','oauth.callback','oauth.emailTaken','spa',

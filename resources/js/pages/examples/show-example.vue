@@ -109,7 +109,7 @@ const goBack = () => {
                             <router-link
                                 v-for="(image, index) in example.images"
                                 :key="image.image_id"
-                                :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
+                                :to="{ name: 'public.examples.image', params: { filename: image.filename } }"
                                 class="group relative block rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 aspect-video"
                                 title="View Full Size"
                             >

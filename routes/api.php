@@ -86,7 +86,7 @@ Route::prefix('public')->group(function () {
 
     Route::get('examples', [ExampleController::class, 'index'])->name('public.examples.list');
     Route::get('examples/{example}', [ExampleController::class, 'show'])->name('public.examples.show');
-    Route::get('examples/{example}/images/{exampleImage}', [ExampleController::class, 'image'])->name('public.examples.images');
+    Route::get('examples/{example}/images/{exampleImage}', [ExampleController::class, 'image'])->name('public.examples.image');
     Route::get('examples/{example}/comments', [ExampleController::class, 'listComments'])->name('public.examples.listComments');
 
     Route::post('contact', [ContactController::class, 'send'])->name('public.contact.send');

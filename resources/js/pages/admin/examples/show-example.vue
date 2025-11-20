@@ -182,7 +182,7 @@ onMounted(fetchExample);
                             v-for="image in example.images"
                             :key="`example-image-${image.id}`"
                             :to="{
-                                name: 'public.examples.images',
+                                name: 'admin.examples.image',
                                 params: {
                                     category: example.category.slug,
                                     example: example.slug,

@@ -27,14 +27,19 @@ const isLoading = computed(() => state.value === IS_LOADING);
 const isLoaded = computed(() => state.value === IS_LOADED);
 const hasError = computed(() => state.value === HAS_ERROR);
 
+const isAdmin = computed(() => currentRoute.name?.startsWith('admin.'));
+
 const fetchExample = async () => {
     try {
         const { example, filename } = currentRoute.params;
 
-        // Ensure we have the params before fetching
         if (!example || !filename) throw new Error("Missing route parameters");
 
-        const response = await axios.get(route('public.examples.images', [example, filename]));
+        // ZIGGY FIX: We map 'filename' to 'exampleImage' here
+        const response = await axios.get(route('public.examples.image', { 
+            example: example, 
+            exampleImage: filename 
+        }));
 
         image.value = response.data.image;
         imageUrl.value = response.data.image_url;
@@ -45,7 +50,6 @@ const fetchExample = async () => {
     }
 };
 
-// Pure helper to force download
 const downloadImage = async () => {
     if (!imageUrl.value) return;
     
@@ -64,13 +68,21 @@ const downloadImage = async () => {
 };
 
 const goBack = () => {
-    router.push({
-        name: 'public.examples.show',
-        params: {
-            category: currentRoute.params.category,
-            example: currentRoute.params.example,
-        },
-    });
+    console.log('isAdmin', isAdmin.value);
+    if (isAdmin.value) {
+        router.push({
+            name: 'admin.examples.show',
+            params: { example: currentRoute.params.example },
+        });
+    } else {
+        router.push({
+            name: 'public.examples.show',
+            params: {
+                category: currentRoute.params.category,
+                example: currentRoute.params.example,
+            },
+        });
+    }
 };
 
 onMounted(fetchExample);
@@ -79,13 +91,13 @@ onMounted(fetchExample);
 <template>
     <div class="fixed inset-0 z-50 bg-gray-900 flex flex-col overflow-hidden">
         
-        <div class="relative z-20 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/10 text-white">
+        <div class="relative z-20 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/10 text-white shrink-0">
             <div class="flex items-center gap-4">
                 <Button 
                     icon="pi pi-arrow-left" 
                     text 
                     rounded 
-                    class="text-white! hover:bg-white/20!" 
+                    class="!text-white hover:!bg-white/20" 
                     @click="goBack"
                     aria-label="Go Back"
                 />
@@ -94,7 +106,7 @@ onMounted(fetchExample);
                         {{ image.filename || 'Loading...' }}
                     </h1>
                     <span class="text-xs text-gray-400" v-if="isLoaded">
-                        Original Size
+                        {{ isAdmin ? 'Admin View' : 'Original Size' }}
                     </span>
                 </div>
             </div>
@@ -113,14 +125,14 @@ onMounted(fetchExample);
                     icon="pi pi-times" 
                     text 
                     rounded 
-                    class="text-white! hover:bg-white/20!" 
+                    class="!text-white hover:!bg-white/20" 
                     @click="goBack"
                     aria-label="Close"
                 />
             </div>
         </div>
 
-        <div class="relative flex-1 w-full h-full flex items-center justify-center bg-gray-900">
+        <div class="relative flex-1 w-full h-full flex items-center justify-center bg-gray-900 overflow-hidden p-4">
             
             <div v-if="isLoading" class="z-30 flex flex-col items-center gap-4">
                 <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="4" />
@@ -141,7 +153,7 @@ onMounted(fetchExample);
 
                 <img 
                     :src="imageUrl" 
-                    class="relative z-10 max-w-full max-h-[85vh] object-contain shadow-2xl rounded-lg transition-transform duration-300 ease-out hover:scale-[1.01]" 
+                    class="relative z-10 w-full h-full object-contain shadow-2xl drop-shadow-2xl" 
                     alt="Full screen example" 
                 />
             </template>
