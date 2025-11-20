@@ -13,20 +13,23 @@ const auth = useAuthStore();
             You are currently logged in with {{ auth.isAdmin ? 'full administrative' : 'standard' }} privileges.
         </p>
         <p v-else class="text-indigo-100 text-sm mb-6">
-            You are not logged in. Please log in to access more features.
+            Please login to access more features.
         </p>
 
         <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
             <div class="flex items-center gap-3 mb-2">
-                <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                <div v-if="auth.isAuthenticated" class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                <div v-else class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></div>
                 <span class="font-mono text-sm">Session</span>
             </div>
-            <div class="text-sm text-indigo-100">
-                <span class="font-bold">User:</span> {{ auth.user?.name }}
-            </div>
-            <div class="text-sm text-indigo-100 truncate">
-                <span class="font-bold">Email:</span> {{ auth.user?.email }}
-            </div>
+            <template v-if="auth.isAuthenticated">
+                <div class="text-sm text-indigo-100">
+                    <span class="font-bold">User:</span> {{ auth.user?.name }}
+                </div>
+                <div class="text-sm text-indigo-100 truncate">
+                    <span class="font-bold">Email:</span> {{ auth.user?.email }}
+                </div>
+            </template>
         </div>
     </div>
 </template>
