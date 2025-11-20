@@ -3,15 +3,13 @@ import { ref, computed, watch } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-
-// PrimeVue Imports
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
-import Card from 'primevue/card'; // Using PrimeVue card for consistency
+import Card from 'primevue/card';
 
 useHead({
-    title: 'Project Details',
+    title: 'Example Details',
 });
 
 const IS_LOADING = 0;
@@ -28,7 +26,7 @@ const example = ref({
     images: [],
     links: [],
     tags: [],
-    created_at_human: '', // Assuming you might add dates later
+    created_at_human: '', // todo: add dates
 });
 
 const isLoaded = computed(() => state.value === IS_LOADED);
