@@ -122,7 +122,6 @@ onUnmounted(() => {
         v-if="hasClientId"
         type="button"
         severity="secondary"
-        :class="buttonStyles"
         @click="login"
     >
         <i :class="iconStyles"></i>

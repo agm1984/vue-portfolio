@@ -182,7 +182,7 @@ const sendMessage = async () => {
 
                             <form v-else class="space-y-6 p-2" @submit.prevent="sendMessage">
                                 <div>
-                                    <a-input-field input-id="contact-name" title="Your Name" required />
+                                    <a-input-field input-id="contact-name" title="Name" required />
                                     <InputText
                                         v-model="v$.sender_name.$model"
                                         id="contact-name"
@@ -198,7 +198,7 @@ const sendMessage = async () => {
                                 </div>
 
                                 <div>
-                                    <a-input-field input-id="contact-email" title="Email Address" required />
+                                    <a-input-field input-id="contact-email" title="Email" required />
                                     <InputText
                                         v-model="v$.sender_email.$model"
                                         id="contact-email"

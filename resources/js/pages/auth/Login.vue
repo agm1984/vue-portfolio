@@ -73,6 +73,9 @@ const login = async () => {
     <div class="flex-1 flex items-center justify-center p-8">
         <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
             <div class="p-8 pb-6 text-center">
+                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="pi pi-user text-2xl"></i>
+                </div>
                 <h1>Login</h1>
                 <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">
                     Logged in users have more fun.
@@ -169,7 +172,7 @@ const login = async () => {
                 <div class="mt-6 text-center text-gray-600 dark:text-gray-400">
                     Don't have an account?
                     <router-link :to="{ name: 'register' }" class="font-bold text-indigo-600 hover:underline ml-1">
-                        Sign up
+                        Register
                     </router-link>
                 </div>
 
