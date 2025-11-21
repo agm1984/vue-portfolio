@@ -3,21 +3,18 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, minLength, maxLength, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import { useRoute, useRouter } from 'vue-router';
-import { useAuthStore } from '~/store/auth';
-
-// PrimeVue Imports
+import { useRouter } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
+import { useAuthStore } from '~/store/auth';
 
 useHead({
     title: 'Register',
 });
 
-const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 
