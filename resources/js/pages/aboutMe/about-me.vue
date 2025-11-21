@@ -170,16 +170,14 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
             <interactive-timeline></interactive-timeline>
         </section>
 
-        <div class="text-center mt-8">
-            <p class="text-lg text-gray-600">
-                Want to chat about cars or code?
-                <router-link
-                    :to="{ name: 'contact' }"
-                    class="text-indigo-600 font-semibold hover:underline hover:text-indigo-700 active:text-indigo-800 transition-colors ml-1"
-                >
-                    Drop me a message.
-                </router-link>
-            </p>
-        </div>
+        <p class="text-lg text-center mt-8">
+            Want to chat about cars or code?
+            <router-link
+                :to="{ name: 'contact' }"
+                class="text-indigo-600 font-semibold hover:underline hover:text-indigo-700 active:text-indigo-800 transition-colors ml-1"
+            >
+                Drop me a message.
+            </router-link>
+        </p>
     </div>
 </template>
