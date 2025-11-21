@@ -78,7 +78,7 @@ const login = async () => {
                 </div>
                 <h1>Login</h1>
                 <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">
-                    Logged in users have more fun.
+                    Use Oauth or your email and password.
                 </p>
             </div>
 

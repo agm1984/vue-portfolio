@@ -18,39 +18,39 @@ const pinia = createPinia();
 const Noir = definePreset(Aura, {
     semantic: {
         primary: {
-            50: '{zinc.50}',
-            100: '{zinc.100}',
-            200: '{zinc.200}',
-            300: '{zinc.300}',
-            400: '{zinc.400}',
-            500: '{zinc.500}',
-            600: '{zinc.600}',
-            700: '{zinc.700}',
-            800: '{zinc.800}',
-            900: '{zinc.900}',
-            950: '{zinc.950}'
+            50: '{indigo.50}',
+            100: '{indigo.100}',
+            200: '{indigo.200}',
+            300: '{indigo.300}',
+            400: '{indigo.400}',
+            500: '{indigo.500}',
+            600: '{indigo.600}',
+            700: '{indigo.700}',
+            800: '{indigo.800}',
+            900: '{indigo.900}',
+            950: '{indigo.950}'
         },
         colorScheme: {
             light: {
                 primary: {
-                    color: '{zinc.950}',
+                    color: '{indigo.950}',
                     inverseColor: '#ffffff',
-                    hoverColor: '{zinc.900}',
-                    activeColor: '{zinc.800}'
+                    hoverColor: '{indigo.900}',
+                    activeColor: '{indigo.800}'
                 },
                 highlight: {
-                    background: '{zinc.950}',
-                    focusBackground: '{zinc.700}',
+                    background: '{indigo.950}',
+                    focusBackground: '{indigo.700}',
                     color: '#ffffff',
                     focusColor: '#ffffff'
                 }
             },
             dark: {
                 primary: {
-                    color: '{zinc.50}',
-                    inverseColor: '{zinc.950}',
-                    hoverColor: '{zinc.100}',
-                    activeColor: '{zinc.200}'
+                    color: '{indigo.50}',
+                    inverseColor: '{indigo.950}',
+                    hoverColor: '{indigo.100}',
+                    activeColor: '{indigo.200}'
                 },
                 highlight: {
                     background: 'rgba(250, 250, 250, .16)',
