@@ -28,8 +28,8 @@ const providerName = computed(() => {
 });
 
 const buttonLabel = computed(() => {
-    if (route.name === 'register') return `Register via ${providerName.value}`;
-    return `Login via ${providerName.value}`;
+    if (route.name === 'register') return `Register via ${providerName.value.replace('Twitter', 'X')}`;
+    return `Login via ${providerName.value.replace('Twitter', 'X')}`;
 });
 
 /**

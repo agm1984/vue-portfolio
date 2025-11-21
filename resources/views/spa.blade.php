@@ -47,9 +47,9 @@
         <meta name="twitter:description" content="With over 15 years workforce experience, Adam is a web and mobile software developer specialized in node.js and React development.">
         <meta name="twitter:image" content="https://adammackintosh.net/adam.png">
         <meta name="twitter:image:alt" content="Adam Mackintosh">
-        <meta property="og:image" content="http://adammackintosh.net/adam.png">
+        <meta property="og:image" content="https://adammackintosh.net/adam.png">
         <meta property="og:title" content="Adam Mackintosh's Portfolio">
-        <meta property="og:url" content="http://adammackintosh.net">
+        <meta property="og:url" content="https://adammackintosh.net">
         <meta property="og:site_name" content="adammackintosh.net">
         <meta property="og:description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
         <meta property="og:type" content="Website">
@@ -89,7 +89,6 @@
                 }
             }
         </script>
-
     </head>
 
     <body class="antialiased">

@@ -19,7 +19,7 @@ const handleLogout = async () => {
     <nav class="sticky top-0 z-10 w-full bg-white border-b">
         <!-- desktop -->
         <div class="flex h-[66px] items-center justify-between px-8">
-            <div class="w-8 flex items-center">
+            <div class="w-32 h-full flex items-center">
                 <router-link
                     class="text-lg font-semibold tracking-tight"
                     :to="{ name: auth.isAuthenticated ? 'home' : 'home' }"
@@ -70,7 +70,7 @@ const handleLogout = async () => {
                 </router-link>
             </div>
 
-            <div class="hidden md:flex h-full items-center gap-4">
+            <div class="hidden w-32 h-full md:flex items-center justify-end gap-4">
                 <user-menu v-if="auth.isAuthenticated" />
 
                 <template v-else>

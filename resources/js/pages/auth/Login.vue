@@ -71,24 +71,26 @@ const login = async () => {
 
 <template>
     <div class="flex-1 flex items-center justify-center p-8">
-        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
-            <div class="p-8 pb-6 text-center">
-                <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="pi pi-user text-2xl"></i>
+        <a-card class="w-full max-w-md p-8">
+            <div class="text-center">
+                <div class="w-16 h-16 flex items-center justify-center bg-green-100 text-green-600 rounded-full mx-auto">
+                    <i class="pi pi-user" style="font-size: 24px;"></i>
                 </div>
-                <h1>Login</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">
+
+                <h1 class="mt-4">Login</h1>
+
+                <p class="text-gray-500 mt-2">
                     Use Oauth or your email and password.
                 </p>
             </div>
 
-            <div class="px-8 pb-8">
-                <div class="flex flex-col gap-3">
+            <div class="mt-4">
+                <div class="flex flex-col gap-2">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
 
-                <div class="relative my-8">
+                <div class="relative mt-4">
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
                     </div>
@@ -97,49 +99,47 @@ const login = async () => {
                     </div>
                 </div>
 
-                <form @submit.prevent="login" class="space-y-5">
-                    <div>
-                        <a-input-field input-id="login-email" title="Email" required />
-                        <IconField iconPosition="left">
-                            <InputIcon class="pi pi-envelope text-gray-400" />
-                            <InputText
-                                v-model="v$.email.$model"
-                                id="login-email"
-                                :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
-                                autocomplete="email"
-                                placeholder=""
-                            />
-                        </IconField>
-                        <a-field-errors
-                            v-if="v$.email.$error && submitted"
-                            :errors="v$.email.$errors"
-                            name="Email"
-                        />
-                    </div>
+                <form class="mt-4" @submit.prevent="login">
+                    <a-input-field input-id="login-email" title="Email" required />
 
-                    <div>
-                        <a-input-field input-id="login-password" title="Password" required />
-                        <div class="relative">
-                            <Password
-                                v-model="v$.password.$model"
-                                input-id="login-password"
-                                class="w-full"
-                                input-class="w-full"
-                                autocomplete="current-password"
-                                :feedback="false"
-                                toggle-mask
-                                placeholder=""
-                                :invalid="v$.password.$invalid && submitted"
-                            />
-                        </div>
-                        <a-field-errors
-                            v-if="v$.password.$error && submitted"
-                            :errors="v$.password.$errors"
-                            name="Password"
+                    <IconField iconPosition="left">
+                        <InputIcon class="pi pi-envelope text-gray-400" />
+                        <InputText
+                            v-model="v$.email.$model"
+                            id="login-email"
+                            :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+                            autocomplete="email"
+                            placeholder=""
                         />
-                    </div>
+                    </IconField>
 
-                    <div class="flex items-center justify-between">
+                    <a-field-errors
+                        v-if="v$.email.$error && submitted"
+                        :errors="v$.email.$errors"
+                        name="Email"
+                    />
+
+                    <a-input-field class="mt-4" input-id="login-password" title="Password" required />
+
+                    <Password
+                        v-model="v$.password.$model"
+                        input-id="login-password"
+                        class="w-full"
+                        input-class="w-full"
+                        autocomplete="current-password"
+                        :feedback="false"
+                        toggle-mask
+                        placeholder=""
+                        :invalid="v$.password.$invalid && submitted"
+                    />
+
+                    <a-field-errors
+                        v-if="v$.password.$error && submitted"
+                        :errors="v$.password.$errors"
+                        name="Password"
+                    />
+
+                    <div class="flex items-center justify-between mt-4">
                         <div class="flex items-center">
                             <Checkbox
                                 v-model="v$.remember.$model"
@@ -153,8 +153,8 @@ const login = async () => {
                         </div>
 
                         <router-link
-                            :to="{ name: 'password.request' }"
                             class="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline"
+                            :to="{ name: 'password.request' }"
                         >
                             Forgot password?
                         </router-link>
@@ -162,21 +162,20 @@ const login = async () => {
 
                     <Button
                         type="submit"
+                        class="w-full mt-4"
                         :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
                         label="Login"
-                        class="w-full font-bold"
                         :disabled="isSubmitting"
                     />
                 </form>
 
-                <div class="mt-6 text-center text-gray-600 dark:text-gray-400">
+                <div class="text-center mt-8">
                     Don't have an account?
-                    <router-link :to="{ name: 'register' }" class="font-bold text-indigo-600 hover:underline ml-1">
+                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 hover:underline ml-1">
                         Register
                     </router-link>
                 </div>
-
             </div>
-        </div>
+        </a-card>
     </div>
 </template>

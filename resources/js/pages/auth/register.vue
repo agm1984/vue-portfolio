@@ -77,24 +77,26 @@ const register = async () => {
 
 <template>
     <div class="flex-1 flex items-center justify-center p-8">
-        <div class="w-full max-w-md md:max-w-3xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
-            <div class="p-8 pb-6 text-center">
-                <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="pi pi-user-plus text-2xl"></i>
+        <a-card class="w-full max-w-md md:max-w-3xl p-8">
+            <div class="text-center">
+                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 rounded-full mx-auto">
+                    <i class="pi pi-user-plus" style="font-size: 24px;"></i>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Register</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">
+
+                <h1 class="mt-4">Register</h1>
+
+                <p class="text-gray-500 mt-2">
                     Join me for no raisin.
                 </p>
             </div>
 
-            <div class="px-8 pb-8">
-                <div class="flex flex-col gap-3">
+            <div class="mt-4">
+                <div class="flex flex-col gap-2">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
                 </div>
 
-                <div class="relative my-8">
+                <div class="relative mt-4">
                     <div class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
                     </div>
@@ -103,9 +105,10 @@ const register = async () => {
                     </div>
                 </div>
 
-                <form @submit.prevent="register" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" @submit.prevent="register">
                     <div>
                         <a-input-field input-id="register-name" title="Name" required />
+
                         <IconField iconPosition="left">
                             <InputIcon class="pi pi-id-card text-gray-400" />
                             <InputText
@@ -116,6 +119,7 @@ const register = async () => {
                                 placeholder=""
                             />
                         </IconField>
+
                         <a-field-errors
                             v-if="v$.name.$error && submitted"
                             :errors="v$.name.$errors"
@@ -125,6 +129,7 @@ const register = async () => {
 
                     <div>
                         <a-input-field input-id="register-email" title="Email" required />
+
                         <IconField iconPosition="left">
                             <InputIcon class="pi pi-envelope text-gray-400" />
                             <InputText
@@ -135,33 +140,34 @@ const register = async () => {
                                 placeholder=""
                             />
                         </IconField>
+
                         <a-field-errors
                             v-if="v$.email.$error && submitted"
                             :errors="v$.email.$errors"
                             name="Email"
                         />
 
-                        <div class="mt-2 flex gap-2 items-start text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 p-2 rounded-lg">
-                            <i class="pi pi-shield text-indigo-500 mt-0.5"></i>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 rounded-lg p-2 mt-2">
+                            <i class="pi pi-eye-slash text-indigo-500"></i>
                             <span>Your email is private and only visible to admins.</span>
                         </div>
                     </div>
 
                     <div>
                         <a-input-field input-id="register-password" title="Password" required />
-                        <div class="relative">
-                            <Password
-                                v-model="v$.password.$model"
-                                input-id="register-password"
-                                class="w-full"
-                                input-class="w-full"
-                                placeholder=""
-                                autocomplete="new-password"
-                                :feedback="true"
-                                toggle-mask
-                                :invalid="v$.password.$invalid && submitted"
-                            />
-                        </div>
+
+                        <Password
+                            v-model="v$.password.$model"
+                            :invalid="v$.password.$invalid && submitted"
+                            input-id="register-password"
+                            class="w-full"
+                            input-class="w-full"
+                            placeholder=""
+                            autocomplete="new-password"
+                            feedback
+                            toggle-mask
+                        />
+
                         <a-field-errors
                             v-if="v$.password.$error && submitted"
                             :errors="v$.password.$errors"
@@ -171,19 +177,19 @@ const register = async () => {
 
                     <div>
                         <a-input-field input-id="register-confirm-password" title="Confirm Password" required />
-                        <div class="relative">
-                            <Password
-                                v-model="v$.password_confirmation.$model"
-                                input-id="register-confirm-password"
-                                class="w-full"
-                                input-class="w-full"
-                                placeholder=""
-                                autocomplete="new-password"
-                                :feedback="false"
-                                toggle-mask
-                                :invalid="v$.password_confirmation.$invalid && submitted"
-                            />
-                        </div>
+
+                        <Password
+                            v-model="v$.password_confirmation.$model"
+                            :invalid="v$.password_confirmation.$invalid && submitted"
+                            input-id="register-confirm-password"
+                            class="w-full"
+                            input-class="w-full"
+                            placeholder=""
+                            autocomplete="new-password"
+                            :feedback="false"
+                            toggle-mask
+                        />
+
                         <a-field-errors
                             v-if="v$.password_confirmation.$error && submitted"
                             :errors="v$.password_confirmation.$errors"
@@ -193,22 +199,22 @@ const register = async () => {
 
                     <Button
                         type="submit"
+                        class="w-full md:col-span-2 mt-4"
                         :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-user-plus'"
                         label="Register"
-                        class="w-full font-bold mt-4 md:col-span-2"
                         :disabled="isSubmitting"
                     />
 
                 </form>
 
-                <div class="mt-6 text-center text-gray-600 dark:text-gray-400">
+                <div class="text-center text-gray-600 mt-8">
                     Already have an account?
-                    <router-link :to="{ name: 'login' }" class="font-bold text-indigo-600 hover:underline">
+                    <router-link :to="{ name: 'login' }" class="font-semibold text-indigo-600 hover:underline">
                         Login
                     </router-link>
                 </div>
 
             </div>
-        </div>
+        </a-card>
     </div>
 </template>
