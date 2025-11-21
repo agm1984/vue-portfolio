@@ -95,10 +95,10 @@ const register = async () => {
 
                 <div class="relative mt-4">
                     <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                        <div class="w-full border-t border-gray-300"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-4 bg-white dark:bg-gray-800 text-gray-500">or</span>
+                        <span class="bg-white text-gray-500 px-4">or</span>
                     </div>
                 </div>
 
