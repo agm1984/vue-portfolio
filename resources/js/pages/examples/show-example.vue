@@ -115,10 +115,11 @@ const goBack = () => {
                                 class="group relative block rounded-xl overflow-hidden shadow-sm border aspect-video"
                                 title="View Full Size"
                             >
-                                <img
-                                    :src="`/storage/examples/${example.slug}/${image.filename}`"
-                                    :alt="`Screenshot ${index + 1}`"
+                                <a-image
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    :src="`/storage/examples/${example.slug}/${image.filename}`"
+                                    background="#ffffff"
+                                    :alt="`Screenshot ${index + 1}`"
                                 />
 
                                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">

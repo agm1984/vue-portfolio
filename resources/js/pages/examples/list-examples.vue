@@ -167,9 +167,9 @@ const handleSelectCategory = async (categorySlug) => {
                     <div class="relative aspect-video w-full overflow-hidden bg-gray-100">
                         <a-image
                             v-if="example.images?.length > 0"
-                            :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            background="#f3f4f6"
+                            :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
+                            background="#ffffff"
                             alt="Example image"
                         />
 
