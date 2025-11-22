@@ -198,8 +198,9 @@ onMounted(fetchUser);
             <h3>User not found</h3>
             <Button
                 type="button"
+                class="mt-4"
                 label="Go Back"
-                text
+                outlined
                 @click="goBack"
             />
         </div>
