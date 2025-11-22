@@ -21,8 +21,9 @@ const handleLogout = async () => {
         <div class="flex h-[66px] items-center justify-between px-8">
             <div class="w-32 h-full flex items-center">
                 <router-link
-                    class="text-lg font-semibold tracking-tight"
+                    class="h-full inline-flex items-center font-semibold text-lg"
                     :to="{ name: auth.isAuthenticated ? 'home' : 'home' }"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     AGM
                 </router-link>
