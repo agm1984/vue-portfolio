@@ -219,7 +219,7 @@ onMounted(fetchCategory);
                                     background="#ffffff"
                                 />
                                 <div v-else class="w-full h-full flex items-center justify-center text-gray-300">
-                                    <i class="pi pi-image text-4xl"></i>
+                                    <i class="pi pi-image" style="font-size: 48px;"></i>
                                 </div>
 
                                 <div class="absolute top-2 right-2">
