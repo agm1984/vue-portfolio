@@ -43,6 +43,14 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
             loading="lazy"
         >
 
-        <span v-else>{{ firstLetterOfName }}</span>
+        <span
+            v-else
+            :class="['', {
+                'text-sm': size === 32,
+                'text-lg': size === 48,
+                'text-2xl': size === 64,
+                'text-4xl': size === 128,
+            }]"
+        >{{ firstLetterOfName }}</span>
     </div>
 </template>

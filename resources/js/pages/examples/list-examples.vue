@@ -197,7 +197,7 @@ const handleSelectCategory = async (categorySlug) => {
 
                         <div class="flex items-center text-indigo-600 font-semibold text-sm pt-4 mt-auto">
                             <span>View</span>
-                            <i class="pi pi-arrow-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                            <i class="pi pi-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                         </div>
                     </div>
                 </router-link>

@@ -3,13 +3,9 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
 import axios from 'axios';
-
-// PrimeVue Imports
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
-import Card from 'primevue/card';
 import Skeleton from 'primevue/skeleton';
-import Divider from 'primevue/divider';
 
 useHead({
     title: 'Admin: Category Details',
@@ -18,11 +14,12 @@ useHead({
 const route = useRoute();
 const router = useRouter();
 
-// --- STATE ---
 const LOADING = 'LOADING';
 const SHOWING = 'SHOWING';
 const EDITING = 'EDITING';
-
+const isLoading = computed(() => state.value === LOADING);
+const isShowing = computed(() => state.value === SHOWING);
+const isEditing = computed(() => state.value === EDITING);
 const state = ref(LOADING);
 const category = ref({
     id: null,
@@ -35,35 +32,28 @@ const category = ref({
     examples: [],
 });
 
-// --- COMPUTED ---
-const isLoading = computed(() => state.value === LOADING);
-const isShowing = computed(() => state.value === SHOWING);
-const isEditing = computed(() => state.value === EDITING);
-
-// --- PURE HELPERS ---
 const getStatusConfig = (status) => {
     return status === 1
         ? { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' }
         : { label: 'Inactive', severity: 'danger', icon: 'pi pi-ban' };
 };
 
-// --- ACTIONS ---
 const fetchCategory = async () => {
     try {
+        state.value = LOADING;
+
         const { data } = await axios.get(window.route('admin.categories.show', route.params.category));
+
         category.value = data.category;
-        
-        // If we were loading, now we show
-        if (state.value === LOADING) state.value = SHOWING;
+
+        state.value = SHOWING;
     } catch (err) {
         console.error(`show-category# Problem fetching category: ${err}.`);
     }
 };
 
-const handleReset = async () => {
-    state.value = LOADING; // brief loading state to reset UI
-    await fetchCategory();
-    state.value = SHOWING;
+const handleReset = () => {
+    fetchCategory();
 };
 
 const handleCategorySaved = (updatedCategory) => {
@@ -100,10 +90,8 @@ onMounted(fetchCategory);
                 <Button
                     v-if="isShowing"
                     type="button"
-                    severity="secondary"
                     icon="pi pi-pencil"
                     label="Edit Category"
-                    outlined
                     @click="state = EDITING"
                 />
 
@@ -198,12 +186,12 @@ onMounted(fetchCategory);
                 <div>
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="pi pi-images text-gray-400"></i>
+                            <i class="pi pi-images text-indigo-500"></i>
                             Associated Examples
                         </h3>
                     </div>
 
-                    <div v-if="category.examples.length" class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+                    <div v-if="category.examples.length" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                         <router-link
                             v-for="example in category.examples"
                             :key="example.slug"
@@ -245,13 +233,17 @@ onMounted(fetchCategory);
                                     {{ example.name }}
                                 </h4>
                                 <p class="text-gray-600 mt-1 flex items-center gap-1">
-                                    View <i class="pi pi-arrow-right"></i>
+                                    View <i class="pi pi-arrow-right transition-transform group-hover:translate-x-1"></i>
                                 </p>
                             </div>
                         </router-link>
                     </div>
 
                     <a-area-empty v-else class="mt-8">
+                        <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
+                            <i class="pi pi-search" style="font-size: 24px;"></i>
+                        </div>
+
                         No examples have been assigned to this category yet.
                     </a-area-empty>
                 </div>
