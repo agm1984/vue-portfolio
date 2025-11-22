@@ -1,109 +1,143 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-
-// PrimeVue Imports
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
-import Skeleton from 'primevue/skeleton'; // For a pro loading state
+import Skeleton from 'primevue/skeleton';
 
 useHead({
     title: 'Examples',
 });
 
 const currentRoute = useRoute();
+const router = useRouter();
 
-// --- STATE MACHINE CONSTANTS ---
 const LOADING = 'is-loading';
 const LOADED = 'is-loaded';
 const HAS_ERROR = 'is-error';
-
-// --- REACTIVE STATE ---
-const state = ref(LOADING);
-const categories = ref([]);
-const examples = ref([]);
-
-// --- COMPUTED HELPERS ---
 const isLoading = computed(() => state.value === LOADING);
 const isLoaded = computed(() => state.value === LOADED);
 const hasError = computed(() => state.value === HAS_ERROR);
-const hasExamples = computed(() => examples.value.length > 0);
+const state = ref(LOADING);
+const categories = ref([]);
+const examples = ref([]);
+const activeCategory = ref('all');
+const searchTerms = ref('');
 
-const activeCategory = computed(() => currentRoute.params.category || null);
+const fetchCategories = async () => {
+    try {
+        const response = await axios.get(route('public.categories.list'));
 
-// --- SIDE EFFECTS ---
-const fetchAllExamples = async () => {
+        categories.value = response.data.categories;
+    } catch (err) {
+        console.error('list-examples# Problem fetching categories:', err);
+    }
+};
+
+const fetchExamples = async () => {
     try {
         state.value = LOADING;
 
-        const [categoriesRes, examplesRes] = await Promise.all([
-            axios.get(route('public.categories.list')),
-            axios.get(route('public.examples.list'), {
-                params: {
-                    'filter[category.slug]': currentRoute.params.category,
-                },
-            }),
-        ]);
+        const response = await axios.get(route('public.examples.list'));
 
-        categories.value = categoriesRes.data.categories;
-        examples.value = examplesRes.data.examples;
+        examples.value = response.data.examples;
+
         state.value = LOADED;
     } catch (err) {
+        console.error('list-examples# Problem fetching examples:', err);
         state.value = HAS_ERROR;
-        console.error('list-examples# Problem fetching data:', err);
     }
-}
+};
 
-const handleTryAgain = () => {
-    fetchAllExamples();
-}
+const loadPage = () => {
+    fetchCategories();
+    fetchExamples();
+};
 
-watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
+onMounted(loadPage);
+
+const filteredExamples = computed(() => {
+    let filtered = examples.value;
+
+    if (searchTerms.value) {
+        const matchesFound = (example) => {
+            return example.name.toLowerCase().includes(searchTerms.value.toLowerCase())
+                || example.category.name.toLowerCase().includes(searchTerms.value.toLowerCase())
+                || example.summary.toLowerCase().includes(searchTerms.value.toLowerCase())
+                || example.conclusion.toLowerCase().includes(searchTerms.value.toLowerCase())
+                || example.slug.toLowerCase().includes(searchTerms.value.toLowerCase())
+                || example.tags.some(tag => tag.toLowerCase().includes(searchTerms.value.toLowerCase()));
+        };
+
+        filtered = filtered.filter(matchesFound);
+    }
+
+    if (activeCategory.value === 'all') return filtered;
+
+    filtered = filtered.filter(example => example.category.slug === activeCategory.value);
+
+    return filtered;
+});
+
+const hasExamples = computed(() => filteredExamples.value.length > 0);
+
+const handleSelectCategory = async (categorySlug) => {
+    activeCategory.value = categorySlug;
+
+    await router.replace({
+        query: {
+            category: categorySlug,
+        },
+    });
+};
 </script>
 
 <template>
-    <div class="w-full max-w-7xl mx-auto flex flex-col p-6 md:p-12 min-h-screen">
-        <div class="flex flex-col gap-8 mb-10">
-            <div>
-                <h1>Examples</h1>
-                <p class="text-gray-500 mt-2">
-                    A collection of code snippets, full projects, experiments and learning.
-                </p>
-            </div>
+    <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col p-8">
+        <div class="flex flex-col">
+            <h1>Examples</h1>
 
-            <div class="flex flex-wrap gap-2 pb-2 overflow-x-auto no-scrollbar">
-                <router-link
-                    :to="{ name: 'public.examples.list' }"
-                    class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border"
-                    :class="[
-                        !activeCategory
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
-                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
-                    ]"
-                >
-                    All Projects
-                </router-link>
+            <p class="text-gray-500 mt-2">
+                A collection of full projects, resources, experiments, and learning.
+            </p>
 
-                <router-link
-                    v-for="category in categories"
-                    :key="`catagory-${category.slug}`"
-                    :to="{ name: 'public.examples.list', params: { category: category.slug } }"
-                    class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap"
-                    :class="[
-                        activeCategory === category.slug
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
-                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
-                    ]"
-                >
-                    {{ category.name }}
-                </router-link>
+            <div class="flex flex-col md:flex-row justify-between gap-4 mt-4">
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap"
+                        :class="['px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap', {
+                            'bg-indigo-600 text-white border-indigo-600 shadow-md': activeCategory === 'all',
+                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': activeCategory !== 'all',
+                        }]"
+                        rounded
+                        @click="() => handleSelectCategory('all')"
+                    >
+                        View all
+                    </button>
+
+                    <button
+                        v-for="category in categories"
+                        :key="`category-${category.slug}`"
+                        type="button"
+                        :class="['px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap', {
+                            'bg-indigo-600 text-white border-indigo-600 shadow-md': activeCategory === category.slug,
+                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': activeCategory !== category.slug,
+                        }]"
+                        @click="() => handleSelectCategory(category.slug)"
+                    >{{ category.name }}</button>
+                </div>
+
+                <div>
+                    <a-input-search v-model="searchTerms" />
+                </div>
             </div>
         </div>
 
-        <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            <div v-for="n in 6" :key="n" class="rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+        <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-4">
+            <div v-for="n in 6" :key="n" class="rounded-xl overflow-hidden border">
                 <Skeleton height="200px" width="100%"></Skeleton>
                 <div class="p-4">
                     <Skeleton width="60%" height="1.5rem" class="mb-2"></Skeleton>
@@ -112,52 +146,56 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </div>
         </div>
 
-        <div v-else-if="isLoaded && hasExamples">
-            <TransitionGroup 
-                name="list" 
-                tag="div" 
+        <div v-else-if="isLoaded && hasExamples" class="mt-4">
+            <TransitionGroup
+                name="list"
+                tag="div"
                 class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
             >
                 <router-link
-                    v-for="example in examples"
+                    v-for="example in filteredExamples"
                     :key="example.slug"
-                    :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
+                    :to="{
+                        name: 'public.examples.show',
+                        params: {
+                            category: example.category.slug,
+                            example: example.slug,
+                        },
+                    }"
                     class="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
                 >
                     <div class="relative aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
-                        
-                        <template v-if="example.images?.length > 0">
-                            <a-tilt class="w-full h-full">
-                                <a-image
-                                    :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
-                                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                    background="#f3f4f6"
-                                    alt="Example image"
-                                />
-                            </a-tilt>
-                        </template>
+                        <a-image
+                            v-if="example.images?.length > 0"
+                            :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
+                            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                            background="#f3f4f6"
+                            alt="Example image"
+                        />
 
-                        <div v-else class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 group-hover:from-indigo-900 group-hover:to-purple-900 transition-colors duration-500">
+                        <div v-else class="w-full h-full flex items-center justify-center bg-linear-to-br from-gray-800 to-gray-900 group-hover:from-indigo-900 group-hover:to-purple-900 transition-colors duration-500">
                             <div class="text-center opacity-50">
-                                <i class="pi pi-code text-5xl text-white mb-2"></i>
-                                <div class="font-mono text-xs text-gray-400">&lt;code /&gt;</div>
+                                <i class="pi pi-image text-white" style="font-size: 48px;"></i>
                             </div>
                         </div>
 
                         <div class="absolute top-3 right-3">
-                             <Tag :value="example.category.name" rounded class="!bg-white/90 !text-gray-800 backdrop-blur-sm border border-gray-200 shadow-sm font-bold text-xs uppercase tracking-wider" />
+                             <Tag
+                                class="bg-white/90! text-gray-800! backdrop-blur-sm border shadow-sm font-semibold text-xs uppercase"
+                                :value="example.category.name"
+                                rounded
+                            />
                         </div>
                     </div>
 
-                    <div class="p-6 flex flex-col flex-1">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 transition-colors">
-                            {{ example.name }}
-                        </h3>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">
-                            Click to view project details, code snippets, and live demos.
+                    <div class="p-8 flex flex-col flex-1">
+                        <h3 class="group-hover:text-indigo-600! transition-colors">{{ example.name }}</h3>
+
+                        <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mt-2">
+                            See project details, resources, and live demos.
                         </p>
-                        
-                        <div class="mt-auto pt-4 flex items-center text-indigo-600 font-semibold text-sm">
+
+                        <div class="flex items-center text-indigo-600 font-semibold text-sm pt-4 mt-auto">
                             <span>View</span>
                             <i class="pi pi-arrow-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
                         </div>
@@ -166,34 +204,46 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
             </TransitionGroup>
         </div>
 
-        <a-card v-else-if="isLoaded && !hasExamples" class="p-12 mt-8 text-center">
-            <div class="flex flex-col items-center justify-center">
-                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <i class="pi pi-search text-2xl text-gray-400"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900">No examples found</h3>
-                <p class="text-gray-500 mt-2">
-                    We couldn't find any projects in the <strong>{{ activeCategory }}</strong> category.
-                </p>
-                <Button 
-                    label="View All Projects" 
-                    text 
-                    class="mt-4" 
-                    @click="$router.push({ name: 'public.examples.list' })" 
-                />
+        <a-card v-else-if="isLoaded && !hasExamples" class="flex flex-col items-center justify-center p-8 mt-8">
+            <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mb-4">
+                <i class="pi pi-search" style="font-size: 24px;"></i>
             </div>
+
+            <h3>No examples found</h3>
+
+            <p v-if="searchTerms" class="max-w-xl text-center text-gray-500 wrap-break-word mt-2">
+                We couldn't find any examples matching <strong>{{ searchTerms }}</strong> in the <strong>{{ activeCategory }}</strong> category.
+            </p>
+            <p v-else class="max-w-xl text-center text-gray-500 wrap-break-word mt-2">
+                We couldn't find any examples in the <strong>{{ activeCategory }}</strong> category.
+            </p>
+
+            <Button
+                type="button"
+                class="mt-4"
+                severity="secondary"
+                icon="pi pi-eye"
+                label="View All Examples"
+                @click="$router.push({ name: 'public.examples.list' })"
+            />
         </a-card>
 
         <div v-else-if="hasError" class="w-full mt-12 flex flex-col items-center justify-center text-center">
-            <i class="pi pi-exclamation-circle text-4xl text-red-500 mb-4"></i>
-            <h3 class="text-lg font-bold text-gray-900">Something went wrong</h3>
-            <p class="text-gray-500 mb-6">We failed to load the project examples.</p>
+            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center">
+                <i class="pi pi-exclamation-circle" style="font-size: 24px;"></i>
+            </div>
+
+            <h3 class="mt-4">Something went wrong</h3>
+
+            <p class="mt-4">We failed to load the project examples.</p>
+
             <Button
                 type="button"
+                class="mt-4"
                 severity="danger"
                 icon="pi pi-refresh"
                 label="Try again"
-                @click="handleTryAgain"
+                @click="loadPage"
             />
         </div>
 
@@ -201,7 +251,6 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 </template>
 
 <style scoped>
-/* Smooth Transition for Filtering */
 .list-move,
 .list-enter-active,
 .list-leave-active {
@@ -216,14 +265,5 @@ watch(() => currentRoute.fullPath, fetchAllExamples, { immediate: true });
 
 .list-leave-active {
   position: absolute;
-}
-
-/* Hide scrollbar for the filter pills */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 </style>

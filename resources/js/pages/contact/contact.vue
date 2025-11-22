@@ -255,15 +255,17 @@ const sendMessage = async () => {
                                     <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-400 mb-1">
                                         <span>{{ verificationText }}</span>
                                     </label>
+
                                     <div class="flex flex-col">
                                         <InputNumber
                                             v-model="v$.answer.$model"
+                                            :invalid="v$.answer.$invalid && submitted"
                                             input-id="contact-answer"
                                             input-class="w-24"
                                             class="w-24"
-                                            :invalid="v$.answer.$invalid && submitted"
                                             placeholder=""
                                         />
+
                                         <a-field-errors
                                             v-if="v$.answer.$error && submitted"
                                             :errors="v$.answer.$errors"
@@ -275,10 +277,10 @@ const sendMessage = async () => {
                                 <div class="w-full sm:w-auto">
                                     <Button
                                         type="submit"
+                                        class="w-full sm:w-auto"
                                         :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-send'"
                                         label="Send Message"
                                         :disabled="isSubmitting"
-                                        class="w-full sm:w-auto"
                                     />
                                 </div>
                             </div>

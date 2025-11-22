@@ -7,7 +7,7 @@ const routes = [
         component: () => import('../pages/examples/examples.vue'),
         redirect: { name: 'public.examples.list' },
         children: [
-            { path: ':category?', name: 'public.examples.list', component: () => import('../pages/examples/list-examples.vue') },
+            { path: '', name: 'public.examples.list', component: () => import('../pages/examples/list-examples.vue') },
             { path: ':category/:example', name: 'public.examples.show', component: () => import('../pages/examples/show-example.vue') },
             { path: ':category/:example/images/:filename', name: 'public.examples.image', component: () => import('../pages/examples/show-example-images.vue') },
         ],
