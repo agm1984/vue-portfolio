@@ -35,14 +35,14 @@ const fetchExample = async () => {
 
         if (!example || !filename) throw new Error("Missing route parameters");
 
-        // ZIGGY FIX: We map 'filename' to 'exampleImage' here
-        const response = await axios.get(route('public.examples.image', { 
-            example: example, 
-            exampleImage: filename 
+        const response = await axios.get(route('public.examples.image', {
+            example: example,
+            exampleImage: filename,
         }));
 
         image.value = response.data.image;
         imageUrl.value = response.data.image_url;
+
         state.value = IS_LOADED;
     } catch (err) {
         console.error(`show-example-image# Error: ${err}`);
@@ -52,7 +52,7 @@ const fetchExample = async () => {
 
 const downloadImage = async () => {
     if (!imageUrl.value) return;
-    
+
     try {
         const response = await fetch(imageUrl.value);
         const blob = await response.blob();
@@ -68,7 +68,6 @@ const downloadImage = async () => {
 };
 
 const goBack = () => {
-    console.log('isAdmin', isAdmin.value);
     if (isAdmin.value) {
         router.push({
             name: 'admin.examples.show',
@@ -90,71 +89,85 @@ onMounted(fetchExample);
 
 <template>
     <div class="fixed inset-0 z-50 bg-gray-900 flex flex-col overflow-hidden">
-        
         <div class="relative z-20 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/10 text-white shrink-0">
             <div class="flex items-center gap-4">
-                <Button 
-                    icon="pi pi-arrow-left" 
-                    text 
-                    rounded 
-                    class="!text-white hover:!bg-white/20" 
-                    @click="goBack"
+                <Button
+                    type="button"
+                    class="text-white! hover:bg-white/20!"
+                    icon="pi pi-arrow-left"
+                    text
+                    rounded
                     aria-label="Go Back"
+                    @click="goBack"
                 />
+
                 <div class="flex flex-col">
-                    <h1 class="text-base font-bold truncate max-w-[200px] md:max-w-md">
+                    <h1 class="truncate max-w-[200px] md:max-w-md">
                         {{ image.filename || 'Loading...' }}
                     </h1>
-                    <span class="text-xs text-gray-400" v-if="isLoaded">
+                    <span v-if="isLoaded" class="text-xs text-gray-400 mt-1">
                         {{ isAdmin ? 'Admin View' : 'Original Size' }}
                     </span>
                 </div>
             </div>
 
             <div class="flex gap-2">
-                <Button 
-                    label="Download" 
-                    icon="pi pi-download" 
-                    size="small"
-                    severity="secondary" 
-                    class="!bg-white/10 !border-white/10 !text-white hover:!bg-white/20"
-                    @click="downloadImage"
+                <Button
                     v-if="isLoaded"
+                    type="button"
+                    class="bg-white/10! border-white/10! text-white! hover:bg-white/20!"
+                    severity="secondary"
+                    icon="pi pi-download"
+                    label="Download"
+                    size="small"
+                    @click="downloadImage"
                 />
-                <Button 
-                    icon="pi pi-times" 
-                    text 
-                    rounded 
-                    class="!text-white hover:!bg-white/20" 
-                    @click="goBack"
+
+                <Button
+                    type="button"
+                    class="text-white! hover:bg-white/20!"
+                    icon="pi pi-times"
                     aria-label="Close"
+                    text
+                    rounded
+                    @click="goBack"
                 />
             </div>
         </div>
 
         <div class="relative flex-1 w-full h-full flex items-center justify-center bg-gray-900 overflow-hidden p-4">
-            
             <div v-if="isLoading" class="z-30 flex flex-col items-center gap-4">
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="4" />
-                <span class="text-gray-400 text-sm">Loading high-res image...</span>
+                <ProgressSpinner style="width: 64px; height: 64px" strokeWidth="4" />
+
+                <span class="text-gray-300 text-sm">Loading high-res image...</span>
             </div>
 
             <div v-else-if="hasError" class="z-30 text-center">
-                <i class="pi pi-image text-6xl text-gray-700 mb-4"></i>
-                <p class="text-gray-400">Failed to load image.</p>
-                <Button label="Go Back" text class="mt-2" @click="goBack" />
+                <i class="pi pi-image text-gray-600 mb-4" style="font-size: 64px;"></i>
+                <p class="text-gray-300">Failed to load image.</p>
+                <Button
+                    type="button"
+                    class="text-white! hover:bg-white/20! mt-2"
+                    label="Go Back"
+                    text
+                    @click="goBack"
+                />
             </div>
 
             <template v-else>
-                <div 
+                <div
                     class="absolute inset-0 opacity-30 blur-3xl scale-110 pointer-events-none"
-                    :style="{ backgroundImage: `url(${imageUrl})`, backgroundPosition: 'center', backgroundSize: 'cover' }"
+                    :style="{
+                        backgroundImage: `url(${imageUrl})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                    }"
                 ></div>
 
-                <img 
-                    :src="imageUrl" 
-                    class="relative z-10 w-full h-full object-contain shadow-2xl drop-shadow-2xl" 
-                    alt="Full screen example" 
+                <img
+                    class="relative z-10 w-full h-full object-contain shadow-2xl drop-shadow-2xl"
+                    :src="imageUrl"
+                    alt="Full screen example"
                 />
             </template>
         </div>

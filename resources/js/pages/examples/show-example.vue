@@ -132,7 +132,7 @@ const goBack = () => {
                         </div>
                     </section>
 
-                    <section v-if="example.conclusion" class="bg-gray-50 rounded-2xl border-l-4 border-indigo-500 p-8">
+                    <section v-if="example.conclusion" class="bg-indigo-50 rounded-2xl border-l-4 border-indigo-500 p-8">
                         <h3>Final Thoughts</h3>
                         <p class="text-gray-600 mt-2">{{ example.conclusion }}</p>
                     </section>
