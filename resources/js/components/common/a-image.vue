@@ -1,104 +1,126 @@
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, useAttrs } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed, useAttrs } from 'vue';
 
-// Vue 3.3+ — lets us keep attrs off the root like in the original
 defineOptions({ name: 'AppImg', inheritAttrs: false });
 
 const props = defineProps({
-  src: { type: String, required: true },
-  placeholder: String,
-  background: String,
+    src: { type: String, required: true },
+    placeholder: String,
+    background: String,
 });
 
 const attrs = useAttrs();
+const imgAttrs = computed(() => {
+    const { class: className, style, ...rest } = attrs;
+    return rest;
+});
 
 const rootRef = ref(null);
-const imgRef = ref(null);
-const placeholderRef = ref(null);
+const isIntersecting = ref(false);
+const isLoaded = ref(false);
+
+const computedSrc = computed(() => isIntersecting.value ? props.src : undefined);
+const computedSrcSet = computed(() => isIntersecting.value ? attrs.srcset : undefined);
+
+const onImageLoad = () => {
+    isLoaded.value = true;
+};
 
 let observer;
-let timeOut;
 
 onMounted(() => {
-  const el = rootRef.value;
-  const img = imgRef.value;
-
-  observer = new IntersectionObserver(([entry]) => {
-    const placeholderEl = placeholderRef.value;
-
-    img.onload = () => {
-      img.onload = null;
-      el.classList.add('app-img--loaded');
-      if (placeholderEl) {
-        timeOut = setTimeout(() => {
-          placeholderEl.remove();
-        }, 300);
-      }
-    };
-
-    if (entry.isIntersecting) {
-      if (attrs.srcset) {
-        img.setAttribute('srcset', attrs.srcset);
-      }
-      img.src = props.src;
-      observer && observer.disconnect();
+    // fallback for very old browsers or SEO bots: load immediately
+    if (!window.IntersectionObserver) {
+        isIntersecting.value = true;
+        return;
     }
-  });
 
-  observer.observe(el);
+    observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+            isIntersecting.value = true;
+            observer.disconnect();
+        }
+    });
+
+    if (rootRef.value) observer.observe(rootRef.value);
 });
 
 onBeforeUnmount(() => {
-  if (observer) observer.disconnect();
-  if (timeOut) clearTimeout(timeOut);
+    if (observer) observer.disconnect();
 });
 </script>
 
 <template>
-  <div class="app-img" ref="rootRef">
-    <slot></slot>
-
     <div
-      v-if="src"
-      :style="{ background: props.background }"
-      class="app-img__placeholder"
-      ref="placeholderRef"
+        ref="rootRef"
+        class="app-img"
+        :class="[attrs.class, { 'app-img--loaded': isLoaded }]"
+        :style="attrs.style"
     >
-      <img :src="props.placeholder" alt v-bind="attrs">
-    </div>
+        <slot></slot>
 
-    <img
-      ref="imgRef"
-      :src="src"
-      :alt="attrs.alt || ''"
-      v-bind="attrs"
-      class="w-full aspect-video"
-    >
-  </div>
+        <transition name="fade">
+            <div
+              v-if="src && !isLoaded"
+              :style="{ background: props.background }"
+              class="app-img__placeholder"
+            >
+                <img
+                    v-if="props.placeholder"
+                    :src="props.placeholder"
+                    alt=""
+                    aria-hidden="true"
+                >
+            </div>
+        </transition>
+
+        <img
+            class="app-img__img w-full aspect-video"
+            :src="computedSrc"
+            :srcset="computedSrcSet"
+            :alt="attrs.alt || ''"
+            v-bind="imgAttrs"
+            @load="onImageLoad"
+        >
+    </div>
 </template>
 
-<style>
-  .app-img {
-    display: inline-block;
-    position: relative;
-  }
+<style scoped>
+    .app-img {
+        display: inline-block;
+        position: relative;
+        overflow: hidden; /* Keeps the blur contained */
+    }
 
-  .app-img__placeholder {
-    position: absolute;
-    overflow: hidden;
-  }
+    .app-img__placeholder {
+        position: absolute;
+        inset: 0; /* shorthand for top/right/bottom/left: 0 */
+        z-index: 1;
+    }
 
-  .app-img__placeholder img {
-    transform: scale(1.05);
-    filter: blur(10px);
-  }
+    .app-img__placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.05);
+        filter: blur(10px);
+    }
 
-  .app-img__img {
-    opacity: 0;
-    transition: opacity 300ms ease;
-  }
+    .app-img__img {
+        opacity: 0;
+        transition: opacity 500ms ease;
+        display: block;
+    }
 
-  .app-img--loaded .app-img__img {
-    opacity: 1;
-  }
+    .app-img--loaded .app-img__img {
+        opacity: 1;
+    }
+
+    /* Vue Transition for removing the placeholder smoothly */
+    .fade-leave-active {
+        transition: opacity 500ms ease;
+    }
+    .fade-leave-to {
+        opacity: 0;
+    }
 </style>

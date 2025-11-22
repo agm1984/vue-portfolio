@@ -47,11 +47,11 @@ const navItems = computed(() => [
             :nav-items="navItems"
         ></side-nav-pane>
 
-        <main class="flex-1 md:ml-64 p-4 md:p-8 max-w-7xl mx-auto w-full">
+        <main class="flex-1 w-full md:ml-64 p-8">
             <template v-if="isDashboard">
-                <div class="mb-8">
+                <div class="mb-4">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-1">Here's what is happening with my portfolio.</p>
+                    <p class="text-gray-600 mt-2">Here's what is happening with my portfolio.</p>
                 </div>
 
                 <dashboard-counts :metrics="metrics"></dashboard-counts>
@@ -80,9 +80,7 @@ const navItems = computed(() => [
 
             </template>
 
-            <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 min-h-[500px]">
-                <router-view></router-view>
-            </div>
+            <router-view v-else></router-view>
         </main>
     </div>
 </template>

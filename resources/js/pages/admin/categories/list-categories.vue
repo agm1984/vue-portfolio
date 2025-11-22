@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
-import { FilterMatchMode } from '@primevue/core/api'; // Ensure correct import for v4
+import { FilterMatchMode } from '@primevue/core/api';
 import axios from 'axios';
-
-// PrimeVue Components
+import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
@@ -12,9 +11,6 @@ import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
-import { useToast } from 'primevue/usetoast';
-
-// Store
 import { useAuthStore } from '~/store/auth';
 
 useHead({
@@ -24,29 +20,34 @@ useHead({
 const auth = useAuthStore();
 const toast = useToast();
 
-// --- STATE ---
 const loading = ref(true);
 const categories = ref([]);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-// --- PURE HELPERS ---
-const getStatusConfig = (status) => {
-    return status === 1
-        ? { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' }
-        : { label: 'Inactive', severity: 'danger', icon: 'pi pi-ban' };
+const statusMap = {
+    0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
+    1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
 };
 
-// --- ACTIONS ---
+const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', severity: 'info', icon: 'pi pi-question' };
+
 const fetchAllCategories = async () => {
     try {
         loading.value = true;
+
         const { data } = await axios.get(route('admin.categories.list'));
+
         categories.value = data.categories;
-    } catch (err) {
-        console.error(err);
-        toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to load categories', life: 3000 });
+    } catch (error) {
+        console.error(error);
+        toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load categories',
+            life: 5000,
+        });
     } finally {
         loading.value = false;
     }
@@ -56,56 +57,51 @@ onMounted(fetchAllCategories);
 </script>
 
 <template>
-    <div class="w-full max-w-7xl mx-auto p-6">
-
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+    <div class="flex-1 w-full flex flex-col">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Categories</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">For organizing portfolio examples.</p>
+                <h1>Categories</h1>
+                <p class="text-gray-600 mt-2">For organizing portfolio examples.</p>
             </div>
 
             <div v-if="auth.isAdmin">
                 <router-link :to="{ name: 'admin.categories.create' }">
-                    <Button 
-                        label="Add Category" 
-                        icon="pi pi-plus" 
-                        severity="primary" 
+                    <Button
+                        type="button"
+                        severity="primary"
+                        icon="pi pi-plus"
+                        label="Add Category"
                         raised
                     />
                 </router-link>
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-            
-            <DataTable 
-                :value="categories" 
-                :loading="loading"
-                paginator 
-                :rows="10" 
-                :rowsPerPageOptions="[5, 10, 25, 50]"
+        <a-card class="p-8">
+            <div class="flex justify-end pb-4">
+                <IconField iconPosition="left">
+                    <InputIcon>
+                        <i class="pi pi-search" />
+                    </InputIcon>
+                    <InputText
+                        v-model="filters['global'].value"
+                        placeholder="Search categories..."
+                        class="w-full md:w-64"
+                    />
+                </IconField>
+            </div>
+
+            <DataTable
                 v-model:filters="filters"
+                :value="categories"
+                :loading="loading"
+                paginator
+                :rows="10"
+                :rowsPerPageOptions="[5, 10, 25, 50]"
                 :globalFilterFields="['name', 'slug']"
-                tableStyle="min-width: 50rem"
                 removableSort
                 stripedRows
             >
-
-                <template #header>
-                    <div class="flex justify-end">
-                        <IconField iconPosition="left">
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText 
-                                v-model="filters['global'].value" 
-                                placeholder="Search categories..." 
-                                class="w-full md:w-64"
-                            />
-                        </IconField>
-                    </div>
-                </template>
-
                 <template #empty>
                     <div class="text-center py-8">
                         <i class="pi pi-folder-open text-4xl text-gray-300 mb-3"></i>
@@ -136,12 +132,12 @@ onMounted(fetchAllCategories);
 
                 <Column field="status" header="Status" sortable>
                     <template #body="{ data }">
-                        <Tag 
-                            :value="getStatusConfig(data.status).label" 
+                        <Tag
+                            class="uppercase text-[10px] font-bold tracking-wider px-2"
                             :severity="getStatusConfig(data.status).severity"
                             :icon="getStatusConfig(data.status).icon"
+                            :value="getStatusConfig(data.status).label"
                             rounded
-                            class="uppercase text-[10px] font-bold tracking-wider px-2"
                         />
                     </template>
                 </Column>
@@ -165,9 +161,7 @@ onMounted(fetchAllCategories);
                         </router-link>
                     </template>
                 </Column>
-
             </DataTable>
-        </div>
-
+        </a-card>
     </div>
 </template>

@@ -7,11 +7,13 @@ useHead({
 </script>
 
 <template>
-    <a-card class="p-8">
+    <div class="flex-1 flex flex-col">
         <h2>Create Category</h2>
 
-        <edit-category
-            mode="create"
-        />
-    </a-card>
+        <a-card class="p-8 mt-4">
+            <edit-category
+                mode="create"
+            />
+        </a-card>
+    </div>
 </template>

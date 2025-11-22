@@ -6,9 +6,9 @@ const auth = useAuthStore();
 
 <template>
     <div class="bg-linear-to-br from-indigo-600 to-purple-700 rounded-xl p-6 text-white shadow-md flex flex-col justify-center">
-        <h3 v-if="auth.isAuthenticated && auth.isAdmin" class="text-xl font-bold mb-2">Admin Access</h3>
-        <h3 v-else-if="auth.isAuthenticated && auth.isStandard" class="text-xl font-bold mb-2">Standard Access</h3>
-        <h3 v-else class="text-xl font-bold mb-2">Guest Access</h3>
+        <h3 v-if="auth.isAuthenticated && auth.isAdmin" class="text-xl font-bold text-indigo-200! mb-2">Admin Access</h3>
+        <h3 v-else-if="auth.isAuthenticated && auth.isStandard" class="text-xl font-bold text-indigo-200! mb-2">Standard Access</h3>
+        <h3 v-else class="text-xl font-bold text-indigo-200! mb-2">Guest Access</h3>
         <p v-if="auth.isAuthenticated" class="text-indigo-100 text-sm mb-6">
             You are currently logged in with {{ auth.isAdmin ? 'full administrative' : 'standard' }} privileges.
         </p>

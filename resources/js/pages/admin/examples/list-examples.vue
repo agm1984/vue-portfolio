@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
-import { FilterMatchMode } from '@primevue/core/api'; // Ensure correct import for your version
+import { FilterMatchMode } from '@primevue/core/api';
 import axios from 'axios';
-
-// PrimeVue Components
+import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
@@ -12,9 +11,6 @@ import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
-import { useToast } from 'primevue/usetoast';
-
-// Store
 import { useAuthStore } from '~/store/auth';
 
 useHead({
@@ -24,29 +20,34 @@ useHead({
 const auth = useAuthStore();
 const toast = useToast();
 
-// --- STATE ---
 const loading = ref(true);
 const examples = ref([]);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-// --- PURE HELPERS ---
-const getStatusConfig = (status) => {
-    return status === 1
-        ? { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' }
-        : { label: 'Inactive', severity: 'danger', icon: 'pi pi-ban' };
+const statusMap = {
+    0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
+    1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
 };
 
-// --- ACTIONS ---
+const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', severity: 'info', icon: 'pi pi-question' };
+
 const fetchAllExamples = async () => {
     try {
         loading.value = true;
+
         const { data } = await axios.get(route('admin.examples.list'));
+
         examples.value = data.examples;
-    } catch (err) {
-        console.error(err);
-        toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to load examples', life: 3000 });
+    } catch (error) {
+        console.error(error);
+        toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load examples',
+            life: 5000,
+        });
     } finally {
         loading.value = false;
     }
@@ -56,56 +57,51 @@ onMounted(fetchAllExamples);
 </script>
 
 <template>
-    <div class="w-full max-w-7xl mx-auto p-6">
-
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+    <div class="flex-1 w-full flex flex-col">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Examples</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your portfolio projects.</p>
+                <h1>Examples</h1>
+                <p class="text-gray-600 mt-2">Manage your portfolio projects.</p>
             </div>
 
             <div v-if="auth.isAdmin">
                 <router-link :to="{ name: 'admin.examples.create' }">
-                    <Button 
-                        label="Add Example" 
-                        icon="pi pi-plus" 
-                        severity="primary" 
+                    <Button
+                        type="button"
+                        severity="primary"
+                        icon="pi pi-plus"
+                        label="Add Example"
                         raised
                     />
                 </router-link>
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-            
-            <DataTable 
-                :value="examples" 
+        <a-card class="p-8">
+            <div class="flex justify-end pb-4">
+                <IconField iconPosition="left">
+                    <InputIcon>
+                        <i class="pi pi-search" />
+                    </InputIcon>
+                    <InputText
+                        v-model="filters['global'].value"
+                        placeholder="Search examples..."
+                        class="w-full md:w-64"
+                    />
+                </IconField>
+            </div>
+
+            <DataTable
+                :value="examples"
                 :loading="loading"
-                paginator 
-                :rows="10" 
+                paginator
+                :rows="10"
                 :rowsPerPageOptions="[5, 10, 25, 50]"
                 v-model:filters="filters"
                 :globalFilterFields="['name', 'slug', 'category.name']"
-                tableStyle="min-width: 50rem"
                 removableSort
                 stripedRows
             >
-
-                <template #header>
-                    <div class="flex justify-end">
-                        <IconField iconPosition="left">
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText 
-                                v-model="filters['global'].value" 
-                                placeholder="Search projects..." 
-                                class="w-full md:w-64"
-                            />
-                        </IconField>
-                    </div>
-                </template>
-
                 <template #empty>
                     <div class="text-center py-8">
                         <i class="pi pi-briefcase text-4xl text-gray-300 mb-3"></i>
@@ -134,23 +130,23 @@ onMounted(fetchAllExamples);
 
                 <Column field="category.name" header="Category" sortable>
                     <template #body="{ data }">
-                        <Tag 
-                            :value="data.category?.name || 'Uncategorized'" 
-                            severity="info" 
-                            rounded 
-                            class="!bg-gray-100 !text-gray-600 dark:!bg-gray-700 dark:!text-gray-300 border border-gray-200 dark:border-gray-600"
+                        <Tag
+                            class="bg-gray-100! text-gray-600! border"
+                            severity="info"
+                            :value="data.category?.name || 'Uncategorized'"
+                            rounded
                         />
                     </template>
                 </Column>
 
                 <Column field="status" header="Status" sortable>
                     <template #body="{ data }">
-                        <Tag 
-                            :value="getStatusConfig(data.status).label" 
+                        <Tag
+                            class="uppercase text-[10px] font-bold tracking-wider px-2"
                             :severity="getStatusConfig(data.status).severity"
                             :icon="getStatusConfig(data.status).icon"
+                            :value="getStatusConfig(data.status).label"
                             rounded
-                            class="uppercase text-[10px] font-bold tracking-wider px-2"
                         />
                     </template>
                 </Column>
@@ -174,8 +170,7 @@ onMounted(fetchAllExamples);
                         </router-link>
                     </template>
                 </Column>
-
             </DataTable>
-        </div>
+        </a-card>
     </div>
 </template>

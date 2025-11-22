@@ -336,7 +336,7 @@ const handleSubmit = async () => {
             />
         </div>
 
-        <a-input-field class="mt-2" input-id="edit-example-images" title="Images"></a-input-field>
+        <a-input-field class="mt-6" input-id="edit-example-images" title="Images"></a-input-field>
         <a-multi-image-input
             v-model="v$.images.$model"
             :example-slug="initialExample.slug"

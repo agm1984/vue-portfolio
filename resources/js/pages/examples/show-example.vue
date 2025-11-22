@@ -60,13 +60,13 @@ const goBack = () => {
     <div class="w-full max-w-7xl mx-auto p-6 md:p-12 min-h-screen flex flex-col">
         <div v-if="isLoading" class="animate-pulse space-y-8">
             <Skeleton width="100px" height="2rem" class="mb-4" />
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-8 space-y-4">
                     <Skeleton width="70%" height="4rem" />
                     <Skeleton width="100%" height="20rem" />
                     <Skeleton width="100%" height="10rem" />
                 </div>
-                <div class="lg:col-span-4 space-y-4">
+                <div class="lg:col-span-4 space-y-4 mt-32">
                     <Skeleton width="100%" height="15rem" />
                 </div>
             </div>
