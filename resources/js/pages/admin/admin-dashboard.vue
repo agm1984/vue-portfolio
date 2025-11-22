@@ -50,14 +50,14 @@ const navItems = computed(() => [
         <main class="flex-1 w-full md:ml-64 p-8">
             <template v-if="isDashboard">
                 <div class="mb-4">
-                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
+                    <h2>Dashboard</h2>
                     <p class="text-gray-600 mt-2">Here's what is happening with my portfolio.</p>
                 </div>
 
                 <dashboard-counts :metrics="metrics"></dashboard-counts>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <div class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <div class="space-y-8">
                         <dashboard-signups :metrics="metrics"></dashboard-signups>
 
                         <dashboard-growth :metrics="metrics"></dashboard-growth>
@@ -68,7 +68,7 @@ const navItems = computed(() => [
                     <dashboard-usage :metrics="metrics"></dashboard-usage>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                      <div class="lg:col-span-2">
                         <dashboard-queue :metrics="metrics"></dashboard-queue>
 

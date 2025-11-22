@@ -13,10 +13,10 @@ const isGrowthPositive = computed(() => growthRate.value >= 0);
 </script>
 
 <template>
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
-        <p class="text-gray-600 font-medium mb-4">Monthly Growth</p>
+    <a-card class="p-8">
+        <h6>Monthly Growth</h6>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 mt-4">
             <span class="text-4xl font-bold" :class="isGrowthPositive ? 'text-green-500' : 'text-red-500'">
                 {{ isGrowthPositive ? '+' : '' }}{{ growthRate }}%
             </span>
@@ -26,5 +26,5 @@ const isGrowthPositive = computed(() => growthRate.value >= 0);
                 <i :class="['pi', isGrowthPositive ? 'pi-arrow-up' : 'pi-arrow-down']"></i>
             </div>
         </div>
-    </div>
+    </a-card>
 </template>

@@ -10,10 +10,12 @@ const auth = useAuthStore();
         <h3 v-else-if="auth.isAuthenticated && auth.isStandard" class="text-xl font-bold text-indigo-200! mb-2">Standard Access</h3>
         <h3 v-else class="text-xl font-bold text-indigo-200! mb-2">Guest Access</h3>
         <p v-if="auth.isAuthenticated" class="text-indigo-100 text-sm mb-6">
-            You are currently logged in with {{ auth.isAdmin ? 'full administrative' : 'standard' }} privileges.
+            You are currently logged in with {{ auth.isAdmin ? 'full admin' : 'standard' }} privileges.
         </p>
         <p v-else class="text-indigo-100 text-sm mb-6">
-            Please login to access more features.
+            Please <router-link class="font-semibold hover:underline" :to="{ name: 'login' }">Login</router-link>
+            or <router-link class="font-semibold hover:underline" :to="{ name: 'register' }">Register</router-link>
+            to access more features.
         </p>
 
         <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">

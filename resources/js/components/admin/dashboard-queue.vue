@@ -23,12 +23,19 @@ const systemStatus = computed(() => getSystemStatus(props.metrics.activity.faile
 </script>
 
 <template>
-    <Message :severity="systemStatus.severity" :closable="false" class="w-full shadow-sm mb-6" :icon="systemStatus.icon">
+    <Message
+        class="w-full shadow-sm mb-8"
+        :severity="systemStatus.severity"
+        :icon="systemStatus.icon"
+        :closable="false"
+    >
         <div class="flex flex-col sm:flex-row sm:items-center gap-2">
             <span class="font-bold text-lg">{{ systemStatus.text }}</span>
+
             <span v-if="metrics.activity.failed_jobs > 0" class="text-sm opacity-90">
                 ({{ metrics.activity.failed_jobs }} failed jobs pending retry)
             </span>
+
             <span v-else class="text-sm opacity-90 ml-2">
                 - Queue workers are processing normally.
             </span>

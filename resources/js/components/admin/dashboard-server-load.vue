@@ -24,19 +24,19 @@ const loadColor = computed(() => getLoadColor(serverLoadPercentage.value));
 </script>
 
 <template>
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col items-center justify-center text-center">
-        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-6">Server Load</h3>
+    <a-card class="flex flex-col items-center justify-center text-center p-8">
+        <h3 class="mb-4">Server Load</h3>
 
         <Knob
             v-model="serverLoadPercentage"
             :size="140"
             readonly
-            range-color="#f3f4f6"
+            range-color="var(--color-gray-200)"
             value-template="{value}%"
             :value-color="loadColor"
             :stroke-width="8"
         />
 
         <p class="text-sm text-gray-500 mt-4">CPU Load Average (1 min)</p>
-    </div>
+    </a-card>
 </template>
