@@ -107,7 +107,7 @@ const register = async () => {
                         <a-input-field input-id="register-name" title="Name" required />
 
                         <IconField iconPosition="left">
-                            <InputIcon class="pi pi-id-card text-gray-400" />
+                            <InputIcon class="pi pi-id-card text-gray-500" />
                             <InputText
                                 v-model="v$.name.$model"
                                 id="register-name"
@@ -128,7 +128,7 @@ const register = async () => {
                         <a-input-field input-id="register-email" title="Email" required />
 
                         <IconField iconPosition="left">
-                            <InputIcon class="pi pi-envelope text-gray-400" />
+                            <InputIcon class="pi pi-envelope text-gray-500" />
                             <InputText
                                 v-model="v$.email.$model"
                                 id="register-email"

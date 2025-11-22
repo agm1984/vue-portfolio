@@ -35,7 +35,7 @@ const dbQuotaPercentage = computed(() => {
                 class="h-3 rounded-full bg-gray-100 dark:bg-gray-700"
                 :pt="{ value: { class: 'bg-indigo-500 rounded-full' } }"
             />
-            <p class="text-xs text-gray-400 mt-2 text-right">512MB Limit</p>
+            <p class="text-xs text-gray-500 mt-2 text-right">512MB Limit</p>
         </div>
 
         <div>
@@ -48,7 +48,7 @@ const dbQuotaPercentage = computed(() => {
                         :style="{ width: `${dbQuotaPercentage < 5 ? 5 : dbQuotaPercentage}%` }">
                 </div>
             </div>
-            <p class="text-xs text-gray-400 mt-2 text-right">InnoDB Engine</p>
+            <p class="text-xs text-gray-500 mt-2 text-right">InnoDB Engine</p>
         </div>
     </div>
 </template>

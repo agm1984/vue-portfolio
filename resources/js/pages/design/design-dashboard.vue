@@ -66,7 +66,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
             <template v-if="isDashboard">
                 <div class="mb-8">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">System Overview</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">
+                    <p class="text-gray-600 dark:text-gray-500 mt-2">
                         A centralized registry of UI components, design tokens, and usage guidelines.
                     </p>
                 </div>
@@ -82,14 +82,14 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
                             <template #content>
                                 <div class="flex items-start gap-5 p-2">
                                     <div class="w-16 h-16 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center border border-gray-100 dark:border-gray-600 group-hover:bg-pink-50 dark:group-hover:bg-pink-900/20 transition-colors duration-300">
-                                        <i :class="[item.icon, 'text-2xl text-gray-400 group-hover:text-pink-500 transition-colors']"></i>
+                                        <i :class="[item.icon, 'text-2xl text-gray-500 group-hover:text-pink-500 transition-colors']"></i>
                                     </div>
                                     
                                     <div>
                                         <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-pink-600 transition-colors">
                                             {{ item.label }}
                                         </h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
+                                        <p class="text-sm text-gray-600 dark:text-gray-500 mt-2 leading-relaxed">
                                             {{ item.description }}
                                         </p>
                                     </div>

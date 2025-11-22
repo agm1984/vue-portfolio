@@ -49,7 +49,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                         </div>
                         <div>
                             <h3 class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide">Car Enthusiast</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            <p class="text-sm text-gray-600 dark:text-gray-500 mt-1">
                                 I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
                                 you can find me out driving with friends and finding new places to visit.
                             </p>
@@ -91,7 +91,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                         <div class="w-3 h-3 rounded-full bg-red-500"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        <span class="ml-2 font-mono text-xs text-gray-400">message_to_devs.js</span>
+                        <span class="ml-2 font-mono text-xs text-gray-500">message_to_devs.js</span>
                     </div>
                     <div class="flex-1 bg-gray-50 p-8">
                         <h2 class="font-mono text-xl font-bold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>

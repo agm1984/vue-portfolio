@@ -128,7 +128,7 @@ const exportCSV = () => {
                                 >
                                     {{ data.name }}
                                 </router-link>
-                                <span class="text-xs text-gray-600 dark:text-gray-400">ID: {{ data.id }}</span>
+                                <span class="text-xs text-gray-600 dark:text-gray-500">ID: {{ data.id }}</span>
                             </div>
                         </div>
                     </template>

@@ -92,7 +92,7 @@ onMounted(fetchExample);
                     <h1>{{ example.name }}</h1>
 
                     <div class="flex items-center gap-2 mt-2">
-                        <span class="text-xs font-bold uppercase text-gray-400">Slug:</span>
+                        <span class="text-xs font-bold uppercase text-gray-500">Slug:</span>
                         <span class="font-mono text-xs text-indigo-600 bg-gray-100 px-2 py-1 rounded">/{{ example.slug }}</span>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ onMounted(fetchExample);
                 <a-card class="p-8">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="pi pi-images text-gray-400"></i> Gallery
+                            <i class="pi pi-images text-gray-500"></i> Gallery
                         </h3>
                         <span class="text-xs text-gray-600">{{ example.images.length }} images</span>
                     </div>
@@ -246,14 +246,14 @@ onMounted(fetchExample);
                             class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors group"
                         >
                             <span class="text-sm font-semibold">{{ link.name }}</span>
-                            <i class="pi pi-external-link text-xs text-gray-400 group-hover:text-indigo-500"></i>
+                            <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
                         </a>
                     </div>
-                    <div v-else class="text-sm text-gray-400 italic">No external links.</div>
+                    <div v-else class="text-sm text-gray-500 italic">No external links.</div>
                 </a-card>
 
                 <a-card class="p-8">
-                    <h3 class="text-sm font-bold uppercase text-gray-400 flex items-center gap-2">
+                    <h3 class="text-sm font-bold uppercase text-gray-500 flex items-center gap-2">
                         <i class="pi pi-tags"></i> Tags
                     </h3>
 
@@ -266,7 +266,7 @@ onMounted(fetchExample);
                             rounded
                         />
                     </div>
-                    <div v-else class="text-sm text-gray-400 italic">No tags assigned.</div>
+                    <div v-else class="text-sm text-gray-500 italic">No tags assigned.</div>
                 </a-card>
             </div>
         </div>

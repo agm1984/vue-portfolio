@@ -37,6 +37,6 @@ const loadColor = computed(() => getLoadColor(serverLoadPercentage.value));
             :stroke-width="8"
         />
 
-        <p class="text-sm text-gray-400 mt-4">CPU Load Average (1 min)</p>
+        <p class="text-sm text-gray-500 mt-4">CPU Load Average (1 min)</p>
     </div>
 </template>

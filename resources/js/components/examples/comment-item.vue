@@ -99,7 +99,7 @@ const toggleDownvote = () => {
                     <h4 class="font-bold text-gray-900 dark:text-white text-sm md:text-base">
                         {{ comment.author.name }}
                     </h4>
-                    <span class="text-xs text-gray-600 dark:text-gray-400" :title="comment.created_at">
+                    <span class="text-xs text-gray-600 dark:text-gray-500" :title="comment.created_at">
                         {{ formatDate(comment.created_at) }}
                     </span>
                 </div>
@@ -130,7 +130,7 @@ const toggleDownvote = () => {
                             icon="pi pi-thumbs-up"
                             :class="[
                                 'transition-colors',
-                                userVote === 1 ? 'text-green-600!' : 'text-gray-400! hover:text-gray-600!'
+                                userVote === 1 ? 'text-green-600!' : 'text-gray-500! hover:text-gray-600!'
                             ]"
                             text
                             rounded
@@ -150,7 +150,7 @@ const toggleDownvote = () => {
                             type="button"
                             :class="[
                                 'transition-colors',
-                                userVote === -1 ? 'text-red-500!' : 'text-gray-400! hover:text-gray-600!'
+                                userVote === -1 ? 'text-red-500!' : 'text-gray-500! hover:text-gray-600!'
                             ]"
                             icon="pi pi-thumbs-down"
                             size="small"

@@ -252,7 +252,7 @@ const sendMessage = async () => {
 
                             <div class="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 mt-4">
                                 <div class="w-full sm:w-auto">
-                                    <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                                    <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-500 mb-1">
                                         <span>{{ verificationText }}</span>
                                     </label>
 

@@ -96,7 +96,7 @@ const handleSubmit = async () => {
                     <a-input-field input-id="fp-email" title="Email" required />
 
                     <IconField iconPosition="left">
-                        <InputIcon class="pi pi-envelope text-gray-400" />
+                        <InputIcon class="pi pi-envelope text-gray-500" />
                         <InputText
                             v-model="v$.email.$model"
                             id="fp-email"

@@ -161,7 +161,7 @@ const goBack = () => {
                                             class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-gray-600 transition-colors group"
                                         >
                                             <span class="font-semibold text-sm">{{ link.name }}</span>
-                                            <i class="pi pi-external-link text-xs text-gray-400 group-hover:text-indigo-500"></i>
+                                            <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
                                         </a>
                                     </div>
                                 </div>

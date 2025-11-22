@@ -104,7 +104,7 @@ const saveComment = async () => {
 
                 <div class="flex items-center justify-between mt-2">
                     <div></div>
-                    <!-- <span class="text-xs text-gray-400">Markdown supported</span> -->
+                    <!-- <span class="text-xs text-gray-500">Markdown supported</span> -->
                     <Button
                         type="submit"
                         :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-send'"

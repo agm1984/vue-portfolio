@@ -103,7 +103,7 @@ const login = async () => {
                     <a-input-field input-id="login-email" title="Email" required />
 
                     <IconField iconPosition="left">
-                        <InputIcon class="pi pi-envelope text-gray-400" />
+                        <InputIcon class="pi pi-envelope text-gray-500" />
                         <InputText
                             v-model="v$.email.$model"
                             id="login-email"
