@@ -168,7 +168,7 @@ const removeVoteFromComment = async ({ commentId }) => {
                     <i class="pi pi-search" style="font-size: 24px;"></i>
                 </div>
 
-                <p class="text-gray-600 mt-2">No comments yet. Be the first to share your thoughts!</p>
+                <p class="italic text-gray-600 mt-2">No comments yet. Be the first to share your thoughts!</p>
             </a-card>
         </div>
     </div>

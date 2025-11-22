@@ -146,7 +146,7 @@ const goBack = () => {
                 <aside class="lg:col-span-4 space-y-8">
                     <div class="sticky top-[99px] space-y-8">
                         <a-card class="p-8">
-                            <h4>Details</h4>
+                            <h3>Details</h3>
 
                             <div class="space-y-8 mt-2">
                                 <div v-if="example.links.length > 0">
