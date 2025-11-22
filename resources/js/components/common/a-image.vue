@@ -1,12 +1,25 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed, useAttrs } from 'vue';
 
-defineOptions({ name: 'AppImg', inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
-    src: { type: String, required: true },
-    placeholder: String,
-    background: String,
+    src: {
+        type: String,
+        required: true,
+    },
+
+    placeholder: {
+        type: String,
+        required: false,
+        default: null,
+    },
+
+    background: {
+        type: String,
+        required: false,
+        default: '#ffffff',
+    },
 });
 
 const attrs = useAttrs();
@@ -42,11 +55,15 @@ onMounted(() => {
         }
     });
 
-    if (rootRef.value) observer.observe(rootRef.value);
+    if (rootRef.value) {
+        observer.observe(rootRef.value);
+    }
 });
 
 onBeforeUnmount(() => {
-    if (observer) observer.disconnect();
+    if (observer) {
+        observer.disconnect();
+    }
 });
 </script>
 
@@ -94,7 +111,7 @@ onBeforeUnmount(() => {
 
     .app-img__placeholder {
         position: absolute;
-        inset: 0; /* shorthand for top/right/bottom/left: 0 */
+        inset: 0;
         z-index: 1;
     }
 
@@ -116,7 +133,6 @@ onBeforeUnmount(() => {
         opacity: 1;
     }
 
-    /* Vue Transition for removing the placeholder smoothly */
     .fade-leave-active {
         transition: opacity 500ms ease;
     }
