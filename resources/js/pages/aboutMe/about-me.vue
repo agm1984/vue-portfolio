@@ -105,7 +105,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                                 Give me a <span class="text-indigo-600 font-semibold">map</span>, <span class="text-indigo-600 font-semibold">reduce</span>, 
                                 or <span class="text-indigo-600 font-semibold">filter</span> over a for-loop any day.
                             </p>
-                            <p class="text-gray-500 italic border-l-2 border-gray-300 pl-3 mt-4">
+                            <p class="text-gray-600 italic border-l-2 border-gray-300 pl-3 mt-4">
                                 // Push vs Pull<br>
                                 Pushing is doing & triggering.<br>
                                 Pulling is listening & acting.
@@ -164,7 +164,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
         <section class="mt-8">
             <div class="text-center">
                 <h2>My Timeline</h2>
-                <p class="text-gray-500 mt-2">A history of jobs</p>
+                <p class="text-gray-600 mt-2">A history of jobs</p>
             </div>
 
             <interactive-timeline></interactive-timeline>

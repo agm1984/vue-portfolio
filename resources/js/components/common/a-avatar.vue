@@ -24,6 +24,7 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
     <div
         :class="[containerStyles, {
             'w-8 h-8 min-w-8 min-h-8 max-w-8 max-h-8': size === 32,
+            'w-12 h-12 min-w-12 min-h-12 max-w-12 max-h-12': size === 48,
             'w-16 h-16 min-w-16 min-h-16 max-w-16 max-h-16': size === 64,
             'w-32 h-32 min-w-32 min-h-32 max-w-32 max-h-32': size === 128,
             'bg-grey-400 border': !hasImage,
@@ -33,6 +34,7 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
             v-if="hasImage"
             :class="['bg-cover rounded-full', {
                 'w-8 h-8 min-w-8 min-h-8 max-w-8 max-h-8': size === 32,
+                'w-12 h-12 min-w-12 min-h-12 max-w-12 max-h-12': size === 48,
                 'w-16 h-16 min-w-16 min-h-16 max-w-16 max-h-16': size === 64,
                 'w-32 h-32 min-w-32 min-h-32 max-w-32 max-h-32': size === 128,
             }]"

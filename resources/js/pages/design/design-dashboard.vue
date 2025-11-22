@@ -66,7 +66,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
             <template v-if="isDashboard">
                 <div class="mb-8">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">System Overview</h2>
-                    <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">
                         A centralized registry of UI components, design tokens, and usage guidelines.
                     </p>
                 </div>
@@ -89,7 +89,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
                                         <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-pink-600 transition-colors">
                                             {{ item.label }}
                                         </h3>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 leading-relaxed">
                                             {{ item.description }}
                                         </p>
                                     </div>

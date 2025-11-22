@@ -135,7 +135,7 @@ const toggleSort = () => {
                             <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-indigo-600 transition-colors">
                                 {{ event.title }}
                             </h3>
-                            <span class="text-xs font-bold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
+                            <span class="text-xs font-bold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
                                 {{ event.year }}
                             </span>
                         </div>
@@ -152,7 +152,7 @@ const toggleSort = () => {
             </TransitionGroup>
 
             <div v-if="displayEvents.length === 0" class="pl-8">
-                <p class="text-gray-500 italic">No events found for this category.</p>
+                <p class="text-gray-600 italic">No events found for this category.</p>
             </div>
         </div>
     </div>

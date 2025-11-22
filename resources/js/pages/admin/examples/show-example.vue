@@ -158,7 +158,7 @@ onMounted(fetchExample);
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
                     <div class="space-y-6">
                         <div>
-                            <h3 class="text-sm font-bold uppercase text-gray-500 mb-2">Summary</h3>
+                            <h3 class="text-sm font-bold uppercase text-gray-600 mb-2">Summary</h3>
                             <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">{{ example.summary }}</p>
                         </div>
 
@@ -174,7 +174,7 @@ onMounted(fetchExample);
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                             <i class="pi pi-images text-gray-400"></i> Gallery
                         </h3>
-                        <span class="text-xs text-gray-500">{{ example.images.length }} images</span>
+                        <span class="text-xs text-gray-600">{{ example.images.length }} images</span>
                     </div>
 
                     <div v-if="example.images.length" class="grid grid-cols-1 sm:grid-cols-2 gap-4">

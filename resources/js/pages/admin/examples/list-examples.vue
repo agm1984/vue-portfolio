@@ -61,7 +61,7 @@ onMounted(fetchAllExamples);
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Examples</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-1">Manage your portfolio projects.</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your portfolio projects.</p>
             </div>
 
             <div v-if="auth.isAdmin">
@@ -109,7 +109,7 @@ onMounted(fetchAllExamples);
                 <template #empty>
                     <div class="text-center py-8">
                         <i class="pi pi-briefcase text-4xl text-gray-300 mb-3"></i>
-                        <p class="text-gray-500">No examples found.</p>
+                        <p class="text-gray-600">No examples found.</p>
                     </div>
                 </template>
 
@@ -157,13 +157,13 @@ onMounted(fetchAllExamples);
 
                 <Column field="created_at_diff" header="Created" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-500 whitespace-nowrap">{{ data.created_at_diff }}</span>
+                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.created_at_diff }}</span>
                     </template>
                 </Column>
 
                 <Column field="updated_at_diff" header="Updated" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-500 whitespace-nowrap">{{ data.updated_at_diff }}</span>
+                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.updated_at_diff }}</span>
                     </template>
                 </Column>
 

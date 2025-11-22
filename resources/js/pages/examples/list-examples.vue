@@ -99,7 +99,7 @@ const handleSelectCategory = async (categorySlug) => {
         <div class="flex flex-col">
             <h1>Examples</h1>
 
-            <p class="text-gray-500 mt-2">
+            <p class="text-gray-600 mt-2">
                 A collection of full projects, resources, experiments, and learning.
             </p>
 
@@ -162,9 +162,9 @@ const handleSelectCategory = async (categorySlug) => {
                             example: example.slug,
                         },
                     }"
-                    class="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
+                    class="group flex flex-col bg-white rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
                 >
-                    <div class="relative aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
+                    <div class="relative aspect-video w-full overflow-hidden bg-gray-100">
                         <a-image
                             v-if="example.images?.length > 0"
                             :src="`/storage/examples/${example.slug}/${example.images?.[0]?.filename}`"
@@ -191,7 +191,7 @@ const handleSelectCategory = async (categorySlug) => {
                     <div class="p-8 flex flex-col flex-1">
                         <h3 class="group-hover:text-indigo-600! transition-colors">{{ example.name }}</h3>
 
-                        <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mt-2">
+                        <p class="text-gray-600 text-sm line-clamp-2 mt-2">
                             See project details, resources, and live demos.
                         </p>
 
@@ -204,18 +204,18 @@ const handleSelectCategory = async (categorySlug) => {
             </TransitionGroup>
         </div>
 
-        <a-card v-else-if="isLoaded && !hasExamples" class="flex flex-col items-center justify-center p-8 mt-8">
-            <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mb-4">
+        <a-card v-else-if="isLoaded && !hasExamples" class="flex flex-col items-center justify-center p-8 mt-4">
+            <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
                 <i class="pi pi-search" style="font-size: 24px;"></i>
             </div>
 
             <h3>No examples found</h3>
 
-            <p v-if="searchTerms" class="max-w-xl text-center text-gray-500 wrap-break-word mt-2">
-                We couldn't find any examples matching <strong>{{ searchTerms }}</strong> in the <strong>{{ activeCategory }}</strong> category.
+            <p v-if="searchTerms" class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
+                We couldn't find any examples matching <strong>{{ searchTerms }}</strong> in the <strong class="capitalize font-semibold">{{ activeCategory }}</strong> category.
             </p>
-            <p v-else class="max-w-xl text-center text-gray-500 wrap-break-word mt-2">
-                We couldn't find any examples in the <strong>{{ activeCategory }}</strong> category.
+            <p v-else class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
+                We couldn't find any examples in the <strong class="capitalize font-semibold">{{ activeCategory }}</strong> category.
             </p>
 
             <Button

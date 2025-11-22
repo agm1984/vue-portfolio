@@ -63,7 +63,7 @@ const handleSubmit = async () => {
 
                 <h2 class="mt-4">Check your email</h2>
 
-                <p class="text-gray-500 mt-2">
+                <p class="text-gray-600 mt-2">
                     If an account exists for <span class="font-semibold">{{ form.email }}</span>,
                     you will receive password reset instructions shortly.
                 </p>
@@ -87,7 +87,7 @@ const handleSubmit = async () => {
 
                     <h1 class="mt-4">Forgot Password?</h1>
 
-                    <p class="text-gray-500 mt-2">
+                    <p class="text-gray-600 mt-2">
                         No worries, I will send you reset instructions.
                     </p>
                 </div>

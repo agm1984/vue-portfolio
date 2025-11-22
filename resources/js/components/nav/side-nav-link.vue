@@ -23,7 +23,7 @@ const currentRoute = useRoute();
         ]"
     >
         <i :class="[item.icon, 'mr-3 text-lg transition-colors',
-            currentRoute.name === item.route ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 group-hover:text-gray-500']">
+            currentRoute.name === item.route ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 group-hover:text-gray-600']">
         </i>
         {{ item.label }}
     </router-link>

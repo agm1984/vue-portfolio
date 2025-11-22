@@ -44,7 +44,7 @@ const statCards = computed(() => [
                 <i :class="['text-2xl', stat.icon]"></i>
             </div>
             <div>
-                <p class="text-sm text-gray-500 font-medium uppercase tracking-wide">{{ stat.label }}</p>
+                <p class="text-sm text-gray-600 font-medium uppercase tracking-wide">{{ stat.label }}</p>
                 <p class="text-3xl font-bold text-gray-800 dark:text-white mt-1">{{ stat.value }}</p>
             </div>
         </div>

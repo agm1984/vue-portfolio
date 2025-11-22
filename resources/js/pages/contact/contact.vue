@@ -120,7 +120,7 @@ const sendMessage = async () => {
                 <div>
                     <h1>Contact Me</h1>
 
-                    <p class="text-gray-500 mt-2">
+                    <p class="text-gray-600 mt-2">
                         Have a project in mind? Send a message here, or reach out directly via email.
                     </p>
                 </div>

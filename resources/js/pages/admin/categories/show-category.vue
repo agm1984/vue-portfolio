@@ -91,7 +91,7 @@ onMounted(fetchCategory);
                 />
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Category Details</h1>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Manage Example classification.</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Manage Example classification.</p>
                 </div>
             </div>
 
@@ -151,7 +151,7 @@ onMounted(fetchCategory);
                     </div>
 
                     <div class="pt-6 mt-auto border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Database ID</span>
+                        <span class="text-gray-600">Database ID</span>
                         <span class="font-mono font-bold text-gray-700">#{{ category.id }}</span>
                     </div>
                 </div>
@@ -176,13 +176,13 @@ onMounted(fetchCategory);
                     <div class="flex-1">
                          <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Created</label>
                          <p class="text-gray-800 dark:text-white font-medium">{{ category.created_at_nice }}</p>
-                         <p class="text-xs text-gray-500 mt-1">{{ category.created_at_diff }}</p>
+                         <p class="text-xs text-gray-600 mt-1">{{ category.created_at_diff }}</p>
                     </div>
                     <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block"></div>
                     <div class="flex-1">
                          <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Last Updated</label>
                          <p class="text-gray-800 dark:text-white font-medium">{{ category.updated_at_nice }}</p>
-                         <p class="text-xs text-gray-500 mt-1">{{ category.updated_at_diff }}</p>
+                         <p class="text-xs text-gray-600 mt-1">{{ category.updated_at_diff }}</p>
                     </div>
                     <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block"></div>
                      <div class="flex-1">
@@ -239,7 +239,7 @@ onMounted(fetchCategory);
                                 <h4 class="font-bold text-gray-800 dark:text-white group-hover:text-indigo-600 transition-colors truncate">
                                     {{ example.name }}
                                 </h4>
-                                <p class="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                                <p class="text-xs text-gray-600 mt-1 flex items-center gap-1">
                                     View <i class="pi pi-arrow-right text-[10px]"></i>
                                 </p>
                             </div>

@@ -14,7 +14,7 @@ const isGrowthPositive = computed(() => growthRate.value >= 0);
 
 <template>
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
-        <p class="text-gray-500 font-medium mb-4">Monthly Growth</p>
+        <p class="text-gray-600 font-medium mb-4">Monthly Growth</p>
 
         <div class="flex items-center gap-4">
             <span class="text-4xl font-bold" :class="isGrowthPositive ? 'text-green-500' : 'text-red-500'">

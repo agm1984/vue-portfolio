@@ -1,5 +1,6 @@
 <script setup>
 import { useHead } from '@unhead/vue';
+import Toast from 'primevue/toast';
 
 useHead({
     titleTemplate: title => `${title} | Adam Mackintosh's Portfolio`,
@@ -12,4 +13,6 @@ useHead({
         <router-view></router-view>
         <app-footer />
     </div>
+
+    <Toast />
 </template>

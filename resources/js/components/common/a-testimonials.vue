@@ -142,7 +142,7 @@ watch(
                                 <p class="font-semibold">
                                     {{ testimonial.name }}
                                 </p>
-                                <p class="text-xs text-gray-500 mt-1">
+                                <p class="text-xs text-gray-600 mt-1">
                                     <span v-if="testimonial.role">{{ testimonial.role }}</span>
                                     <span v-if="testimonial.role && testimonial.company"> · </span>
                                     <span v-if="testimonial.company">{{ testimonial.company }}</span>

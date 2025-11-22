@@ -82,7 +82,7 @@ const register = async () => {
 
                 <h1 class="mt-4">Register</h1>
 
-                <p class="text-gray-500 mt-2">
+                <p class="text-gray-600 mt-2">
                     Join me for no raisin.
                 </p>
             </div>
@@ -98,7 +98,7 @@ const register = async () => {
                         <div class="w-full border-t border-gray-300"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-white text-gray-500 px-4">or</span>
+                        <span class="bg-white text-gray-600 px-4">or</span>
                     </div>
                 </div>
 
@@ -144,7 +144,7 @@ const register = async () => {
                             name="Email"
                         />
 
-                        <div class="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 rounded-lg p-2 mt-2">
+                        <div class="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 rounded-lg p-2 mt-2">
                             <i class="pi pi-eye-slash text-indigo-500"></i>
                             <span>Your email is private and only visible to admins.</span>
                         </div>

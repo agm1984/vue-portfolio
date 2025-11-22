@@ -51,7 +51,7 @@ const navItems = computed(() => [
             <template v-if="isDashboard">
                 <div class="mb-8">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
-                    <p class="text-gray-500 dark:text-gray-400 mt-1">Here's what is happening with my portfolio.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Here's what is happening with my portfolio.</p>
                 </div>
 
                 <dashboard-counts :metrics="metrics"></dashboard-counts>

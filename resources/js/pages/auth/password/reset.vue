@@ -79,7 +79,7 @@ const resetPassword = async () => {
 
                 <h1 class="mt-4">Set New Password</h1>
 
-                <p class="text-gray-500 mt-2">
+                <p class="text-gray-600 mt-2">
                     Please choose a strong password to secure your account.
                 </p>
             </div>

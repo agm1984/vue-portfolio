@@ -11,7 +11,7 @@ defineProps({
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 relative overflow-hidden">
             <div class="flex justify-between items-start">
             <div>
-                <p class="text-gray-500 font-medium mb-1">Signups Today</p>
+                <p class="text-gray-600 font-medium mb-1">Signups Today</p>
                 <span class="text-4xl font-bold text-gray-800 dark:text-white">
                     {{ metrics.activity.users_today }}
                 </span>

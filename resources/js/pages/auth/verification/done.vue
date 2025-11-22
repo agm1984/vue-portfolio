@@ -65,7 +65,7 @@ const goToLogin = async () => {
             <div v-else>
                 <p>{{ message }}</p>
 
-                <p v-if="email" class="text-sm text-gray-500 mt-4">
+                <p v-if="email" class="text-sm text-gray-600 mt-4">
                     <strong>{{ email }}</strong>
                 </p>
 

@@ -1,15 +1,15 @@
 <script setup>
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed } from 'vue';
 import Button from 'primevue/button';
 import Textarea from 'primevue/textarea';
-import Avatar from 'primevue/avatar'; // Using PrimeVue Avatar for consistency
 
 const props = defineProps({
     user: {
         type: Object,
-        required: false, // Made optional so guests don't break it
+        required: false,
         default: () => ({ id: null }),
     },
+
     comment: {
         type: Object,
         required: true,
@@ -23,15 +23,11 @@ const emit = defineEmits([
     'comment-unvoted',
 ]);
 
-// --- STATE ---
 const isEditing = ref(false);
 const body = ref(props.comment.body);
-
-// --- COMPUTED ---
 const isEditable = computed(() => props.user && props.user.id === props.comment.author.id);
-const userVote = computed(() => props.comment.user_vote); // 1, -1, or null
+const userVote = computed(() => props.comment.user_vote);
 
-// --- PURE HELPERS ---
 const formatDate = (dateString) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -43,21 +39,21 @@ const formatDate = (dateString) => {
     });
 };
 
-const getInitials = (name) => name ? name.substring(0, 1).toUpperCase() : 'U';
-
-// --- ACTIONS ---
 const startEditing = () => {
     body.value = props.comment.body;
+
     isEditing.value = true;
 };
 
 const cancelEdit = () => {
     isEditing.value = false;
+
     body.value = props.comment.body;
 };
 
 const save = () => {
     isEditing.value = false;
+
     emit('comment-updated', {
         id: props.comment.id,
         body: body.value,
@@ -65,6 +61,7 @@ const save = () => {
 };
 
 const deleteComment = () => {
+    // todo: use primevue confirm dialog
     if(confirm("Delete this comment?")) {
         emit('comment-deleted', { id: props.comment.id });
     }
@@ -88,25 +85,21 @@ const toggleDownvote = () => {
 </script>
 
 <template>
-    <div class="flex gap-4 p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm transition-all hover:shadow-md">
-        
+    <a-card class="flex gap-4 p-6 transition-all">
         <div class="shrink-0">
-            <Avatar 
-                :label="getInitials(comment.author.name)" 
-                class="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-300 font-bold"
-                size="large"
-                shape="circle"
-            />
+            <a-avatar
+                :user="comment.author"
+                :size="48"
+            ></a-avatar>
         </div>
 
         <div class="flex-1 min-w-0">
-            
             <div class="flex items-start justify-between mb-2">
                 <div>
                     <h4 class="font-bold text-gray-900 dark:text-white text-sm md:text-base">
                         {{ comment.author.name }}
                     </h4>
-                    <span class="text-xs text-gray-500 dark:text-gray-400" :title="comment.created_at">
+                    <span class="text-xs text-gray-600 dark:text-gray-400" :title="comment.created_at">
                         {{ formatDate(comment.created_at) }}
                     </span>
                 </div>
@@ -130,79 +123,86 @@ const toggleDownvote = () => {
                     {{ comment.body }}
                 </div>
 
-                <div class="flex items-center gap-4 mt-4 pt-3 border-t border-gray-50 dark:border-gray-700/50">
-                    <div class="flex items-center bg-gray-50 dark:bg-gray-700/50 rounded-lg p-1">
+                <div class="flex items-center gap-4 mt-4 pt-3 border-t">
+                    <div class="flex items-center bg-gray-50 rounded-lg p-1">
                         <Button
+                            type="button"
                             icon="pi pi-thumbs-up"
                             :class="[
-                                'transition-colors', 
-                                userVote === 1 ? '!text-green-600' : '!text-gray-400 hover:!text-gray-600 dark:hover:!text-gray-200'
+                                'transition-colors',
+                                userVote === 1 ? 'text-green-600!' : 'text-gray-400! hover:text-gray-600!'
                             ]"
                             text
                             rounded
                             size="small"
                             @click="toggleUpvote"
                         />
-                        
-                        <span class="text-xs font-bold px-2 min-w-[1.5rem] text-center" 
-                              :class="{'text-green-600': (comment.score > 0), 'text-red-500': (comment.score < 0), 'text-gray-500': (comment.score === 0)}">
-                            {{ comment.score ?? 0 }}
-                        </span>
+
+                        <span
+                            :class="['text-xs font-bold px-2 min-w-6 text-center', {
+                                'text-green-600': (comment.score > 0),
+                                'text-red-500': (comment.score < 0),
+                                'text-gray-600': (comment.score === 0),
+                            }]"
+                        >{{ comment.score ?? 0 }}</span>
 
                         <Button
-                            icon="pi pi-thumbs-down"
+                            type="button"
                             :class="[
-                                'transition-colors', 
-                                userVote === -1 ? '!text-red-500' : '!text-gray-400 hover:!text-gray-600 dark:hover:!text-gray-200'
+                                'transition-colors',
+                                userVote === -1 ? 'text-red-500!' : 'text-gray-400! hover:text-gray-600!'
                             ]"
+                            icon="pi pi-thumbs-down"
+                            size="small"
                             text
                             rounded
-                            size="small"
                             @click="toggleDownvote"
                         />
                     </div>
-                    
-                    </div>
+                </div>
             </div>
 
             <div v-else class="animate-fade-in">
                 <Textarea
                     v-model="body"
-                    class="w-full mb-3"
+                    class="w-full"
                     rows="4"
                     autoResize
                 />
-                
-                <div class="flex items-center justify-between">
+
+                <div class="flex items-center justify-between gap-4 mt-2">
                     <Button
-                        label="Delete"
-                        icon="pi pi-trash"
+                        type="button"
                         severity="danger"
-                        text
+                        icon="pi pi-trash"
+                        label="Delete"
                         size="small"
+                        text
                         @click="deleteComment"
                     />
 
                     <div class="flex gap-2">
                         <Button
-                            label="Cancel"
+                            type="button"
                             severity="secondary"
-                            text
+                            label="Cancel"
                             size="small"
+                            text
                             @click="cancelEdit"
                         />
+
                         <Button
-                            label="Update"
+                            type="button"
                             icon="pi pi-check"
+                            label="Update"
                             size="small"
                             @click="save"
                         />
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
+    </a-card>
 </template>
 
 <style scoped>

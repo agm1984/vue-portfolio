@@ -79,7 +79,7 @@ onMounted(fetchAllUsers);
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Users</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-1">Manage system access and roles.</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Manage system access and roles.</p>
             </div>
             <div class="flex gap-2">
                 <Button 
@@ -124,7 +124,7 @@ onMounted(fetchAllUsers);
 
                 <template #empty>
                     <div class="text-center py-8">
-                        <p class="text-gray-500">No users found matching your criteria.</p>
+                        <p class="text-gray-600">No users found matching your criteria.</p>
                     </div>
                 </template>
 
@@ -139,7 +139,7 @@ onMounted(fetchAllUsers);
                                 >
                                     {{ data.name }}
                                 </router-link>
-                                <span class="text-xs text-gray-500 dark:text-gray-400">ID: {{ data.id }}</span>
+                                <span class="text-xs text-gray-600 dark:text-gray-400">ID: {{ data.id }}</span>
                             </div>
                         </div>
                     </template>
@@ -179,7 +179,7 @@ onMounted(fetchAllUsers);
 
                 <Column field="created_at_diff" header="Joined" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-500 whitespace-nowrap">{{ data.created_at_diff }}</span>
+                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.created_at_diff }}</span>
                     </template>
                 </Column>
 

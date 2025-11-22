@@ -67,7 +67,7 @@ onMounted(fetchUser);
                 />
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">User Profile</h1>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Manage account details and permissions.</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Manage account details and permissions.</p>
                 </div>
             </div>
             
@@ -92,7 +92,7 @@ onMounted(fetchUser);
                     </div>
 
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ user.name }}</h2>
-                    <p class="text-gray-500 dark:text-gray-400 break-all">{{ user.email }}</p>
+                    <p class="text-gray-600 dark:text-gray-400 break-all">{{ user.email }}</p>
 
                     <div class="mt-6 w-full">
                         <Tag 
@@ -104,7 +104,7 @@ onMounted(fetchUser);
                     </div>
 
                     <div class="mt-6 w-full pt-6 border-t border-gray-100 dark:border-gray-700 flex justify-between text-sm">
-                        <span class="text-gray-500">User ID</span>
+                        <span class="text-gray-600">User ID</span>
                         <span class="font-mono font-bold text-gray-700 dark:text-gray-300">#{{ user.id }}</span>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ onMounted(fetchUser);
                             <div class="flex-1">
                                 <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Member Since</label>
                                 <p class="text-gray-800 dark:text-white font-medium">{{ user.created_at_nice }}</p>
-                                <p class="text-xs text-gray-500 mt-1">{{ user.created_at_diff }}</p>
+                                <p class="text-xs text-gray-600 mt-1">{{ user.created_at_diff }}</p>
                             </div>
                             
                             <div class="hidden md:block w-px bg-gray-100 dark:bg-gray-700"></div>
@@ -173,7 +173,7 @@ onMounted(fetchUser);
                             <div class="flex-1">
                                 <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Last Profile Update</label>
                                 <p class="text-gray-800 dark:text-white font-medium">{{ user.updated_at_nice }}</p>
-                                <p class="text-xs text-gray-500 mt-1">{{ user.updated_at_diff }}</p>
+                                <p class="text-xs text-gray-600 mt-1">{{ user.updated_at_diff }}</p>
                             </div>
                         </div>
                     </div>

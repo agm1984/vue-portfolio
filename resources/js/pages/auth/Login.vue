@@ -79,7 +79,7 @@ const login = async () => {
 
                 <h1 class="mt-4">Login</h1>
 
-                <p class="text-gray-500 mt-2">
+                <p class="text-gray-600 mt-2">
                     Use Oauth or your email and password.
                 </p>
             </div>
@@ -95,7 +95,7 @@ const login = async () => {
                         <div class="w-full border-t border-gray-300"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-white text-gray-500 px-4">or</span>
+                        <span class="bg-white text-gray-600 px-4">or</span>
                     </div>
                 </div>
 
