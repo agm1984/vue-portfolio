@@ -31,40 +31,40 @@ const handleLogout = async () => {
             <div class="hidden md:flex h-full items-center gap-4">
                 <router-link
                     :to="{ name: 'about' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                    active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     About Me
                 </router-link>
 
                 <router-link
                     :to="{ name: 'public.examples' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                    active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     Examples
                 </router-link>
 
                 <router-link
                     :to="{ name: 'admin' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                    active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     Admin
                 </router-link>
 
                 <router-link
                     :to="{ name: 'design' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                    active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     Design System
                 </router-link>
 
                 <router-link
                     :to="{ name: 'contact' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                    active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                 >
                     Contact Me
                 </router-link>
@@ -76,16 +76,16 @@ const handleLogout = async () => {
                 <template v-else>
                     <router-link
                         :to="{ name: 'register' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                        active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                     >
                         Register
                     </router-link>
 
                     <router-link
                         :to="{ name: 'login' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-gray-900"
-                        active-class="border-b-2 border-gray-900 mt-0.5 text-gray-900"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
+                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
                     >
                         Login
                     </router-link>
