@@ -38,7 +38,7 @@ onMounted(preloadHotPath);
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8 text-center lg:text-left z-10">
                     <div>
-                        <p class="text-sm font-semibold tracking-widest text-indigo-600 uppercase">The Portfolio Of</p>
+                        <h3 class="text-indigo-600!">The Portfolio Of</h3>
                         <h1 class="text-5xl md:text-7xl! font-aroly text-gray-900 mt-4">
                             Adam<br />
                             <span class="text-indigo-600">Mackintosh</span>

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useToast } from 'primevue/usetoast';
 import router from '~/router';
+import { useToast } from '~/composables/useToast';
 
 axios.defaults.withCredentials = true;          // send cookies
 axios.defaults.xsrfCookieName = 'XSRF-TOKEN';   // Laravel's cookie
@@ -45,7 +45,7 @@ axios.interceptors.response.use(response => response, (error) => {
         }
 
         // @TODO: needs more testing
-        toast.error('Page expired. Refresh the page and try again.');
+        toast.add({ severity: 'error', summary: 'Page Expired', detail: 'Refresh the page and try again.', life: 5000 });
     }
 
     if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
