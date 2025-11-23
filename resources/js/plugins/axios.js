@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { toast } from 'vue3-toastify';
+import { useToast } from 'primevue/usetoast';
 import router from '~/router';
 
 axios.defaults.withCredentials = true;          // send cookies
@@ -11,6 +11,8 @@ axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN'; // header Laravel expects
  * check if client-side action is needed.
  */
 axios.interceptors.response.use(response => response, (error) => {
+    const toast = useToast();
+
     if (!error.config) {
         return Promise.reject(error);
     }
@@ -19,15 +21,15 @@ axios.interceptors.response.use(response => response, (error) => {
 
     // for debugging:
     console.log('ERROR RESPONSE', error.response);
-    toast.error(`Error ${status}: ${data.message || 'An error occurred.'}`);
+    toast.add({ severity: 'error', summary: `Error ${status}`, detail: data.message || 'An error occurred.', life: 5000 });
 
     if (status >= 500) {
-        toast.error('Oops... Something went wrong! Please try again.');
-        }
+        toast.add({ severity: 'error', summary: 'Server Error', detail: 'Oops... Something went wrong! Please try again.', life: 5000 });
+    }
 
     if (status === 429) {
         // @TODO: needs more testing
-        toast.error('Slow down... You\'ve been throttled.');
+        toast.add({ severity: 'warn', summary: 'Too Many Requests', detail: 'Slow down... You\'ve been throttled.', life: 5000 });
     }
 
     if (status === 422) {

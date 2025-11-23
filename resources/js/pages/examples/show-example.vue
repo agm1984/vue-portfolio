@@ -16,6 +16,10 @@ const IS_LOADED = 1;
 
 const state = ref(IS_LOADING);
 const example = ref({
+    created_at_nice: '',
+    updated_at_nice: '',
+    created_at_diff: '',
+    updated_at_diff: '',
     status: null,
     category: { name: '', slug: '' },
     name: '',
@@ -25,7 +29,6 @@ const example = ref({
     images: [],
     links: [],
     tags: [],
-    created_at_human: '', // todo: add dates
 });
 
 const isLoaded = computed(() => state.value === IS_LOADED);
@@ -83,20 +86,29 @@ const goBack = () => {
                     @click="goBack"
                 />
 
-                <div class="flex flex-col gap-4 mt-4">
+                <div class="flex flex-col gap-2 mt-4">
                     <h1>{{ example.name }}</h1>
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-4">
                         <Tag
-                            :value="example.category.name"
-                            severity="info"
                             class="uppercase tracking-widest text-xs! font-semibold bg-indigo-50! text-indigo-600! border border-indigo-100"
+                            severity="info"
+                            :value="example.category.name"
                         />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <span class="text-sm text-gray-600">Added: {{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
+                        <span
+                            v-if="example.created_at_nice !== example.updated_at_nice"
+                            class="text-sm text-gray-600">Last updated: {{ example.updated_at_nice }} ({{ example.updated_at_diff }})
+                        </span>
+
                     </div>
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
                 <main class="lg:col-span-8 flex flex-col gap-8">
                     <section class="prose max-w-none text-lg text-gray-600">
                         <p>{{ example.summary }}</p>

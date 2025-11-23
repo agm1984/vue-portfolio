@@ -1,7 +1,8 @@
+import { useToast } from 'primevue/usetoast';
 import { useAuthStore } from '~/store/auth';
-import { toast } from 'vue3-toastify';
 
 export async function metaAuthGuard(to, from, next) {
+    const toast = useToast();
     const auth = useAuthStore();
 
     if (!auth.isInitialized) {
@@ -24,7 +25,7 @@ export async function metaAuthGuard(to, from, next) {
         const hasRole = to.meta.roles.some(r => auth.user.roles_list.includes(r));
 
         if (!hasRole) {
-            toast.warning('Permission denied');
+            toast.add({ severity: 'warn', summary: 'Permission denied', detail: 'You do not have the required permissions to access this page.', life: 5000 });
             return next({ name: '403' });
         }
     }
