@@ -75,14 +75,7 @@ const handleResendVerificationEmail = async () => {
 
 <template>
     <form class="mt-4" @submit.prevent="handleSubmit">
-        <div v-if="auth.user.email_verified_at" class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700">
-            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
-                <i class="pi pi-verified" style="font-size: 12px;"></i>
-            </span>
-            <span>Email verified</span>
-        </div>
-
-        <Message v-else severity="info">
+        <Message v-if="!auth.user.email_verified_at" severity="info">
             <span>Your email isn't verified yet.</span>
             <Button
                 type="button"
@@ -119,14 +112,23 @@ const handleResendVerificationEmail = async () => {
 
         <a-input-field class="mt-4" input-id="profile-email" title="Email" required />
 
-        <InputText
-            v-model="v$.email.$model"
-            id="profile-email"
-            :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
-            autocomplete="email"
-            placeholder=""
-            disabled
-        />
+        <div class="flex items-center gap-2">
+            <InputText
+                v-model="v$.email.$model"
+                id="profile-email"
+                :class="['w-full', { 'p-invalid': v$.email.$invalid && submitted }]"
+                autocomplete="email"
+                placeholder=""
+                disabled
+            />
+
+            <div v-if="auth.user.email_verified_at" class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700 whitespace-nowrap">
+                <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
+                    <i class="pi pi-verified" style="font-size: 12px;"></i>
+                </span>
+                <span>Verified</span>
+            </div>
+        </div>
 
         <a-field-errors
             v-if="v$.email.$error && submitted"
