@@ -42,13 +42,12 @@ const messageExamples = [
 </script>
 
 <template>
-    <div class="w-full flex flex-col gap-8">
-        <div class="mb-4">
-            <h2>Feedback & Alerts</h2>
-            <p class="text-gray-600 mt-2">
-                Components used to communicate status, errors, and successful actions to the user.
-            </p>
-        </div>
+    <div class="w-full flex flex-col">
+        <h2>Feedback & Alerts</h2>
+
+        <p class="text-gray-600 mt-2">
+            Components used to communicate status, errors, and successful actions to the user.
+        </p>
 
         <a-card class="p-8 mt-4">
             <h3>Toast Notifications</h3>
@@ -95,7 +94,7 @@ const messageExamples = [
             </div>
         </a-card>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <a-card class="h-full p-8">
                 <h3>Inline Alerts</h3>
 

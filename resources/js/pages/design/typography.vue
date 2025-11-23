@@ -38,24 +38,22 @@ const copyClass = async (text) => {
 </script>
 
 <template>
-    <div class="w-full flex flex-col gap-8 text-gray-900">
-        <div class="flex flex-col gap-6">
-            <div>
-                <h2 class="text-3xl font-bold">Typography</h2>
-                <p class="text-gray-600 mt-2">
-                    The system uses <a href="https://fonts.google.com/specimen/Lato" target="_blank" class="text-indigo-500 hover:underline font-bold">Lato</a> as the primary typeface for optimal readability and modern aesthetics.
-                </p>
+    <div class="w-full flex flex-col">
+        <h2 class="text-3xl font-bold">Typography</h2>
+
+        <p class="text-gray-600 mt-2">
+            The system uses <a href="https://fonts.google.com/specimen/Lato" target="_blank" class="text-indigo-500 hover:underline font-bold">Lato</a> as the primary typeface for optimal readability and modern aesthetics.
+        </p>
+
+        <a-card class="p-8 mt-4">
+            <div class="flex flex-col">
+                <h6>Type Tester</h6>
+                <InputText v-model="previewText" class="w-full mt-2" placeholder="Type something to preview..." />
+                <span class="text-xs text-gray-500 mt-1">Change the text to update the examples below.</span>
             </div>
+        </a-card>
 
-            <a-card class="p-8">
-                <div class="flex flex-col gap-2">
-                    <h6>Type Tester</h6>
-                    <InputText v-model="previewText" class="w-full text-lg" placeholder="Type something to preview..." />
-                </div>
-            </a-card>
-        </div>
-
-        <a-card class="p-8">
+        <a-card class="p-8 mt-8">
             <div class="flex justify-between items-center">
                 <h3>Brand Typeface</h3>
                 <Tag value="Display Only" severity="warn" rounded />
@@ -89,7 +87,7 @@ const copyClass = async (text) => {
             </div>
         </a-card>
 
-        <a-card class="p-8">
+        <a-card class="p-8 mt-8">
             <h3>Primary Typeface (Lato)</h3>
 
             <div class="mt-4">

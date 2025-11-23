@@ -28,15 +28,14 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
 </script>
 
 <template>
-    <div class="w-full flex flex-col gap-8">
-        <div class="mb-4">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Loading States</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                Patterns to manage wait times, reduce perceived latency, and prevent layout shifts.
-            </p>
-        </div>
+    <div class="w-full flex flex-col">
+        <h2>Loading States</h2>
 
-        <Card class="p-4 border-l-4 border-indigo-500">
+        <p class="text-gray-600 mt-2">
+            Patterns to manage wait times, reduce perceived latency, and prevent layout shifts.
+        </p>
+
+        <Card class="p-4 border-l-4 border-indigo-500 mt-4">
             <template #title>
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -135,7 +134,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
             </template>
         </Card>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <Card class="p-4 h-full">
                 <template #title><h3>Primitives</h3></template>
                 <template #content>
@@ -180,7 +179,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
             </Card>
         </div>
 
-        <Card class="p-4">
+        <Card class="p-4 mt-8">
             <template #title><h3>Indeterminate Spinners</h3></template>
             <template #content>
                 <div class="flex flex-wrap items-center gap-12 mt-4">
