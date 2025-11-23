@@ -11,10 +11,13 @@ useHead({
     title: 'Example Details',
 });
 
-const IS_LOADING = 0;
-const IS_LOADED = 1;
-
+const IS_LOADING = 'is-loading';
+const IS_LOADED = 'is-loaded';
+const IS_ERROR = 'is-error';
+const isLoading = computed(() => state.value === IS_LOADING);
+const isLoaded = computed(() => state.value === IS_LOADED);
 const state = ref(IS_LOADING);
+
 const example = ref({
     created_at_nice: '',
     updated_at_nice: '',
@@ -31,9 +34,6 @@ const example = ref({
     tags: [],
 });
 
-const isLoaded = computed(() => state.value === IS_LOADED);
-const isLoading = computed(() => state.value === IS_LOADING);
-
 const currentRoute = useRoute();
 const router = useRouter();
 
@@ -46,8 +46,8 @@ const fetchExample = async () => {
         example.value = res.data.example;
 
         state.value = IS_LOADED;
-        // useHead({ title: example.value.name });
     } catch (err) {
+        state.value = IS_ERROR;
         console.error(`show-example# Problem fetching example:`, err);
     }
 }
@@ -75,7 +75,7 @@ const goBack = () => {
             </div>
         </div>
 
-        <div v-else class="flex flex-col">
+        <div v-else-if="isLoaded" class="flex flex-col">
             <header>
                 <Button
                     type="button"
@@ -170,7 +170,7 @@ const goBack = () => {
                                             :key="`link-${link.url}`"
                                             :href="link.url"
                                             target="_blank"
-                                            class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-gray-600 transition-colors group"
+                                            class="flex items-center justify-between p-3 rounded-lg bg-gray-100 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-gray-600 transition-colors group"
                                         >
                                             <span class="font-semibold text-sm">{{ link.name }}</span>
                                             <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
@@ -202,6 +202,29 @@ const goBack = () => {
                         </a-card>
                     </div>
                 </aside>
+            </div>
+        </div>
+
+        <div v-else class="flex-1 flex items-center justify-center">
+            <div class="text-center p-8 bg-red-50 border border-red-200 rounded-lg">
+                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <i class="pi pi-exclamation-triangle" style="font-size: 24px;"></i>
+                </div>
+
+                <h3 class="text-red-700">Error loading example</h3>
+
+                <p class="text-red-600 mt-2">
+                    There was a problem loading this example. Please try again later.
+                </p>
+
+                <Button
+                    type="button"
+                    class="mt-4"
+                    label="Back to Projects"
+                    icon="pi pi-arrow-left"
+                    text
+                    @click="goBack"
+                />
             </div>
         </div>
     </div>
