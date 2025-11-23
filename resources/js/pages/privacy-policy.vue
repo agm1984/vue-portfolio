@@ -1,3 +1,11 @@
+<script setup>
+import { useHead } from '@unhead/vue';
+
+useHead({
+    title: 'Privacy Policy',
+});
+</script>
+
 <template>
     <div class="flex-1 w-full max-w-4xl mx-auto flex flex-col p-8 leading-relaxed">
         <h1>Privacy Policy</h1>
@@ -61,23 +69,3 @@
         <p>By using this Site or any other The Company Site or interactive banner ads, you signify your acceptance of our Privacy Policy, and you adhere to the terms and conditions posted on the Site. By submitting your information, you agree that it will be governed by our Privacy Policy.</p>
     </div>
 </template>
-
-<script>
-// source: https://canada.findforms.com/single_example.php/example/38/Canadian_Privacy_Policy_for_Website
-export default {
-    name: 'privacy-policy',
-
-    metaInfo() {
-        return { title: 'Privacy Policy' };
-    },
-
-    data() {
-        return {};
-    },
-
-    computed: {},
-
-    methods: {},
-
-};
-</script>
