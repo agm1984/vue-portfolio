@@ -136,6 +136,10 @@ const handleResendVerificationEmail = async () => {
             name="Email"
         />
 
+        <p class="text-xs text-gray-600 mt-1">
+            Contact support to change your email address.
+        </p>
+
         <Button
             type="submit"
             class="w-full mt-4"
