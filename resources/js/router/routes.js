@@ -67,6 +67,9 @@ const routes = [
         ],
     },
 
+    { path: '/privacy-policy', name: 'privacy.policy', meta: { preloadOnly: true }, component: () => import('../pages/privacy-policy.vue') },
+    { path: '/terms-of-use', name: 'terms.of.use', meta: { preloadOnly: true }, component: () => import('../pages/terms-of-use.vue') },
+
     { path: '/forbidden', name: '403', component: () => import('../pages/errors/403.vue') },
     { path: '/:catchAll(.*)', name: 'splat', component: () => import('../pages/errors/404.vue') },
 ];
