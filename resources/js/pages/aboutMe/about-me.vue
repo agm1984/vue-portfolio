@@ -1,10 +1,6 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useHead } from '@unhead/vue';
-import Accordion from 'primevue/accordion';
-import AccordionPanel from 'primevue/accordionpanel';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
 
 useHead({
     title: 'About Me',
@@ -12,6 +8,15 @@ useHead({
 
 const START_YEAR = 2017;
 const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
+const isSeeingSupra = ref(false);
+
+const openSupraModal = () => {
+    isSeeingSupra.value = true;
+};
+
+const closeSupraModal = () => {
+    isSeeingSupra.value = false;
+};
 </script>
 
 <template>
@@ -48,11 +53,16 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                             <i class="pi pi-car text-red-600" style="font-size: 24px;"></i>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-gray-900 dark:text-white text-sm uppercase tracking-wide">Car Enthusiast</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-500 mt-1">
+                            <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wide">Car Enthusiast</h3>
+                            <p class="text-sm text-gray-600 mt-2">
                                 I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
                                 you can find me out driving with friends and finding new places to visit.
                             </p>
+                            <button
+                                type="button"
+                                class="cursor-pointer font-semibold text-red-600 hover:underline mt-2"
+                                @click="openSupraModal"
+                            >See the Supra</button>
                         </div>
                     </div>
                 </div>
@@ -86,78 +96,8 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-                <a-card class="h-full bg-indigo-50! border-t-4 border-indigo-500 p-0 overflow-hidden flex flex-col">
-                    <div class="bg-gray-900 p-4 flex items-center gap-2">
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        <span class="ml-2 font-mono text-xs text-gray-500">message_to_devs.js</span>
-                    </div>
-                    <div class="flex-1 p-8">
-                        <h2 class="font-mono text-indigo-600! mb-4">&lt;ToProgrammers /&gt;</h2>
-                        <div class="font-mono text-sm md:text-base text-gray-700">
-                            <p>
-                                I like to use <span class="text-gray-700 bg-gray-200 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 
-                                predicates, booleans, and low-arity functions.
-                            </p>
-                            <p class="mt-4">
-                                I'm a huge advocate for <strong>immutable functional-reactive programming (FRP)</strong>. 
-                                Give me a <span class="text-indigo-600 font-semibold">map</span>, <span class="text-indigo-600 font-semibold">reduce</span>, 
-                                or <span class="text-indigo-600 font-semibold">filter</span> over a for-loop any day.
-                            </p>
-                            <p class="text-gray-600 italic border-l-2 border-gray-300 pl-3 mt-4">
-                                // Push vs Pull<br>
-                                Pushing is doing & triggering.<br>
-                                Pulling is listening & acting.
-                            </p>
-                        </div>
-                    </div>
-                </a-card>
-
-                <a-card class="h-full border-t-4 border-emerald-500 p-8">
-                    <h2 class="text-emerald-700!">To Non-Programmers</h2>
-
-                    <div class="w-full mt-4">
-                        <Accordion :value="[]" multiple class="space-y-2">
-                            <AccordionPanel value="0">
-                                <AccordionHeader>
-                                    <span class="font-semibold text-gray-700">Work</span>
-                                </AccordionHeader>
-                                <AccordionContent>
-                                    <p class="leading-relaxed text-gray-600">
-                                        As a developer, I aim to write not only pragmatic code but also empathetic 
-                                        and thorough technical documentation. I believe software should be understandable by humans, not just machines.
-                                    </p>
-                                </AccordionContent>
-                            </AccordionPanel>
-
-                            <AccordionPanel value="1">
-                                <AccordionHeader>
-                                    <span class="font-semibold text-gray-700">Life</span>
-                                </AccordionHeader>
-                                <AccordionContent>
-                                    <p class="leading-relaxed text-gray-600">
-                                        I am introverted, creative, and known for being precise. I decompress from work by 
-                                        cooking nice meals. I love the chemistry behind balancing 
-                                        <span class="italic">salty, sweet, sour, and hot</span>.
-                                    </p>
-                                </AccordionContent>
-                            </AccordionPanel>
-
-                            <AccordionPanel value="2">
-                                <AccordionHeader>
-                                    <span class="font-semibold text-gray-700">Balance</span>
-                                </AccordionHeader>
-                                <AccordionContent>
-                                    <p class="leading-relaxed text-gray-600">
-                                        Fitness & nutrition have been a way of life for me since 2009. 
-                                        A healthy mind and optimized thinking both start with physical health.
-                                    </p>
-                                </AccordionContent>
-                            </AccordionPanel>
-                        </Accordion>
-                    </div>
-                </a-card>
+                <to-programmers-card></to-programmers-card>
+                <to-non-programmers-card></to-non-programmers-card>
             </div>
         </section>
 
@@ -180,4 +120,9 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
             </router-link>
         </p>
     </div>
+
+    <see-supra-modal
+        v-if="isSeeingSupra"
+        @close="closeSupraModal"
+    />
 </template>
