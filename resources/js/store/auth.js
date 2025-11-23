@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
+        isInitialized: false,
         isAuthenticated: false,
         user: {},
     }),
@@ -46,6 +47,8 @@ export const useAuthStore = defineStore('auth', {
             } catch {
                 this.isAuthenticated = false;
                 this.user = {};
+            } finally {
+                this.isInitialized = true;
             }
         },
 
@@ -65,6 +68,7 @@ export const useAuthStore = defineStore('auth', {
 
                 this.setUser(data.user);
                 this.isAuthenticated = true;
+                this.isInitialized = true;
             } catch (err) {
                 this.isAuthenticated = false;
                 this.user = {};
@@ -80,6 +84,7 @@ export const useAuthStore = defineStore('auth', {
             } finally {
                 this.isAuthenticated = false;
                 this.user = {};
+                this.isInitialized = false;
             }
         },
 

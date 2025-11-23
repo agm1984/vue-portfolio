@@ -1,11 +1,11 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
 import Skeleton from 'primevue/skeleton';
+import { usePublicExamplesStore } from '~/store/publicExamples';
 
 useHead({
     title: 'Examples',
@@ -13,85 +13,44 @@ useHead({
 
 const currentRoute = useRoute();
 const router = useRouter();
+const publicExamples = usePublicExamplesStore();
 
-const LOADING = 'is-loading';
-const LOADED = 'is-loaded';
-const HAS_ERROR = 'is-error';
-const isLoading = computed(() => state.value === LOADING);
-const isLoaded = computed(() => state.value === LOADED);
-const hasError = computed(() => state.value === HAS_ERROR);
-const state = ref(LOADING);
-const categories = ref([]);
-const examples = ref([]);
-const activeCategory = ref('all');
-const searchTerms = ref('');
-
-const fetchCategories = async () => {
-    try {
-        const response = await axios.get(route('public.categories.list'));
-
-        categories.value = response.data.categories;
-    } catch (err) {
-        console.error('list-examples# Problem fetching categories:', err);
-    }
-};
-
-const fetchExamples = async () => {
-    try {
-        state.value = LOADING;
-
-        const response = await axios.get(route('public.examples.list'));
-
-        examples.value = response.data.examples;
-
-        state.value = LOADED;
-    } catch (err) {
-        console.error('list-examples# Problem fetching examples:', err);
-        state.value = HAS_ERROR;
-    }
+const setUrlParams = async () => {
+    await router.replace({
+        query: publicExamples.formattedFilters,
+    });
 };
 
 const loadPage = () => {
-    fetchCategories();
-    fetchExamples();
+    publicExamples.getUrlParams(currentRoute.query);
+
+    if (!publicExamples.allCategories.length) {
+        publicExamples.getAllCategories();
+    }
+
+    if (!publicExamples.allExamples.length) {
+        publicExamples.getAllExamples();
+    }
+
+    setUrlParams();
 };
 
 onMounted(loadPage);
 
-const filteredExamples = computed(() => {
-    let filtered = examples.value;
+const resetPage = () => {
+    publicExamples.$reset();
+    loadPage();
+    setUrlParams();
+};
 
-    if (searchTerms.value) {
-        const matchesFound = (example) => {
-            return example.name.toLowerCase().includes(searchTerms.value.toLowerCase())
-                || example.category.name.toLowerCase().includes(searchTerms.value.toLowerCase())
-                || example.summary.toLowerCase().includes(searchTerms.value.toLowerCase())
-                || example.conclusion.toLowerCase().includes(searchTerms.value.toLowerCase())
-                || example.slug.toLowerCase().includes(searchTerms.value.toLowerCase())
-                || example.tags.some(tag => tag.toLowerCase().includes(searchTerms.value.toLowerCase()));
-        };
-
-        filtered = filtered.filter(matchesFound);
-    }
-
-    if (activeCategory.value === 'all') return filtered;
-
-    filtered = filtered.filter(example => example.category.slug === activeCategory.value);
-
-    return filtered;
-});
-
-const hasExamples = computed(() => filteredExamples.value.length > 0);
+const hasExamples = computed(() => publicExamples.filteredExamples.length > 0);
 
 const handleSelectCategory = async (categorySlug) => {
-    activeCategory.value = categorySlug;
-
-    await router.replace({
-        query: {
-            category: categorySlug,
-        },
-    });
+    publicExamples.activeCategory = categorySlug;
 };
+
+watch(() => publicExamples.searchTerms, setUrlParams);
+watch(() => publicExamples.activeCategory, setUrlParams);
 </script>
 
 <template>
@@ -103,14 +62,28 @@ const handleSelectCategory = async (categorySlug) => {
                 A collection of full projects, resources, experiments, and learning.
             </p>
 
-            <div class="flex flex-col md:flex-row justify-between gap-4 mt-4">
+            <div v-if="publicExamples.isFetchingCategories" class="flex flex-col md:flex-row justify-between gap-4 mt-4">
+                <div class="flex flex-wrap gap-2">
+                    <Skeleton width="6rem" height="2.4rem" borderRadius="2rem"></Skeleton>
+
+                    <Skeleton width="7rem" height="2.4rem" borderRadius="2rem"></Skeleton>
+                    <Skeleton width="5rem" height="2.4rem" borderRadius="2rem"></Skeleton>
+                    <Skeleton width="8rem" height="2.4rem" borderRadius="2rem"></Skeleton>
+                </div>
+
+                <div class="w-full md:w-auto">
+                    <Skeleton class="w-full md:w-64" height="2.4rem" borderRadius="0.375rem"></Skeleton>
+                </div>
+            </div>
+
+            <div v-else class="flex flex-col md:flex-row justify-between gap-4 mt-4">
                 <div class="flex flex-wrap gap-2">
                     <button
                         type="button"
                         class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap"
                         :class="['px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap', {
-                            'bg-indigo-600 text-white border-indigo-600 shadow-md': activeCategory === 'all',
-                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': activeCategory !== 'all',
+                            'bg-indigo-600 text-white border-indigo-600 shadow-md': publicExamples.activeCategory === 'all',
+                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': publicExamples.activeCategory !== 'all',
                         }]"
                         rounded
                         @click="() => handleSelectCategory('all')"
@@ -119,24 +92,24 @@ const handleSelectCategory = async (categorySlug) => {
                     </button>
 
                     <button
-                        v-for="category in categories"
+                        v-for="category in publicExamples.allCategories"
                         :key="`category-${category.slug}`"
                         type="button"
                         :class="['px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap', {
-                            'bg-indigo-600 text-white border-indigo-600 shadow-md': activeCategory === category.slug,
-                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': activeCategory !== category.slug,
+                            'bg-indigo-600 text-white border-indigo-600 shadow-md': publicExamples.activeCategory === category.slug,
+                            'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300': publicExamples.activeCategory !== category.slug,
                         }]"
                         @click="() => handleSelectCategory(category.slug)"
                     >{{ category.name }}</button>
                 </div>
 
                 <div>
-                    <a-input-search v-model="searchTerms" />
+                    <a-input-search v-model="publicExamples.searchTerms" />
                 </div>
             </div>
         </div>
 
-        <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-4">
+        <div v-if="publicExamples.isFetchingExamples" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-4">
             <div v-for="n in 6" :key="n" class="rounded-xl overflow-hidden border">
                 <Skeleton height="200px" width="100%"></Skeleton>
                 <div class="p-4">
@@ -146,14 +119,14 @@ const handleSelectCategory = async (categorySlug) => {
             </div>
         </div>
 
-        <div v-else-if="isLoaded && hasExamples" class="mt-4">
+        <div v-else-if="!publicExamples.isFetchingExamples && hasExamples" class="mt-4">
             <TransitionGroup
                 name="list"
                 tag="div"
                 class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
             >
                 <router-link
-                    v-for="example in filteredExamples"
+                    v-for="example in publicExamples.filteredExamples"
                     :key="example.slug"
                     :to="{
                         name: 'public.examples.show',
@@ -204,31 +177,31 @@ const handleSelectCategory = async (categorySlug) => {
             </TransitionGroup>
         </div>
 
-        <a-card v-else-if="isLoaded && !hasExamples" class="flex flex-col items-center justify-center p-8 mt-4">
+        <a-card v-else-if="!publicExamples.isFetchingExamples && !hasExamples" class="flex flex-col items-center justify-center p-8 mt-4">
             <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
                 <i class="pi pi-search" style="font-size: 24px;"></i>
             </div>
 
             <h3>No examples found</h3>
 
-            <p v-if="searchTerms" class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
-                We couldn't find any examples matching <strong>{{ searchTerms }}</strong> in the <strong class="capitalize font-semibold">{{ activeCategory }}</strong> category.
+            <p v-if="publicExamples.searchTerms" class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
+                We couldn't find any examples matching <strong>{{ publicExamples.searchTerms }}</strong> in the <strong class="capitalize font-semibold">{{ publicExamples.activeCategory }}</strong> category.
             </p>
             <p v-else class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
-                We couldn't find any examples in the <strong class="capitalize font-semibold">{{ activeCategory }}</strong> category.
+                We couldn't find any examples in the <strong class="capitalize font-semibold">{{ publicExamples.activeCategory }}</strong> category.
             </p>
 
             <Button
                 type="button"
                 class="mt-4"
                 severity="secondary"
-                icon="pi pi-eye"
-                label="View All Examples"
-                @click="$router.push({ name: 'public.examples.list' })"
+                icon="pi pi-refresh"
+                label="Reset page"
+                @click="resetPage"
             />
         </a-card>
 
-        <div v-else-if="hasError" class="w-full mt-12 flex flex-col items-center justify-center text-center">
+        <div v-else class="w-full mt-12 flex flex-col items-center justify-center text-center">
             <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center">
                 <i class="pi pi-exclamation-circle" style="font-size: 24px;"></i>
             </div>
@@ -243,7 +216,7 @@ const handleSelectCategory = async (categorySlug) => {
                 severity="danger"
                 icon="pi pi-refresh"
                 label="Try again"
-                @click="loadPage"
+                @click="resetPage"
             />
         </div>
 

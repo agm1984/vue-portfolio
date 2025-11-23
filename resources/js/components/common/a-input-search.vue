@@ -1,9 +1,11 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import debounce from 'lodash.debounce';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
+
+const TIME_TO_WAIT = 1000; // milliseconds
 
 const props = defineProps({
     modelValue: {
@@ -25,7 +27,7 @@ const handleSearch = () => {
     }
 };
 
-const debouncedSearch = debounce(handleSearch, 2000);
+const debouncedSearch = debounce(handleSearch, TIME_TO_WAIT);
 
 watch(() => props.modelValue, (q, prev) => {
     if (q !== prev) debouncedSearch();

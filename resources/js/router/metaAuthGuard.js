@@ -3,7 +3,10 @@ import { toast } from 'vue3-toastify';
 
 export async function metaAuthGuard(to, from, next) {
     const auth = useAuthStore();
-    await auth.fetchUser();
+
+    if (!auth.isInitialized) {
+        await auth.fetchUser();
+    }
 
     // guest-only
     if (to.meta?.guestOnly) {

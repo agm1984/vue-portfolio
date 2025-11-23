@@ -1,9 +1,25 @@
 <script setup>
+import { onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
+import { usePublicExamplesStore } from '~/store/publicExamples';
 
 useHead({
     title: 'Home',
 });
+
+const publicExamples = usePublicExamplesStore();
+
+const preloadHotPath = () => {
+    if (!publicExamples.allCategories.length) {
+        publicExamples.getAllCategories();
+    }
+
+    if (!publicExamples.allExamples.length) {
+        publicExamples.getAllExamples();
+    }
+};
+
+onMounted(preloadHotPath);
 </script>
 
 <template>
