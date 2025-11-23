@@ -26,7 +26,7 @@ const closeModal = () => {
         </template>
 
         <div>
-            <img class="w-full h-full object-cover rounded-lg aspect-video" src="/supra1.jpg" alt="1993 Toyota Supra">
+            <img class="w-full h-full object-cover rounded-lg aspect-video border" src="/supra1.jpg" alt="1993 Toyota Supra">
         </div>
     </Dialog>
 </template>
