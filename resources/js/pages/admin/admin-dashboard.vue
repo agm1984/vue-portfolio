@@ -50,7 +50,8 @@ const navItems = computed(() => [
         <main class="flex-1 w-full md:ml-64 p-8">
             <template v-if="isDashboard">
                 <div class="mb-4">
-                    <h2>Dashboard</h2>
+                    <h1>Dashboard</h1>
+
                     <p class="text-gray-600 mt-2">Here's what is happening with my portfolio.</p>
                 </div>
 
