@@ -82,19 +82,19 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
         <section>
             <div class="flex items-center gap-4 mt-8">
                 <h2>A Brief Word</h2>
-                <div class="flex-1 h-px bg-gray-200"></div>
+                <div class="flex-1 h-px bg-gray-300"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-                <a-card class="h-full border-t-4 border-indigo-500 p-0 overflow-hidden flex flex-col">
+                <a-card class="h-full bg-indigo-50! border-t-4 border-indigo-500 p-0 overflow-hidden flex flex-col">
                     <div class="bg-gray-900 p-4 flex items-center gap-2">
                         <div class="w-3 h-3 rounded-full bg-red-500"></div>
                         <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div class="w-3 h-3 rounded-full bg-green-500"></div>
                         <span class="ml-2 font-mono text-xs text-gray-500">message_to_devs.js</span>
                     </div>
-                    <div class="flex-1 bg-gray-50 p-8">
-                        <h2 class="font-mono text-xl font-semibold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>
+                    <div class="flex-1 p-8">
+                        <h2 class="font-mono text-indigo-600! mb-4">&lt;ToProgrammers /&gt;</h2>
                         <div class="font-mono text-sm md:text-base text-gray-700">
                             <p>
                                 I like to use <span class="text-gray-700 bg-gray-200 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 
@@ -115,7 +115,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                 </a-card>
 
                 <a-card class="h-full border-t-4 border-emerald-500 p-8">
-                    <h3 class="text-emerald-700!">To Non-Programmers</h3>
+                    <h2 class="text-emerald-700!">To Non-Programmers</h2>
 
                     <div class="w-full mt-4">
                         <Accordion :value="[]" multiple class="space-y-2">
