@@ -58,7 +58,7 @@ const generatedCode = computed(() => {
         <div class="">
             <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
                 <div>
-                    <h2>Button Playground</h2>
+                    <h2>Buttons</h2>
                     <p class="text-gray-600 mt-2">Configure props to generate your button code.</p>
                 </div>
             </div>

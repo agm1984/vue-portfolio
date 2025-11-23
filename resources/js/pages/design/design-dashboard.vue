@@ -59,7 +59,7 @@ const navItems = [
         visible: true,
     },
     {
-        label: 'Feedback',
+        label: 'Feedback & Alerts',
         route: 'design.feedback',
         colour: 'bg-blue-100 text-blue-700',
         icon: 'pi pi-exclamation-circle',

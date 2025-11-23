@@ -41,7 +41,7 @@ const copyClass = async (text) => {
 <template>
     <div class="flex-1 w-full flex flex-col">
         <div class="mb-4">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Cards & Containers</h2>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Cards</h2>
             <p class="text-gray-600 dark:text-gray-400 mt-2">
                 The foundational surfaces of the interface. This system relies on a "Card on Canvas" metaphor.
             </p>

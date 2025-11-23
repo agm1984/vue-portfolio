@@ -62,7 +62,7 @@ const copyClass = async (color, step) => {
 <template>
     <div class="w-full">
         <div class="mb-8">
-            <h2>Color Palette</h2>
+            <h2>Colours</h2>
             <p class="text-gray-600 mt-2 max-w-2xl">
                 This design system leverages the standard Tailwind CSS color palette. 
                 Click any swatch to copy its utility class to your clipboard.

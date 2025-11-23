@@ -41,7 +41,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h3>UX Playground</h3>
-                        <p class="text-sm text-gray-500 font-normal mt-1">Compare how different loading strategies affect the UI feel.</p>
+                        <p class="max-w-sm text-sm text-gray-500 font-normal mt-1">Use the buttons at the top-right of this card to compare how different loading strategies affect the UI feel.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <Button label="Show Data" icon="pi pi-check" size="small" :severity="demoState === 'loaded' ? 'primary' : 'secondary'" @click="demoState = 'loaded'" />
@@ -50,12 +50,10 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                     </div>
                 </div>
             </template>
-            
+
             <template #content>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
-                    
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 min-h-[300px] relative overflow-hidden">
-                        
                         <div v-if="demoState === 'spinner'" class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-900/80 z-10 backdrop-blur-sm">
                             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="4" />
                             <span class="text-xs font-bold uppercase text-gray-400 mt-4 animate-pulse">Fetching User...</span>
@@ -88,7 +86,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                                     <p class="text-indigo-600 font-mono text-sm">{{ demoUser.handle }}</p>
                                 </div>
                             </div>
-                            
+
                             <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                                 {{ demoUser.bio }}
                             </p>
@@ -138,7 +136,6 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
         </Card>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
             <Card class="p-4 h-full">
                 <template #title><h3>Primitives</h3></template>
                 <template #content>
@@ -187,7 +184,6 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
             <template #title><h3>Indeterminate Spinners</h3></template>
             <template #content>
                 <div class="flex flex-wrap items-center gap-12 mt-4">
-                    
                     <div class="text-center">
                         <ProgressSpinner style="width: 30px; height: 30px" strokeWidth="5" />
                         <p class="text-xs text-gray-400 mt-2">Small (30px)</p>
@@ -204,12 +200,12 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                     </div>
 
                     <div class="text-center bg-gray-900 p-6 rounded-xl">
-                        <ProgressSpinner 
-                            style="width: 50px; height: 50px" 
-                            strokeWidth="4" 
-                            fill="transparent" 
-                            animationDuration=".5s" 
-                            aria-label="Custom Spinner" 
+                        <ProgressSpinner
+                            style="width: 50px; height: 50px"
+                            strokeWidth="4"
+                            fill="transparent"
+                            animationDuration=".5s"
+                            aria-label="Custom Spinner"
                         />
                         <p class="text-xs text-gray-400 mt-2">Dark Mode</p>
                     </div>
