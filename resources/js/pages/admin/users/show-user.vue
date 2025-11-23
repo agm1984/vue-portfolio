@@ -112,7 +112,7 @@ onMounted(fetchUser);
 
                     <div class="mt-6 w-full pt-6 border-t border-gray-100 dark:border-gray-700 flex justify-between text-sm">
                         <span class="text-gray-600">ID</span>
-                        <span class="font-mono font-bold text-gray-700 dark:text-gray-300">#{{ user.id }}</span>
+                        <span class="font-mono font-semibold text-gray-700 dark:text-gray-300">#{{ user.id }}</span>
                     </div>
                 </a-card>
             </div>

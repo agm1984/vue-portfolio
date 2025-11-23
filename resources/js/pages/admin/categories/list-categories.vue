@@ -114,7 +114,7 @@ onMounted(fetchAllCategories);
                         <div class="flex flex-col">
                             <router-link
                                 :to="{ name: 'admin.categories.show', params: { category: data.slug } }"
-                                class="font-bold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
+                                class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
                             >
                                 {{ data.name }}
                             </router-link>
@@ -133,7 +133,7 @@ onMounted(fetchAllCategories);
                 <Column field="status" header="Status" sortable>
                     <template #body="{ data }">
                         <Tag
-                            class="uppercase text-[10px] font-bold tracking-wider px-2"
+                            class="uppercase text-[10px] font-semibold tracking-wider px-2"
                             :severity="getStatusConfig(data.status).severity"
                             :icon="getStatusConfig(data.status).icon"
                             :value="getStatusConfig(data.status).label"

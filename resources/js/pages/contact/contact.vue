@@ -126,7 +126,7 @@ const sendMessage = async () => {
                 </div>
 
                 <a-card class="p-8">
-                    <div class="flex items-center gap-2 text-indigo-600 font-bold text-sm uppercase tracking-wide">
+                    <div class="flex items-center gap-2 text-indigo-600 font-semibold text-sm uppercase tracking-wide">
                         <i class="pi pi-envelope"></i>
                         <span>Direct Email</span>
                     </div>
@@ -151,7 +151,7 @@ const sendMessage = async () => {
                 </a-card>
 
                 <div>
-                    <h3 class="text-sm font-bold">Connect</h3>
+                    <h3 class="text-sm font-semibold">Connect</h3>
                     <div class="flex gap-4 mt-4">
                         <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
                         <a-social-link network="github" class="hover:translate-x-1 transition-transform" />

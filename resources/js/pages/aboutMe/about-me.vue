@@ -24,7 +24,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                 <div class="prose text-gray-600 text-lg">
                     <p>
                         I'll keep this short. I've been programming for about
-                        <span class="font-bold text-indigo-600">{{ yearsExperience }} years</span>,
+                        <span class="font-semibold text-indigo-600">{{ yearsExperience }} years</span>,
                         but I've been working with iOS, Android, and web apps since 2013.
                         I discovered my passion for coding around that time.
                     </p>
@@ -48,7 +48,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                             <i class="pi pi-car text-red-600" style="font-size: 24px;"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide">Car Enthusiast</h3>
+                            <h3 class="font-semibold text-gray-900 dark:text-white text-sm uppercase tracking-wide">Car Enthusiast</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-500 mt-1">
                                 I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
                                 you can find me out driving with friends and finding new places to visit.
@@ -58,7 +58,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-                    <h3 class="text-sm font-bold">Connect</h3>
+                    <h3 class="text-sm font-semibold">Connect</h3>
                     <div class="flex gap-3">
                         <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
                         <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
@@ -94,7 +94,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                         <span class="ml-2 font-mono text-xs text-gray-500">message_to_devs.js</span>
                     </div>
                     <div class="flex-1 bg-gray-50 p-8">
-                        <h2 class="font-mono text-xl font-bold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>
+                        <h2 class="font-mono text-xl font-semibold text-indigo-600 mb-4">&lt;ToProgrammers /&gt;</h2>
                         <div class="font-mono text-sm md:text-base text-gray-700">
                             <p>
                                 I like to use <span class="text-gray-700 bg-gray-200 dark:bg-pink-900/20 px-1 rounded">finite state machines</span>, 

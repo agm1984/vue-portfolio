@@ -127,7 +127,7 @@ const resetPassword = async () => {
 
                 <Button
                     type="submit"
-                    class="w-full font-bold mt-4"
+                    class="w-full font-semibold mt-4"
                     :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check-circle'"
                     label="Update Password"
                     :disabled="isSubmitting"

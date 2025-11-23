@@ -30,7 +30,7 @@ const systemStatus = computed(() => getSystemStatus(props.metrics.activity.faile
         :closable="false"
     >
         <div class="flex flex-col sm:flex-row sm:items-center gap-2">
-            <span class="font-bold text-lg">{{ systemStatus.text }}</span>
+            <span class="font-semibold text-lg">{{ systemStatus.text }}</span>
 
             <span v-if="metrics.activity.failed_jobs > 0" class="text-sm opacity-90">
                 ({{ metrics.activity.failed_jobs }} failed jobs pending retry)

@@ -144,12 +144,12 @@ onMounted(fetchCategory);
 
                     <div class="mt-auto border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-sm pt-6">
                         <span class="text-gray-600">ID</span>
-                        <span class="font-mono font-bold text-gray-700">#{{ category.id }}</span>
+                        <span class="font-mono font-semibold text-gray-700">#{{ category.id }}</span>
                     </div>
                 </a-card>
 
                 <a-card v-if="isEditing" class="border-indigo-200 ring-4 ring-indigo-50 p-8">
-                    <div class="flex items-center gap-2 text-indigo-600 font-bold border-b border-gray-100 pb-2 mb-8">
+                    <div class="flex items-center gap-2 text-indigo-600 font-semibold border-b border-gray-100 pb-2 mb-8">
                         <i class="pi pi-file-edit"></i>
                         <span>Editing Mode</span>
                     </div>
@@ -179,13 +179,13 @@ onMounted(fetchCategory);
                     <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block"></div>
                      <div class="flex-1">
                          <h6 class="mb-1">Total Projects</h6>
-                         <p class="text-2xl font-bold text-indigo-600">{{ category.examples_count }}</p>
+                         <p class="text-2xl font-semibold text-indigo-600">{{ category.examples_count }}</p>
                     </div>
                 </a-card>
 
                 <div>
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             <i class="pi pi-images text-indigo-500"></i>
                             Associated Examples
                         </h3>

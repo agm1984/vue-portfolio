@@ -76,7 +76,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                 <div class="flex flex-wrap gap-2">
                     <button
                         type="button"
-                        class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap"
+                        class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 border whitespace-nowrap"
                         :class="[
                             publicExamples.activeCategory === 'all'
                             ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
@@ -91,7 +91,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                         v-for="category in publicExamples.allCategories"
                         :key="`category-${category.slug}`"
                         type="button"
-                        class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap"
+                        class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 border whitespace-nowrap"
                         :class="[
                             publicExamples.activeCategory === category.slug
                             ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'

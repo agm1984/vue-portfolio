@@ -12,7 +12,7 @@ defineProps({
         <div class="flex justify-between items-start">
             <div>
                 <h6>Signups Today</h6>
-                <div class="text-4xl font-bold text-gray-800 mt-1">
+                <div class="text-4xl font-semibold text-gray-800 mt-1">
                     {{ metrics.activity.users_today }}
                 </div>
             </div>

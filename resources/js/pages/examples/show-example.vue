@@ -90,7 +90,7 @@ const goBack = () => {
                         <Tag
                             :value="example.category.name"
                             severity="info"
-                            class="uppercase tracking-widest text-xs! font-bold bg-indigo-50! text-indigo-600! border border-indigo-100"
+                            class="uppercase tracking-widest text-xs! font-semibold bg-indigo-50! text-indigo-600! border border-indigo-100"
                         />
                     </div>
                 </div>
@@ -183,7 +183,7 @@ const goBack = () => {
                                 <div class="border-t pt-4">
                                     <p class="text-sm text-gray-600 text-center">
                                         Have questions about this code?
-                                        <a href="#comments" class="text-indigo-600 font-bold hover:underline ml-2">Ask below.</a>
+                                        <a href="#comments" class="text-indigo-600 font-semibold hover:underline ml-2">Ask below.</a>
                                     </p>
                                 </div>
                             </div>

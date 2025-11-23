@@ -38,7 +38,7 @@ onMounted(preloadHotPath);
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8 text-center lg:text-left z-10">
                     <div>
-                        <p class="text-sm font-bold tracking-widest text-indigo-600 uppercase">The Portfolio Of</p>
+                        <p class="text-sm font-semibold tracking-widest text-indigo-600 uppercase">The Portfolio Of</p>
                         <h1 class="text-5xl md:text-7xl! font-aroly text-gray-900 mt-4">
                             Adam<br />
                             <span class="text-indigo-600">Mackintosh</span>
@@ -79,7 +79,6 @@ onMounted(preloadHotPath);
                             <Button
                                 type="button"
                                 class="w-full sm:w-auto font-semibold"
-                                severity="secondary"
                                 label="Get in Touch"
                                 size="large"
                                 outlined
@@ -99,7 +98,7 @@ onMounted(preloadHotPath);
 
                         <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white p-3 rounded-xl shadow-lg border border-gray-100 flex items-center gap-3 animate-bounce-slow">
                             <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                            <span class="font-bold text-sm text-gray-800">Open to opportunities</span>
+                            <span class="font-semibold text-sm text-gray-800">Open to opportunities</span>
                         </div>
                     </div>
                 </div>

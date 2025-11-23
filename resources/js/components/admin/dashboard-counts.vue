@@ -46,7 +46,7 @@ const statCards = computed(() => [
             <div>
                 <h6>{{ stat.label }}</h6>
 
-                <p class="text-3xl font-bold text-gray-800 mt-1">{{ stat.value }}</p>
+                <p class="text-3xl font-semibold text-gray-800 mt-1">{{ stat.value }}</p>
             </div>
         </a-card>
     </div>

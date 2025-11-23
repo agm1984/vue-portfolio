@@ -92,7 +92,7 @@ onMounted(fetchExample);
                     <h1>{{ example.name }}</h1>
 
                     <div class="flex items-center gap-2 mt-2">
-                        <span class="text-xs font-bold uppercase text-gray-500">Slug:</span>
+                        <span class="text-xs font-semibold uppercase text-gray-500">Slug:</span>
                         <span class="font-mono text-xs text-indigo-600 bg-gray-100 px-2 py-1 rounded">/{{ example.slug }}</span>
                     </div>
                 </div>
@@ -149,12 +149,12 @@ onMounted(fetchExample);
                 <a-card class="p-8">
                     <div class="space-y-8">
                         <div>
-                            <h3 class="text-sm font-bold uppercase text-gray-600">Summary</h3>
+                            <h3 class="text-sm font-semibold uppercase text-gray-600">Summary</h3>
                             <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.summary }}</p>
                         </div>
 
                         <div v-if="example.conclusion" class="bg-indigo-50 rounded-2xl border-l-4 border-indigo-500 p-8">
-                            <h3 class="text-sm font-bold uppercase text-indigo-600">Final Thoughts</h3>
+                            <h3 class="text-sm font-semibold uppercase text-indigo-600">Final Thoughts</h3>
                             <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.conclusion }}</p>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ onMounted(fetchExample);
 
                 <a-card class="p-8">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                             <i class="pi pi-images text-gray-500"></i> Gallery
                         </h3>
                         <span class="text-xs text-gray-600">{{ example.images.length }} images</span>
@@ -217,7 +217,7 @@ onMounted(fetchExample);
 
                          <div class="flex items-center gap-2 mt-1">
                              <i class="pi pi-folder text-indigo-500"></i>
-                             <span class="font-bold text-gray-800 dark:text-white">{{ example.category.name }}</span>
+                             <span class="font-semibold text-gray-800 dark:text-white">{{ example.category.name }}</span>
                          </div>
                     </div>
 
@@ -253,7 +253,7 @@ onMounted(fetchExample);
                 </a-card>
 
                 <a-card class="p-8">
-                    <h3 class="text-sm font-bold uppercase text-gray-500 flex items-center gap-2">
+                    <h3 class="text-sm font-semibold uppercase text-gray-500 flex items-center gap-2">
                         <i class="pi pi-tags"></i> Tags
                     </h3>
 

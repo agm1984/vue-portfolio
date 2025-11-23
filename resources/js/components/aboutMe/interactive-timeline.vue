@@ -132,10 +132,10 @@ const toggleSort = () => {
 
                     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-indigo-600 transition-colors">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white group-hover:text-indigo-600 transition-colors">
                                 {{ event.title }}
                             </h3>
-                            <span class="text-xs font-bold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
+                            <span class="text-xs font-semibold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
                                 {{ event.year }}
                             </span>
                         </div>

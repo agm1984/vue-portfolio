@@ -112,7 +112,7 @@ onMounted(fetchAllExamples);
                 <Column field="name" header="Name" sortable>
                     <template #body="{ data }">
                         <router-link
-                            class="font-bold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
+                            class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
                             :to="{ name: 'admin.examples.show', params: { example: data.slug } }"
                         >
                             {{ data.name }}
@@ -142,7 +142,7 @@ onMounted(fetchAllExamples);
                 <Column field="status" header="Status" sortable>
                     <template #body="{ data }">
                         <Tag
-                            class="uppercase text-[10px] font-bold tracking-wider px-2"
+                            class="uppercase text-[10px] font-semibold tracking-wider px-2"
                             :severity="getStatusConfig(data.status).severity"
                             :icon="getStatusConfig(data.status).icon"
                             :value="getStatusConfig(data.status).label"

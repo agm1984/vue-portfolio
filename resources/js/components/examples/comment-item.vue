@@ -96,7 +96,7 @@ const toggleDownvote = () => {
         <div class="flex-1 min-w-0">
             <div class="flex items-start justify-between mb-2">
                 <div>
-                    <h4 class="font-bold text-gray-900 dark:text-white text-sm md:text-base">
+                    <h4 class="font-semibold text-gray-900 dark:text-white text-sm md:text-base">
                         {{ comment.author.name }}
                     </h4>
                     <span class="text-xs text-gray-600 dark:text-gray-500" :title="comment.created_at">
@@ -139,7 +139,7 @@ const toggleDownvote = () => {
                         />
 
                         <span
-                            :class="['text-xs font-bold px-2 min-w-6 text-center', {
+                            :class="['text-xs font-semibold px-2 min-w-6 text-center', {
                                 'text-green-600': (comment.score > 0),
                                 'text-red-500': (comment.score < 0),
                                 'text-gray-600': (comment.score === 0),

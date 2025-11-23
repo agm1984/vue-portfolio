@@ -124,12 +124,12 @@ const saveComment = async () => {
         </div>
         <div class="flex gap-4">
             <router-link
-                class="text-indigo-600 font-bold hover:underline"
+                class="text-indigo-600 font-semibold hover:underline"
                 :to="{ name: 'login' }"
             >Login</router-link>
 
             <router-link
-                class="text-indigo-600 font-bold hover:underline"
+                class="text-indigo-600 font-semibold hover:underline"
                 :to="{ name: 'register' }"
             >Register</router-link>
         </div>

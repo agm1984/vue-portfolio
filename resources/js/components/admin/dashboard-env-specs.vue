@@ -11,7 +11,7 @@ defineProps({
 
 <template>
     <a-card class="p-8">
-        <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <i class="pi pi-cog text-indigo-500"></i>Environment Specs
         </h3>
 

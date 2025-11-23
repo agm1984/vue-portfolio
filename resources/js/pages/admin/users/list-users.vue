@@ -124,7 +124,7 @@ const exportCSV = () => {
                             <div class="flex flex-col">
                                 <router-link
                                     :to="{ name: 'admin.users.show', params: { user: data.id } }"
-                                    class="font-bold text-gray-800 dark:text-white hover:text-indigo-600 active:text-indigo-700 transition-colors"
+                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 active:text-indigo-700 transition-colors"
                                 >
                                     {{ data.name }}
                                 </router-link>
@@ -149,7 +149,7 @@ const exportCSV = () => {
                                 :value="role"
                                 :severity="getRoleSeverity(role)"
                                 rounded
-                                class="uppercase text-[10px] font-bold tracking-wider px-2"
+                                class="uppercase text-[10px] font-semibold tracking-wider px-2"
                             />
                         </div>
                     </template>
