@@ -16,10 +16,10 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
             const filters = {};
 
             if (this.searchTerms) {
-                filters.search = this.searchTerms;
+                filters.search = encodeURIComponent(this.searchTerms);
             }
 
-            filters.category = this.activeCategory;
+            filters.category = encodeURIComponent(this.activeCategory);
 
             return filters;
         },
