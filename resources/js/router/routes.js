@@ -61,6 +61,9 @@ const routes = [
             { path: 'sizing', name: 'design.sizing', component: () => import('../pages/design/sizing.vue') },
             { path: 'typography', name: 'design.typography', component: () => import('../pages/design/typography.vue') },
             { path: 'forms', name: 'design.forms', component: () => import('../pages/design/forms.vue') },
+            { path: 'feedback', name: 'design.feedback', component: () => import('../pages/design/feedback.vue') },
+            { path: 'cards', name: 'design.cards', component: () => import('../pages/design/cards.vue') },
+            { path: 'loading', name: 'design.loading', component: () => import('../pages/design/loading.vue') },
         ],
     },
 

@@ -3,9 +3,6 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, minLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-
-// PrimeVue Imports
-import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -63,7 +60,6 @@ const generatedCode = computed(() => {
     return parts.join('\n');
 });
 
-// --- 2. VALIDATION LAB ---
 const form = reactive({ email: '', password: '' });
 const rules = { email: { required, email }, password: { required, minLength: minLength(6) } };
 const v$ = useVuelidate(rules, form);
@@ -80,12 +76,10 @@ const validateForm = async () => {
     }
 };
 
-// --- 3. SELECTION STATE ---
+
 const checkboxValue = ref(false);
 const radioValue = ref(null);
 const switchValue = ref(false);
-
-// --- 4. SELECT / DROPDOWN STATE ---
 const selectedCity = ref();
 const selectedTech = ref();
 

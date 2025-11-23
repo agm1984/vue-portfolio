@@ -53,9 +53,29 @@ const navItems = [
         description: 'Input fields, checkboxes, radio buttons, and selects.',
         visible: true,
     },
+    {
+        label: 'Feedback',
+        route: 'design.feedback',
+        icon: 'pi pi-exclamation-circle',
+        description: 'Modals, toasts, and loading indicators.',
+        visible: true,
+    },
+    {
+        label: 'Cards',
+        route: 'design.cards',
+        icon: 'pi pi-clone',
+        description: 'Card layouts and content organization.',
+        visible: true,
+    },
+    {
+        label: 'Loading States',
+        route: 'design.loading',
+        icon: 'pi pi-spinner',
+        description: 'Skeletons and spinners for loading content.',
+        visible: true,
+    },
 ];
 
-// 2. Filter out 'Dashboard' for the grid view (Pure transformation)
 const gridItems = computed(() => navItems.filter(item => item.route !== 'design'));
 </script>
 
@@ -68,7 +88,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
         <main class="flex-1 md:ml-64 p-8 max-w-7xl mx-auto w-full">
             <template v-if="isDashboard">
                 <div class="mb-8">
-                    <h2 class="text-3xl font-semibold text-gray-900">System Overview</h2>
+                    <h2 class="text-3xl font-semibold text-gray-900">Design System</h2>
                     <p class="text-gray-600 dark:text-gray-500 mt-2">
                         A centralized registry of UI components, design tokens, and usage guidelines.
                     </p>
