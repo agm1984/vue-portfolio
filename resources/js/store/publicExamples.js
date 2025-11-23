@@ -50,7 +50,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
 
     actions: {
         getUrlParams(query) {
-            this.searchTerms = decodeURIComponent(query.search) || '';
+            this.searchTerms = query.search ? decodeURIComponent(query.search) : '';
             this.activeCategory = decodeURIComponent(query.category) || 'all';
         },
 
