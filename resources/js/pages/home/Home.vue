@@ -92,7 +92,7 @@ onMounted(preloadHotPath);
                     <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full p-2 bg-white shadow-2xl border">
                         <img
                             class="w-full h-full object-cover rounded-full"
-                            src="/adam.png"
+                            src="/adam2.png"
                             alt="Adam Mackintosh"
                         />
 

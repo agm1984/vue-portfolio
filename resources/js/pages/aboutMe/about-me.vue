@@ -72,7 +72,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                 <div class="absolute -inset-2 bg-linear-to-r from-gray-900 to-gray-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
 
                 <img
-                    src="/adam-center.png"
+                    src="/adam2.png"
                     class="relative w-full aspect-4/5 object-cover rounded-xl shadow-2xl rotate-2 group-hover:rotate-0 transition-all duration-500 ease-out border-2 border-white"
                     alt="Adam Mackintosh"
                 >
@@ -115,7 +115,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
                 </a-card>
 
                 <a-card class="h-full border-t-4 border-emerald-500 p-8">
-                    <h2 class="font-serif italic text-emerald-700">To Non-Programmers</h2>
+                    <h3 class="text-emerald-700!">To Non-Programmers</h3>
 
                     <div class="w-full mt-4">
                         <Accordion :value="[]" multiple class="space-y-2">

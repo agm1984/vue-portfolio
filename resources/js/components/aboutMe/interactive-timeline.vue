@@ -35,7 +35,7 @@ const rawEvents = [
         title: 'Junior Developer',
         description: 'Started my journey building simple CRUD apps and discovering the joy of clean code.',
         category: 'Work',
-        color: 'bg-blue-500',
+        color: 'bg-orange-500',
     },
 ];
 
@@ -45,7 +45,7 @@ const selectedCategory = ref('All');
 const sortOrder = ref('desc'); // 'asc' or 'desc'
 
 // Unique categories for the filter buttons
-const categories = ['All', ...new Set(rawEvents.map((e) => e.category))];
+const categories = ['All', ...new Set(rawEvents.map(e => e.category))];
 
 // 3. PURE TRANSFORMATIONS (Functional Core)
 // We use a computed property to pipeline our data: Source -> Filter -> Sort -> View
@@ -73,27 +73,29 @@ const toggleSort = () => {
 
 <template>
     <div class="mt-8">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div></div>
-
-            <div class="flex flex-wrap gap-2">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
+            <div class="flex flex-wrap md:pl-10">
                 <button
                     v-for="category in categories"
                     :key="category"
+                    type="button"
                     @click="selectedCategory = category"
                     :class="[
                         'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200',
                         selectedCategory === category
                             ? 'bg-indigo-600 text-white shadow-md scale-105'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300',
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
                     ]"
                 >
                     {{ category }}
                 </button>
+            </div>
 
+            <div class="flex gap-2">
                 <button
-                    @click="toggleSort"
+                    type="button"
                     class="px-4 py-2 rounded-full bg-gray-800 text-white text-sm font-semibold flex items-center gap-2 hover:bg-gray-900 transition-colors"
+                    @click="toggleSort"
                 >
                     <span>{{ sortOrder === 'asc' ? 'Oldest First' : 'Newest First' }}</span>
                     <svg
@@ -118,29 +120,29 @@ const toggleSort = () => {
             </div>
         </div>
 
-        <div class="relative border-l-4 border-gray-200 dark:border-gray-700 ml-3 md:ml-6 space-y-8">
+        <div class="relative border-l-4 space-y-8">
             <TransitionGroup name="list">
                 <div
                     v-for="event in displayEvents"
                     :key="event.id"
-                    class="relative pl-8 md:pl-12"
+                    class="relative pl-8"
                 >
                     <span
-                        class="absolute -left-2.5 top-8 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 shadow-sm transition-colors duration-300"
+                        class="absolute -left-2.5 top-8 h-5 w-5 rounded-full border-4 border-white shadow-sm transition-colors duration-300"
                         :class="event.color"
                     ></span>
 
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white group-hover:text-indigo-600 transition-colors">
+                            <h3 class="group-hover:text-indigo-600! transition-colors">
                                 {{ event.title }}
                             </h3>
-                            <span class="text-xs font-semibold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
+                            <span class="text-sm font-semibold uppercase px-2 py-1 rounded bg-gray-100 text-gray-600 mt-2 sm:mt-0 w-fit">
                                 {{ event.year }}
                             </span>
                         </div>
 
-                        <p class="text-gray-600 dark:text-gray-300 mb-3">
+                        <p class="text-gray-600 mb-3">
                             {{ event.description }}
                         </p>
 

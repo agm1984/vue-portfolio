@@ -72,30 +72,17 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                 </div>
             </div>
 
-            <div v-else class="flex flex-col md:flex-row justify-between gap-4 mt-4">
-                <div class="flex flex-wrap gap-2">
-                    <button
-                        type="button"
-                        class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 border whitespace-nowrap"
-                        :class="[
-                            publicExamples.activeCategory === 'all'
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
-                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
-                        ]"
-                        @click="() => handleSelectCategory('all')"
-                    >
-                        View all
-                    </button>
-
+            <div v-else class="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+                <div class="flex flex-wrap">
                     <button
                         v-for="category in publicExamples.allCategories"
                         :key="`category-${category.slug}`"
                         type="button"
-                        class="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 border whitespace-nowrap"
                         :class="[
+                            'rounded-full font-semibold transition-all duration-200 px-4 py-2',
                             publicExamples.activeCategory === category.slug
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
-                            : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                ? 'bg-indigo-600 text-white shadow-md scale-105'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
                         ]"
                         @click="() => handleSelectCategory(category.slug)"
                     >{{ category.name }}</button>

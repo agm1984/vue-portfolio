@@ -76,7 +76,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
 
                 const { data } = await axios.get(route('public.categories.list'));
 
-                this.allCategories = data.categories;
+                this.allCategories = [{ slug: 'all', name: 'All' }, ...data.categories];
             } catch (error) {
                 throw new Error(`publicExamples/getAllCategories# Problem fetching public categories: ${error}.`);
             } finally {
