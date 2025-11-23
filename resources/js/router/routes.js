@@ -60,6 +60,7 @@ const routes = [
             { path: 'colours', name: 'design.colours', component: () => import('../pages/design/colours.vue') },
             { path: 'sizing', name: 'design.sizing', component: () => import('../pages/design/sizing.vue') },
             { path: 'typography', name: 'design.typography', component: () => import('../pages/design/typography.vue') },
+            { path: 'forms', name: 'design.forms', component: () => import('../pages/design/forms.vue') },
         ],
     },
 
