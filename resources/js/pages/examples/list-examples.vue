@@ -152,7 +152,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                     </div>
                     <div class="p-8 flex flex-col flex-1">
                         <h3 class="group-hover:text-indigo-600 transition-colors">{{ example.name }}</h3>
-                        <p class="text-gray-600 text-sm line-clamp-2 mt-2">See project details, resources, and live demos.</p>
+                        <p class="text-gray-500 text-sm line-clamp-2 mt-2">See project details, resources, and live demos.</p>
                         <div class="flex items-center text-indigo-600 font-semibold text-sm pt-4 mt-auto">
                             <span>View</span>
                             <i class="pi pi-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
