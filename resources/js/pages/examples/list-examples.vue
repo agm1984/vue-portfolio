@@ -79,7 +79,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                         :key="`category-${category.slug}`"
                         type="button"
                         :class="[
-                            'rounded-full font-semibold transition-all duration-200 px-4 py-2',
+                            'cursor-pointer rounded-full font-semibold transition-all duration-200 px-4 py-2',
                             publicExamples.activeCategory === category.slug
                                 ? 'bg-indigo-600 text-white shadow-md scale-105'
                                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200',

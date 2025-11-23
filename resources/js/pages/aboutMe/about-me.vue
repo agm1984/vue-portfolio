@@ -161,7 +161,7 @@ const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
             </div>
         </section>
 
-        <section class="mt-8">
+        <section class="max-w-2xl mx-auto mt-8">
             <div class="text-center">
                 <h2>My Timeline</h2>
                 <p class="text-gray-600 mt-2">A history of jobs</p>
