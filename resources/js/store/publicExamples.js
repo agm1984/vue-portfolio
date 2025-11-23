@@ -51,7 +51,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
     actions: {
         getUrlParams(query) {
             this.searchTerms = query.search ? decodeURIComponent(query.search) : '';
-            this.activeCategory = decodeURIComponent(query.category) || 'all';
+            this.activeCategory = query.category ? decodeURIComponent(query.category) : 'all';
         },
 
         async getAllExamples() {
