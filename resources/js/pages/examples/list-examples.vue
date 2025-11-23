@@ -37,10 +37,10 @@ const loadPage = () => {
 
 onMounted(loadPage);
 
-const resetPage = () => {
+const resetPage = async () => {
+    await router.replace({ query: {} });
     publicExamples.$reset();
     loadPage();
-    setUrlParams();
 };
 
 const hasExamples = computed(() => publicExamples.filteredExamples.length > 0);
