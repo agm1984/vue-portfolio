@@ -13,8 +13,8 @@ const publicExamples = usePublicExamplesStore();
 const techStack = [
     { name: 'Laravel 12', icon: 'pi pi-server', color: 'text-red-500' },
     { name: 'Vue 3', icon: 'pi pi-code', color: 'text-green-500' },
-    { name: 'PrimeVue', icon: 'pi pi-prime', color: 'text-indigo-500' },
-    { name: 'Tailwind', icon: 'pi pi-palette', color: 'text-cyan-500' },
+    { name: 'PrimeVue 4', icon: 'pi pi-prime', color: 'text-indigo-500' },
+    { name: 'Tailwind 4', icon: 'pi pi-palette', color: 'text-cyan-500' },
 ];
 
 const preloadHotPath = () => {
