@@ -5,6 +5,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
     state: () => ({
         isFetchingExamples: false,
         isFetchingCategories: false,
+        isError: false,
         allExamples: [],
         allCategories: [],
         activeCategory: 'all',
@@ -15,11 +16,11 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
         formattedFilters() {
             const filters = {};
 
+            filters.category = encodeURIComponent(this.activeCategory);
+
             if (this.searchTerms) {
                 filters.search = encodeURIComponent(this.searchTerms);
             }
-
-            filters.category = encodeURIComponent(this.activeCategory);
 
             return filters;
         },
@@ -62,6 +63,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
 
                 this.allExamples = data.examples;
             } catch (error) {
+                this.isError = true;
                 throw new Error(`publicExamples/getExamples# Problem fetching public examples: ${error}.`);
             } finally {
                 this.isFetchingExamples = false;
