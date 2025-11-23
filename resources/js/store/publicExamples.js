@@ -50,8 +50,8 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
 
     actions: {
         getUrlParams(query) {
-            this.searchTerms = query.search || '';
-            this.activeCategory = query.category || 'all';
+            this.searchTerms = decodeURIComponent(query.search) || '';
+            this.activeCategory = decodeURIComponent(query.category) || 'all';
         },
 
         async getAllExamples() {
