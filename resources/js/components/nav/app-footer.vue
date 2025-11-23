@@ -12,7 +12,9 @@
 
         <div class="flex flex-wrap items-center justify-center gap-2 text-gray-900 text-center mt-8">
             <p>&copy; {{ new Date().getFullYear() }} Adam Mackintosh. All rights reserved.</p>
+            <span class="mx-2">|</span>
             <router-link :to="{ name: 'privacy.policy' }" class="underline hover:text-indigo-600 transition-colors">Privacy Policy</router-link>
+            <span class="mx-2">|</span>
             <router-link :to="{ name: 'terms.of.use' }" class="underline hover:text-indigo-600 transition-colors">Terms of Use</router-link>
         </div>
     </footer>
