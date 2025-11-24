@@ -17,6 +17,7 @@ class ExampleController extends Controller
         \Log::debug($request->all());
 
         $examples = QueryBuilder::for(Example::class)
+                ->defaultSort('-created_at')
                 ->allowedFilters('category.slug')
                 ->get();
 

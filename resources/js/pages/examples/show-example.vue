@@ -161,10 +161,10 @@ const goBack = () => {
                             <h3>Details</h3>
 
                             <div class="space-y-8 mt-2">
-                                <div v-if="example.links.length > 0">
+                                <div>
                                     <h6>Links & Resources</h6>
 
-                                    <div class="flex flex-col gap-2 mt-2">
+                                    <div v-if="example.links.length > 0" class="flex flex-col gap-2 mt-2">
                                         <a
                                             v-for="link in example.links"
                                             :key="`link-${link.url}`"
@@ -176,12 +176,16 @@ const goBack = () => {
                                             <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
                                         </a>
                                     </div>
+
+                                    <a-area-empty v-else class="py-4 mt-2">
+                                        <span class="text-sm text-gray-600">No links yet</span>
+                                    </a-area-empty>
                                 </div>
 
-                                <div v-if="example.tags.length > 0">
+                                <div>
                                     <h6>Technologies</h6>
 
-                                    <div class="flex flex-wrap gap-2 mt-2">
+                                    <div v-if="example.tags.length > 0" class="flex flex-wrap gap-2 mt-2">
                                         <Tag
                                             v-for="(tag, index) in example.tags"
                                             :key="`example-tag-${index}`"
@@ -190,11 +194,15 @@ const goBack = () => {
                                             rounded
                                         />
                                     </div>
+
+                                    <a-area-empty v-else class="py-4 mt-2">
+                                        <span class="text-sm text-gray-600">No tags yet</span>
+                                    </a-area-empty>
                                 </div>
 
                                 <div class="border-t pt-4">
                                     <p class="text-sm text-gray-600 text-center">
-                                        Have questions about this code?
+                                        Have questions about this?
                                         <a href="#comments" class="text-indigo-600 font-semibold hover:underline ml-2">Ask below.</a>
                                     </p>
                                 </div>
