@@ -2,7 +2,7 @@
     <div ref="p5" :id="id" class="absolute inset-0 -z-10">
         <!-- on DOM-change, push redraw action -->
         <!-- note: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver -->
-        <vue-p5
+        <!-- <vue-p5
             :class="['p5wrapper absolute inset-0', {
                 'opacity-10': isWallpaper,
                 'rounded-lg': !isWallpaper,
@@ -12,13 +12,13 @@
             @preload="preload"
             @setup="setup"
             @windowresized=""
-        ></vue-p5>
+        ></vue-p5> -->
 
     </div>
 </template>
 
 <script>
-import VueP5 from 'vue-p5';
+// import VueP5 from 'vue-p5';
 
 // states
 const IS_INITIAL = 'IS_INITIAL';
@@ -32,7 +32,7 @@ export default {
     name: 'a-sacred-geometry',
 
     components: {
-        VueP5,
+        // VueP5,
     },
 
     props: {

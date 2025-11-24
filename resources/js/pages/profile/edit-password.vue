@@ -1,78 +1,129 @@
-<template>
-    <div>
-        <a-form v-slot="{ handleSubmit }">
-            <a-input-row class="pt-16" type="is-wider-right" heading="Old password">
-                <a-text-input
-                    v-model="password.old_password"
-                    vid="name"
-                    rules="required"
-                ></a-text-input>
-            </a-input-row>
-
-            <a-input-row class="pt-16" type="is-wider-right" heading="New password">
-                <a-text-input
-                    v-model="password.new_password"
-                    vid="name"
-                    rules="required"
-                ></a-text-input>
-            </a-input-row>
-
-            <a-input-row class="pt-16" type="is-wider-right" heading="Confirm password">
-                <a-text-input
-                    v-model="password.password_confirmation"
-                    vid="name"
-                    rules="required"
-                ></a-text-input>
-            </a-input-row>
-
-            <div class="flex items-center justify-end pt-16">
-                <a-button @click="handleSubmit(submitForm)">
-                    Update
-                </a-button>
-            </div>
-        </a-form>
-    </div>
-</template>
-
-<script>
+<script setup>
+import { ref, reactive, computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import { required, minLength, sameAs } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
 import axios from 'axios';
+import Password from 'primevue/password';
+import Button from 'primevue/button';
+import { useAuthStore } from '~/store/auth';
 
-export default {
-    name: 'edit-password',
+const auth = useAuthStore();
 
-    scrollToTop: false,
+const INITIAL = 'is-initial';
+const SUBMITTING = 'is-submitting';
+const state = ref(INITIAL);
+const isSubmitting = computed(() => state.value === SUBMITTING);
+const submitted = ref(false);
 
-    metaInfo() {
-        return { title: 'Edit password' };
-    },
+const form = reactive({
+    old_password: '',
+    new_password: '',
+    password_confirmation: '',
+});
 
-    data() {
-        return {
-            password: {
-                old_password: '',
-                new_password: '',
-                password_confirmation: '',
-            },
-        };
-    },
+const newPassword = computed(() => form.new_password);
 
-    methods: {
-        async update() {
-            await this.form.patch('/api/settings/password');
-            this.form.reset();
-        },
+const profileRules = {
+    old_password: { required },
+    new_password: { required, minLength: minLength(6) },
+    password_confirmation: { required, sameAs: sameAs(newPassword) },
+};
 
-        async submitForm() {
-            try {
-                const { data } = await axios.put(route('user.password.edit'), this.password);
+const v$ = useVuelidate(profileRules, form);
 
-                console.log('data', data);
-                this.$store.dispatch('auth/updateUser', { user: data.user });
+const handleSubmit = async () => {
+    try {
+        state.value = SUBMITTING;
+        submitted.value = true;
 
-            } catch (err) {
-                throw new Error(`edit-profile# Problem submitting form: ${err}.`);
-            }
-        },
-    },
+        const isFormValid = await v$.value.$validate();
+
+        if (!isFormValid) {
+            state.value = INITIAL;
+            return;
+        }
+
+        const { data } = await axios.put(route('user.password.edit'), form);
+
+        auth.updateUser(data);
+    } catch (error) {
+        console.error(error);
+    } finally {
+        state.value = INITIAL;
+    }
 };
 </script>
+
+<template>
+    <form class="mt-4" @submit.prevent="handleSubmit">
+        <a-input-field input-id="profile-old-password" title="Old password" required />
+
+        <Password
+            v-model="v$.old_password.$model"
+            id="profile-old-password"
+            class="w-full"
+            input-class="w-full"
+            placeholder=""
+            autocomplete="current-password"
+            :feedback="false"
+            toggle-mask
+            aria-haspopup="false"
+            :invalid="v$.old_password.$invalid && submitted"
+        />
+
+        <a-field-errors
+            v-if="v$.old_password.$error && submitted"
+            :errors="v$.old_password.$errors"
+            name="Old password"
+        />
+
+        <a-input-field class="mt-4" input-id="profile-new-password" title="New password" required />
+
+        <Password
+            v-model="v$.new_password.$model"
+            input-id="profile-new-password"
+            class="w-full"
+            input-class="w-full"
+            autocomplete="new-password"
+            placeholder=""
+            :feedback="false"
+            toggle-mask
+            aria-haspopup="false"
+            :invalid="v$.new_password.$invalid && submitted"
+        />
+
+        <a-field-errors
+            v-if="v$.new_password.$error && submitted"
+            :errors="v$.new_password.$errors"
+            name="New password"
+        />
+
+        <a-input-field class="mt-4" input-id="profile-password-confirmation" title="Confirm Password" required />
+
+        <Password
+            v-model="v$.password_confirmation.$model"
+            input-id="profile-password-confirmation"
+            class="w-full"
+            input-class="w-full"
+            :feedback="false"
+            toggle-mask
+            aria-haspopup="false"
+            :invalid="v$.password_confirmation.$invalid && submitted"
+        />
+
+        <a-field-errors
+            v-if="v$.password_confirmation.$error && submitted"
+            :errors="v$.password_confirmation.$errors"
+            name="Password Confirmation"
+        />
+
+        <Button
+            type="submit"
+            :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+            label="Update Password"
+            class="w-full mt-4"
+            :disabled="isSubmitting"
+        />
+    </form>
+</template>

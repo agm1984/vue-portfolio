@@ -1,123 +1,194 @@
+<script setup>
+import { ref, computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import Button from 'primevue/button';
+
+useHead({
+    title: 'Design System Buttons',
+});
+
+const label = ref('Click Me');
+const selectedSeverity = ref(null); // null = primary default
+const selectedSize = ref(null);
+const isOutlined = ref(false);
+const isRounded = ref(false);
+const isText = ref(false);
+const isLoading = ref(false);
+const isDisabled = ref(false);
+const iconOption = ref('none'); // none, left, right
+
+const severities = [
+    { label: 'Primary', value: null },
+    { label: 'Secondary', value: 'secondary' },
+    { label: 'Success', value: 'success' },
+    { label: 'Info', value: 'info' },
+    { label: 'Warn', value: 'warn' },
+    { label: 'Help', value: 'help' },
+    { label: 'Danger', value: 'danger' },
+    { label: 'Contrast', value: 'contrast' },
+];
+
+const sizes = [
+    { label: 'Small', value: 'small' },
+    { label: 'Normal', value: null },
+    { label: 'Large', value: 'large' },
+];
+
+const generatedCode = computed(() => {
+    const props = [];
+
+    if (label.value) props.push(`label="${label.value}"`);
+    if (selectedSeverity.value) props.push(`severity="${selectedSeverity.value}"`);
+    if (isOutlined.value) props.push('outlined');
+    if (isText.value) props.push('text');
+    if (isRounded.value) props.push('rounded');
+    if (selectedSize.value) props.push(`size="${selectedSize.value}"`);
+    if (isLoading.value) props.push('loading');
+    if (isDisabled.value) props.push('disabled');
+
+    if (iconOption.value === 'left') props.push('icon="pi pi-check"');
+    if (iconOption.value === 'right') props.push('icon="pi pi-arrow-right" iconPos="right"');
+
+    return `<Button ${props.join(' ')} />`;
+});
+</script>
+
 <template>
-    <div class="flex flex-col h-auto">
-        <a-card id="design-system-buttons" class="p-32" with-geometry>
-            <a-heading level="2" dark>Buttons</a-heading>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary">Primary</a-button>
-                <a-button class="m-8" type="is-default">Default</a-button>
-                <a-button class="m-8" type="is-info">Info</a-button>
-                <a-button class="m-8" type="is-warning">Warning</a-button>
-                <a-button class="m-8" type="is-danger">Danger</a-button>
-                <a-button class="m-8" type="is-success">Success</a-button>
-                <b-button class="m-8" type="is-link">Link</b-button>
-                <b-button class="m-8" type="is-light">Light</b-button>
-                <b-button class="m-8" type="is-dark">Dark</b-button>
-                <b-button class="m-8" type="is-text">Text</b-button>
+    <div class="flex-1 flex flex-col gap-8">
+        <div class="">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+                <div>
+                    <h2>Buttons</h2>
+                    <p class="text-gray-600 mt-2">Configure props to generate your button code.</p>
+                </div>
             </div>
 
-            <a-code language="html">
-                &lt;a-button type="is-primary" size="is-default"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 bg-gray-50 border rounded-xl flex items-center justify-center min-h-[200px] relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-            <a-paragraph>
-                For all permutations, see the <a href="https://buefy.org/documentation/button">Buefy button docs</a>.
-            </a-paragraph>
+                    <Button
+                        :label="label"
+                        :severity="selectedSeverity"
+                        :outlined="isOutlined"
+                        :rounded="isRounded"
+                        :text="isText"
+                        :size="selectedSize"
+                        :loading="isLoading"
+                        :disabled="isDisabled"
+                        :icon="iconOption === 'left' ? 'pi pi-check' : (iconOption === 'right' ? 'pi pi-arrow-right' : null)"
+                        :iconPos="iconOption === 'right' ? 'right' : 'left'"
+                    />
+                </div>
 
-        </a-card>
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <h6>Style</h6>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <Button label="Rounded" :severity="isRounded ? 'primary' : 'secondary'" @click="isRounded = !isRounded" size="small" />
+                            <Button label="Outlined" :severity="isOutlined ? 'primary' : 'secondary'" @click="isOutlined = !isOutlined; isText = false" size="small" />
+                            <Button label="Text" :severity="isText ? 'primary' : 'secondary'" @click="isText = !isText; isOutlined = false" size="small" />
+                        </div>
+                    </div>
 
-        <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Light buttons</a-heading>
+                    <div>
+                        <h6>State</h6>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <Button label="Loading" :severity="isLoading ? 'primary' : 'secondary'" @click="isLoading = !isLoading" size="small" />
+                            <Button label="Disabled" :severity="isDisabled ? 'primary' : 'secondary'" @click="isDisabled = !isDisabled" size="small" />
+                        </div>
+                    </div>
 
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary is-light">Primary</a-button>
-                <a-button class="m-8" type="is-default is-light">Default</a-button>
-                <a-button class="m-8" type="is-info is-light">Info</a-button>
-                <a-button class="m-8" type="is-warning is-light">Warning</a-button>
-                <a-button class="m-8" type="is-danger is-light">Danger</a-button>
-                <a-button class="m-8" type="is-success is-light">Success</a-button>
-                <b-button class="m-8" type="is-link is-light">Link Light</b-button>
+                    <div>
+                        <h6>Size</h6>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <Button
+                                v-for="size in sizes"
+                                :key="size.label"
+                                :severity="selectedSize === size.value ? 'primary' : 'secondary'"
+                                :label="size.label"
+                                @click="selectedSize = size.value"
+                                size="small"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h6>Severity</h6>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <button
+                                v-for="sev in severities"
+                                :key="sev.label"
+                                type="button"
+                                @click="selectedSeverity = sev.value"
+                                class="w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 focus:outline-none"
+                                :class="[
+                                    selectedSeverity === sev.value ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : 'border-transparent',
+                                    sev.value === null ? 'bg-indigo-600' : // Primary mapping
+                                    sev.value === 'secondary' ? 'bg-gray-500' :
+                                    sev.value === 'success' ? 'bg-green-500' :
+                                    sev.value === 'info' ? 'bg-blue-500' :
+                                    sev.value === 'warn' ? 'bg-orange-500' :
+                                    sev.value === 'help' ? 'bg-purple-500' :
+                                    sev.value === 'danger' ? 'bg-red-500' :
+                                    'bg-black' // Contrast
+                                ]"
+                                :title="sev.label"
+                            ></button>
+                            <span class="text-sm text-gray-600 ml-2 self-center">{{ severities.find(s => s.value === selectedSeverity)?.label }}</span>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
-            <a-code language="html">
-                &lt;a-button type="is-primary is-light" size="is-default"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
+            <div class="mt-8">
+                <a-code
+                    language="html"
+                    :code="generatedCode"
+                />
+            </div>
+        </div>
 
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Outlined buttons</a-heading>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-primary" outlined>Primary</a-button>
-                <a-button class="m-8" type="is-default" outlined>Default</a-button>
-                <a-button class="m-8" type="is-info" outlined>Info</a-button>
-                <a-button class="m-8" type="is-warning" outlined>Warning</a-button>
-                <a-button class="m-8" type="is-danger" outlined>Danger</a-button>
-                <a-button class="m-8" type="is-success" outlined>Success</a-button>
-                <b-button class="m-8" type="is-link" outlined>Link Light</b-button>
+        <a-card class="p-8">
+            <div class="mb-6">
+                <h2>Semantic Palette</h2>
+                <p class="text-gray-600 mt-2">Standard communication colors used across the application.</p>
             </div>
 
-            <a-code language="html">
-                &lt;a-button type="is-primary" outlined&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <h3>Actions</h3>
+                    <div class="flex flex-col gap-3 items-start">
+                        <Button label="Primary Action" class="w-full" />
+                        <Button label="Secondary Action" severity="secondary" class="w-full" />
+                        <Button label="Outline" outlined class="w-full" />
+                    </div>
+                </div>
 
-        </a-card>
+                <div class="space-y-4">
+                    <h3>Feedback</h3>
+                    <div class="flex flex-col gap-3 items-start">
+                        <Button label="Confirm Success" severity="success" icon="pi pi-check" class="w-full" />
+                        <Button label="Delete Item" severity="danger" icon="pi pi-trash" class="w-full" />
+                        <Button label="Alert Warning" severity="warn" icon="pi pi-exclamation-triangle" class="w-full" />
+                    </div>
+                </div>
 
-        <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Size</a-heading>
-
-            <div class="flex flex-row flex-wrap">
-                <a-button class="m-8" type="is-default" size="is-small">Small</a-button>
-                <a-button class="m-8" type="is-default" size="is-default">Default</a-button>
-                <a-button class="m-8" type="is-default" size="is-medium">Medium</a-button>
-                <a-button class="m-8" type="is-default" size="is-large">Large</a-button>
+                <div class="space-y-4">
+                    <h3>Information</h3>
+                    <div class="flex flex-col gap-3 items-start">
+                        <Button label="View Details" severity="info" icon="pi pi-info-circle" outlined class="w-full" />
+                        <Button label="Documentation" severity="help" icon="pi pi-book" text class="w-full" />
+                        <Button label="Download" severity="contrast" icon="pi pi-download" class="w-full" />
+                    </div>
+                </div>
             </div>
 
-            <a-code language="html">
-                &lt;a-button type="is-primary" size="is-medium"&gt;
-                    Submit
-                &lt;/a-button&gt;
-            </a-code>
-
-        </a-card>
-
-        <a-card id="design-system-buttons" class="p-32 mt-32" with-geometry>
-            <a-heading level="2" dark>Links</a-heading>
-
-            <div class="flex flex-row flex-wrap">
-                <a href="#">Link</a>
-                <!-- <a-button class="m-8" type="is-default" size="is-small">Small</a-button>
-                <a-button class="m-8" type="is-default" size="is-default">Default</a-button>
-                <a-button class="m-8" type="is-default" size="is-medium">Medium</a-button>
-                <a-button class="m-8" type="is-default" size="is-large">Large</a-button> -->
-            </div>
-
-            <a-code language="html">
-                &lt;a href="#"&gt;Link&lt;/a&gt;
-            </a-code>
-
+            <p class="mt-8 text-sm text-gray-500">
+                For advanced usage, configuration, and pass-through props, refer to the
+                <a class="font-semibold text-indigo-600 hover:underline" href="https://primevue.org/button/" target="_blank">PrimeVue Button Documentation</a>.
+            </p>
         </a-card>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'buttons',
-
-    data() {
-        return {};
-    },
-
-    computed: {},
-
-    methods: {},
-
-};
-</script>

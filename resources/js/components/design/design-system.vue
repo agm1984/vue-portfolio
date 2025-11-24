@@ -1,15 +1,15 @@
 <template>
     <a-page v-title="'Design system'">
-        <a-heading level="1">Typography</a-heading>
+        <h2 level="1">Typography</h2>
 
         <div class="flex flex-col">
-            <a-heading level="1">Size 1</a-heading>
-            <a-heading level="2">Size 2</a-heading>
-            <a-heading level="3">Size 3</a-heading>
-            <a-heading level="4">Size 4</a-heading>
-            <a-heading level="5">Size 5</a-heading>
-            <a-heading level="6">Size 6</a-heading>
-            <a-heading level="7">Size 7</a-heading>
+            <h2 level="1">Size 1</h2>
+            <h2 level="2">Size 2</h2>
+            <h2 level="3">Size 3</h2>
+            <h2 level="4">Size 4</h2>
+            <h2 level="5">Size 5</h2>
+            <h2 level="6">Size 6</h2>
+            <h2 level="7">Size 7</h2>
         </div>
     </a-page>
 </template>

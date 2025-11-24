@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Comment;
-use App\Example;
-use App\User;
+use App\Models\Comment;
+use App\Models\Example;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -24,12 +24,17 @@ class CommentController extends Controller
             $request->input('body'),
         );
 
-        return response()->json($comment, 200);
+        $comment->load('author');
+
+        return response()->json([
+            'comment' => $comment,
+        ], 200);
     }
 
     public function edit(Request $request, Comment $comment)
     {
         \Log::debug($request->all());
+
         $comment->body = $request->input('body');
         $comment->save();
 
@@ -42,9 +47,9 @@ class CommentController extends Controller
 
     public function delete(Request $request, Comment $comment)
     {
-        \Log::debug('hittin dat');
-        $comment->delete();
         \Log::debug($request->all());
+
+        $comment->delete();
 
         return response()->json([
             'success' => true,

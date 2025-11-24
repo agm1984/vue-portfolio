@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -25,7 +25,7 @@ class VerificationController extends Controller
      * Mark the user's email address as verified.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
      */
     public function verify(Request $request, User $user)
@@ -59,24 +59,22 @@ class VerificationController extends Controller
      */
     public function resend(Request $request)
     {
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
 
         $user = User::where('email', $request->email)->first();
 
-        if (is_null($user)) {
-            throw ValidationException::withMessages([
-                'email' => [trans('verification.user')],
-            ]);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            throw ValidationException::withMessages([
-                'email' => [trans('verification.already_verified')],
-            ]);
-        }
+        if (! $user || $user->hasVerifiedEmail()) {
+        return response()->json([
+            'message' => trans('verification.sent_generic'),
+        ]);
+    }
 
         $user->sendEmailVerificationNotification();
 
-        return response()->json(['status' => trans('verification.sent')]);
+        return response()->json([
+            'status' => trans('verification.sent'),
+        ]);
     }
 }

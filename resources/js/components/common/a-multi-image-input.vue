@@ -1,167 +1,127 @@
-<template>
-    <section>
-        <validation-provider
-            v-slot="{ errors, valid }"
-            :vid="vid"
-            :name="$attrs.name || $attrs.label"
-            :rules="rules"
-        >
-            <b-field
-                :label="label"
-                :type="{
-                    [InputContext.DEFAULT]: false,
-                    [InputContext.NEGATIVE]: errors[0],
-                    [InputContext.POSITIVE]: false,
-                    [InputContext.INFO]: false,
-                    [InputContext.WARN]: false,
-                }"
-                :message="errors"
-                :expanded="expanded"
-                :required="required"
-                :disabled="disabled"
-                :loading="loading"
-            >
-                <b-upload
-                    v-model="innerValue"
-                    multiple
-                    drag-drop
-                >
-                    <section class="section">
-                        <div class="content has-text-centered">
-                            <p>
-                                <b-icon
-                                    icon="upload"
-                                    size="is-large"
-                                ></b-icon>
-                            </p>
+<script setup>
+import { ref, watch } from 'vue';
+import FileUpload from 'primevue/fileupload';
+import Button from 'primevue/button';
 
-                            <p>
-                                Drop your files here or click to upload
-                            </p>
-                        </div>
-                    </section>
-                </b-upload>
-            </b-field>
-
-            <div class="tags">
-                <span v-for="(file, index) in innerValue" :key="index" class="tag is-primary">
-                    {{ file.name }}
-
-                    <button
-                        class="delete is-small"
-                        type="button"
-                        @click="deleteDropFile(index)"
-                    ></button>
-                </span>
-            </div>
-
-        </validation-provider>
-    </section>
-</template>
-
-<script>
-import { ValidationProvider } from 'vee-validate';
-import { InputContext } from '~/globalStateTypes';
-
-export default {
-    name: 'a-multi-image-input',
-
-    components: {
-        ValidationProvider,
+const props = defineProps({
+    exampleSlug: {
+        type: String,
+        required: true,
     },
 
-    props: {
-        // must be included in props
-        value: {
-            type: Array,
-            required: false,
-            default: () => '',
-        },
-
-        vid: {
-            type: String,
-            required: false,
-            default: () => undefined,
-        },
-
-        rules: {
-            type: [Object, String, Date],
-            default: () => '',
-        },
-
-        name: {
-            type: String,
-            required: false,
-            default: () => '',
-        },
-
-        label: {
-            type: String,
-            required: false,
-            default: () => '',
-        },
-
-        expanded: {
-            type: Boolean,
-            required: false,
-            default: () => false,
-        },
-
-        required: {
-            type: Boolean,
-            required: false,
-            default: () => false,
-        },
-
-        disabled: {
-            type: Boolean,
-            required: false,
-            default: () => false,
-        },
-
-        loading: {
-            type: Boolean,
-            required: false,
-            default: () => false,
-        },
-
+    existingImages: {
+        type: Array,
+        required: false,
+        default: () => [],
     },
 
-    data() {
-        return {
-            InputContext,
-            innerValue: [],
-        };
+    modelValue: {
+        type: Array,
+        required: true,
     },
+});
 
-    computed: {},
+const emit = defineEmits([
+    'update:model-value',
+    'remove-existing-image',
+]);
 
-    watch: {
-        // handles internal model changes
-        innerValue(newVal) {
-            return this.$emit('input', newVal);
-        },
+const alreadyUploadedImages = ref(props.existingImages);
+const files = ref([]);
+const src = ref([]);
 
-        // handles external model changes
-        value(newVal) {
-            this.innerValue = newVal;
-        },
+watch(props.modelValue, (newVal) => {
+    alreadyUploadedImages.value = props.existingImages;
+    files.value = newVal || [];
+    src.value = [];
+}, { immediate: true });
 
-    },
+const readAsDataURL = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target?.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+};
 
-    created() {
-        if (this.value) {
-            this.innerValue = this.value;
-        }
-    },
+const onSelectedFiles = async (event) => {
+    const list = event?.files ?? [];
+    const fileArr = Array.from(list);
+    files.value = fileArr;
 
-    mounted() {},
+    emit('update:model-value', files.value);
 
-    methods: {
-        deleteDropFile(index) {
-            this.innerValue.splice(index, 1);
-        },
-    },
+    src.value = await Promise.all(fileArr.map(readAsDataURL));
+}
 
+const handleRemoveExistingImage = async (imageId) => {
+    try {
+        alreadyUploadedImages.value = alreadyUploadedImages.value.filter(image => image.id !== imageId);
+
+        emit('remove-existing-image', imageId);
+    } catch (err) {
+        console.error(`a-multi-image-input# Problem removing existing image: ${err}.`);
+    }
+};
+
+const handleRemoveNewImage = (index) => {
+    files.value.splice(index, 1);
+    src.value.splice(index, 1);
+
+    emit('update:model-value', files.value);
 };
 </script>
+
+<template>
+    <div class="w-full flex flex-col gap-4">
+        <div class="w-full grid grid-cols-2 gap-4">
+            <div
+                v-for="image in alreadyUploadedImages"
+                :key="`existing-image-${image.name}`"
+            >
+                <img
+                    class="w-full aspect-video object-cover"
+                    :src="`/storage/examples/${exampleSlug}/${image.filename}`"
+                    :alt="image.filename"
+                />
+                <Button
+                    type="button"
+                    class="mt-2"
+                    severity="danger"
+                    icon="pi pi-trash"
+                    label="Remove"
+                    @click="handleRemoveExistingImage(image.id)"
+                />
+            </div>
+
+            <div
+                v-for="(item, index) in src"
+                :key="`new-image-${index}`"
+            >
+                <img
+                    class="w-full aspect-video object-cover"
+                    :src="item"
+                    :alt="`Selected image ${index + 1}`"
+                />
+                <Button
+                    type="button"
+                    class="mt-2"
+                    severity="danger"
+                    icon="pi pi-trash"
+                    label="Remove"
+                    @click="handleRemoveNewImage(index)"
+                />
+            </div>
+        </div>
+
+        <FileUpload
+            mode="basic"
+            multiple
+            custom-upload
+            accept="image/*"
+            :max-file-size="10000000"
+            @select="onSelectedFiles"
+        />
+    </div>
+</template>

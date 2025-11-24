@@ -1,111 +1,167 @@
-<template>
-    <a-card class="p-32" with-geometry>
-        <a-heading level="2" class="mb-16">
-            Categories
-        </a-heading>
-
-        <b-table
-            :data="categories"
-            :loading="isInitializing"
-        >
-            <template slot-scope="{ row }">
-                <b-table-column field="name" label="Name">
-                    <router-link :to="{ name: 'admin.categories.show', params: { category: row.slug } }">
-                        {{ row.name }}
-                    </router-link>
-                </b-table-column>
-
-                <b-table-column field="slug" label="Slug">
-                    {{ row.slug }}
-                </b-table-column>
-
-                <b-table-column field="created_at" label="Created" width="128" numeric>
-                    {{ row.created_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="updated_at" label="Last updated" width="128" numeric>
-                    {{ row.updated_at_diff }}
-                </b-table-column>
-
-                <b-table-column field="status" label="Status" width="1" numeric>
-                    <a-status-tag :status="row.status_nice"></a-status-tag>
-                </b-table-column>
-            </template>
-        </b-table>
-
-    </a-card>
-</template>
-
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useHead } from '@unhead/vue';
+import { FilterMatchMode } from '@primevue/core/api';
 import axios from 'axios';
-import CreateCategory from './create-category.vue';
+import { useToast } from 'primevue/usetoast';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Tag from 'primevue/tag';
+import InputText from 'primevue/inputtext';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+import Button from 'primevue/button';
+import { useAuthStore } from '~/store/auth';
 
-const INITIAL = 'INITIAL';
-const LIST = 'LIST';
-const CREATE = 'CREATE';
+useHead({
+    title: 'Admin List Categories',
+});
 
-export default {
-    name: 'list-categories',
+const auth = useAuthStore();
+const toast = useToast();
 
-    middleware: ['auth', 'role-admin'],
+const loading = ref(true);
+const categories = ref([]);
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
 
-    metaInfo() {
-        return { title: 'List categories' };
-    },
-
-    data() {
-        return {
-            state: INITIAL,
-            categories: [],
-        };
-    },
-
-    computed: {
-        isInitializing() {
-            return (this.state === INITIAL);
-        },
-
-        isListing() {
-            return (this.state === LIST);
-        },
-
-        // isCreating() {
-        //     return (this.state === CREATE);
-        // },
-
-    },
-
-    mounted() {
-        return this.fetchAllCategories();
-    },
-
-    methods: {
-        async fetchAllCategories() {
-            try {
-                const { data } = await axios.get(route('admin.categories.list'));
-
-                this.categories = data.categories;
-                this.state = LIST;
-            } catch (err) {
-                throw new Error(`list-categories# Problem fetching all categories: ${err}.`);
-            }
-        },
-
-        // resetCreate() {
-        //     this.state = LIST;
-        // },
-
-        // use as reference for modals?
-        // handleCreate() {
-        //     this.state = CREATE;
-
-        //     return this.$buefy.modal.open({
-        //         parent: this,
-        //         component: CreateCategory,
-        //         onCancel: this.resetCreate,
-        //     });
-        // },
-    },
-
+const statusMap = {
+    0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
+    1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
 };
+
+const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', severity: 'info', icon: 'pi pi-question' };
+
+const fetchAllCategories = async () => {
+    try {
+        loading.value = true;
+
+        const { data } = await axios.get(route('admin.categories.list'));
+
+        categories.value = data.categories;
+    } catch (error) {
+        console.error(error);
+        toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load categories',
+            life: 5000,
+        });
+    } finally {
+        loading.value = false;
+    }
+};
+
+onMounted(fetchAllCategories);
 </script>
+
+<template>
+    <div class="flex-1 w-full flex flex-col">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div>
+                <h1>Categories</h1>
+                <p class="text-gray-600 mt-2">For organizing portfolio examples.</p>
+            </div>
+
+            <div v-if="auth.isAdmin">
+                <router-link :to="{ name: 'admin.categories.create' }">
+                    <Button
+                        type="button"
+                        severity="primary"
+                        icon="pi pi-plus"
+                        label="Add Category"
+                        raised
+                    />
+                </router-link>
+            </div>
+        </div>
+
+        <a-card class="p-8">
+            <div class="flex justify-end pb-4">
+                <IconField iconPosition="left">
+                    <InputIcon>
+                        <i class="pi pi-search" />
+                    </InputIcon>
+                    <InputText
+                        v-model="filters['global'].value"
+                        placeholder="Search categories..."
+                        class="w-full md:w-64"
+                    />
+                </IconField>
+            </div>
+
+            <DataTable
+                v-model:filters="filters"
+                :value="categories"
+                :loading="loading"
+                paginator
+                :rows="10"
+                :rowsPerPageOptions="[5, 10, 25, 50]"
+                :globalFilterFields="['name', 'slug']"
+                removableSort
+                stripedRows
+            >
+                <template #empty>
+                    <div class="text-center py-8">
+                        <i class="pi pi-folder-open text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-600">No categories found.</p>
+                    </div>
+                </template>
+
+                <Column field="name" header="Name" sortable>
+                    <template #body="{ data }">
+                        <div class="flex flex-col">
+                            <router-link
+                                :to="{ name: 'admin.categories.show', params: { category: data.slug } }"
+                                class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
+                            >
+                                {{ data.name }}
+                            </router-link>
+                        </div>
+                    </template>
+                </Column>
+
+                <Column field="slug" header="Slug" sortable>
+                    <template #body="{ data }">
+                        <span class="font-mono text-sm text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">
+                            {{ data.slug }}
+                        </span>
+                    </template>
+                </Column>
+
+                <Column field="status" header="Status" sortable>
+                    <template #body="{ data }">
+                        <Tag
+                            class="uppercase text-[10px] font-semibold tracking-wider px-2"
+                            :severity="getStatusConfig(data.status).severity"
+                            :icon="getStatusConfig(data.status).icon"
+                            :value="getStatusConfig(data.status).label"
+                            rounded
+                        />
+                    </template>
+                </Column>
+
+                <Column field="created_at_diff" header="Created" sortable>
+                    <template #body="{ data }">
+                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.created_at_diff }}</span>
+                    </template>
+                </Column>
+
+                <Column field="updated_at_diff" header="Last Updated" sortable>
+                    <template #body="{ data }">
+                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.updated_at_diff }}</span>
+                    </template>
+                </Column>
+
+                <Column style="width: 3rem; text-align: center">
+                    <template #body="{ data }">
+                        <router-link :to="{ name: 'admin.categories.show', params: { category: data.slug } }">
+                            <Button icon="pi pi-chevron-right" text rounded severity="secondary" />
+                        </router-link>
+                    </template>
+                </Column>
+            </DataTable>
+        </a-card>
+    </div>
+</template>

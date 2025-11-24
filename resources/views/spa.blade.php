@@ -1,17 +1,17 @@
 @php
-$config = [
-    'appName' => config('app.name'),
-    'github' => [
-        'client_id' => config('services.github.client_id'),
-        'callback_url' => config('services.github.callback_url'),
-        'provider_name' => config('services.github.provider_name'),
-    ],
-    'twitter' => [
-        'client_id' => config('services.twitter.client_id'),
-        'callback_url' => config('services.twitter.callback_url'),
-        'provider_name' => config('services.twitter.provider_name'),
-    ],
-];
+    $config = [
+        'appName' => config('app.name'),
+        'github' => [
+            'client_id' => config('services.github.client_id'),
+            'callback_url' => config('services.github.callback_url'),
+            'provider_name' => config('services.github.provider_name'),
+        ],
+        'twitter' => [
+            'client_id' => config('services.twitter.client_id'),
+            'callback_url' => config('services.twitter.callback_url'),
+            'provider_name' => config('services.twitter.provider_name'),
+        ],
+    ];
 @endphp
 
 <!DOCTYPE html>
@@ -29,10 +29,11 @@ $config = [
         <meta name="msapplication-TileColor" content="#006666">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:300">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300"> -->
+        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:300"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,9 +47,9 @@ $config = [
         <meta name="twitter:description" content="With over 15 years workforce experience, Adam is a web and mobile software developer specialized in node.js and React development.">
         <meta name="twitter:image" content="https://adammackintosh.net/adam.png">
         <meta name="twitter:image:alt" content="Adam Mackintosh">
-        <meta property="og:image" content="http://adammackintosh.net/adam.png">
+        <meta property="og:image" content="https://adammackintosh.net/adam.png">
         <meta property="og:title" content="Adam Mackintosh's Portfolio">
-        <meta property="og:url" content="http://adammackintosh.net">
+        <meta property="og:url" content="https://adammackintosh.net">
         <meta property="og:site_name" content="adammackintosh.net">
         <meta property="og:description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
         <meta property="og:type" content="Website">
@@ -61,12 +62,12 @@ $config = [
         <meta itemprop="image" url="https://adammackintosh.net/adam.png">
         <meta itemprop="author" content="Adam Mackintosh">
 
-         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <script type="application/ld+json">
             {
-                "@context": "http://schema.org",
-                "@type": "Person",
+                "@@context": "http://schema.org",
+                "@@type": "Person",
                 "name": "Adam Mackintosh",
                 "sameAs": [
                     "https://www.linkedin.com/in/adam-mackintosh-1540b874",
@@ -82,13 +83,12 @@ $config = [
                 "additionalName": "agm1984",
                 "url": "https://adammackintosh.net",
                 "address": {
-                    "@type": "PostalAddress",
+                    "@@type": "PostalAddress",
                     "addressLocality": "Nanaimo",
                     "addressRegion": "British Columbia"
                 }
             }
         </script>
-
     </head>
 
     <body class="antialiased">
@@ -139,7 +139,6 @@ $config = [
 
         @routes
 
-        <script src="{{ mix('dist/js/app.js') }}"></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </body>
-
 </html>

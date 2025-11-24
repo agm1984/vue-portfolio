@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class RegisterController extends Controller
      * Create a new user from the registration form data.
      *
      * @param array $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data) : User
     {
@@ -59,8 +59,13 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, User $user)
     {
+        if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+        }
+
         return response()->json([
             'user' => $user,
+            'message' => 'Registration successful. We have emailed you a verification link.',
         ]);
     }
 }

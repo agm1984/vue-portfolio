@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Aroly';
+    src: url('../fonts/AROLY.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-aroly: Aroly, sans-serif;
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-300, currentColor);
+    }
+}
+
+html {
+    font-family: Lato, sans-serif;
+}
+
+h1 {
+    @apply text-4xl font-semibold;
+}
+
+h2 {
+    @apply text-3xl font-semibold;
+}
+
+h3 {
+    @apply text-2xl font-semibold text-gray-600 uppercase tracking-wider;
+}
+
+h4 {
+    @apply text-xl font-semibold;
+}
+
+h5 {
+    @apply text-lg font-semibold;
+}
+
+h6 {
+    @apply text-xs font-semibold text-gray-600 uppercase tracking-wider;
+}
+
+/* CHROMIUM ICON BUG FIX */
+.pi:before {
+    --webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: relative;
+}

@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss');
+require('mix-tailwindcss');
 require('laravel-mix-bundle-analyzer');
 
 function publishAssets() {
@@ -16,12 +16,9 @@ function publishAssets() {
     fs.removeSync(path.join(publicDir, 'build'));
 }
 
-mix.js('resources/js/app.js', 'public/dist/js')
+mix.js('resources/js/app.js', 'public/dist/js').vue({ version: 2 })
     .sass('resources/sass/app.scss', 'public/dist/css')
-    .options({
-        postCss: [tailwindcss('./tailwind.config.js')],
-        processCssUrls: false,
-    });
+    .tailwind();
 // .disableNotifications()
 
 if (mix.inProduction()) {
@@ -48,12 +45,12 @@ mix.webpackConfig({
 
     output: {
         chunkFilename: 'dist/js/[chunkhash].js',
-        path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build'),
+        // path: mix.inProduction() ? '/' : path.resolve(__dirname, './public'),
     },
 });
 
 mix.then(() => {
-    if (!mix.config.hmr) {
+    if (mix.inProduction()) {
         process.nextTick(() => publishAssets());
     }
 });

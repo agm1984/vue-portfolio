@@ -1,219 +1,307 @@
+<script setup>
+import { ref, reactive, computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import { helpers, required, email, numeric, minLength, maxLength } from '@vuelidate/validators';
+import { useVuelidate } from '@vuelidate/core';
+import axios from 'axios';
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
+import InputNumber from 'primevue/inputnumber';
+import Button from 'primevue/button';
+import { useAuthStore } from '~/store/auth';
+
+useHead({
+    title: 'Contact Me',
+});
+
+const auth = useAuthStore();
+
+const myEmail = 'adam@adammackintosh.net';
+const INITIAL = 'is-initial';
+const COPIED = 'is-copied';
+const SUBMITTING = 'is-submitting';
+const MESSAGE_SENT = 'is-message-sent';
+const state = ref(INITIAL);
+const isSubmitting = computed(() => state.value === SUBMITTING);
+const isCopiedToClipboard = computed(() => state.value === COPIED);
+const isMessageSent = computed(() => state.value === MESSAGE_SENT);
+const submitted = ref(false);
+
+const generateRandom = () => Math.floor((Math.random() * 10) + 1);
+const num1 = ref(generateRandom());
+const num2 = ref(generateRandom());
+const successMessage = ref('');
+const verificationText = computed(() => `What is ${num1.value} + ${num2.value}?`);
+
+const form = reactive({
+    sender_name: auth.isAuthenticated ? auth.user.name : '',
+    sender_email: auth.isAuthenticated ? auth.user.email : '',
+    subject: '',
+    content: '',
+    answer: null,
+});
+
+const contactRules = {
+    sender_name: { required, maxLength: maxLength(255) },
+    sender_email: { required, email, maxLength: maxLength(255) },
+    subject: { required, maxLength: maxLength(255) },
+    content: { required, minLength: minLength(10), maxLength: maxLength(2000) },
+    answer: {
+        required,
+        numeric,
+        isCorrect: helpers.withMessage('Incorrect!', (value) => {
+            if (!helpers.req(value)) return true;
+            return value === (num1.value + num2.value);
+        }),
+    },
+};
+
+const v$ = useVuelidate(contactRules, form);
+
+const copyEmailToClipboard = async () => {
+    if (state.value === COPIED) return;
+
+    try {
+        await navigator.clipboard.writeText(myEmail);
+        state.value = COPIED;
+        setTimeout(() => {
+            state.value = INITIAL;
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy!', err);
+    }
+};
+
+const resetForm = () => {
+    form.sender_name = auth.isAuthenticated ? auth.user.name : '';
+    form.sender_email = auth.isAuthenticated ? auth.user.email : '';
+    form.subject = '';
+    form.content = '';
+    form.answer = '';
+    num1.value = generateRandom();
+    num2.value = generateRandom();
+    submitted.value = false;
+    state.value = INITIAL;
+    successMessage.value = '';
+};
+
+const sendMessage = async () => {
+    try {
+        state.value = SUBMITTING;
+        submitted.value = true;
+
+        const isFormValid = await v$.value.$validate();
+
+        if (!isFormValid) {
+            state.value = INITIAL;
+            return;
+        }
+
+        const formData = {
+            ...form,
+        };
+
+        const { data } = await axios.post(route('public.contact.send'), formData);
+
+        successMessage.value = data.message;
+
+        state.value = MESSAGE_SENT;
+    } catch (error) {
+        console.error(error);
+        state.value = INITIAL;
+    }
+}
+</script>
+
 <template>
-    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <b-message v-show="showSuccessMessage" type="is-success">
-            {{ successMessage }}
-        </b-message>
+    <div class="flex-1 w-full max-w-5xl mx-auto flex items-center p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
+            <div class="lg:col-span-1 flex flex-col gap-8">
+                <div>
+                    <h1>Contact Me</h1>
 
-        <div class="flex flex-col w-full xl:flex-row">
-            <a-card class="order-1 w-full p-32 mr-0 xl:mr-16" with-geometry>
-                <a-heading level="1" class="mb-16">Contact</a-heading>
+                    <p class="text-gray-600 mt-2">
+                        Have a project in mind? Send a message here, or reach out directly via email.
+                    </p>
+                </div>
 
-                <a-paragraph>
-                    Ready to get in touch?
-                </a-paragraph>
+                <a-card class="p-8">
+                    <div class="flex items-center gap-2 text-indigo-600 font-semibold text-sm uppercase tracking-wide">
+                        <i class="pi pi-envelope"></i>
+                        <span>Direct Email</span>
+                    </div>
 
-                <a-paragraph>
-                    Send a message here, or email me at <a :href="`mailto:${myEmail}`">{{ myEmail }}</a>
-                    <span
-                        v-if="isCopiedToClipboard"
-                        class="text-sm"
+                    <a
+                        :href="`mailto:${myEmail}`"
+                        class="text-lg text-gray-800 hover:text-indigo-600 transition-colors block break-all mt-2"
                     >
-                        Copied to Clipboard
-                        <span class="text-mint-hover">✓</span>
-                    </span>
+                        {{ myEmail }}
+                    </a>
 
-                    <button
-                        v-else
-                        class="text-sm"
-                        tabindex="0"
-                        title="Copy email address into clipboard"
+                    <Button
+                        type="button"
+                        class="lg:w-full mt-2"
+                        :severity="isCopiedToClipboard ? 'success' : 'secondary'"
+                        :icon="isCopiedToClipboard ? 'pi pi-check' : 'pi pi-copy'"
+                        :label="isCopiedToClipboard ? 'Copied!' : 'Copy to Clipboard'"
+                        size="small"
+                        outlined
                         @click="copyEmailToClipboard"
-                    >
-                        Copy to Clipboard
-                    </button>
-                </a-paragraph>
+                    />
+                </a-card>
 
-                <div class="flex flex-col pb-8 bg-grey-200">
-                    <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
-                        Find me on social media
-                    </a-heading>
-                    <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
-                    <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
-                    <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
-                    <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link>
+                <div>
+                    <h3 class="text-sm font-semibold">Connect</h3>
+                    <div class="flex gap-4 mt-4">
+                        <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="stackoverflow" class="hover:translate-x-1 transition-transform" />
+                        <a-social-link network="medium" class="hover:translate-x-1 transition-transform" />
+                    </div>
                 </div>
-            </a-card>
+            </div>
 
-            <a-form v-slot="{ handleSubmit }" class="flex flex-col order-2 w-full mt-64 ml-0 xl:ml-16 xl:mt-0">
-                <a-text-input
-                    v-model="message.sender_name"
-                    class="mb-20"
-                    rules="required"
-                    vid="sender_name"
-                    placeholder="Name"
-                ></a-text-input>
+            <div class="lg:col-span-2">
+                <a-card class="p-8">
+                    <transition name="fade" mode="out-in">
+                        <div v-if="isMessageSent" class="flex flex-col items-center justify-center text-center py-8">
+                            <div class="w-20 h-20 flex items-center justify-center bg-green-100 text-green-600 rounded-full animate-bounce">
+                                <i class="pi pi-check" style="font-size: 24px;"></i>
+                            </div>
 
-                <a-text-input
-                    v-model="message.sender_email"
-                    class="mb-20"
-                    rules="required"
-                    vid="sender_email"
-                    placeholder="Email"
-                ></a-text-input>
+                            <h3 class="mt-4">Message Sent!</h3>
 
-                <a-text-input
-                    v-model="message.subject"
-                    class="mb-20"
-                    rules="required"
-                    vid="subject"
-                    placeholder="Subject"
-                ></a-text-input>
+                            <p class="max-w-md mt-4">
+                                {{ successMessage }}
+                            </p>
+                            <Button
+                                type="button"
+                                class="mt-4"
+                                severity="secondary"
+                                icon="pi pi-send"
+                                label="Send Another Message"
+                                @click="resetForm"
+                            />
+                        </div>
 
-                <a-text-input
-                    v-model="message.content"
-                    rules="required"
-                    vid="content"
-                    type="textarea"
-                    placeholder="Type your message here"
-                    maxlength="2000"
-                    has-counter
-                ></a-text-input>
+                        <form v-else @submit.prevent="sendMessage">
+                            <a-input-field input-id="contact-name" title="Name" required />
 
-                <div class="flex flex-row justify-end">
-                    <span class="mt-8 mr-8">
-                        {{ verificationText }}
-                    </span>
+                            <InputText
+                                v-model="v$.sender_name.$model"
+                                id="contact-name"
+                                :class="['w-full', { 'p-invalid': v$.sender_name.$invalid && submitted }]"
+                                autocomplete="name"
+                                placeholder=""
+                            />
 
-                    <a-text-input
-                        v-model="message.answer"
-                        class="mr-8 w-80"
-                        rules="required"
-                        vid="answer"
-                    ></a-text-input>
+                            <a-field-errors
+                                v-if="v$.sender_name.$error && submitted"
+                                :errors="v$.sender_name.$errors"
+                                name="Name"
+                            />
 
-                    <a-button
-                        native-type="submit"
-                        :disabled="!isFormVerified"
-                        expanded
-                        @click="handleSubmit(sendMessage)"
-                    >
-                        SEND
-                    </a-button>
-                </div>
-            </a-form>
+                            <a-input-field class="mt-4" input-id="contact-email" title="Email" required />
+
+                            <InputText
+                                v-model="v$.sender_email.$model"
+                                id="contact-email"
+                                :class="['w-full', { 'p-invalid': v$.sender_email.$invalid && submitted }]"
+                                autocomplete="email"
+                                placeholder=""
+                            />
+
+                            <a-field-errors
+                                v-if="v$.sender_email.$error && submitted"
+                                :errors="v$.sender_email.$errors"
+                                name="Email"
+                            />
+
+                            <a-input-field class="mt-4" input-id="contact-subject" title="Subject" required />
+
+                            <InputText
+                                v-model="v$.subject.$model"
+                                id="contact-subject"
+                                :class="['w-full', { 'p-invalid': v$.subject.$invalid && submitted }]"
+                                autocomplete="off"
+                                placeholder=""
+                            />
+
+                            <a-field-errors
+                                v-if="v$.subject.$error && submitted"
+                                :errors="v$.subject.$errors"
+                                name="Subject"
+                            />
+
+                            <a-input-field class="mt-4" input-id="contact-content" title="Message" required />
+
+                            <Textarea
+                                v-model="v$.content.$model"
+                                id="contact-content"
+                                :class="['w-full', { 'p-invalid': v$.content.$invalid && submitted }]"
+                                rows="6"
+                                maxlength="2000"
+                                autoResize
+                            />
+
+                            <a-field-errors
+                                v-if="v$.content.$error && submitted"
+                                :errors="v$.content.$errors"
+                                name="Content"
+                            />
+
+                            <div class="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 mt-4">
+                                <div class="w-full sm:w-auto">
+                                    <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-500 mb-1">
+                                        <span>{{ verificationText }}</span>
+                                    </label>
+
+                                    <div class="flex flex-col">
+                                        <InputNumber
+                                            v-model="v$.answer.$model"
+                                            :invalid="v$.answer.$invalid && submitted"
+                                            input-id="contact-answer"
+                                            input-class="w-24"
+                                            class="w-24"
+                                            placeholder=""
+                                        />
+
+                                        <a-field-errors
+                                            v-if="v$.answer.$error && submitted"
+                                            :errors="v$.answer.$errors"
+                                            name="Answer"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="w-full sm:w-auto">
+                                    <Button
+                                        type="submit"
+                                        class="w-full sm:w-auto"
+                                        :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-send'"
+                                        label="Send Message"
+                                        :disabled="isSubmitting"
+                                    />
+                                </div>
+                            </div>
+
+                        </form>
+                    </transition>
+                </a-card>
+            </div>
         </div>
-
     </div>
 </template>
 
-<script>
-import axios from 'axios';
+<style scoped>
+/* Simple fade transition for the success message swap */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
 
-const INITIAL = 0;
-const IS_COPIED_TO_CLIPBOARD = 1;
-
-/**
- * Creates a random number used for creation of mathematical solutions
- * that are used for a human verification step before submitting.
- */
-const generateRandom = () => Math.floor((Math.random() * 10) + 1);
-
-export default {
-    name: 'contact',
-
-    metaInfo() {
-        return { title: 'Contact' };
-    },
-
-    data() {
-        return {
-            state: INITIAL,
-            myEmail: 'adam@adammackintosh.net',
-            num1: generateRandom(),
-            num2: generateRandom(),
-            message: {
-                subject: '',
-                content: '',
-                sender_name: '',
-                sender_email: '',
-                answer: '',
-            },
-            isFormVerified: false,
-            successMessage: '',
-        };
-    },
-
-    computed: {
-        isInitial() {
-            return (this.state === INITIAL);
-        },
-
-        isCopiedToClipboard() {
-            return (this.state === IS_COPIED_TO_CLIPBOARD);
-        },
-
-        messageAnswer() {
-            return +this.message.answer;
-        },
-
-        verificationText() {
-            return `${this.num1} + ${this.num2} =`;
-        },
-
-        showSuccessMessage() {
-            return (this.successMessage.length > 0);
-        },
-
-    },
-
-    watch: {
-        messageAnswer() {
-            const solution = (this.num1 + this.num2);
-            if (this.messageAnswer === solution) {
-                this.isFormVerified = true;
-                return;
-            }
-            this.isFormVerified = false;
-        },
-    },
-
-    methods: {
-        copyEmailToClipboard() {
-            const textField = document.createElement('textarea');
-
-            textField.innerText = this.myEmail;
-            document.body.appendChild(textField);
-            textField.select();
-            document.execCommand('copy');
-            textField.remove();
-
-            if (this.isCopiedToClipboard) return undefined;
-
-            this.state = IS_COPIED_TO_CLIPBOARD;
-
-            return setTimeout(() => {
-                this.state = INITIAL;
-            }, 1618);
-        },
-
-        async sendMessage() {
-            try {
-                console.log('FORM SENT');
-                const { data } = await axios.post(route('public.contact.send'), this.message);
-
-                console.log('message sent:', data);
-                if (data.success === true) {
-                    this.successMessage = data.message;
-                    return undefined;
-                }
-
-                throw new Error(`contact# Unexpected error: ${data}.`);
-            } catch (err) {
-                throw new Error(`contact# Problem submitting contact form: ${err}.`);
-            }
-        },
-
-    },
-
-};
-</script>
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

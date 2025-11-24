@@ -1,218 +1,274 @@
-<template>
-    <div>
-        <a-card class="p-32" with-geometry>
-            <div class="flex items-center pb-16">
-                <a-heading level="2" dark>
-                    {{ example.name }}
-                </a-heading>
-
-                <a-button v-if="isShowing" class="ml-16" outlined @click="toggleEdit">
-                    Edit
-                </a-button>
-            </div>
-
-            <div v-if="isShowing" class="p-32">
-                <a-input-row type="is-wider-right" heading="ID">
-                    <span>{{ example.id }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Status">
-                    <span>{{ example.status_nice }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Name">
-                    <span>{{ example.name }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Slug">
-                    <span>{{ example.slug }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Summary" is-tall>
-                    <span>{{ example.summary }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Conclusion" is-tall>
-                    <span>{{ example.conclusion }}</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Links" is-tall>
-                    <div
-                        v-for="(link, i) in example.links"
-                        :key="`link-${link.url}`"
-                        class="flex flex-col"
-                    >
-                        <span>
-                            Name: {{ link.name }}
-                        </span>
-
-                        <span>
-                            URL: {{ link.url }}
-                        </span>
-
-                        <hr v-if="(i !== (example.links.length - 1))" class="h-1 my-16 bg-grey-600">
-                    </div>
-
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Tags" is-tall>
-                    <b-tag
-                        v-for="tag in example.tags"
-                        :key="`tag-${tag.name}`"
-                        type="is-info is-light"
-                        class="m-4"
-                    >
-                        {{ tag.name }}
-                    </b-tag>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Images" is-tall>
-                    <div class="flex flex-row flex-wrap justify-start">
-                        <router-link
-                            v-for="image in example.images"
-                            :key="image.image_id"
-                            :to="{ name: 'public.examples.images', params: { filename: image.filename } }"
-                            class="relative m-16 bg-no-repeat bg-cover cursor-pointer border-1 border-primary w-256 h-128"
-                            title="Click to enlarge"
-                            :style="{ backgroundImage: `url('/storage/examples/${example.slug}/${image.filename}')` }"
-                        ></router-link>
-                    </div>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Created at">
-                    <span>{{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
-                </a-input-row>
-
-                <a-input-row class="pt-8" type="is-wider-right" heading="Updated at">
-                    <span>{{ example.updated_at_nice }} ({{ example.updated_at_diff }})</span>
-                </a-input-row>
-            </div>
-
-            <div v-if="isEditing" class="">
-                <edit-example
-                    :example="example"
-                    @reset="handleReset"
-                    @saved="handleSaved"
-                ></edit-example>
-            </div>
-        </a-card>
-
-        <a-card class="p-32 mt-16">
-            <a-heading level="2" class="mb-16">
-                Add images
-            </a-heading>
-
-            <a-form v-slot="{ handleSubmit }" has-files>
-                <a-multi-image-input
-                    v-model="newImages"
-                    vid="images"
-                    rules="required"
-                ></a-multi-image-input>
-
-                <div class="flex items-center justify-end">
-                    <a-button @click="handleSubmit(submitNewImages)">
-                        Upload
-                    </a-button>
-                </div>
-            </a-form>
-        </a-card>
-
-    </div>
-</template>
-
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useHead } from '@unhead/vue';
 import axios from 'axios';
-import EditExample from './edit-example.vue';
+import Button from 'primevue/button';
+import Tag from 'primevue/tag';
+import Skeleton from 'primevue/skeleton';
 
+useHead({
+    title: 'Admin: Example Details',
+});
+
+const route = useRoute();
+const router = useRouter();
+
+const LOADING = 'LOADING';
 const SHOWING = 'SHOWING';
 const EDITING = 'EDITING';
 
-export default {
-    name: 'show-example',
+const state = ref(LOADING);
+const example = ref({
+    id: null,
+    name: '',
+    slug: '',
+    status: 0,
+    status_nice: '',
+    summary: '',
+    conclusion: '',
+    created_at_nice: '',
+    created_at_diff: '',
+    updated_at_nice: '',
+    updated_at_diff: '',
+    category: {},
+    links: [],
+    tags: [],
+    images: [],
+});
 
-    components: {
-        EditExample,
-    },
+const isLoading = computed(() => state.value === LOADING);
+const isShowing = computed(() => state.value === SHOWING);
+const isEditing = computed(() => state.value === EDITING);
 
-    middleware: ['auth', 'role-admin'],
-
-    data() {
-        return {
-            state: SHOWING,
-            example: {
-                category: {},
-            },
-            links: [],
-            newImages: [],
-        };
-    },
-
-    computed: {
-        isShowing() {
-            return (this.state === SHOWING);
-        },
-
-        isEditing() {
-            return (this.state === EDITING);
-        },
-    },
-
-    mounted() {
-        return this.fetchExample();
-    },
-
-    methods: {
-        async fetchExample() {
-            try {
-                console.log('params', this.$route.params);
-                const { data } = await axios.get(route('admin.examples.show', this.$route.params.example));
-
-                console.log('example', data.example);
-
-                this.example = data.example;
-
-                this.example.links.reduce((acc, link) => {
-                    this.links[link.id] = {};
-                    this.links[link.id].name = link.name;
-                    this.links[link.id].url = link.url;
-                    return acc;
-                }, {});
-
-                // this.state = SHOWING;
-            } catch (err) {
-                throw new Error(`show-example# Problem fetching example: ${err}.`);
-            }
-        },
-
-        toggleEdit() {
-            this.state = EDITING;
-        },
-
-        handleReset() {
-            this.state = SHOWING;
-        },
-
-        handleSaved() {
-            this.fetchExample();
-            this.state = SHOWING;
-        },
-
-        async submitNewImages() {
-            try {
-                console.log('newImages', this.newImages);
-                const payload = new FormData();
-
-                this.newImages.forEach(image => payload.append('images[]', image));
-
-                const { data } = await axios.post(route('admin.examples.appendImages', this.example.slug), payload);
-
-                console.log('data', data);
-            } catch (err) {
-                throw new Error(`show-example# Problem adding images: ${err}.`);
-            }
-        },
-
-    },
-
+const getStatusConfig = (status) => {
+    if (status === 1) return { severity: 'success', icon: 'pi pi-check-circle', label: 'Active' };
+    if (status === 0) return { severity: 'danger', icon: 'pi pi-ban', label: 'Inactive' };
+    return { severity: 'info', icon: 'pi pi-info-circle', label: 'Unknown' };
 };
+
+const fetchExample = async () => {
+    try {
+        const { data } = await axios.get(window.route('admin.examples.show', route.params.example));
+
+        example.value = data.example;
+
+        state.value = SHOWING;
+    } catch (err) {
+        console.error(`show-example# Problem fetching example: ${err}.`);
+    }
+};
+
+const handleReset = async () => {
+    state.value = LOADING;
+    await fetchExample();
+};
+
+const handleExampleSaved = (updatedExample) => {
+    example.value = updatedExample;
+    state.value = SHOWING;
+};
+
+const goBack = () => router.push({ name: 'admin.examples.list' });
+
+onMounted(fetchExample);
 </script>
+
+<template>
+    <div class="flex-1 w-full flex flex-col">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-4">
+                <Button
+                    type="button"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    aria-label="Go Back"
+                    text
+                    rounded
+                    @click="goBack"
+                />
+
+                <div>
+                    <h1>{{ example.name }}</h1>
+
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="text-xs font-semibold uppercase text-gray-500">Slug:</span>
+                        <span class="font-mono text-xs text-indigo-600 bg-gray-100 px-2 py-1 rounded">/{{ example.slug }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="!isLoading">
+                <Button
+                    v-if="isShowing"
+                    type="button"
+                    icon="pi pi-pencil"
+                    label="Edit Example"
+                    @click="state = EDITING"
+                />
+
+                <Button
+                    v-if="isEditing"
+                    type="button"
+                    severity="secondary"
+                    icon="pi pi-times"
+                    label="Cancel Editing"
+                    text
+                    @click="state = SHOWING"
+                />
+            </div>
+        </div>
+
+        <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <Skeleton height="200px" borderRadius="1rem" />
+                <Skeleton height="400px" borderRadius="1rem" />
+            </div>
+            <div class="lg:col-span-1 space-y-8">
+                <Skeleton height="300px" borderRadius="1rem" />
+                <Skeleton height="200px" borderRadius="1rem" />
+            </div>
+        </div>
+
+        <a-card v-else-if="isEditing" class="border-indigo-200 ring-4 ring-indigo-50 p-8">
+            <div class="flex items-center gap-2 text-indigo-600 font-semibold border-b border-gray-100 pb-2 mb-8">
+                <i class="pi pi-file-edit"></i>
+                <span>Editing Mode</span>
+            </div>
+
+            <edit-example
+                mode="edit"
+                :initial-example="example"
+                @reset="handleReset"
+                @save="handleExampleSaved"
+            />
+        </a-card>
+
+        <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div class="lg:col-span-2 space-y-8">
+                <a-card class="p-8">
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-sm font-semibold uppercase text-gray-600">Summary</h3>
+                            <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.summary }}</p>
+                        </div>
+
+                        <div v-if="example.conclusion" class="bg-indigo-50 rounded-2xl border-l-4 border-indigo-500 p-8">
+                            <h3 class="text-sm font-semibold uppercase text-indigo-600">Final Thoughts</h3>
+                            <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.conclusion }}</p>
+                        </div>
+                    </div>
+                </a-card>
+
+                <a-card class="p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <i class="pi pi-images text-gray-500"></i> Gallery
+                        </h3>
+                        <span class="text-xs text-gray-600">{{ example.images.length }} images</span>
+                    </div>
+
+                    <div v-if="example.images.length" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <router-link
+                            v-for="image in example.images"
+                            :key="`example-image-${image.id}`"
+                            :to="{
+                                name: 'admin.examples.image',
+                                params: {
+                                    category: example.category.slug,
+                                    example: example.slug,
+                                    filename: image.filename,
+                                },
+                            }"
+                            class="group relative aspect-video rounded-lg overflow-hidden border border-gray-100 dark:border-gray-700 cursor-zoom-in"
+                        >
+                            <a-image
+                                :src="`/storage/examples/${example.slug}/${image.filename}`"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                alt="Project Screenshot"
+                                background="#ffffff"
+                            />
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                <i class="pi pi-search-plus text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md" style="font-size: 24px;"></i>
+                            </div>
+                        </router-link>
+                    </div>
+                    <a-area-empty v-else>No images uploaded yet.</a-area-empty>
+                </a-card>
+            </div>
+
+            <div class="lg:col-span-1 space-y-8">
+                <a-card class="p-8">
+                    <div class="flex items-center justify-between mb-2">
+                        <h6>Status</h6>
+
+                        <span class="font-mono text-xs text-gray-300">#{{ example.id }}</span>
+                    </div>
+                    <div class="mb-6">
+                        <Tag
+                            :severity="getStatusConfig(example.status).severity"
+                            :icon="getStatusConfig(example.status).icon"
+                            :value="getStatusConfig(example.status).label"
+                        />
+                    </div>
+
+                    <div class="mb-4">
+                         <h6>Category</h6>
+
+                         <div class="flex items-center gap-2 mt-1">
+                             <i class="pi pi-folder text-indigo-500"></i>
+                             <span class="font-semibold text-gray-800 dark:text-white">{{ example.category.name }}</span>
+                         </div>
+                    </div>
+
+                    <div class="border-t space-y-4 pt-4">
+                        <div>
+                            <h6>Created</h6>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ example.created_at_nice }}</span>
+                        </div>
+                        <div>
+                            <h6>Last Update</h6>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ example.updated_at_nice }}</span>
+                        </div>
+                    </div>
+                </a-card>
+
+                <a-card class="p-8">
+                    <h3 class="flex items-center gap-2">
+                        <i class="pi pi-link"></i> Resources
+                    </h3>
+                    <div v-if="example.links.length" class="flex flex-col gap-2 mt-4">
+                        <a
+                            v-for="link in example.links"
+                            :key="link.url"
+                            :href="link.url"
+                            target="_blank"
+                            class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors group"
+                        >
+                            <span class="text-sm font-semibold">{{ link.name }}</span>
+                            <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
+                        </a>
+                    </div>
+                    <div v-else class="text-sm text-gray-500 italic">No external links.</div>
+                </a-card>
+
+                <a-card class="p-8">
+                    <h3 class="text-sm font-semibold uppercase text-gray-500 flex items-center gap-2">
+                        <i class="pi pi-tags"></i> Tags
+                    </h3>
+
+                    <div v-if="example.tags.length" class="flex flex-wrap gap-2 mt-4">
+                        <Tag
+                            v-for="(tag, index) in example.tags"
+                            :key="`tag-${index}`"
+                            severity="secondary"
+                            :value="tag"
+                            rounded
+                        />
+                    </div>
+                    <div v-else class="text-sm text-gray-500 italic">No tags assigned.</div>
+                </a-card>
+            </div>
+        </div>
+    </div>
+</template>

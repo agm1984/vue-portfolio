@@ -23,7 +23,7 @@ localVue.use(Vuex);
 
 // const router = new VueRouter({ routes });
 
-describe('login.vue', () => {
+describe('Login.vue', () => {
     it('ignores intendedUrl when it is empty', () => {
         const getters = {
             'auth/intendedUrl': () => '',

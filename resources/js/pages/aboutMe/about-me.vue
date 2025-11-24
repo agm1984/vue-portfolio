@@ -1,144 +1,128 @@
-<template>
-    <div class="flex flex-col w-full h-auto p-32 xl:w-1024 xl:p-0">
-        <a-card class="p-32" with-geometry>
-            <a-heading level="1" class="mb-16">About me</a-heading>
+<script setup>
+import { ref, computed } from 'vue';
+import { useHead } from '@unhead/vue';
 
-            <div class="flex flex-col h-auto md:flex-row">
-                <div class="w-full mr-0 md:w-1/2 md:mr-16">
-                    <a-paragraph>
-                        I'll keep this short. I've been programming for about four years (calc: current year minus 2017),
-                        but I've been working with iOS, Android, and web apps since 2013. I would say I discovered my passion
-                        for coding around that time. I'm an autodidact-type person. All I need is a topic and an impetus, and
-                        I can start researching it. Google really is a magical thing.
-                    </a-paragraph>
+useHead({
+    title: 'About Me',
+});
 
-                    <a-paragraph>
-                        My list of hobbies is quite short because my main hobby is programming. Beyond that,
-                        I enjoy working out. I've been working out for the past 10 years. I didn't go to the gym much in 2019,
-                        but I've been going again four times a week, and it feels great.
-                    </a-paragraph>
+const START_YEAR = 2017;
+const yearsExperience = computed(() => new Date().getFullYear() - START_YEAR);
+const isSeeingSupra = ref(false);
 
-                    <a-paragraph>
-                        I have a 700 horsepower 1993 Toyota Supra, so when the engine isn't broken and it's clean,
-                        you can find me out driving with my friends, listening to music, and finding new places to visit.
-                    </a-paragraph>
+const openSupraModal = () => {
+    isSeeingSupra.value = true;
+};
 
-                    <a-paragraph>
-                        Check out my <router-link :to="{ name: 'contact' }">Contact</router-link> page.
-                    </a-paragraph>
-
-                    <div class="flex flex-col pb-8 bg-grey-200">
-                        <a-heading level="4" class="px-16 py-8 bg-primary" nunito light>
-                            Find me on social media
-                        </a-heading>
-                        <a-social-link class="pt-8 pl-16" network="twitter">Twitter</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="github">GitHub</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="stackoverflow">StackOverflow</a-social-link>
-                        <a-social-link class="pt-8 pl-16" network="medium">Medium</a-social-link>
-                    </div>
-                </div>
-
-                <div class="w-full mt-32 md:w-1/2 md:mt-0">
-                    <img src="adam-center.png" class="w-full h-auto pl-0 md:pl-16" alt="">
-                </div>
-            </div>
-
-        </a-card>
-
-        <div class="w-full">
-            <a-heading level="3" class="mt-64 mb-32" nunito>A BRIEF WORD</a-heading>
-
-            <div class="flex flex-col w-full xl:flex-row">
-                <a-card class="order-1 p-32 mr-0 xl:mr-16" fill primary>
-                    <a-heading level="2" class="mb-16" light>
-                        To programmers
-                    </a-heading>
-
-                    <a-paragraph light>
-                        What can I say? I like to use Mealy finite state machines, predicates and booleans,
-                        and immutable functional-reactive programming (FRP) styles (ie: map, reduce, filter, etc).
-                    </a-paragraph>
-
-                    <a-paragraph light>
-                        I often think in two modes: push and pull. Pushing is like doing & triggering.
-                        Pulling is like listening & acting. In my opinion, this is much of where the
-                        "functional-reactive" comes from in FRP. Functional can be pushing, and reactive can be pulling.
-                    </a-paragraph>
-                </a-card>
-
-                <a-card class="order-2 p-32 mt-32 ml-0 xl:ml-16 xl:mt-0" fill with-geometry>
-                    <a-heading level="2" class="mb-16">To non-programmers</a-heading>
-
-                    <div class="flex flex-col w-full">
-                        <div class="w-full">
-                            <a-heading level="3" primary nunito>Work</a-heading>
-                            <a-paragraph class="pr-32">
-                                As a developer, I aim to write not only pragmatic and UX-enriched code but also empathetic and
-                                thorough technical documentation. I am always curious to learn new tools and techniques.
-                            </a-paragraph>
-                        </div>
-
-                        <div class="w-full mt-16">
-                            <a-heading level="3" primary nunito>Life</a-heading>
-                            <a-paragraph class="pr-32">
-                                I am introverted and creative and known for being light hearted, precise, and thorough. I decompress
-                                from work by going to the gym and cooking nice meals for other people. I like the chemistry behind
-                                balancing salty, sweet, sour, and hot.
-                            </a-paragraph>
-                        </div>
-
-                        <div class="w-full mt-16">
-                            <a-heading level="3" primary nunito>Balance</a-heading>
-                            <a-paragraph>
-                                Fitness & nutrition has been a way of life for me for the past ten years. A healthy mind and
-                                optimized metabolic processes both start with optimized nutrient-intake.
-                            </a-paragraph>
-                        </div>
-                    </div>
-                </a-card>
-            </div>
-
-        </div>
-
-        <div class="flex justify-center w-full mt-32 text-primary">
-            △△△
-        </div>
-
-    </div>
-</template>
-
-<script>
-import AdamScene from './adam-scene.vue';
-import isUserScrolling from '../../components/mixins/isUserScrolling';
-
-export default {
-    name: 'about-me',
-
-    components: {
-        AdamScene,
-    },
-
-    mixins: [isUserScrolling],
-
-    metaInfo() {
-        return { title: 'About me' };
-    },
-
-    data() {
-        return {};
-    },
-
-    computed: {},
-
-    methods: {
-        handleScrollDown() {
-            return window.scrollTo({
-                top: window.innerHeight / 2,
-                behavior: 'smooth',
-            });
-        },
-
-    },
-
+const closeSupraModal = () => {
+    isSeeingSupra.value = false;
 };
 </script>
+
+<template>
+    <div class="w-full max-w-6xl mx-auto flex flex-col p-8">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-7 flex flex-col gap-4">
+                <h1 class="">About <span class="text-indigo-600">Me</span></h1>
+                <div class="w-20 h-1 bg-indigo-600 rounded-full"></div>
+
+                <div class="prose text-gray-600 text-lg">
+                    <p>
+                        I'll keep this short. I've been programming for about
+                        <span class="font-semibold text-indigo-600">{{ yearsExperience }} years</span>,
+                        but I've been working with iOS, Android, and web apps since 2013.
+                        I discovered my passion for coding around that time.
+                    </p>
+
+                    <p class="mt-4">
+                        I'm an <span class="italic font-serif text-gray-800 dark:text-gray-200">autodidact</span>.
+                        All I need is a topic and an impetus, and I can start researching it.
+                        Google really is a magical thing.
+                    </p>
+
+                    <p class="mt-4">
+                        My list of hobbies is short because <strong>programming is my main hobby</strong>.
+                        Beyond that, I've been working out consistently for over a decade.
+                        I'm currently back in the gym four times a week, and it feels great to reconnect with that discipline.
+                    </p>
+                </div>
+
+                <div class="bg-gray-100 border-l-4 border-red-600 rounded-r-lg p-4 mt-2">
+                    <div class="flex items-start gap-4">
+                        <div class="min-w-16 max-w-16 min-h-16 max-h-16 flex items-center justify-center bg-white rounded-full shadow-sm shrink-0">
+                            <i class="pi pi-car text-red-600" style="font-size: 24px;"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wide">Car Enthusiast</h3>
+                            <p class="text-sm text-gray-600 mt-2">
+                                I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
+                                you can find me out driving with friends and finding new places to visit.
+                            </p>
+                            <button
+                                type="button"
+                                class="cursor-pointer font-semibold text-red-600 hover:underline mt-2"
+                                @click="openSupraModal"
+                            >See the Supra</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
+                    <h3 class="text-sm font-semibold">Connect</h3>
+                    <div class="flex gap-3">
+                        <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="stackoverflow" class="hover:-translate-y-1 transition-transform duration-300" />
+                        <a-social-link network="medium" class="hover:-translate-y-1 transition-transform duration-300" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 relative group">
+                <div class="absolute -inset-2 bg-linear-to-r from-gray-900 to-gray-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+
+                <img
+                    src="/adam2.png"
+                    class="relative w-full aspect-4/5 object-cover rounded-xl shadow-2xl rotate-2 group-hover:rotate-0 transition-all duration-500 ease-out border-2 border-white"
+                    alt="Adam Mackintosh"
+                >
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-4 mt-8">
+                <h2>A Brief Word</h2>
+                <div class="flex-1 h-px bg-gray-300"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+                <to-programmers-card></to-programmers-card>
+                <to-non-programmers-card></to-non-programmers-card>
+            </div>
+        </section>
+
+        <section class="max-w-2xl mx-auto mt-8">
+            <div class="text-center">
+                <h2>My Timeline</h2>
+                <p class="text-gray-600 mt-2">A history of jobs</p>
+            </div>
+
+            <interactive-timeline></interactive-timeline>
+        </section>
+
+        <p class="text-lg text-center mt-8">
+            Want to chat about cars or code?
+            <router-link
+                :to="{ name: 'contact' }"
+                class="text-indigo-600 font-semibold hover:underline hover:text-indigo-700 active:text-indigo-800 transition-colors ml-1"
+            >
+                Drop me a message.
+            </router-link>
+        </p>
+    </div>
+
+    <see-supra-modal
+        v-if="isSeeingSupra"
+        @close="closeSupraModal"
+    />
+</template>

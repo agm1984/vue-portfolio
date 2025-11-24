@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\OAuthProvider;
-use App\User;
+use App\Models\OAuthProvider;
+use App\Models\User;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -80,7 +80,7 @@ class OAuthController extends Controller
      *
      * @param string $provider
      * @param \Laravel\Socialite\Contracts\User|object $sUser
-     * @return \App\User|false
+     * @return \App\Models\User|false
      */
     protected function findOrCreateUser($provider, $sUser) : User
     {
@@ -118,8 +118,8 @@ class OAuthController extends Controller
      *
      * @param string $provider
      * @param \Laravel\Socialite\Contracts\User|object $sUser
-     * @param \App\User $user
-     * @return \App\User
+     * @param \App\Models\User $user
+     * @return \App\Models\User
      */
     protected function addProvider($provider, $sUser, User $user) : User
     {

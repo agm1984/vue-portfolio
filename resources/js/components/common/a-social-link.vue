@@ -1,6 +1,6 @@
 <template>
     <a
-        class="inline"
+        class="inline-flex items-center gap-2 self-start"
         :href="profileUrl"
         rel="noopener noreferrer"
         target="_blank"
@@ -11,8 +11,8 @@
             :class="svgStyles"
             x="0px"
             y="0px"
-            width="16px"
-            height="16px"
+            width="24px"
+            height="24px"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -33,8 +33,8 @@
             :class="svgStyles"
             x="0px"
             y="0px"
-            width="16px"
-            height="16px"
+            width="24px"
+            height="24px"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -55,8 +55,8 @@
             :class="svgStyles"
             x="0px"
             y="0px"
-            width="16px"
-            height="16px"
+            width="24px"
+            height="24px"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -79,8 +79,8 @@
             :class="svgStyles"
             x="0px"
             y="0px"
-            width="16px"
-            height="16px"
+            width="24px"
+            height="24px"
             viewBox="0 0 64 64"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -100,8 +100,6 @@
 </template>
 
 <script>
-import tailwind from '../../../../tailwind.config';
-
 export default {
     name: 'a-social-icon',
 
@@ -114,7 +112,7 @@ export default {
 
     data() {
         return {
-            fillColor: tailwind.theme.colors.primary,
+            fillColor: '#000000',
         };
     },
 
@@ -145,7 +143,7 @@ export default {
         },
 
         svgStyles() {
-            const styles = ['inline mb-4'];
+            const styles = ['inline'];
 
             return styles;
         },

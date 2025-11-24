@@ -1,196 +1,139 @@
+<script setup>
+import { computed } from 'vue';
+import { useHead } from '@unhead/vue';
+import { useRoute } from 'vue-router';
+
+useHead({
+    title: 'Design System',
+});
+
+const currentRoute = useRoute();
+const isDashboard = computed(() => currentRoute.name === 'design');
+
+const navItems = [
+    {
+        label: 'Dashboard',
+        route: 'design',
+        icon: 'pi pi-home',
+        description: 'Overview of the design system components.',
+        visible: true,
+    },
+    {
+        label: 'Buttons',
+        route: 'design.buttons',
+        colour: 'bg-red-100 text-red-700',
+        icon: 'pi pi-stop',
+        description: 'Primary, secondary, and ghost button interactions.',
+        visible: true,
+    },
+    {
+        label: 'Colours',
+        route: 'design.colours',
+        colour: 'bg-orange-100 text-orange-700',
+        icon: 'pi pi-palette',
+        description: 'Global color palette, gradients, and semantic tones.',
+        visible: true,
+    },
+    {
+        label: 'Space & Size',
+        route: 'design.sizing',
+        colour: 'bg-yellow-100 text-yellow-700',
+        icon: 'pi pi-arrows-alt',
+        description: 'Spacing scale, typography sizing, and breakpoints.',
+        visible: true,
+    },
+    {
+        label: 'Typography',
+        route: 'design.typography',
+        colour: 'bg-green-100 text-green-700',
+        icon: 'pi pi-align-left',
+        description: 'Headings, body text, and font weights.',
+        visible: true,
+    },
+    {
+        label: 'Forms',
+        route: 'design.forms',
+        colour: 'bg-teal-100 text-teal-700',
+        icon: 'pi pi-check-square',
+        description: 'Input fields, checkboxes, radio buttons, and selects.',
+        visible: true,
+    },
+    {
+        label: 'Feedback & Alerts',
+        route: 'design.feedback',
+        colour: 'bg-blue-100 text-blue-700',
+        icon: 'pi pi-exclamation-circle',
+        description: 'Modals, toasts, and loading indicators.',
+        visible: true,
+    },
+    {
+        label: 'Cards',
+        route: 'design.cards',
+        colour: 'bg-indigo-100 text-indigo-700',
+        icon: 'pi pi-clone',
+        description: 'Card layouts and content organization.',
+        visible: true,
+    },
+    {
+        label: 'Loading States',
+        route: 'design.loading',
+        colour: 'bg-purple-100 text-purple-700',
+        icon: 'pi pi-spinner',
+        description: 'Skeletons and spinners for loading content.',
+        visible: true,
+    },
+];
+
+const gridItems = computed(() => navItems.filter(item => item.route !== 'design'));
+</script>
+
 <template>
-    <div class="flex w-full h-auto xl:w-1024">
-        <div class="sidebar-page">
-            <section class="sidebar-layout">
-                <b-sidebar
-                    type="is-light"
-                    mobile="reduce"
-                    position="static"
-                    expand-on-hover
-                    open
-                    reduce
-                >
-                    <div class="">
-                        <div class="block">
-                            <a-heading level="1">
-                                Design
-                            </a-heading>
-                        </div>
-                        <b-menu class="is-custom-mobile">
-                            <b-menu-list :label="currentDate">
-                                <b-menu-item
-                                    label="Dashboard"
-                                    tag="router-link"
-                                    :to="{ name: 'design' }"
-                                    :active="$router.currentRoute.name === 'design'"
-                                ></b-menu-item>
-                            </b-menu-list>
-                            <b-menu-list label="UI Elements">
-                                <b-menu-item
-                                    label="Buttons"
-                                    tag="router-link"
-                                    :to="{ name: 'design.buttons' }"
-                                    :active="$router.currentRoute.name === 'design.buttons'"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Colours"
-                                    tag="router-link"
-                                    :to="{ name: 'design.colours' }"
-                                    :active="$router.currentRoute.name === 'design.colours'"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Space & Size"
-                                    tag="router-link"
-                                    :to="{ name: 'design.sizing' }"
-                                    :active="$router.currentRoute.name === 'design.sizing'"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Typography"
-                                    tag="router-link"
-                                    :to="{ name: 'design.typography' }"
-                                    :active="$router.currentRoute.name === 'design.typography'"
-                                ></b-menu-item>
-                            </b-menu-list>
+    <div class="flex-1 flex flex-col md:flex-row">
+        <side-nav-pane
+            :nav-items="navItems"
+        ></side-nav-pane>
 
-                            <b-menu-list label="Form controls">
-                                <b-menu-item
-                                    label="Text inputs"
-                                    tag="router-link"
-                                    to="/textinputs"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Selects"
-                                    tag="router-link"
-                                    to="/selects"
-                                ></b-menu-item>
-                            </b-menu-list>
-
-                            <b-menu-list label="Components">
-                                <b-menu-item
-                                    label="Radical thing"
-                                    tag="router-link"
-                                    to="/textinputs"
-                                ></b-menu-item>
-                                <b-menu-item
-                                    label="Blast widget"
-                                    tag="router-link"
-                                    to="/selects"
-                                ></b-menu-item>
-                            </b-menu-list>
-                        </b-menu>
-                    </div>
-                </b-sidebar>
-            </section>
-        </div>
-
-        <div class="w-full h-auto pt-64 pl-32">
+        <main class="flex-1 md:ml-64 p-8 max-w-7xl mx-auto w-full">
             <template v-if="isDashboard">
-                <router-link :to="{ name: 'design.buttons' }">
-                    <a-card class="flex flex-wrap p-32" with-geometry>
-                        <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
-                            <b-icon
-                                pack="fas"
-                                icon="mouse-pointer"
-                                size="is-medium"
-                                type="is-primary">
-                            </b-icon>
-                        </div>
-                        <div class="flex items-center ml-16">
-                            <a-heading level="2">
-                                Buttons
-                            </a-heading>
-                        </div>
-                    </a-card>
-                </router-link>
+                <div>
+                    <h1>Dashboard</h1>
 
-                <router-link :to="{ name: 'design.colours' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
-                        <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
-                            <b-icon
-                                pack="fas"
-                                icon="palette"
-                                size="is-medium"
-                                type="is-primary">
-                            </b-icon>
-                        </div>
-                        <div class="flex items-center ml-16">
-                            <a-heading level="2">
-                                Colours
-                            </a-heading>
-                        </div>
-                    </a-card>
-                </router-link>
+                    <p class="text-gray-600 dark:text-gray-500 mt-2">
+                        A centralized registry of UI components, design tokens, and usage guidelines.
+                    </p>
+                </div>
 
-                <router-link :to="{ name: 'design.sizing' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
-                        <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
-                            <b-icon
-                                pack="fas"
-                                icon="ruler-combined"
-                                size="is-medium"
-                                type="is-primary">
-                            </b-icon>
-                        </div>
-                        <div class="flex items-center ml-16">
-                            <a-heading level="2">
-                                Space & Size
-                            </a-heading>
-                        </div>
-                    </a-card>
-                </router-link>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+                    <router-link
+                        v-for="item in gridItems"
+                        :key="`design-system-section-${item.route}`"
+                        :to="{ name: item.route }"
+                        class="block group"
+                    >
+                        <a-card class="cursor-pointer group-hover:-translate-y-1 transform transition-transform p-8">
+                            <div class="flex items-start gap-5 p-2">
+                                <div :class="['min-w-16 w-16 min-h-16 h-16 rounded-full flex items-center justify-center border', item.colour]">
+                                    <i
+                                        :class="['', item.icon]"
+                                        style="font-size: 24px;"
+                                    ></i>
+                                </div>
 
-                <router-link :to="{ name: 'design.typography' }">
-                    <a-card class="flex flex-wrap p-32 mt-16" with-geometry>
-                        <div class="flex items-center justify-center w-64 h-64 rounded-full border-1 border-primary">
-                            <b-icon
-                                pack="fas"
-                                icon="font"
-                                size="is-medium"
-                                type="is-primary">
-                            </b-icon>
-                        </div>
-                        <div class="flex items-center ml-16">
-                            <a-heading level="2">
-                                Typography
-                            </a-heading>
-                        </div>
-                    </a-card>
-                </router-link>
+                                <div>
+                                    <h3 class="group-hover:text-pink-600 transition-colors">
+                                        {{ item.label }}
+                                    </h3>
+                                    <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+                                        {{ item.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a-card>
+                    </router-link>
+                </div>
             </template>
 
             <router-view v-else></router-view>
-        </div>
-
+        </main>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'design-system',
-
-    metaInfo() {
-        return { title: 'Design system' };
-    },
-
-    data() {
-        return {
-            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        };
-    },
-
-
-    computed: {
-        isDashboard() {
-            return (this.$route.matched.length === 1);
-        },
-
-        currentDate() {
-            const d = new Date();
-            return `${this.months[d.getMonth()]} ${d.getDate()}`;
-        },
-    },
-
-    methods: {},
-
-};
-</script>

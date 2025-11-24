@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Comment;
-use App\Example;
-use App\ExampleImage;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Example;
+use App\Models\ExampleImage;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -17,6 +17,7 @@ class ExampleController extends Controller
         \Log::debug($request->all());
 
         $examples = QueryBuilder::for(Example::class)
+                ->defaultSort('-created_at')
                 ->allowedFilters('category.slug')
                 ->get();
 
@@ -36,8 +37,8 @@ class ExampleController extends Controller
      * Retrieves one ExampleImage and generates its URL for the client.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Example $example
-     * @param \App\ExampleImage $exampleImage
+     * @param \App\Models\Example $example
+     * @param \App\Models\ExampleImage $exampleImage
      *
      * @return void
      */
@@ -51,10 +52,15 @@ class ExampleController extends Controller
 
     public function listComments(Example $example)
     {
-        $comments = Comment::query()->where('example_id', $example->id)->get();
+        $comments = $example->comments()
+            ->with(['author'])
+            ->withSum('votes as score', 'value')
+            ->orderByDesc('score')
+            ->orderByDesc('created_at')
+            ->get();
 
         return response()->json([
-            'comments' => $comments->load('author'),
+            'comments' => $comments,
         ]);
     }
 

@@ -1,34 +1,18 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import Swal from 'sweetalert2';
-import store from '~/store';
 import router from '~/router';
+import { useToast } from '~/composables/useToast';
 
-/**
- * Request interceptor: for each request to the server,
- * attach the CSRF token if it exists.
- */
-axios.interceptors.request.use((request) => {
-    try {
-        const csrf = Cookies.get('XSRF-TOKEN');
-
-        request.withCredentials = true;
-
-        if (csrf) {
-            request.headers.common['XSRF-TOKEN'] = csrf;
-        }
-
-        return request;
-    } catch (err) {
-        throw new Error(`axios# Problem with request during pre-flight phase: ${err}.`);
-    }
-});
+axios.defaults.withCredentials = true;          // send cookies
+axios.defaults.xsrfCookieName = 'XSRF-TOKEN';   // Laravel's cookie
+axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN'; // header Laravel expects
 
 /**
  * Response interceptor: for each server error response,
  * check if client-side action is needed.
  */
 axios.interceptors.response.use(response => response, (error) => {
+    const toast = useToast();
+
     if (!error.config) {
         return Promise.reject(error);
     }
@@ -36,25 +20,16 @@ axios.interceptors.response.use(response => response, (error) => {
     const { config, data, status } = error.response;
 
     // for debugging:
-    // console.log('ERROR RESPONSE', error.response);
+    console.log('ERROR RESPONSE', error.response);
+    toast.add({ severity: 'error', summary: `Error ${status}`, detail: data.message || 'An error occurred.', life: 5000 });
 
     if (status >= 500) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong! Please try again.',
-            confirmButtonText: 'Ok',
-        });
+        toast.add({ severity: 'error', summary: 'Server Error', detail: 'Oops... Something went wrong! Please try again.', life: 5000 });
     }
 
     if (status === 429) {
         // @TODO: needs more testing
-        Swal.fire({
-            icon: 'error',
-            title: 'Slow down...',
-            text: 'You\'ve been throttled.',
-            confirmButtonText: 'Ok',
-        });
+        toast.add({ severity: 'warn', summary: 'Too Many Requests', detail: 'Slow down... You\'ve been throttled.', life: 5000 });
     }
 
     if (status === 422) {
@@ -70,12 +45,7 @@ axios.interceptors.response.use(response => response, (error) => {
         }
 
         // @TODO: needs more testing
-        Swal.fire({
-            icon: 'error',
-            title: 'Page expired',
-            text: 'Refresh the page and try again.',
-            confirmButtonText: 'Ok',
-        });
+        toast.add({ severity: 'error', summary: 'Page Expired', detail: 'Refresh the page and try again.', life: 5000 });
     }
 
     if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
@@ -89,7 +59,7 @@ axios.interceptors.response.use(response => response, (error) => {
             return Promise.resolve();
         }
 
-        store.commit('auth/LOGOUT');
+        // store.commit('auth/LOGOUT');
 
         if (router.currentRoute.name !== 'login') {
             return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));

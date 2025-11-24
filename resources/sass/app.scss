@@ -3,6 +3,7 @@
  * Normalize.css and some additional base styles.
  */
 @import "tailwindcss/base";
+@import "tailwindcss/components";
 @import "tailwindcss/utilities";
 // @tailwind base;
 @import './bulma.scss';
@@ -50,7 +51,7 @@ hr {
 
 // buefy
 .dropdown-content {
-    @apply .light-card;
+    // @apply .light-card;
 }
 
 

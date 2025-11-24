@@ -2,7 +2,7 @@
 
 namespace Tests\Auth;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;

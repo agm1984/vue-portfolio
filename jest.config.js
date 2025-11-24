@@ -1,16 +1,3 @@
-/**
- * Jest occasionally throws "Jest encountered an unexpected token" error messages.
- * At the time of this writing, the cause is typically external libraries that use ESM syntax imports/exports,
- * and the solution is typically to add offending modules here to the `esModules` list.
- *
- * Each element represents the NPM package name as seen in `package.json`.
- */
-const esModules = [
-    'prism-es6',
-    'prismjs',
-    '@vue/test-utils',
-].join('|');
-
 module.exports = {
     testRegex: 'resources/js/.*.spec.js$',
     moduleFileExtensions: [

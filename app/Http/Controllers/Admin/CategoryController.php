@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Example;
+use App\Models\Category;
+use App\Models\Example;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -37,6 +38,43 @@ class CategoryController extends Controller
 
         return response()->json([
             'category' => $category->load(['examples.category', 'examples.images']),
+        ]);
+    }
+
+    public function create(Request $request)
+    {
+        \Log::debug($request->all());
+
+        $data = $request->validate([
+            'status' => ['required', 'integer', Rule::in([Category::STATUS_INACTIVE, Category::STATUS_ACTIVE])],
+            'slug'   => ['required', 'string', 'max:255', 'unique:categories,slug'],
+            'name'   => ['required', 'string', 'max:255'],
+        ]);
+
+        $category = Category::create($data);
+
+        return response()->json([
+            'category' => $category->fresh(['examples.category', 'examples.images']),
+        ]);
+    }
+
+    public function edit(Request $request, Category $category)
+    {
+        \Log::debug($request->all());
+
+        // OPTIONAL: if you use policies
+        // $this->authorize('update', $category);
+
+        $data = $request->validate([
+            'status' => ['sometimes', 'integer', Rule::in([Category::STATUS_INACTIVE, Category::STATUS_ACTIVE])],
+            'slug'   => ['sometimes', 'string', 'max:255', Rule::unique('categories', 'slug')->ignore($category->id)],
+            'name'   => ['sometimes', 'string', 'max:255'],
+        ]);
+
+        $category->fill($data)->save();
+
+        return response()->json([
+            'category' => $category->fresh(['examples.category', 'examples.images']),
         ]);
     }
 

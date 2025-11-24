@@ -77,7 +77,7 @@ export default {
             else if (light) styles.push('text-white');
             else if (dark) styles.push('text-black');
 
-            if (isBold) styles.push('font-bold');
+            if (isBold) styles.push('font-semibold');
 
             return styles;
         };

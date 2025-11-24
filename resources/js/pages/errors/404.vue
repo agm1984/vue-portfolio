@@ -1,23 +1,17 @@
-<template>
-    <card class="text-center">
-        <h3 class="mb-4">
-            Page not found
-        </h3>
+<script setup>
+import { useHead } from '@unhead/vue';
 
-        <div class="links">
-            <router-link :to="{ name: 'home' }">
-                Go home
-            </router-link>
-        </div>
-    </card>
-</template>
-
-<script>
-export default {
-    name: 'not-found',
-
-    metaInfo() {
-        return { title: '404 - Not Found' };
-    },
-};
+useHead({
+    title: '404',
+});
 </script>
+
+<template>
+    <div class="flex-1 w-full max-w-xl mx-auto flex flex-col items-center justify-center gap-4 p-8">
+        <span class="text-6xl">404</span>
+
+        <h1>Page not found</h1>
+
+        <router-link class="font-semibold hover:underline" :to="{ name: 'home' }">Go home</router-link>
+    </div>
+</template>

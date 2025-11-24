@@ -10,7 +10,7 @@
 
             window.opener.postMessage(
                 {
-                    user: {!! $user !!},
+                    user: @json($user),
                 },
                 "{{ url('/') }}"
             );
