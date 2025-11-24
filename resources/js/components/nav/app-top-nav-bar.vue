@@ -16,14 +16,14 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <nav class="sticky top-0 z-50 w-full bg-white border-b">
+    <nav class="sticky top-0 z-50 w-full bg-white dark:bg-gray-900 border-b dark:border-gray-950">
         <!-- desktop -->
         <div class="flex h-[66px] items-center justify-between px-8">
-            <div class="w-32 h-full flex items-center">
+            <div class="w-48 h-full flex items-center">
                 <router-link
                     class="h-full inline-flex items-center font-semibold text-lg"
                     :to="{ name: auth.isAuthenticated ? 'home' : 'home' }"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     AGM
                 </router-link>
@@ -32,61 +32,71 @@ const handleLogout = async () => {
             <div class="hidden md:flex h-full items-center gap-4">
                 <router-link
                     :to="{ name: 'about' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     About Me
                 </router-link>
 
                 <router-link
                     :to="{ name: 'public.examples' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Examples
                 </router-link>
 
                 <router-link
                     :to="{ name: 'admin' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Admin
                 </router-link>
 
                 <router-link
                     :to="{ name: 'design' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Design System
                 </router-link>
 
                 <router-link
                     :to="{ name: 'contact' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Contact Me
                 </router-link>
             </div>
 
-            <div class="hidden w-32 h-full md:flex items-center justify-end gap-4">
+            <div class="hidden w-48 h-full md:flex items-center justify-end gap-4">
+                <dark-mode-selector></dark-mode-selector>
+
+                <Button
+                    type="button"
+                    icon="pi pi-moon"
+                    outlined
+                    rounded
+                    @click="toggleDarkMode"
+                />
+
                 <user-menu v-if="auth.isAuthenticated" />
 
                 <template v-else>
                     <router-link
                         :to="{ name: 'register' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                        active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                     >
                         Register
                     </router-link>
 
                     <router-link
                         :to="{ name: 'login' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 active:text-indigo-700"
-                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
+                        active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
                     >
                         Login
                     </router-link>
