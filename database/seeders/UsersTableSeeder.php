@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -24,7 +25,7 @@ class UsersTableSeeder extends Seeder
 
         // Create root admin
         $adam = User::firstOrCreate(
-            ['email' => 'agm1984@gmail.com'], // Look for this email...
+            ['email' => 'agm1984@gmail.com'],
             [
                 'status' => User::STATUS_ACTIVE,
                 'name' => 'Adam Mackintosh',
