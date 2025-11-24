@@ -16,11 +16,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user_count = 10;
+        // $user_count = 10;
 
-        User::factory($user_count)->create()->each(function ($user) {
-            $user->assignRole('standard');
-        });
+        // User::factory($user_count)->create()->each(function ($user) {
+        //     $user->assignRole('standard');
+        // });
 
         // Create root admin
         $adam = User::factory()->create([
