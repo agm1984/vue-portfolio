@@ -23,12 +23,18 @@ class UsersTableSeeder extends Seeder
         // });
 
         // Create root admin
-        $adam = User::factory()->create([
-            'status' => User::STATUS_ACTIVE,
-            'name' => 'Adam Mackintosh',
-            'email' => 'agm1984@gmail.com',
-            'email_verified_at' => now(),
-        ]);
-        $adam->assignRole('admin');
+        $adam = User::firstOrCreate(
+            ['email' => 'agm1984@gmail.com'], // Look for this email...
+            [
+                'status' => User::STATUS_ACTIVE,
+                'name' => 'Adam Mackintosh',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+            ],
+        );
+
+        if (! $adam->hasRole('admin')) {
+            $adam->assignRole('admin');
+        }
     }
 }
