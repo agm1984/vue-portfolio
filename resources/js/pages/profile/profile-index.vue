@@ -14,26 +14,30 @@ const links = computed(() => [
 </script>
 
 <template>
-    <div class="w-full max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-8">
-        <h1>Settings</h1>
-        <p class="text-gray-600 mt-2 text-center">
+    <div class="w-full max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center p-8 transition-colors duration-300">
+        <h1 class="text-gray-900 dark:text-white">Settings</h1>
+
+        <p class="text-gray-600 dark:text-gray-400 mt-2 text-center">
             Manage your account settings and profile information.
         </p>
 
-        <a-card class="w-full p-8 mt-4">
-            <div class="h-10 flex items-center justify-center gap-4">
+        <div class="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
+            <div class="h-10 flex items-center justify-center gap-8 mb-8 border-b border-gray-100 dark:border-gray-700">
                 <router-link
                     v-for="link in links"
                     :key="`link-${link.name}`"
                     :to="{ name: link.to }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700"
-                    active-class="text-indigo-600 border-b-2 border-indigo-600 mt-0.5"
+                    class="h-full inline-flex items-center font-semibold px-2 transition-colors duration-200"
+                    :class="[
+                        'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 border-b-2 border-transparent'
+                    ]"
+                    active-class="!text-indigo-600 dark:!text-indigo-400 border-indigo-600 dark:border-indigo-400"
                 >
                     {{ link.name }}
                 </router-link>
             </div>
 
             <router-view></router-view>
-        </a-card>
+        </div>
     </div>
 </template>

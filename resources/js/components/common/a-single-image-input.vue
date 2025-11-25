@@ -35,32 +35,38 @@ function onFileSelect(event) {
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col items-center gap-4">
         <div
             v-if="imagePreview"
             class="flex items-center justify-center"
         >
             <img
-                class="w-32 h-32 bg-cover rounded-full"
+                class="w-32 h-32 bg-cover rounded-full border-4 border-white dark:border-gray-700 shadow-md transition-colors duration-300"
                 :src="imagePreview"
                 alt="User avatar"
             >
         </div>
 
         <div v-else class="flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-full bg-grey-400 min-w-32 min-h-32 border">
-                <span class="text-3xl font-aroly">
+            <div class="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 min-w-32 min-h-32 border border-gray-300 dark:border-gray-600 transition-colors duration-300">
+                <span class="text-4xl font-bold text-gray-500 dark:text-gray-300">
                     {{ firstLetterOfName }}
                 </span>
             </div>
         </div>
 
-        <FileUpload
-            class="p-button-secondary mt-4"
-            mode="basic"
-            @select="onFileSelect"
-            customUpload
-            auto
-        />
+        <div class="relative overflow-hidden">
+            <FileUpload
+                mode="basic"
+                name="avatar"
+                accept="image/*"
+                :maxFileSize="1000000"
+                @select="onFileSelect"
+                customUpload
+                auto
+                chooseLabel="Change Image"
+                class="p-button-secondary p-button-outlined"
+            />
+        </div>
     </div>
 </template>
