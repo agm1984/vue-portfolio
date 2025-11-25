@@ -31,7 +31,7 @@ const links = computed(() => [
                     :class="[
                         'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 border-b-2 border-transparent'
                     ]"
-                    active-class="!text-indigo-600 dark:!text-indigo-400 border-indigo-600 dark:border-indigo-400"
+                    active-class="!text-indigo-600 dark:!text-indigo-400 border-indigo-600! dark:border-indigo-400"
                 >
                     {{ link.name }}
                 </router-link>
