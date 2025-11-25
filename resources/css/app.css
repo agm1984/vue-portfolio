@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @font-face {
     font-family: 'Aroly';
     src: url('../fonts/AROLY.ttf') format('truetype');
@@ -27,27 +29,27 @@ html {
 }
 
 h1 {
-    @apply text-4xl font-semibold;
+    @apply text-4xl font-semibold text-gray-900 dark:text-white;
 }
 
 h2 {
-    @apply text-3xl font-semibold;
+    @apply text-3xl font-semibold text-gray-900 dark:text-white;
 }
 
 h3 {
-    @apply text-2xl font-semibold text-gray-600 uppercase tracking-wider;
+    @apply text-2xl font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider;
 }
 
 h4 {
-    @apply text-xl font-semibold;
+    @apply text-xl font-semibold text-gray-900 dark:text-white;
 }
 
 h5 {
-    @apply text-lg font-semibold;
+    @apply text-lg font-semibold text-gray-900 dark:text-white;
 }
 
 h6 {
-    @apply text-xs font-semibold text-gray-600 uppercase tracking-wider;
+    @apply text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider;
 }
 
 /* CHROMIUM ICON BUG FIX */

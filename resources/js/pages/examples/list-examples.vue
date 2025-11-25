@@ -54,10 +54,10 @@ watch(() => publicExamples.activeCategory, setUrlParams);
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col p-8">
+    <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col p-8 transition-colors duration-300">
         <div class="flex flex-col">
-            <h1>Examples</h1>
-            <p class="text-gray-600 mt-2">
+            <h1 class="text-gray-900 dark:text-white">Examples</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">
                 A collection of full projects, resources, experiments, and learning.
             </p>
 
@@ -82,7 +82,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                             'cursor-pointer rounded-full font-semibold transition-all duration-200 px-4 py-2',
                             publicExamples.activeCategory === category.slug
                                 ? 'bg-indigo-600 text-white shadow-md scale-105'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+                                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700',
                         ]"
                         @click="() => handleSelectCategory(category.slug)"
                     >{{ category.name }}</button>
@@ -98,7 +98,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             <div
                 v-for="loader in 6"
                 :key="`example-skeleton-${loader}`"
-                class="rounded-xl overflow-hidden border"
+                class="rounded-xl overflow-hidden border dark:border-gray-700"
             >
                 <Skeleton height="200px" width="100%"></Skeleton>
                 <div class="p-4">
@@ -109,11 +109,11 @@ watch(() => publicExamples.activeCategory, setUrlParams);
         </div>
 
         <div v-else-if="hasError" class="w-full flex flex-col items-center justify-center text-center mt-4">
-            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center">
+            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400 rounded-full flex items-center justify-center">
                 <i class="pi pi-exclamation-circle" style="font-size: 24px;"></i>
             </div>
-            <h3 class="mt-4">Something went wrong</h3>
-            <p class="mt-4">We failed to load the project examples.</p>
+            <h3 class="mt-4 text-gray-900 dark:text-white">Something went wrong</h3>
+            <p class="mt-4 text-gray-600 dark:text-gray-400">We failed to load the project examples.</p>
             <Button
                 type="button"
                 class="mt-4"
@@ -130,9 +130,9 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                     v-for="example in publicExamples.filteredExamples"
                     :key="example.slug"
                     :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
-                    class="group flex flex-col bg-white rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
+                    class="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border dark:border-gray-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
                 >
-                    <div class="relative aspect-video w-full overflow-hidden bg-gray-100">
+                    <div class="relative aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
                         <a-image
                             v-if="example.images?.length > 0"
                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
@@ -144,16 +144,16 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                         </div>
                         <div class="absolute top-3 right-3">
                              <Tag
-                                class="bg-white/90 text-gray-800 backdrop-blur-sm border shadow-sm font-semibold text-xs uppercase"
+                                class="bg-white/90 dark:bg-gray-900/90 text-gray-800 dark:text-gray-200 backdrop-blur-sm border dark:border-gray-700 shadow-sm font-semibold text-xs uppercase"
                                 :value="example.category.name"
                                 rounded
                             />
                         </div>
                     </div>
                     <div class="p-8 flex flex-col flex-1">
-                        <h3 class="group-hover:text-indigo-600 transition-colors">{{ example.name }}</h3>
-                        <p class="text-gray-500 text-sm line-clamp-2 mt-2">See project details, resources, and live demos.</p>
-                        <div class="flex items-center text-indigo-600 font-semibold text-sm pt-4 mt-auto">
+                        <h3 class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-gray-900 dark:text-white">{{ example.name }}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mt-2">See project details, resources, and live demos.</p>
+                        <div class="flex items-center text-indigo-600 dark:text-indigo-400 font-semibold text-sm pt-4 mt-auto">
                             <span>View</span>
                             <i class="pi pi-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                         </div>
@@ -163,18 +163,18 @@ watch(() => publicExamples.activeCategory, setUrlParams);
         </div>
 
         <a-card v-else class="flex flex-col items-center justify-center p-8 mt-4">
-            <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
+            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center mb-4">
                 <i class="pi pi-search" style="font-size: 24px;"></i>
             </div>
 
-            <h3>No examples found</h3>
+            <h3 class="text-gray-900 dark:text-white">No examples found</h3>
 
-            <p v-if="publicExamples.searchTerms" class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
-                We couldn't find any examples matching <strong>{{ publicExamples.searchTerms }}</strong> in the <strong class="capitalize font-semibold">{{ publicExamples.activeCategory }}</strong> category.
+            <p v-if="publicExamples.searchTerms" class="max-w-xl text-center text-gray-600 dark:text-gray-400 wrap-break-word mt-2">
+                We couldn't find any examples matching <strong class="text-gray-900 dark:text-white">{{ publicExamples.searchTerms }}</strong> in the <strong class="capitalize font-semibold text-gray-900 dark:text-white">{{ publicExamples.activeCategory }}</strong> category.
             </p>
 
-            <p v-else class="max-w-xl text-center text-gray-600 wrap-break-word mt-2">
-                We couldn't find any examples in the <strong class="capitalize font-semibold">{{ publicExamples.activeCategory }}</strong> category.
+            <p v-else class="max-w-xl text-center text-gray-600 dark:text-gray-400 wrap-break-word mt-2">
+                We couldn't find any examples in the <strong class="capitalize font-semibold text-gray-900 dark:text-white">{{ publicExamples.activeCategory }}</strong> category.
             </p>
 
             <Button

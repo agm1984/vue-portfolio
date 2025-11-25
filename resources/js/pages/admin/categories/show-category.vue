@@ -17,9 +17,6 @@ const router = useRouter();
 const LOADING = 'LOADING';
 const SHOWING = 'SHOWING';
 const EDITING = 'EDITING';
-const isLoading = computed(() => state.value === LOADING);
-const isShowing = computed(() => state.value === SHOWING);
-const isEditing = computed(() => state.value === EDITING);
 const state = ref(LOADING);
 const category = ref({
     id: null,
@@ -31,6 +28,10 @@ const category = ref({
     updated_at_nice: '',
     examples: [],
 });
+
+const isLoading = computed(() => state.value === LOADING);
+const isShowing = computed(() => state.value === SHOWING);
+const isEditing = computed(() => state.value === EDITING);
 
 const getStatusConfig = (status) => {
     return status === 1
@@ -67,7 +68,7 @@ onMounted(fetchCategory);
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col">
+    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-center gap-4">
                 <Button
@@ -81,8 +82,8 @@ onMounted(fetchCategory);
                 />
 
                 <div>
-                    <h1>Category Details</h1>
-                    <p class="text-gray-600 mt-2">Manage Example classification.</p>
+                    <h1 class="text-gray-900 dark:text-white">Category Details</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Manage Example classification.</p>
                 </div>
             </div>
 
@@ -114,25 +115,25 @@ onMounted(fetchCategory);
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div class="lg:col-span-1">
-                <a-card v-if="isShowing" class="flex flex-col relative overflow-hidden p-8">
+                <div v-if="isShowing" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col relative overflow-hidden p-8 transition-colors duration-300">
                     <div class="absolute top-0 left-0 w-full h-2 bg-indigo-500"></div>
 
                     <div>
-                        <h6>Category Name</h6>
+                        <h6 class="text-gray-900 dark:text-white">Category Name</h6>
 
-                        <h2 class="mt-1">{{ category.name }}</h2>
+                        <h2 class="mt-1 text-gray-900 dark:text-white">{{ category.name }}</h2>
                     </div>
 
                     <div class="mt-6">
-                        <h6>URL Slug</h6>
+                        <h6 class="text-gray-900 dark:text-white">URL Slug</h6>
 
-                        <div class="bg-gray-100 rounded font-mono text-sm text-indigo-600 break-all p-2 mt-1">
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded font-mono text-sm text-indigo-600 dark:text-indigo-400 break-all p-2 mt-1 transition-colors">
                             /{{ category.slug }}
                         </div>
                     </div>
 
                     <div class="mt-6">
-                         <h6>Status</h6>
+                         <h6 class="text-gray-900 dark:text-white">Status</h6>
 
                          <Tag
                             class="w-full py-2 text-sm uppercase tracking-widest mt-1"
@@ -142,14 +143,14 @@ onMounted(fetchCategory);
                         />
                     </div>
 
-                    <div class="mt-auto border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-sm pt-6">
-                        <span class="text-gray-600">ID</span>
-                        <span class="font-mono font-semibold text-gray-700">#{{ category.id }}</span>
+                    <div class="mt-auto border-t border-gray-100 dark:border-gray-700 flex justify-between items-center text-sm pt-6 transition-colors">
+                        <span class="text-gray-600 dark:text-gray-400">ID</span>
+                        <span class="font-mono font-semibold text-gray-700 dark:text-gray-300">#{{ category.id }}</span>
                     </div>
-                </a-card>
+                </div>
 
-                <a-card v-if="isEditing" class="border-indigo-200 ring-4 ring-indigo-50 p-8">
-                    <div class="flex items-center gap-2 text-indigo-600 font-semibold border-b border-gray-100 pb-2 mb-8">
+                <div v-if="isEditing" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-indigo-200 dark:border-indigo-900 ring-4 ring-indigo-50 dark:ring-indigo-900/20 p-8 transition-colors duration-300">
+                    <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold border-b border-gray-100 dark:border-gray-700 pb-2 mb-8 transition-colors">
                         <i class="pi pi-file-edit"></i>
                         <span>Editing Mode</span>
                     </div>
@@ -160,33 +161,33 @@ onMounted(fetchCategory);
                         @reset="handleReset"
                         @save="handleCategorySaved"
                     />
-                </a-card>
+                </div>
             </div>
 
             <div class="lg:col-span-2 space-y-8">
-                <a-card class="flex flex-col sm:flex-row gap-4 p-8">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row gap-4 p-8 transition-colors duration-300">
                     <div class="flex-1">
-                         <h6 class="mb-1">Created</h6>
+                         <h6 class="mb-1 text-gray-900 dark:text-white">Created</h6>
                          <p class="text-gray-800 dark:text-white font-medium">{{ category.created_at_nice }}</p>
-                         <p class="text-xs text-gray-600 mt-1">{{ category.created_at_diff }}</p>
+                         <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ category.created_at_diff }}</p>
                     </div>
-                    <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block"></div>
+                    <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block transition-colors"></div>
                     <div class="flex-1">
-                         <h6 class="mb-1">Last Updated</h6>
+                         <h6 class="mb-1 text-gray-900 dark:text-white">Last Updated</h6>
                          <p class="text-gray-800 dark:text-white font-medium">{{ category.updated_at_nice }}</p>
-                         <p class="text-xs text-gray-600 mt-1">{{ category.updated_at_diff }}</p>
+                         <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ category.updated_at_diff }}</p>
                     </div>
-                    <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block"></div>
+                    <div class="w-px bg-gray-100 dark:bg-gray-700 hidden sm:block transition-colors"></div>
                      <div class="flex-1">
-                         <h6 class="mb-1">Total Projects</h6>
-                         <p class="text-2xl font-semibold text-indigo-600">{{ category.examples_count }}</p>
+                         <h6 class="mb-1 text-gray-900 dark:text-white">Total Projects</h6>
+                         <p class="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 transition-colors">{{ category.examples_count }}</p>
                     </div>
-                </a-card>
+                </div>
 
                 <div>
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="pi pi-images text-indigo-500"></i>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 transition-colors">
+                            <i class="pi pi-images text-indigo-500 dark:text-indigo-400"></i>
                             Associated Examples
                         </h3>
                     </div>
@@ -198,7 +199,7 @@ onMounted(fetchCategory);
                             :to="{ name: 'admin.examples.show', params: { example: example.slug } }"
                             class="group relative block bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-all hover:-translate-y-1"
                         >
-                            <div class="aspect-video bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
+                            <div class="aspect-video bg-gray-100 dark:bg-gray-900 relative overflow-hidden transition-colors">
                                 <a-image
                                     v-if="example.images && example.images.length > 0"
                                     :src="`/storage/examples/${example.slug}/${example.images[0].filename}`" 
@@ -206,7 +207,7 @@ onMounted(fetchCategory);
                                     alt="Project Thumbnail"
                                     background="#ffffff"
                                 />
-                                <div v-else class="w-full h-full flex items-center justify-center text-gray-300">
+                                <div v-else class="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600 transition-colors">
                                     <i class="pi pi-image" style="font-size: 48px;"></i>
                                 </div>
 
@@ -229,18 +230,18 @@ onMounted(fetchCategory);
                             </div>
 
                             <div class="p-4">
-                                <h4 class="group-hover:text-indigo-600 transition-colors truncate">
+                                <h4 class="text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors truncate">
                                     {{ example.name }}
                                 </h4>
-                                <p class="text-gray-600 mt-1 flex items-center gap-1">
-                                    View <i class="pi pi-arrow-right transition-transform group-hover:translate-x-1"></i>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-1 text-sm transition-colors">
+                                    View <i class="pi pi-arrow-right transition-transform group-hover:translate-x-1 text-[10px]"></i>
                                 </p>
                             </div>
                         </router-link>
                     </div>
 
                     <a-area-empty v-else class="mt-8">
-                        <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full flex items-center justify-center mb-4 transition-colors">
                             <i class="pi pi-search" style="font-size: 24px;"></i>
                         </div>
 

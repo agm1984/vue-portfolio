@@ -14,9 +14,10 @@ useHead({
 const IS_LOADING = 'is-loading';
 const IS_LOADED = 'is-loaded';
 const IS_ERROR = 'is-error';
+const state = ref(IS_LOADING);
+
 const isLoading = computed(() => state.value === IS_LOADING);
 const isLoaded = computed(() => state.value === IS_LOADED);
-const state = ref(IS_LOADING);
 
 const example = ref({
     created_at_nice: '',
@@ -60,7 +61,8 @@ const goBack = () => {
 </script>
 
 <template>
-    <div class="w-full max-w-7xl mx-auto p-6 md:p-12 min-h-screen flex flex-col">
+    <div class="w-full max-w-7xl mx-auto p-6 md:p-12 min-h-screen flex flex-col transition-colors duration-300">
+        
         <div v-if="isLoading" class="animate-pulse space-y-8">
             <Skeleton width="100px" height="2rem" class="mb-4" />
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -79,7 +81,7 @@ const goBack = () => {
             <header>
                 <Button
                     type="button"
-                    class="text-gray-600! hover:text-indigo-600"
+                    class="text-gray-600! dark:text-gray-400! hover:text-indigo-600! dark:hover:text-indigo-400!"
                     icon="pi pi-arrow-left"
                     label="Back to Projects"
                     text
@@ -87,36 +89,36 @@ const goBack = () => {
                 />
 
                 <div class="flex flex-col gap-2 mt-4">
-                    <h1>{{ example.name }}</h1>
+                    <h1 class="text-gray-900 dark:text-white">{{ example.name }}</h1>
 
                     <div class="flex items-center gap-4">
                         <Tag
-                            class="uppercase tracking-widest text-xs! font-semibold bg-indigo-50! text-indigo-600! border border-indigo-100"
+                            class="uppercase tracking-widest text-xs! font-semibold bg-indigo-50! dark:bg-indigo-900/30! text-indigo-600! dark:text-indigo-300! border border-indigo-100 dark:border-indigo-800"
                             severity="info"
                             :value="example.category.name"
                         />
                     </div>
 
-                    <div class="flex flex-col gap-2">
-                        <span class="text-sm text-gray-600">Added: {{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
+                    <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+                        <span class="text-sm">Added: {{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
                         <span
                             v-if="example.created_at_nice !== example.updated_at_nice"
-                            class="text-sm text-gray-600">Last updated: {{ example.updated_at_nice }} ({{ example.updated_at_diff }})
+                            class="text-sm">Last updated: {{ example.updated_at_nice }} ({{ example.updated_at_diff }})
                         </span>
-
                     </div>
                 </div>
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
+                
                 <main class="lg:col-span-8 flex flex-col gap-8">
-                    <section class="prose max-w-none text-lg text-gray-600">
+                    <section class="prose max-w-none text-lg text-gray-600 dark:text-gray-300">
                         <p>{{ example.summary }}</p>
                     </section>
 
                     <section v-if="example.images.length > 0">
-                        <h3 class="flex items-center gap-2">
-                            <i class="pi pi-images text-indigo-500"></i> Gallery
+                        <h3 class="flex items-center gap-2 text-gray-900 dark:text-white">
+                            <i class="pi pi-images text-indigo-500 dark:text-indigo-400"></i> Gallery
                         </h3>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
@@ -124,7 +126,7 @@ const goBack = () => {
                                 v-for="(image, index) in example.images"
                                 :key="image.image_id"
                                 :to="{ name: 'public.examples.image', params: { filename: image.filename } }"
-                                class="group relative block rounded-xl overflow-hidden shadow-sm border aspect-video"
+                                class="group relative block rounded-xl overflow-hidden shadow-sm border dark:border-gray-700 aspect-video"
                                 title="View Full Size"
                             >
                                 <a-image
@@ -144,25 +146,26 @@ const goBack = () => {
                         </div>
                     </section>
 
-                    <section v-if="example.conclusion" class="bg-indigo-50 rounded-2xl border-l-4 border-indigo-500 p-8">
-                        <h3>Final Thoughts</h3>
-                        <p class="text-gray-600 mt-2">{{ example.conclusion }}</p>
+                    <section v-if="example.conclusion" class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border-l-4 border-indigo-500 dark:border-indigo-400 p-8 transition-colors">
+                        <h3 class="text-indigo-900 dark:text-indigo-100">Final Thoughts</h3>
+                        <p class="text-gray-700 dark:text-gray-300 mt-2">{{ example.conclusion }}</p>
                     </section>
 
-                    <section class="border-t pt-8">
-                        <h3>Discussion</h3>
+                    <section class="border-t border-gray-200 dark:border-gray-700 pt-8">
+                        <h3 class="text-gray-900 dark:text-white">Discussion</h3>
                         <comments-manager class="mt-4"></comments-manager>
                     </section>
                 </main>
 
                 <aside class="lg:col-span-4 space-y-8">
                     <div class="sticky top-[99px] space-y-8">
-                        <a-card class="p-8">
-                            <h3>Details</h3>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors">
+                            <h3 class="text-gray-900 dark:text-white">Details</h3>
 
                             <div class="space-y-8 mt-2">
                                 <div>
-                                    <h6>Links & Resources</h6>
+                                    <h6 class="text-gray-900 dark:text-white">Links & Resources</h6>
 
                                     <div v-if="example.links.length > 0" class="flex flex-col gap-2 mt-2">
                                         <a
@@ -170,67 +173,66 @@ const goBack = () => {
                                             :key="`link-${link.url}`"
                                             :href="link.url"
                                             target="_blank"
-                                            class="flex items-center justify-between p-3 rounded-lg bg-gray-100 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-gray-600 transition-colors group"
+                                            class="flex items-center justify-between p-3 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 text-gray-700 dark:text-gray-200 transition-colors group"
                                         >
                                             <span class="font-semibold text-sm">{{ link.name }}</span>
-                                            <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
+                                            <i class="pi pi-external-link text-xs text-gray-500 dark:text-gray-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400"></i>
                                         </a>
                                     </div>
 
                                     <a-area-empty v-else class="py-4 mt-2">
-                                        <span class="text-sm text-gray-600">No links yet</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">No links yet</span>
                                     </a-area-empty>
                                 </div>
 
                                 <div>
-                                    <h6>Technologies</h6>
+                                    <h6 class="text-gray-900 dark:text-white">Technologies</h6>
 
                                     <div v-if="example.tags.length > 0" class="flex flex-wrap gap-2 mt-2">
                                         <Tag
                                             v-for="(tag, index) in example.tags"
                                             :key="`example-tag-${index}`"
-                                            class="bg-white! text-gray-700! border font-normal!"
+                                            class="bg-white! dark:bg-gray-700! text-gray-700! dark:text-gray-200! border dark:border-gray-600 font-normal!"
                                             :value="tag"
                                             rounded
                                         />
                                     </div>
 
                                     <a-area-empty v-else class="py-4 mt-2">
-                                        <span class="text-sm text-gray-600">No tags yet</span>
+                                        <span class="text-sm text-gray-600 dark:text-gray-400">No tags yet</span>
                                     </a-area-empty>
                                 </div>
 
-                                <div class="border-t pt-4">
-                                    <p class="text-sm text-gray-600 text-center">
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
                                         Have questions about this?
-                                        <a href="#comments" class="text-indigo-600 font-semibold hover:underline ml-2">Ask below.</a>
+                                        <a href="#comments" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline ml-2">Ask below.</a>
                                     </p>
                                 </div>
                             </div>
-                        </a-card>
+                        </div>
                     </div>
                 </aside>
             </div>
         </div>
 
         <div v-else class="flex-1 flex items-center justify-center">
-            <div class="text-center p-8 bg-red-50 border border-red-200 rounded-lg">
-                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+            <div class="text-center p-8 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-lg transition-colors">
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mb-4 mx-auto">
                     <i class="pi pi-exclamation-triangle" style="font-size: 24px;"></i>
                 </div>
 
-                <h3 class="text-red-700">Error loading example</h3>
+                <h3 class="text-red-700 dark:text-red-400">Error loading example</h3>
 
-                <p class="text-red-600 mt-2">
+                <p class="text-red-600 dark:text-red-300 mt-2">
                     There was a problem loading this example. Please try again later.
                 </p>
 
                 <Button
                     type="button"
-                    class="mt-4"
+                    class="mt-4 p-button-danger p-button-text"
                     label="Back to Projects"
                     icon="pi pi-arrow-left"
-                    text
                     @click="goBack"
                 />
             </div>

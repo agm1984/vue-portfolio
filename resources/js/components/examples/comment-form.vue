@@ -19,7 +19,6 @@ const auth = useAuthStore();
 
 const INITIAL = 'is-initial';
 const SUBMITTING = 'is-submitting';
-// const isInitial = computed(() => state.value === INITIAL);
 const isSubmitting = computed(() => state.value === SUBMITTING);
 const state = ref(INITIAL);
 const submitted = ref(false);
@@ -77,7 +76,10 @@ const saveComment = async () => {
 </script>
 
 <template>
-    <a-card v-if="auth.isAuthenticated" class="p-8">
+    <div 
+        v-if="auth.isAuthenticated" 
+        class="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300"
+    >
         <div class="flex gap-4">
             <div class="hidden md:block">
                 <a-avatar
@@ -91,7 +93,7 @@ const saveComment = async () => {
                     v-model="v$.body.$model"
                     class="w-full focus:ring-0"
                     :invalid="v$.body.$invalid && submitted"
-                    placeholder=""
+                    placeholder="Write a comment..."
                     rows="3"
                     autoResize
                 />
@@ -104,7 +106,6 @@ const saveComment = async () => {
 
                 <div class="flex items-center justify-between mt-2">
                     <div></div>
-                    <!-- <span class="text-xs text-gray-500">Markdown supported</span> -->
                     <Button
                         type="submit"
                         :icon="isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-send'"
@@ -115,21 +116,24 @@ const saveComment = async () => {
                 </div>
             </form>
         </div>
-    </a-card>
+    </div>
 
-    <div v-else class="bg-indigo-50 p-8 rounded-xl border border-indigo-100 dark:border-indigo-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div 
+        v-else 
+        class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-xl border border-indigo-100 dark:border-indigo-800 flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors duration-300"
+    >
         <div class="flex items-center gap-3">
-            <i class="pi pi-lock text-indigo-500 text-xl"></i>
+            <i class="pi pi-lock text-indigo-500 dark:text-indigo-400 text-xl"></i>
             <span class="text-gray-700 dark:text-gray-300 font-medium">Join the discussion and leave a comment.</span>
         </div>
         <div class="flex gap-4">
             <router-link
-                class="text-indigo-600 font-semibold hover:underline"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
                 :to="{ name: 'login' }"
             >Login</router-link>
 
             <router-link
-                class="text-indigo-600 font-semibold hover:underline"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
                 :to="{ name: 'register' }"
             >Register</router-link>
         </div>

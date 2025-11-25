@@ -24,7 +24,7 @@ const systemStatus = computed(() => getSystemStatus(props.metrics.activity.faile
 
 <template>
     <Message
-        class="w-full shadow-sm mb-8"
+        class="w-full shadow-sm mb-8 transition-all duration-300"
         :severity="systemStatus.severity"
         :icon="systemStatus.icon"
         :closable="false"

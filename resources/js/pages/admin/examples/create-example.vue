@@ -8,7 +8,7 @@ useHead({
 
 <template>
     <div class="flex-1 flex flex-col">
-        <h2>Create Example</h2>
+        <h2>Add Example</h2>
 
         <a-card class="p-8 mt-4">
             <edit-example

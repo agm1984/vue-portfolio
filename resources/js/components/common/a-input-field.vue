@@ -29,15 +29,16 @@ defineProps({
     <div class="flex gap-1">
         <label
             :for="inputId"
-            :class="['font-semibold text-grey-900', {
+            :class="['font-semibold text-gray-900 dark:text-gray-200 transition-colors', {
                 'opacity-50': disabled,
             }]"
         >{{ title }}</label>
 
-        <span v-if="required" aria-hidden="true" class="text-red-700">*</span>
+        <span
+            v-if="required"
+            aria-hidden="true"
+            class="text-red-700 dark:text-red-400"
+        >*</span>
 
-        <!-- <UIHelp v-if="$slots.help">
-            <slot name="help"></slot>
-        </UIHelp> -->
-    </div>
+        </div>
 </template>

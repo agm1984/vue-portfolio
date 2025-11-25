@@ -100,18 +100,18 @@ const technologies = [
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col">
-        <h2>Forms</h2>
-        <p class="text-gray-600 mt-2">
+    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
+        <h2 class="text-gray-900 dark:text-white">Forms</h2>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
             A comprehensive guide to input fields, selection controls, and validation patterns.
         </p>
 
-        <a-card class="p-8 mt-4">
-            <h3>Input Playground</h3>
-            <p class="text-sm text-gray-500 font-normal mt-1">Configure the state and style of text inputs.</p>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+            <h3 class="text-gray-900 dark:text-white">Input Playground</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">Configure the state and style of text inputs.</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
-                <div class="lg:col-span-7 bg-gray-50 rounded-xl border flex items-center justify-center min-h-[200px] p-8">
+                <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center min-h-[200px] p-8 transition-colors">
                     <div class="w-full max-w-xs">
                         <template v-if="playground.icon !== 'none'">
                             <IconField :iconPosition="playground.icon">
@@ -149,18 +149,18 @@ const technologies = [
                 </div>
             </div>
             <div class="mt-8"><a-code language="html" :code="generatedCode" /></div>
-        </a-card>
+        </div>
 
-        <a-card class="border-l-4 border-y-0 border-r-0 border-indigo-500 p-8 mt-8">
-            <h3>Validation Architecture</h3>
-            <p class="text-sm text-gray-500 font-normal mt-1">
-                Live demo of <code class="text-indigo-600 bg-indigo-50 px-1 rounded">a-input-field</code> + <code class="text-indigo-600 bg-indigo-50 px-1 rounded">a-field-errors</code> integration.
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r border-gray-200 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
+            <h3 class="text-gray-900 dark:text-white">Validation Architecture</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
+                Live demo of <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-input-field</code> + <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-field-errors</code> integration.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
                 <form @submit.prevent="validateForm" class="space-y-6">
                     <div>
-                        <a-input-field input-id="demo-email" title="Email" required />
+                        <a-input-field input-id="demo-email" title="Email Address" required />
                         <IconField iconPosition="left">
                             <InputIcon class="pi pi-envelope" />
                             <InputText id="demo-email" v-model="v$.email.$model" :class="{'p-invalid': v$.email.$invalid && submitted}" class="w-full" placeholder="Try 'invalid-email'..." />
@@ -174,7 +174,7 @@ const technologies = [
                     </div>
                     <Button type="submit" label="Test Validation" />
                 </form>
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-sm space-y-4">
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-sm space-y-4 transition-colors">
                     <h4 class="font-bold text-gray-900 dark:text-white uppercase tracking-wider">How it works</h4>
                     <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
                         <li><strong>State:</strong> Use <code>v$.fieldName.$model</code> for v-model binding.</li>
@@ -182,47 +182,62 @@ const technologies = [
                         <li><strong>Feedback:</strong> Use <code>&lt;a-field-errors&gt;</code> for error messages.</li>
                     </ol>
                     <Divider />
-                    <div class="font-mono text-xs text-indigo-600">Current Status: {{ v$.$invalid ? 'INVALID' : 'VALID' }}</div>
+                    <div class="font-mono text-xs text-indigo-600 dark:text-indigo-400">Current Status: {{ v$.$invalid ? 'INVALID' : 'VALID' }}</div>
                 </div>
             </div>
-        </a-card>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <a-card class="h-full p-8">
-                <h3>Boolean</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
+                <h3 class="text-gray-900 dark:text-white">Boolean</h3>
 
-                <div class="space-y-4 mt-2">
+                <div class="space-y-4 mt-4">
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center"><Checkbox v-model="checkboxValue" :binary="true" inputId="check1" /><label for="check1" class="ml-2 cursor-pointer">Accept</label></div>
-                        <div class="flex items-center"><Checkbox :modelValue="true" :binary="true" disabled inputId="check2" /><label for="check2" class="ml-2 text-gray-400">Disabled</label></div>
+                        <div class="flex items-center">
+                            <Checkbox v-model="checkboxValue" :binary="true" inputId="check1" />
+                            <label for="check1" class="ml-2 cursor-pointer text-gray-700 dark:text-gray-300">Accept</label>
+                        </div>
+                        <div class="flex items-center">
+                            <Checkbox :modelValue="true" :binary="true" disabled inputId="check2" />
+                            <label for="check2" class="ml-2 text-gray-400 dark:text-gray-500">Disabled</label>
+                        </div>
                     </div>
                     <Divider />
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center"><RadioButton v-model="radioValue" inputId="opt1" name="opts" value="1" /><label for="opt1" class="ml-2 cursor-pointer">Opt 1</label></div>
-                        <div class="flex items-center"><RadioButton v-model="radioValue" inputId="opt2" name="opts" value="2" /><label for="opt2" class="ml-2 cursor-pointer">Opt 2</label></div>
+                        <div class="flex items-center">
+                            <RadioButton v-model="radioValue" inputId="opt1" name="opts" value="1" />
+                            <label for="opt1" class="ml-2 cursor-pointer text-gray-700 dark:text-gray-300">Opt 1</label>
+                        </div>
+                        <div class="flex items-center">
+                            <RadioButton v-model="radioValue" inputId="opt2" name="opts" value="2" />
+                            <label for="opt2" class="ml-2 cursor-pointer text-gray-700 dark:text-gray-300">Opt 2</label>
+                        </div>
                     </div>
                     <Divider />
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center"><ToggleSwitch v-model="switchValue" inputId="switch1" /><label for="switch1" class="ml-2 cursor-pointer">Notify me</label></div>
+                        <div class="flex items-center">
+                            <ToggleSwitch v-model="switchValue" inputId="switch1" />
+                            <label for="switch1" class="ml-2 cursor-pointer text-gray-700 dark:text-gray-300">Notify me</label>
+                        </div>
                     </div>
                 </div>
-            </a-card>
+            </div>
 
-            <a-card class="h-full p-8">
-                <h3>Text Area</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
+                <h3 class="text-gray-900 dark:text-white">Text Area</h3>
 
-                <div class="space-y-4 mt-2">
-                    <p class="text-sm text-gray-500">Supports auto-resize.</p>
+                <div class="space-y-4 mt-4">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Supports auto-resize.</p>
                     <Textarea placeholder="Type a long message here..." rows="5" autoResize class="w-full" />
                 </div>
-                </a-card>
+            </div>
 
-            <a-card class="h-full p-8">
-                <h3>Select Menu</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
+                <h3 class="text-gray-900 dark:text-white">Select Menu</h3>
 
-                <div class="space-y-6 mt-2">
+                <div class="space-y-6 mt-4">
                     <div class="flex flex-col gap-2">
-                        <h6>Standard</h6>
+                        <h6 class="text-gray-900 dark:text-white">Standard</h6>
                         <Select
                             v-model="selectedCity"
                             :options="cities"
@@ -235,7 +250,7 @@ const technologies = [
                     <Divider />
 
                     <div class="flex flex-col gap-2">
-                        <h6>Search & Template</h6>
+                        <h6 class="text-gray-900 dark:text-white">Search & Template</h6>
                         <Select
                             v-model="selectedTech"
                             :options="technologies"
@@ -261,7 +276,7 @@ const technologies = [
                         </Select>
                     </div>
                 </div>
-            </a-card>
+            </div>
 
         </div>
 

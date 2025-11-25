@@ -68,6 +68,13 @@ app.use(pinia);
 app.use(PrimeVue, {
     theme: {
         preset: Noir,
+        options: {
+            darkModeSelector: '.dark',
+            cssLayer: {
+                name: 'primevue',
+                order: 'theme, base, primevue',
+            },
+        },
     },
 });
 app.use(ToastService);

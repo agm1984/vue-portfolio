@@ -114,26 +114,26 @@ const sendMessage = async () => {
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-5xl mx-auto flex items-center p-8">
+    <div class="flex-1 w-full max-w-5xl mx-auto flex items-center p-8 transition-colors duration-300">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
             <div class="lg:col-span-1 flex flex-col gap-8">
                 <div>
-                    <h1>Contact Me</h1>
+                    <h1 class="text-gray-900 dark:text-white">Contact Me</h1>
 
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 dark:text-gray-300 mt-2">
                         Have a project in mind? Send a message here, or reach out directly via email.
                     </p>
                 </div>
 
                 <a-card class="p-8">
-                    <div class="flex items-center gap-2 text-indigo-600 font-semibold text-sm uppercase tracking-wide">
+                    <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold text-sm uppercase tracking-wide">
                         <i class="pi pi-envelope"></i>
                         <span>Direct Email</span>
                     </div>
 
                     <a
                         :href="`mailto:${myEmail}`"
-                        class="text-lg text-gray-800 hover:text-indigo-600 transition-colors block break-all mt-2"
+                        class="text-lg text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors block break-all mt-2"
                     >
                         {{ myEmail }}
                     </a>
@@ -151,7 +151,7 @@ const sendMessage = async () => {
                 </a-card>
 
                 <div>
-                    <h3 class="text-sm font-semibold">Connect</h3>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Connect</h3>
                     <div class="flex gap-4 mt-4">
                         <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
                         <a-social-link network="github" class="hover:translate-x-1 transition-transform" />
@@ -165,13 +165,13 @@ const sendMessage = async () => {
                 <a-card class="p-8">
                     <transition name="fade" mode="out-in">
                         <div v-if="isMessageSent" class="flex flex-col items-center justify-center text-center py-8">
-                            <div class="w-20 h-20 flex items-center justify-center bg-green-100 text-green-600 rounded-full animate-bounce">
+                            <div class="w-20 h-20 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full animate-bounce">
                                 <i class="pi pi-check" style="font-size: 24px;"></i>
                             </div>
 
-                            <h3 class="mt-4">Message Sent!</h3>
+                            <h3 class="mt-4 text-gray-900 dark:text-white">Message Sent!</h3>
 
-                            <p class="max-w-md mt-4">
+                            <p class="max-w-md mt-4 text-gray-600 dark:text-gray-300">
                                 {{ successMessage }}
                             </p>
                             <Button
@@ -252,7 +252,7 @@ const sendMessage = async () => {
 
                             <div class="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4 mt-4">
                                 <div class="w-full sm:w-auto">
-                                    <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-500 mb-1">
+                                    <label for="contact-answer" class="block font-semibold text-gray-600 dark:text-gray-300 mb-1">
                                         <span>{{ verificationText }}</span>
                                     </label>
 
@@ -294,14 +294,13 @@ const sendMessage = async () => {
 </template>
 
 <style scoped>
-/* Simple fade transition for the success message swap */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.3s ease;
+    }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
 </style>

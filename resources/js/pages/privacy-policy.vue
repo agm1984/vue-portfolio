@@ -7,10 +7,10 @@ useHead({
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-4xl mx-auto flex flex-col p-8 leading-relaxed">
+    <div class="flex-1 w-full max-w-4xl mx-auto flex flex-col p-8 leading-relaxed text-gray-800 dark:text-gray-300 transition-colors duration-300">
         <h1>Privacy Policy</h1>
 
-        <p class="text-gray-600 mt-2">LAST UPDATE OF THIS PRIVACY POLICY - November 23, 2025</p>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">LAST UPDATE OF THIS PRIVACY POLICY - November 23, 2025</p>
 
         <h3 class="mt-4">BEFORE USING OUR SITES, PLEASE READ THIS PRIVACY POLICY CAREFULLY.</h3>
 

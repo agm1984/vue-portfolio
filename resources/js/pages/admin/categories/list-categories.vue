@@ -57,11 +57,11 @@ onMounted(fetchAllCategories);
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-                <h1>Categories</h1>
-                <p class="text-gray-600 mt-2">For organizing portfolio examples.</p>
+                <h1 class="text-gray-900 dark:text-white">Categories</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">For organizing portfolio examples.</p>
             </div>
 
             <div v-if="auth.isAdmin">
@@ -77,7 +77,8 @@ onMounted(fetchAllCategories);
             </div>
         </div>
 
-        <a-card class="p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+            
             <div class="flex justify-end pb-4">
                 <IconField iconPosition="left">
                     <InputIcon>
@@ -104,8 +105,8 @@ onMounted(fetchAllCategories);
             >
                 <template #empty>
                     <div class="text-center py-8">
-                        <i class="pi pi-folder-open text-4xl text-gray-300 mb-3"></i>
-                        <p class="text-gray-600">No categories found.</p>
+                        <i class="pi pi-folder-open text-4xl text-gray-300 dark:text-gray-600 mb-3 transition-colors"></i>
+                        <p class="text-gray-600 dark:text-gray-400">No categories found.</p>
                     </div>
                 </template>
 
@@ -114,7 +115,7 @@ onMounted(fetchAllCategories);
                         <div class="flex flex-col">
                             <router-link
                                 :to="{ name: 'admin.categories.show', params: { category: data.slug } }"
-                                class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 transition-colors text-base"
+                                class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-base"
                             >
                                 {{ data.name }}
                             </router-link>
@@ -124,7 +125,7 @@ onMounted(fetchAllCategories);
 
                 <Column field="slug" header="Slug" sortable>
                     <template #body="{ data }">
-                        <span class="font-mono text-sm text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">
+                        <span class="font-mono text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded transition-colors">
                             {{ data.slug }}
                         </span>
                     </template>
@@ -144,13 +145,13 @@ onMounted(fetchAllCategories);
 
                 <Column field="created_at_diff" header="Created" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.created_at_diff }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap transition-colors">{{ data.created_at_diff }}</span>
                     </template>
                 </Column>
 
                 <Column field="updated_at_diff" header="Last Updated" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.updated_at_diff }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap transition-colors">{{ data.updated_at_diff }}</span>
                     </template>
                 </Column>
 
@@ -162,6 +163,6 @@ onMounted(fetchAllCategories);
                     </template>
                 </Column>
             </DataTable>
-        </a-card>
+        </div>
     </div>
 </template>

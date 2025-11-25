@@ -70,16 +70,16 @@ const resetPassword = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8">
-        <a-card class="w-full max-w-md p-8">
+    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
+        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 rounded-full mx-auto">
+                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto transition-colors">
                     <i class="pi pi-lock-open" style="font-size: 24px;"></i>
                 </div>
 
-                <h1 class="mt-4">Set New Password</h1>
+                <h1 class="mt-4 text-gray-900 dark:text-white">Set New Password</h1>
 
-                <p class="text-gray-600 mt-2">
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
                     Please choose a strong password to secure your account.
                 </p>
             </div>
@@ -137,13 +137,13 @@ const resetPassword = async () => {
 
             <div class="text-center mt-8">
                 <router-link
-                    class="flex items-center justify-center gap-2 text-indigo-600 hover:text-indigo-700 active:text-indigo-800 font-semibold transition-colors"
+                    class="flex items-center justify-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 font-semibold transition-colors"
                     :to="{ name: 'login' }"
                 >
                     <i class="pi pi-arrow-left"></i>
                     Back to Login
                 </router-link>
             </div>
-        </a-card>
+        </div>
     </div>
 </template>

@@ -54,17 +54,18 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8">
-        <a-card class="w-full max-w-md p-8">
+    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
+        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 p-8 transition-colors duration-300">
+            
             <div v-if="isSuccess" class="flex flex-col items-center text-center animate-fade-in">
-                <div class="w-16 h-16 flex items-center justify-center bg-green-100 text-green-600 rounded-full">
+                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full transition-colors">
                     <i class="pi pi-envelope" style="font-size: 24px;"></i>
                 </div>
 
-                <h2 class="mt-4">Check your email</h2>
+                <h2 class="mt-4 text-gray-900 dark:text-white">Check your email</h2>
 
-                <p class="text-gray-600 mt-2">
-                    If an account exists for <span class="font-semibold">{{ form.email }}</span>,
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
+                    If an account exists for <span class="font-semibold text-gray-900 dark:text-white">{{ form.email }}</span>,
                     you will receive password reset instructions shortly.
                 </p>
 
@@ -81,13 +82,13 @@ const handleSubmit = async () => {
 
             <div v-else>
                 <div class="text-center">
-                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 text-indigo-600 rounded-full mx-auto">
+                    <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto transition-colors">
                         <i class="pi pi-key" style="font-size: 24px;"></i>
                     </div>
 
-                    <h1 class="mt-4">Forgot Password?</h1>
+                    <h1 class="mt-4 text-gray-900 dark:text-white">Forgot Password?</h1>
 
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">
                         No worries, I will send you reset instructions.
                     </p>
                 </div>
@@ -96,7 +97,7 @@ const handleSubmit = async () => {
                     <a-input-field input-id="fp-email" title="Email" required />
 
                     <IconField iconPosition="left">
-                        <InputIcon class="pi pi-envelope text-gray-500" />
+                        <InputIcon class="pi pi-envelope text-gray-500 dark:text-gray-400" />
                         <InputText
                             v-model="v$.email.$model"
                             id="fp-email"
@@ -123,7 +124,7 @@ const handleSubmit = async () => {
 
                 <div class="text-center mt-8">
                     <router-link
-                        class="flex items-center justify-center gap-2 text-indigo-600 hover:text-indigo-700 active:text-indigo-800 font-semibold transition-colors"
+                        class="flex items-center justify-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 font-semibold transition-colors"
                         :to="{ name: 'login' }"
                     >
                         <i class="pi pi-arrow-left"></i>
@@ -131,7 +132,7 @@ const handleSubmit = async () => {
                     </router-link>
                 </div>
             </div>
-        </a-card>
+        </div>
     </div>
 </template>
 
