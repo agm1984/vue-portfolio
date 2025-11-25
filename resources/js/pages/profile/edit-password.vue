@@ -8,6 +8,10 @@ import Password from 'primevue/password';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
 
+useHead({
+    title: 'Edit Password',
+});
+
 const auth = useAuthStore();
 
 const INITIAL = 'is-initial';
