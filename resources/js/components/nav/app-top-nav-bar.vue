@@ -94,7 +94,9 @@ const handleLogout = async () => {
                 </template>
             </div>
 
-            <div class="flex items-center md:hidden -mr-3">
+            <div class="flex items-center gap-4 md:hidden -mr-3">
+                <dark-mode-selector></dark-mode-selector>
+
                 <button
                     type="button"
                     class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900 dark:focus:ring-gray-500"

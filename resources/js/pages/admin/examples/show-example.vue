@@ -75,7 +75,7 @@ onMounted(fetchExample);
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col">
+    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div class="flex items-center gap-4">
                 <Button
@@ -89,11 +89,11 @@ onMounted(fetchExample);
                 />
 
                 <div>
-                    <h1>{{ example.name }}</h1>
+                    <h1 class="text-gray-900 dark:text-white">{{ example.name }}</h1>
 
                     <div class="flex items-center gap-2 mt-2">
-                        <span class="text-xs font-semibold uppercase text-gray-500">Slug:</span>
-                        <span class="font-mono text-xs text-indigo-600 bg-gray-100 px-2 py-1 rounded">/{{ example.slug }}</span>
+                        <span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Slug:</span>
+                        <span class="font-mono text-xs text-indigo-600 dark:text-indigo-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded transition-colors">/{{ example.slug }}</span>
                     </div>
                 </div>
             </div>
@@ -130,8 +130,8 @@ onMounted(fetchExample);
             </div>
         </div>
 
-        <a-card v-else-if="isEditing" class="border-indigo-200 ring-4 ring-indigo-50 p-8">
-            <div class="flex items-center gap-2 text-indigo-600 font-semibold border-b border-gray-100 pb-2 mb-8">
+        <div v-else-if="isEditing" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-indigo-200 dark:border-indigo-900 ring-4 ring-indigo-50 dark:ring-indigo-900/20 p-8 transition-colors duration-300">
+            <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold border-b border-gray-100 dark:border-gray-700 pb-2 mb-8">
                 <i class="pi pi-file-edit"></i>
                 <span>Editing Mode</span>
             </div>
@@ -142,30 +142,31 @@ onMounted(fetchExample);
                 @reset="handleReset"
                 @save="handleExampleSaved"
             />
-        </a-card>
+        </div>
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
             <div class="lg:col-span-2 space-y-8">
-                <a-card class="p-8">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
                     <div class="space-y-8">
                         <div>
-                            <h3 class="text-sm font-semibold uppercase text-gray-600">Summary</h3>
+                            <h3 class="text-sm font-semibold uppercase text-gray-600 dark:text-gray-400">Summary</h3>
                             <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.summary }}</p>
                         </div>
 
-                        <div v-if="example.conclusion" class="bg-indigo-50 rounded-2xl border-l-4 border-indigo-500 p-8">
-                            <h3 class="text-sm font-semibold uppercase text-indigo-600">Final Thoughts</h3>
+                        <div v-if="example.conclusion" class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border-l-4 border-indigo-500 dark:border-indigo-400 p-8 transition-colors">
+                            <h3 class="text-sm font-semibold uppercase text-indigo-600 dark:text-indigo-400">Final Thoughts</h3>
                             <p class="text-gray-800 dark:text-gray-300 leading-relaxed whitespace-pre-wrap mt-2">{{ example.conclusion }}</p>
                         </div>
                     </div>
-                </a-card>
+                </div>
 
-                <a-card class="p-8">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="pi pi-images text-gray-500"></i> Gallery
+                            <i class="pi pi-images text-gray-500 dark:text-gray-400"></i> Gallery
                         </h3>
-                        <span class="text-xs text-gray-600">{{ example.images.length }} images</span>
+                        <span class="text-xs text-gray-600 dark:text-gray-400">{{ example.images.length }} images</span>
                     </div>
 
                     <div v-if="example.images.length" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -194,15 +195,15 @@ onMounted(fetchExample);
                         </router-link>
                     </div>
                     <a-area-empty v-else>No images uploaded yet.</a-area-empty>
-                </a-card>
+                </div>
             </div>
 
             <div class="lg:col-span-1 space-y-8">
-                <a-card class="p-8">
+                
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
                     <div class="flex items-center justify-between mb-2">
-                        <h6>Status</h6>
-
-                        <span class="font-mono text-xs text-gray-300">#{{ example.id }}</span>
+                        <h6 class="text-gray-900 dark:text-white">Status</h6>
+                        <span class="font-mono text-xs text-gray-300 dark:text-gray-600">#{{ example.id }}</span>
                     </div>
                     <div class="mb-6">
                         <Tag
@@ -213,28 +214,28 @@ onMounted(fetchExample);
                     </div>
 
                     <div class="mb-4">
-                         <h6>Category</h6>
+                         <h6 class="text-gray-900 dark:text-white">Category</h6>
 
                          <div class="flex items-center gap-2 mt-1">
-                             <i class="pi pi-folder text-indigo-500"></i>
+                             <i class="pi pi-folder text-indigo-500 dark:text-indigo-400"></i>
                              <span class="font-semibold text-gray-800 dark:text-white">{{ example.category.name }}</span>
                          </div>
                     </div>
 
-                    <div class="border-t space-y-4 pt-4">
+                    <div class="border-t border-gray-100 dark:border-gray-700 space-y-4 pt-4 transition-colors">
                         <div>
-                            <h6>Created</h6>
+                            <h6 class="text-gray-900 dark:text-white">Created</h6>
                             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ example.created_at_nice }}</span>
                         </div>
                         <div>
-                            <h6>Last Update</h6>
+                            <h6 class="text-gray-900 dark:text-white">Last Update</h6>
                             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ example.updated_at_nice }}</span>
                         </div>
                     </div>
-                </a-card>
+                </div>
 
-                <a-card class="p-8">
-                    <h3 class="flex items-center gap-2">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+                    <h3 class="flex items-center gap-2 text-gray-900 dark:text-white">
                         <i class="pi pi-link"></i> Resources
                     </h3>
                     <div v-if="example.links.length" class="flex flex-col gap-2 mt-4">
@@ -243,17 +244,17 @@ onMounted(fetchExample);
                             :key="link.url"
                             :href="link.url"
                             target="_blank"
-                            class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors group"
+                            class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors group"
                         >
-                            <span class="text-sm font-semibold">{{ link.name }}</span>
-                            <i class="pi pi-external-link text-xs text-gray-500 group-hover:text-indigo-500"></i>
+                            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ link.name }}</span>
+                            <i class="pi pi-external-link text-xs text-gray-500 dark:text-gray-400 group-hover:text-indigo-500 dark:group-hover:text-indigo-400"></i>
                         </a>
                     </div>
-                    <div v-else class="text-sm text-gray-500 italic">No external links.</div>
-                </a-card>
+                    <div v-else class="text-sm text-gray-500 dark:text-gray-400 italic">No external links.</div>
+                </div>
 
-                <a-card class="p-8">
-                    <h3 class="text-sm font-semibold uppercase text-gray-500 flex items-center gap-2">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+                    <h3 class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 flex items-center gap-2">
                         <i class="pi pi-tags"></i> Tags
                     </h3>
 
@@ -266,8 +267,8 @@ onMounted(fetchExample);
                             rounded
                         />
                     </div>
-                    <div v-else class="text-sm text-gray-500 italic">No tags assigned.</div>
-                </a-card>
+                    <div v-else class="text-sm text-gray-500 dark:text-gray-400 italic">No tags assigned.</div>
+                </div>
             </div>
         </div>
     </div>

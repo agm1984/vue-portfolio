@@ -85,7 +85,7 @@ const toggleDownvote = () => {
 </script>
 
 <template>
-    <a-card class="flex gap-4 p-6 transition-all">
+    <div class="flex gap-4 p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm transition-colors duration-300">
         <div class="shrink-0">
             <a-avatar
                 :user="comment.author"
@@ -96,10 +96,10 @@ const toggleDownvote = () => {
         <div class="flex-1 min-w-0">
             <div class="flex items-start justify-between mb-2">
                 <div>
-                    <h4 class="font-semibold text-gray-900 dark:text-white text-sm md:text-base">
+                    <h4 class="font-semibold text-gray-900 dark:text-white text-sm md:text-base transition-colors">
                         {{ comment.author.name }}
                     </h4>
-                    <span class="text-xs text-gray-600 dark:text-gray-500" :title="comment.created_at">
+                    <span class="text-xs text-gray-600 dark:text-gray-400 transition-colors" :title="comment.created_at">
                         {{ formatDate(comment.created_at) }}
                     </span>
                 </div>
@@ -119,18 +119,20 @@ const toggleDownvote = () => {
             </div>
 
             <div v-if="!isEditing">
-                <div class="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words">
+                <div class="text-gray-700 dark:text-gray-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap break-words transition-colors">
                     {{ comment.body }}
                 </div>
 
-                <div class="flex items-center gap-4 mt-4 pt-3 border-t">
-                    <div class="flex items-center bg-gray-50 rounded-lg p-1">
+                <div class="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700 transition-colors">
+                    <div class="flex items-center bg-gray-100 dark:bg-gray-700/50 rounded-lg p-1 transition-colors">
                         <Button
                             type="button"
                             icon="pi pi-thumbs-up"
                             :class="[
                                 'transition-colors',
-                                userVote === 1 ? 'text-green-600!' : 'text-gray-500! hover:text-gray-600!'
+                                userVote === 1 
+                                    ? 'text-green-600! dark:text-green-400!' 
+                                    : 'text-gray-500! dark:text-gray-400! hover:text-gray-600! dark:hover:text-gray-200!'
                             ]"
                             text
                             rounded
@@ -139,10 +141,10 @@ const toggleDownvote = () => {
                         />
 
                         <span
-                            :class="['text-xs font-semibold px-2 min-w-6 text-center', {
-                                'text-green-600': (comment.score > 0),
-                                'text-red-500': (comment.score < 0),
-                                'text-gray-600': (comment.score === 0),
+                            :class="['text-xs font-semibold px-2 min-w-6 text-center transition-colors', {
+                                'text-green-600 dark:text-green-400': (comment.score > 0),
+                                'text-red-500 dark:text-red-400': (comment.score < 0),
+                                'text-gray-600 dark:text-gray-400': (comment.score === 0),
                             }]"
                         >{{ comment.score ?? 0 }}</span>
 
@@ -150,7 +152,9 @@ const toggleDownvote = () => {
                             type="button"
                             :class="[
                                 'transition-colors',
-                                userVote === -1 ? 'text-red-500!' : 'text-gray-500! hover:text-gray-600!'
+                                userVote === -1 
+                                    ? 'text-red-500! dark:text-red-400!' 
+                                    : 'text-gray-500! dark:text-gray-400! hover:text-gray-600! dark:hover:text-gray-200!'
                             ]"
                             icon="pi pi-thumbs-down"
                             size="small"
@@ -202,7 +206,7 @@ const toggleDownvote = () => {
                 </div>
             </div>
         </div>
-    </a-card>
+    </div>
 </template>
 
 <style scoped>

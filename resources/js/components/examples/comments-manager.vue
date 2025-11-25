@@ -129,13 +129,15 @@ const removeVoteFromComment = async ({ commentId }) => {
 </script>
 
 <template>
-    <div id="comments" class="flex flex-col">
+    <div id="comments" class="flex flex-col transition-colors duration-300">
         <comment-form
             @comment-added="handleCommentAdded"
         ></comment-form>
 
         <div class="flex items-center justify-between mt-8">
-            <h3>{{ commentCount }} {{ pluralize(commentCount, 'Comment') }}</h3>
+            <h3 class="text-gray-900 dark:text-white transition-colors">
+                {{ commentCount }} {{ pluralize(commentCount, 'Comment') }}
+            </h3>
             <div></div>
         </div>
 
@@ -163,13 +165,18 @@ const removeVoteFromComment = async ({ commentId }) => {
                 ></comment-item>
             </TransitionGroup>
 
-            <a-card v-if="!isLoading && commentCount === 0" class="flex flex-col items-center p-8">
-                <div class="w-16 h-16 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center mb-4">
+            <div 
+                v-if="!isLoading && commentCount === 0" 
+                class="flex flex-col items-center p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm transition-colors"
+            >
+                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center mb-4 transition-colors">
                     <i class="pi pi-search" style="font-size: 24px;"></i>
                 </div>
 
-                <p class="italic text-gray-600 mt-2">No comments yet. Be the first to share your thoughts!</p>
-            </a-card>
+                <p class="italic text-gray-600 dark:text-gray-400 mt-2 transition-colors">
+                    No comments yet. Be the first to share your thoughts!
+                </p>
+            </div>
         </div>
     </div>
 </template>
