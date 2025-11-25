@@ -73,7 +73,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             </div>
 
             <div v-else class="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
-                <div class="flex flex-wrap">
+                <div class="flex flex-wrap gap-2">
                     <button
                         v-for="category in publicExamples.allCategories"
                         :key="`category-${category.slug}`"
