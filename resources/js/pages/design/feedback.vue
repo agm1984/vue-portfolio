@@ -6,6 +6,7 @@ import Button from 'primevue/button';
 import Message from 'primevue/message';
 import InputText from 'primevue/inputtext';
 import Divider from 'primevue/divider';
+import Avatar from 'primevue/avatar'; // Using PrimeVue Avatar for the custom slot example
 
 useHead({
     title: 'Design System Feedback',
@@ -42,30 +43,28 @@ const messageExamples = [
 </script>
 
 <template>
-    <div class="w-full flex flex-col">
-        <h2>Feedback & Alerts</h2>
+    <div class="w-full flex flex-col transition-colors duration-300">
+        <h2 class="text-gray-900 dark:text-white">Feedback & Alerts</h2>
 
-        <p class="text-gray-600 mt-2">
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
             Components used to communicate status, errors, and successful actions to the user.
         </p>
 
-        <a-card class="p-8 mt-4">
-            <h3>Toast Notifications</h3>
-            <p class="text-sm text-gray-500 font-normal mt-1">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+            <h3 class="text-gray-900 dark:text-white">Toast Notifications</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Ephemeral messages that appear in the top-right corner. Managed via <code>useToast()</code>.
             </p>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="space-y-2">
-                        <h6>Message Content</h6>
-
+                        <h6 class="text-gray-900 dark:text-white">Message Content</h6>
                         <InputText v-model="customDetail" class="w-full" placeholder="Type a message..." />
                     </div>
 
                     <div class="space-y-2">
-                        <h6>Trigger Severity</h6>
-
+                        <h6 class="text-gray-900 dark:text-white">Trigger Severity</h6>
                         <div class="grid grid-cols-2 gap-3">
                             <Button
                                 v-for="sev in severities"
@@ -80,23 +79,23 @@ const messageExamples = [
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 bg-gray-700 rounded-xl p-6 flex flex-col justify-center relative overflow-hidden">
+                <div class="lg:col-span-7 bg-gray-900 rounded-xl p-6 flex flex-col justify-center relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-50 pointer-events-none">
-                        <i class="pi pi-bell text-6xl text-white"></i>
+                        <i class="pi pi-bell text-4xl text-gray-700"></i>
                     </div>
 
-                    <h3 class="text-gray-300! mb-2">Usage Example</h3>
+                    <h3 class="text-gray-300! mb-2 text-sm font-bold uppercase tracking-wider">Usage Example</h3>
                     <a-code
                         language="html"
                         :code="`import { useToast } from 'primevue/usetoast';\n\nconst toast = useToast();\n\ntoast.add({\n    severity: 'success',\n    summary: 'Success',\n    detail: '${customDetail}',\n    life: 5000\n});`"
                     />
                 </div>
             </div>
-        </a-card>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <a-card class="h-full p-8">
-                <h3>Inline Alerts</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
+                <h3 class="text-gray-900 dark:text-white">Inline Alerts</h3>
 
                 <div class="space-y-4 mt-2">
                     <Message
@@ -108,12 +107,12 @@ const messageExamples = [
                         {{ msg.content }}
                     </Message>
                 </div>
-            </a-card>
+            </div>
 
-            <a-card class="h-full p-8">
-                <h3>Field Feedback</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
+                <h3 class="text-gray-900 dark:text-white">Field Feedback</h3>
                 <div class="space-y-6 mt-2">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                         Use <code>variant="simple"</code> for validation text below inputs.
                     </p>
 
@@ -132,16 +131,20 @@ const messageExamples = [
                     <div>
                         <Message severity="warn">
                             <div class="flex items-center gap-2">
-                                <a-avatar size="small" class="bg-orange-100 text-orange-600 font-bold" label="!" />
-                                <span class="font-bold">Custom Slot Content</span>
+                                <Avatar
+                                    size="small"
+                                    class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 font-bold"
+                                    label="!"
+                                />
+                                <span class="font-bold text-gray-900 dark:text-white">Custom Slot Content</span>
                             </div>
-                            <div class="ml-8 mt-1 text-sm">
+                            <div class="ml-8 mt-1 text-sm text-gray-700 dark:text-gray-300">
                                 You can pass any HTML into the default slot.
                             </div>
                         </Message>
                     </div>
                 </div>
-            </a-card>
+            </div>
         </div>
     </div>
 </template>

@@ -20,16 +20,18 @@ const closeSupraModal = () => {
 </script>
 
 <template>
-    <div class="w-full max-w-6xl mx-auto flex flex-col p-8">
+    <div class="w-full max-w-6xl mx-auto flex flex-col p-8 transition-colors duration-300">
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-7 flex flex-col gap-4">
-                <h1 class="">About <span class="text-indigo-600">Me</span></h1>
-                <div class="w-20 h-1 bg-indigo-600 rounded-full"></div>
+                <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
+                    About <span class="text-indigo-600 dark:text-indigo-400">Me</span>
+                </h1>
+                <div class="w-20 h-1 bg-indigo-600 dark:bg-indigo-500 rounded-full"></div>
 
-                <div class="prose text-gray-600 text-lg">
+                <div class="prose text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                     <p>
                         I'll keep this short. I've been programming for about
-                        <span class="font-semibold text-indigo-600">{{ yearsExperience }} years</span>,
+                        <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ yearsExperience }} years</span>,
                         but I've been working with iOS, Android, and web apps since 2013.
                         I discovered my passion for coding around that time.
                     </p>
@@ -41,26 +43,26 @@ const closeSupraModal = () => {
                     </p>
 
                     <p class="mt-4">
-                        My list of hobbies is short because <strong>programming is my main hobby</strong>.
+                        My list of hobbies is short because <strong class="text-gray-900 dark:text-white">programming is my main hobby</strong>.
                         Beyond that, I've been working out consistently for over a decade.
                         I'm currently back in the gym four times a week, and it feels great to reconnect with that discipline.
                     </p>
                 </div>
 
-                <div class="bg-gray-100 border-l-4 border-red-600 rounded-r-lg p-4 mt-2">
+                <div class="bg-gray-100 dark:bg-gray-800 border-l-4 border-red-600 dark:border-red-500 rounded-r-lg p-4 mt-2 transition-colors">
                     <div class="flex items-start gap-4">
-                        <div class="min-w-16 max-w-16 min-h-16 max-h-16 flex items-center justify-center bg-white rounded-full shadow-sm shrink-0">
-                            <i class="pi pi-car text-red-600" style="font-size: 24px;"></i>
+                        <div class="min-w-16 max-w-16 min-h-16 max-h-16 flex items-center justify-center bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0 transition-colors">
+                            <i class="pi pi-car text-red-600 dark:text-red-400" style="font-size: 24px;"></i>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wide">Car Enthusiast</h3>
-                            <p class="text-sm text-gray-600 mt-2">
-                                I have a <strong>700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
+                            <h3 class="font-semibold text-gray-900 dark:text-white text-sm uppercase tracking-wide">Car Enthusiast</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                                I have a <strong class="text-gray-900 dark:text-white">700 horsepower 1993 Toyota Supra</strong>. When the engine isn't broken and it's clean, 
                                 you can find me out driving with friends and finding new places to visit.
                             </p>
                             <button
                                 type="button"
-                                class="cursor-pointer font-semibold text-red-600 hover:underline mt-2"
+                                class="cursor-pointer font-semibold text-red-600 dark:text-red-400 hover:underline mt-2 hover:text-red-700 dark:hover:text-red-300 transition-colors"
                                 @click="openSupraModal"
                             >See the Supra</button>
                         </div>
@@ -68,7 +70,7 @@ const closeSupraModal = () => {
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-                    <h3 class="text-sm font-semibold">Connect</h3>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">Connect</h3>
                     <div class="flex gap-3">
                         <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
                         <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
@@ -79,11 +81,11 @@ const closeSupraModal = () => {
             </div>
 
             <div class="lg:col-span-5 relative group">
-                <div class="absolute -inset-2 bg-linear-to-r from-gray-900 to-gray-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+                <div class="absolute -inset-2 bg-linear-to-r from-gray-900 to-gray-600 dark:from-indigo-900 dark:to-purple-900 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition duration-1000"></div>
 
                 <img
                     src="/adam2.png"
-                    class="relative w-full aspect-4/5 object-cover rounded-xl shadow-2xl rotate-2 group-hover:rotate-0 transition-all duration-500 ease-out border-2 border-white"
+                    class="relative w-full aspect-4/5 object-cover rounded-xl shadow-2xl rotate-2 group-hover:rotate-0 transition-all duration-500 ease-out border-2 border-white dark:border-gray-700"
                     alt="Adam Mackintosh"
                 >
             </div>
@@ -91,8 +93,8 @@ const closeSupraModal = () => {
 
         <section>
             <div class="flex items-center gap-4 mt-8">
-                <h2>A Brief Word</h2>
-                <div class="flex-1 h-px bg-gray-300"></div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">A Brief Word</h2>
+                <div class="flex-1 h-px bg-gray-300 dark:bg-gray-700"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
@@ -102,19 +104,19 @@ const closeSupraModal = () => {
         </section>
 
         <section class="max-w-2xl mx-auto mt-8">
-            <div class="text-center">
-                <h2>My Timeline</h2>
-                <p class="text-gray-600 mt-2">A history of jobs</p>
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">My Timeline</h2>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">A history of jobs</p>
             </div>
 
             <interactive-timeline></interactive-timeline>
         </section>
 
-        <p class="text-lg text-center mt-8">
+        <p class="text-lg text-center mt-8 text-gray-600 dark:text-gray-300">
             Want to chat about cars or code?
             <router-link
                 :to="{ name: 'contact' }"
-                class="text-indigo-600 font-semibold hover:underline hover:text-indigo-700 active:text-indigo-800 transition-colors ml-1"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 transition-colors ml-1"
             >
                 Drop me a message.
             </router-link>

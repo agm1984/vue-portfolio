@@ -42,7 +42,7 @@ const navItems = computed(() => [
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col md:flex-row">
+    <div class="flex-1 flex flex-col md:flex-row transition-colors duration-300">
         <side-nav-pane
             :nav-items="navItems"
         ></side-nav-pane>
@@ -50,9 +50,9 @@ const navItems = computed(() => [
         <main class="flex-1 w-full md:ml-64 p-8">
             <template v-if="isDashboard">
                 <div class="mb-4">
-                    <h1>Dashboard</h1>
+                    <h1 class="text-gray-900 dark:text-white">Dashboard</h1>
 
-                    <p class="text-gray-600 mt-2">Here's what is happening with my portfolio.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Here's what is happening with my portfolio.</p>
                 </div>
 
                 <dashboard-counts :metrics="metrics"></dashboard-counts>

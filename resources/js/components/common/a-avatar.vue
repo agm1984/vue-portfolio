@@ -17,7 +17,13 @@ const user = computed(() => props.user);
 
 const hasImage = computed(() => !!(user.value?.avatar_url && user.value.avatar_url.length > 0));
 const firstLetterOfName = computed(() => (user.value?.name ? user.value.name.charAt(0) : ''));
-const containerStyles = computed(() => ['flex items-center justify-center rounded-full bg-gray-200']);
+
+const containerStyles = computed(() => [
+    'flex items-center justify-center rounded-full',
+    'bg-gray-200 dark:bg-gray-700',
+    'text-gray-600 dark:text-gray-300',
+    'transition-colors duration-300'
+]);
 </script>
 
 <template>
@@ -27,7 +33,7 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
             'w-12 h-12 min-w-12 min-h-12 max-w-12 max-h-12': size === 48,
             'w-16 h-16 min-w-16 min-h-16 max-w-16 max-h-16': size === 64,
             'w-32 h-32 min-w-32 min-h-32 max-w-32 max-h-32': size === 128,
-            'bg-grey-400 border': !hasImage,
+            'border border-gray-300 dark:border-gray-600': !hasImage,
         }]"
     >
         <img
@@ -45,7 +51,7 @@ const containerStyles = computed(() => ['flex items-center justify-center rounde
 
         <span
             v-else
-            :class="['', {
+            :class="['font-bold', {
                 'text-sm': size === 32,
                 'text-lg': size === 48,
                 'text-2xl': size === 64,

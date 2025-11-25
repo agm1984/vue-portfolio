@@ -4,6 +4,8 @@ import { useHead } from '@unhead/vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import axios from 'axios';
+
+// PrimeVue Imports
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
@@ -24,6 +26,7 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
+// --- PURE HELPERS ---
 const statusMap = {
     0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
     1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
@@ -36,16 +39,14 @@ const getRoleSeverity = (role) => {
         'admin': 'contrast',
         'standard': 'secondary',
     };
-
     return map[role.toLowerCase()] || 'secondary';
 };
 
+// --- ACTIONS ---
 const fetchAllUsers = async () => {
     try {
         loading.value = true;
-
         const { data } = await axios.get(route('admin.users.list'));
-
         users.value = data.users;
     } catch (error) {
         console.error(error);
@@ -60,19 +61,20 @@ const fetchAllUsers = async () => {
     }
 };
 
-onMounted(fetchAllUsers);
-
 const exportCSV = () => {
     console.log('Exporting data...');
 };
+
+onMounted(fetchAllUsers);
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-                <h1>Users</h1>
-                <p class="text-gray-600 mt-2">Manage system access and roles.</p>
+                <h1 class="text-gray-900 dark:text-white">Users</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Manage system access and roles.</p>
             </div>
 
             <div class="flex gap-2">
@@ -81,12 +83,14 @@ const exportCSV = () => {
                     icon="pi pi-download"
                     label="Export"
                     outlined
+                    severity="secondary"
                     @click="exportCSV"
                 />
             </div>
         </div>
 
-        <a-card class="p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+            
             <div class="flex justify-end pb-4">
                 <IconField iconPosition="left">
                     <InputIcon>
@@ -113,7 +117,7 @@ const exportCSV = () => {
             >
                 <template #empty>
                     <div class="text-center py-8">
-                        <p class="text-gray-600">No users found matching your criteria.</p>
+                        <p class="text-gray-600 dark:text-gray-400">No users found matching your criteria.</p>
                     </div>
                 </template>
 
@@ -124,11 +128,11 @@ const exportCSV = () => {
                             <div class="flex flex-col">
                                 <router-link
                                     :to="{ name: 'admin.users.show', params: { user: data.id } }"
-                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 active:text-indigo-700 transition-colors"
+                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 transition-colors"
                                 >
                                     {{ data.name }}
                                 </router-link>
-                                <span class="text-xs text-gray-600 dark:text-gray-500">ID: {{ data.id }}</span>
+                                <span class="text-xs text-gray-600 dark:text-gray-400">ID: {{ data.id }}</span>
                             </div>
                         </div>
                     </template>
@@ -168,7 +172,7 @@ const exportCSV = () => {
 
                 <Column field="created_at_diff" header="Joined" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-600 whitespace-nowrap">{{ data.created_at_diff }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{{ data.created_at_diff }}</span>
                     </template>
                 </Column>
 
@@ -180,6 +184,6 @@ const exportCSV = () => {
                     </template>
                 </Column>
             </DataTable>
-        </a-card>
+        </div>
     </div>
 </template>

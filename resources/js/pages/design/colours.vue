@@ -60,22 +60,22 @@ const copyClass = async (color, step) => {
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full flex-1 flex flex-col transition-colors duration-300">
         <div class="mb-8">
-            <h2>Colours</h2>
-            <p class="text-gray-600 mt-2 max-w-2xl">
+            <h2 class="text-gray-900 dark:text-white">Colours</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl">
                 This design system leverages the standard Tailwind CSS color palette. 
                 Click any swatch to copy its utility class to your clipboard.
             </p>
         </div>
 
-        <a-card class="p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
                 <div v-for="color in colors" :key="color" class="flex flex-col gap-2">
-                    <h3>{{ color }}</h3>
+                    <h3 class="capitalize text-gray-700 dark:text-gray-200">{{ color }}</h3>
 
-                    <div class="flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-100 mt-2">
+                    <div class="flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 mt-2 transition-colors">
                         <button
                             v-for="step in steps"
                             :key="`${color}-${step}`"
@@ -93,6 +93,6 @@ const copyClass = async (color, step) => {
                     </div>
                 </div>
             </div>
-        </a-card>
+        </div>
     </div>
 </template>

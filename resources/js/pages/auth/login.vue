@@ -70,16 +70,16 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8">
+    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
         <a-card class="w-full max-w-md p-8">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-green-100 text-green-600 rounded-full mx-auto">
+                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto transition-colors">
                     <i class="pi pi-user" style="font-size: 24px;"></i>
                 </div>
 
-                <h1 class="mt-4">Login</h1>
+                <h1 class="mt-4 text-gray-900 dark:text-white">Login</h1>
 
-                <p class="text-gray-600 mt-2">
+                <p class="text-gray-600 dark:text-gray-400 mt-2">
                     Use Oauth or your email and password.
                 </p>
             </div>
@@ -92,10 +92,10 @@ const login = async () => {
 
                 <div class="relative mt-4">
                     <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-300"></div>
+                        <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-white text-gray-600 px-4">or</span>
+                        <span class="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-4 transition-colors">or</span>
                     </div>
                 </div>
 
@@ -103,7 +103,7 @@ const login = async () => {
                     <a-input-field input-id="login-email" title="Email" required />
 
                     <IconField iconPosition="left">
-                        <InputIcon class="pi pi-envelope text-gray-500" />
+                        <InputIcon class="pi pi-envelope text-gray-500 dark:text-gray-400" />
                         <InputText
                             v-model="v$.email.$model"
                             id="login-email"
@@ -147,13 +147,13 @@ const login = async () => {
                                 binary
                                 class="mr-2"
                             />
-                            <label for="login-remember" class="cursor-pointer select-none">
+                            <label for="login-remember" class="cursor-pointer select-none text-gray-900 dark:text-gray-300">
                                 Remember me
                             </label>
                         </div>
 
                         <router-link
-                            class="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline"
+                            class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 hover:underline transition-colors"
                             :to="{ name: 'password.request' }"
                         >
                             Forgot password?
@@ -169,9 +169,9 @@ const login = async () => {
                     />
                 </form>
 
-                <div class="text-center mt-8">
+                <div class="text-center mt-8 text-gray-600 dark:text-gray-400">
                     Don't have an account?
-                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 hover:underline ml-1">
+                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-1 transition-colors">
                         Register
                     </router-link>
                 </div>

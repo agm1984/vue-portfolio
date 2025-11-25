@@ -18,14 +18,16 @@ const currentRoute = useRoute();
         class="group flex items-center px-4 py-3 text-sm font-semibold rounded-lg transition-all duration-200"
         :class="[
             currentRoute.name === item.route
-                ? 'bg-indigo-50 text-indigo-700'
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200'
         ]"
     >
         <i
             :class="[
                 item.icon, 'mr-3 text-lg transition-colors',
-                currentRoute.name === item.route ? 'text-indigo-600' : 'text-gray-500 group-hover:text-gray-600',
+                currentRoute.name === item.route
+                    ? 'text-indigo-600 dark:text-indigo-400'
+                    : 'text-gray-500 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300',
             ]"
         >
         </i>

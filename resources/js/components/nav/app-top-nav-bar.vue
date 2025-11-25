@@ -16,14 +16,13 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <nav class="sticky top-0 z-50 w-full bg-white dark:bg-gray-900 border-b dark:border-gray-950">
-        <!-- desktop -->
+    <nav class="sticky top-0 z-50 w-full bg-white dark:bg-gray-900 border-b dark:border-gray-700 transition-colors duration-300">
         <div class="flex h-[66px] items-center justify-between px-8">
             <div class="w-48 h-full flex items-center">
                 <router-link
-                    class="h-full inline-flex items-center font-semibold text-lg"
+                    class="h-full inline-flex items-center font-semibold text-lg text-gray-900 dark:text-white"
                     :to="{ name: auth.isAuthenticated ? 'home' : 'home' }"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     AGM
                 </router-link>
@@ -32,40 +31,40 @@ const handleLogout = async () => {
             <div class="hidden md:flex h-full items-center gap-4">
                 <router-link
                     :to="{ name: 'about' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     About Me
                 </router-link>
 
                 <router-link
                     :to="{ name: 'public.examples' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Examples
                 </router-link>
 
                 <router-link
                     :to="{ name: 'admin' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Admin
                 </router-link>
 
                 <router-link
                     :to="{ name: 'design' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Design System
                 </router-link>
 
                 <router-link
                     :to="{ name: 'contact' }"
-                    class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                    active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                    class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                    active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                 >
                     Contact Me
                 </router-link>
@@ -87,27 +86,26 @@ const handleLogout = async () => {
                 <template v-else>
                     <router-link
                         :to="{ name: 'register' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                        active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                     >
                         Register
                     </router-link>
 
                     <router-link
                         :to="{ name: 'login' }"
-                        class="h-full inline-flex items-center font-semibold text-gray-700 hover:text-indigo-600 dark:text-indigo-400 active:text-indigo-700"
-                        active-class="border-b-2 border-indigo-600 dark:border-indigo-400 mt-0.5 text-indigo-600 dark:text-indigo-400"
+                        class="h-full inline-flex items-center font-semibold text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 dark:active:text-indigo-500 transition-colors"
+                        active-class="border-b-2 border-indigo-600 mt-0.5 text-indigo-600 dark:text-indigo-400"
                     >
                         Login
                     </router-link>
                 </template>
             </div>
 
-            <!-- mobile -->
             <div class="flex items-center md:hidden -mr-3">
                 <button
                     type="button"
-                    class="inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900"
+                    class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900 dark:focus:ring-gray-500"
                     :aria-expanded="isMobileMenuOpen"
                     aria-controls="primary-navigation"
                     @click="isMobileMenuOpen = !isMobileMenuOpen"
@@ -144,13 +142,13 @@ const handleLogout = async () => {
         <div
             v-show="isMobileMenuOpen"
             id="primary-navigation"
-            class="md:hidden border-t border-gray-200 bg-white"
+            class="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
         >
             <div class="p-4">
                 <router-link
                     :to="{ name: 'about' }"
-                    class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                    active-class="bg-gray-100 text-gray-900"
+                    class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                    active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     @click="isMobileMenuOpen = false"
                 >
                     About Me
@@ -158,8 +156,8 @@ const handleLogout = async () => {
 
                 <router-link
                     :to="{ name: 'public.examples' }"
-                    class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                    active-class="bg-gray-100 text-gray-900"
+                    class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                    active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     @click="isMobileMenuOpen = false"
                 >
                     Examples
@@ -167,8 +165,8 @@ const handleLogout = async () => {
 
                 <router-link
                     :to="{ name: 'admin' }"
-                    class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                    active-class="bg-gray-100 text-gray-900"
+                    class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                    active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     @click="isMobileMenuOpen = false"
                 >
                     Admin
@@ -176,8 +174,8 @@ const handleLogout = async () => {
 
                 <router-link
                     :to="{ name: 'design' }"
-                    class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                    active-class="bg-gray-100 text-gray-900"
+                    class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                    active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     @click="isMobileMenuOpen = false"
                 >
                     Design System
@@ -185,27 +183,27 @@ const handleLogout = async () => {
 
                 <router-link
                     :to="{ name: 'contact' }"
-                    class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                    active-class="bg-gray-100 text-gray-900"
+                    class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                    active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     @click="isMobileMenuOpen = false"
                 >
                     Contact Me
                 </router-link>
             </div>
 
-            <div class="border-t border-gray-200 p-4">
+            <div class="border-t border-gray-200 dark:border-gray-700 p-4">
                 <template v-if="auth.isAuthenticated">
-                    <p class="text-gray-700 p-2">
+                    <p class="text-gray-700 dark:text-gray-300 p-2">
                         Signed in as
-                        <span class="font-semibold">
+                        <span class="font-semibold text-gray-900 dark:text-white">
                             {{ auth.user.name }}
                         </span>
                     </p>
                     <div class="">
                         <router-link
                             :to="{ name: 'settings.profile' }"
-                            class="block rounded-md text-gray-700 hover:bg-gray-50 p-2"
-                            active-class="bg-gray-100 text-gray-900"
+                            class="block rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
+                            active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                             @click="isMobileMenuOpen = false"
                         >
                             View profile
@@ -213,7 +211,7 @@ const handleLogout = async () => {
 
                         <button
                             type="button"
-                            class="block w-full rounded-md text-left text-gray-700 hover:bg-gray-50 p-2"
+                            class="block w-full rounded-md text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 p-2 transition-colors"
                             @click="handleLogout"
                         >
                             Logout
@@ -221,13 +219,12 @@ const handleLogout = async () => {
                     </div>
                 </template>
 
-                <!-- Guest -->
                 <template v-else>
                     <div class="flex flex-col gap-1">
                         <router-link
                             :to="{ name: 'register' }"
-                            class="block rounded-md p-2 text-base font-medium text-gray-700 hover:bg-gray-50"
-                            active-class="bg-gray-100 text-gray-900"
+                            class="block rounded-md p-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                            active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                             @click="isMobileMenuOpen = false"
                         >
                             Register
@@ -235,8 +232,8 @@ const handleLogout = async () => {
 
                             <router-link
                             :to="{ name: 'login' }"
-                            class="block rounded-md p-2 text-base font-medium text-gray-700 hover:bg-gray-50"
-                            active-class="bg-gray-100 text-gray-900"
+                            class="block rounded-md p-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                            active-class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                             @click="isMobileMenuOpen = false"
                         >
                             Login
