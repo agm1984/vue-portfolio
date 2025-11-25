@@ -22,7 +22,7 @@ const links = computed(() => [
         </p>
 
         <div class="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
-            <div class="h-10 flex items-center justify-center gap-8 mb-8 border-b border-gray-100 dark:border-gray-700">
+            <div class="h-10 flex items-center justify-center gap-8 mb-8 border-b border-gray-300 dark:border-gray-700">
                 <router-link
                     v-for="link in links"
                     :key="`link-${link.name}`"
