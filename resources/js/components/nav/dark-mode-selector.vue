@@ -9,10 +9,9 @@ const { isDark, toggleTheme } = useDarkMode();
     <Button
         severity="secondary"
         aria-label="Toggle Dark Mode"
+        :icon="isDark ? 'pi pi-moon' : 'pi pi-sun'"
         rounded
         outlined
         @click="toggleTheme"
-    >
-        <i class="pi" :class="isDark ? 'pi-moon' : 'pi-sun'"></i>
-    </Button>
+    />
 </template>

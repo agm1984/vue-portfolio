@@ -73,14 +73,6 @@ const handleLogout = async () => {
             <div class="hidden w-48 h-full md:flex items-center justify-end gap-4">
                 <dark-mode-selector></dark-mode-selector>
 
-                <Button
-                    type="button"
-                    icon="pi pi-moon"
-                    outlined
-                    rounded
-                    @click="toggleDarkMode"
-                />
-
                 <user-menu v-if="auth.isAuthenticated" />
 
                 <template v-else>
