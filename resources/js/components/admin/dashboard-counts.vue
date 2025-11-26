@@ -35,12 +35,12 @@ const statCards = computed(() => [
 
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-        <div
+        <a-card
             v-for="stat in statCards"
             :key="`stat-card-${stat.label}`"
-            class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 flex items-center gap-5 shadow-sm hover:shadow-md transition-all duration-300"
+            class="p-8 flex items-center gap-4"
         >
-            <div :class="['w-16 h-16 rounded-full flex items-center justify-center transition-colors', stat.bg, stat.color]">
+            <div :class="['w-16 h-16 rounded-full flex items-center justify-center', stat.bg, stat.color]">
                 <i :class="['', stat.icon]" style="font-size: 24px;"></i>
             </div>
 
@@ -49,10 +49,10 @@ const statCards = computed(() => [
                     {{ stat.label }}
                 </h6>
 
-                <p class="text-3xl font-semibold text-gray-900 dark:text-white mt-1 transition-colors">
+                <p class="text-3xl font-semibold text-gray-900 dark:text-white mt-1">
                     {{ stat.value }}
                 </p>
             </div>
-        </div>
+        </a-card>
     </div>
 </template>

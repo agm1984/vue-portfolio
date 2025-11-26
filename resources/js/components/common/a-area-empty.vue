@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="w-full flex flex-col items-center justify-center p-8 text-center bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 rounded-md italic transition-colors duration-300">
+    <div class="w-full flex flex-col items-center justify-center p-8 text-center bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 rounded-md italic">
         <slot>No content yet</slot>
     </div>
 </template>

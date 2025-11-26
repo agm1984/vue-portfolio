@@ -7,7 +7,7 @@ useHead({
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-4xl mx-auto flex flex-col p-8 leading-relaxed text-gray-800 dark:text-gray-300 transition-colors duration-300">
+    <div class="flex-1 w-full max-w-4xl mx-auto flex flex-col p-8 leading-relaxed text-gray-800 dark:text-gray-300">
         <h1 class="text-gray-900 dark:text-white">Terms of Use</h1>
 
         <p class="text-gray-600 dark:text-gray-400 mt-2">LAST UPDATE OF THIS TERMS OF USE - November 23, 2025</p>

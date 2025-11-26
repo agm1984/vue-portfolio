@@ -54,14 +54,14 @@ watch(() => publicExamples.activeCategory, setUrlParams);
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col p-8 transition-colors duration-300">
+    <div class="flex-1 w-full max-w-7xl mx-auto flex flex-col p-8">
         <div class="flex flex-col">
-            <h1 class="text-gray-900 dark:text-white">Examples</h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                A collection of full projects, resources, experiments, and learning.
-            </p>
+            <a-page-title
+                title="Examples"
+                description="A collection of full projects, resources, experiments, and learning."
+            ></a-page-title>
 
-            <div v-if="publicExamples.isFetchingCategories" class="flex flex-col md:flex-row justify-between gap-4 mt-4">
+            <div v-if="publicExamples.isFetchingCategories" class="flex flex-col md:flex-row justify-between gap-4">
                 <div class="flex flex-wrap gap-2">
                     <Skeleton width="6rem" height="2.4rem" borderRadius="2rem"></Skeleton>
                     <Skeleton width="7rem" height="2.4rem" borderRadius="2rem"></Skeleton>
@@ -72,7 +72,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                 </div>
             </div>
 
-            <div v-else class="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+            <div v-else class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="flex flex-wrap gap-2">
                     <button
                         v-for="category in publicExamples.allCategories"
@@ -94,7 +94,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             </div>
         </div>
 
-        <div v-if="publicExamples.isFetchingExamples" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-4">
+        <div v-if="publicExamples.isFetchingExamples" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             <div
                 v-for="loader in 6"
                 :key="`example-skeleton-${loader}`"
@@ -108,7 +108,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             </div>
         </div>
 
-        <div v-else-if="hasError" class="w-full flex flex-col items-center justify-center text-center mt-4">
+        <div v-else-if="hasError" class="w-full flex flex-col items-center justify-center text-center">
             <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400 rounded-full flex items-center justify-center">
                 <i class="pi pi-exclamation-circle" style="font-size: 24px;"></i>
             </div>
@@ -139,7 +139,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                             :src="`/storage/examples/${example.slug}/${example.images[0].filename}`"
                             alt="Example image"
                         />
-                        <div v-else class="w-full h-full flex items-center justify-center bg-linear-to-br from-gray-800 to-gray-900 group-hover:from-indigo-900 group-hover:to-purple-900 transition-colors duration-500">
+                        <div v-else class="w-full h-full flex items-center justify-center bg-linear-to-br from-gray-800 to-gray-900 group-hover:from-indigo-900 group-hover:to-purple-900 duration-500">
                             <i class="pi pi-image text-white text-5xl opacity-50"></i>
                         </div>
                         <div class="absolute top-3 right-3">
@@ -151,7 +151,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
                         </div>
                     </div>
                     <div class="p-8 flex flex-col flex-1">
-                        <h3 class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-gray-900 dark:text-white">{{ example.name }}</h3>
+                        <h3 class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 text-gray-900 dark:text-white">{{ example.name }}</h3>
                         <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mt-2">See project details, resources, and live demos.</p>
                         <div class="flex items-center text-indigo-600 dark:text-indigo-400 font-semibold text-sm pt-4 mt-auto">
                             <span>View</span>

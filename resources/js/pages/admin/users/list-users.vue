@@ -1,23 +1,20 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import axios from 'axios';
-
-// PrimeVue Imports
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
-import InputText from 'primevue/inputtext';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
 
 useHead({
     title: 'Admin List Users',
 });
 
+const router = useRouter();
 const toast = useToast();
 
 const loading = ref(true);
@@ -26,7 +23,6 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-// --- PURE HELPERS ---
 const statusMap = {
     0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
     1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
@@ -42,7 +38,6 @@ const getRoleSeverity = (role) => {
     return map[role.toLowerCase()] || 'secondary';
 };
 
-// --- ACTIONS ---
 const fetchAllUsers = async () => {
     try {
         loading.value = true;
@@ -66,16 +61,19 @@ const exportCSV = () => {
 };
 
 onMounted(fetchAllUsers);
+
+const goBack = () => router.push({ name: 'admin' });
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-                <h1 class="text-gray-900 dark:text-white">Users</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">Manage system access and roles.</p>
-            </div>
+    <a-page>
+        <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4 md:mb-0">
+            <a-page-title
+                title="Users"
+                description="Manage system access and roles."
+                has-back
+                @on-back="goBack"
+            ></a-page-title>
 
             <div class="flex gap-2">
                 <Button
@@ -89,19 +87,12 @@ onMounted(fetchAllUsers);
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
-            
+        <a-card class="p-8">
             <div class="flex justify-end pb-4">
-                <IconField iconPosition="left">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search users..."
-                        class="w-full md:w-64"
-                    />
-                </IconField>
+                <a-input-search
+                    v-model="filters['global'].value"
+                    placeholder="Search users..."
+                />
             </div>
 
             <DataTable
@@ -128,7 +119,7 @@ onMounted(fetchAllUsers);
                             <div class="flex flex-col">
                                 <router-link
                                     :to="{ name: 'admin.users.show', params: { user: data.id } }"
-                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 transition-colors"
+                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700"
                                 >
                                     {{ data.name }}
                                 </router-link>
@@ -184,6 +175,6 @@ onMounted(fetchAllUsers);
                     </template>
                 </Column>
             </DataTable>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>

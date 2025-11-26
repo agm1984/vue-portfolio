@@ -70,10 +70,10 @@ const resetPassword = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
-        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 p-8 transition-colors duration-300">
+    <div class="flex-1 flex items-center justify-center p-8">
+        <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-300 dark:border-gray-700 p-8">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto transition-colors">
+                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto">
                     <i class="pi pi-lock-open" style="font-size: 24px;"></i>
                 </div>
 
@@ -137,7 +137,7 @@ const resetPassword = async () => {
 
             <div class="text-center mt-8">
                 <router-link
-                    class="flex items-center justify-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 font-semibold transition-colors"
+                    class="flex items-center justify-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 font-semibold"
                     :to="{ name: 'login' }"
                 >
                     <i class="pi pi-arrow-left"></i>

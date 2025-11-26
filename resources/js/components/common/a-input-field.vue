@@ -29,7 +29,7 @@ defineProps({
     <div class="flex gap-1">
         <label
             :for="inputId"
-            :class="['font-semibold text-gray-900 dark:text-gray-200 transition-colors', {
+            :class="['font-semibold text-gray-900 dark:text-gray-200', {
                 'opacity-50': disabled,
             }]"
         >{{ title }}</label>

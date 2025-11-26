@@ -102,10 +102,10 @@ onMounted(fetchExample);
                 />
 
                 <div class="flex flex-col">
-                    <h1 class="truncate max-w-[200px] md:max-w-md">
+                    <h1 class="truncate max-w-[200px] md:max-w-md text-white!">
                         {{ image.filename || 'Loading...' }}
                     </h1>
-                    <span v-if="isLoaded" class="text-xs text-gray-500 mt-1">
+                    <span v-if="isLoaded" class="text-xs text-gray-400 mt-1">
                         {{ isAdmin ? 'Admin View' : 'Original Size' }}
                     </span>
                 </div>

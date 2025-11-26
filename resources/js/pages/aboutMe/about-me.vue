@@ -20,12 +20,10 @@ const closeSupraModal = () => {
 </script>
 
 <template>
-    <div class="w-full max-w-6xl mx-auto flex flex-col p-8 transition-colors duration-300">
+    <div class="w-full max-w-6xl mx-auto flex flex-col p-8">
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-7 flex flex-col gap-4">
-                <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
-                    About <span class="text-indigo-600 dark:text-indigo-400">Me</span>
-                </h1>
+                <h1>About <span class="text-indigo-600 dark:text-indigo-400">Me</span></h1>
                 <div class="w-20 h-1 bg-indigo-600 dark:bg-indigo-500 rounded-full"></div>
 
                 <div class="prose text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
@@ -49,9 +47,9 @@ const closeSupraModal = () => {
                     </p>
                 </div>
 
-                <div class="bg-gray-100 dark:bg-gray-800 border-l-4 border-red-600 dark:border-red-500 rounded-r-lg p-4 mt-2 transition-colors">
+                <div class="bg-gray-200 dark:bg-gray-800 border-l-4 border-red-600 dark:border-red-500 rounded-r-lg p-4 mt-2">
                     <div class="flex items-start gap-4">
-                        <div class="min-w-16 max-w-16 min-h-16 max-h-16 flex items-center justify-center bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0 transition-colors">
+                        <div class="min-w-16 max-w-16 min-h-16 max-h-16 hidden sm:flex items-center justify-center bg-white dark:bg-gray-700 rounded-full shadow-sm shrink-0">
                             <i class="pi pi-car text-red-600 dark:text-red-400" style="font-size: 24px;"></i>
                         </div>
                         <div>
@@ -62,7 +60,7 @@ const closeSupraModal = () => {
                             </p>
                             <button
                                 type="button"
-                                class="cursor-pointer font-semibold text-red-600 dark:text-red-400 hover:underline mt-2 hover:text-red-700 dark:hover:text-red-300 transition-colors"
+                                class="cursor-pointer font-semibold text-red-600 dark:text-red-400 hover:underline mt-2 hover:text-red-700 dark:hover:text-red-300"
                                 @click="openSupraModal"
                             >See the Supra</button>
                         </div>
@@ -70,7 +68,7 @@ const closeSupraModal = () => {
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">Connect</h3>
+                    <h3>Connect</h3>
                     <div class="flex gap-3">
                         <a-social-link network="twitter" class="hover:-translate-y-1 transition-transform duration-300" />
                         <a-social-link network="github" class="hover:-translate-y-1 transition-transform duration-300" />
@@ -91,8 +89,8 @@ const closeSupraModal = () => {
             </div>
         </section>
 
-        <section>
-            <div class="flex items-center gap-4 mt-8">
+        <section class="mt-16">
+            <div class="flex items-center gap-4">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">A Brief Word</h2>
                 <div class="flex-1 h-px bg-gray-300 dark:bg-gray-700"></div>
             </div>
@@ -103,7 +101,7 @@ const closeSupraModal = () => {
             </div>
         </section>
 
-        <section class="max-w-2xl mx-auto mt-8">
+        <section class="max-w-2xl mx-auto mt-16">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">My Timeline</h2>
                 <p class="text-gray-600 dark:text-gray-400 mt-2">A history of jobs</p>
@@ -116,7 +114,7 @@ const closeSupraModal = () => {
             Want to chat about cars or code?
             <router-link
                 :to="{ name: 'contact' }"
-                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 transition-colors ml-1"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 active:text-indigo-800 ml-1"
             >
                 Drop me a message.
             </router-link>

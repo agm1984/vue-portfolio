@@ -73,22 +73,21 @@ const register = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
-        <div class="w-full max-w-md md:max-w-3xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 p-8 transition-colors duration-300">
-            
+    <div class="flex-1 flex items-center justify-center p-8">
+        <div class="w-full max-w-md md:max-w-3xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-300 dark:border-gray-700 p-8">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto transition-colors">
+                <div class="w-16 h-16 flex items-center justify-center bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-full mx-auto mb-4">
                     <i class="pi pi-user-plus" style="font-size: 24px;"></i>
                 </div>
 
-                <h1 class="mt-4 text-gray-900 dark:text-white transition-colors">Register</h1>
-
-                <p class="text-gray-600 dark:text-gray-400 mt-2 transition-colors">
-                    Join me for no raisin.
-                </p>
+                <a-page-title
+                    title="Register"
+                    description="Join me for no raisin."
+                    centered
+                ></a-page-title>
             </div>
 
-            <div class="mt-4">
+            <div class="">
                 <div class="flex flex-col gap-2">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
@@ -96,10 +95,10 @@ const register = async () => {
 
                 <div class="relative mt-4">
                     <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-300 dark:border-gray-700 transition-colors"></div>
+                        <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-4 transition-colors">or</span>
+                        <span class="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-4">or</span>
                     </div>
                 </div>
 
@@ -108,7 +107,7 @@ const register = async () => {
                         <a-input-field input-id="register-name" title="Name" required />
 
                         <IconField iconPosition="left">
-                            <InputIcon class="pi pi-id-card text-gray-500 dark:text-gray-400 transition-colors" />
+                            <InputIcon class="pi pi-id-card text-gray-500 dark:text-gray-400" />
                             <InputText
                                 v-model="v$.name.$model"
                                 id="register-name"
@@ -129,7 +128,7 @@ const register = async () => {
                         <a-input-field input-id="register-email" title="Email" required />
 
                         <IconField iconPosition="left">
-                            <InputIcon class="pi pi-envelope text-gray-500 dark:text-gray-400 transition-colors" />
+                            <InputIcon class="pi pi-envelope text-gray-500 dark:text-gray-400" />
                             <InputText
                                 v-model="v$.email.$model"
                                 id="register-email"
@@ -145,7 +144,7 @@ const register = async () => {
                             name="Email"
                         />
 
-                        <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2 mt-2 transition-colors">
+                        <div class="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2 mt-2">
                             <i class="pi pi-eye-slash text-indigo-500 dark:text-indigo-400"></i>
                             <span>Your email is private and only visible to admins.</span>
                         </div>
@@ -205,9 +204,9 @@ const register = async () => {
 
                 </form>
 
-                <div class="text-center text-gray-600 dark:text-gray-400 mt-8 transition-colors">
+                <div class="text-center text-gray-600 dark:text-gray-400 mt-8">
                     Already have an account?
-                    <router-link :to="{ name: 'login' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline transition-colors">
+                    <router-link :to="{ name: 'login' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-2">
                         Login
                     </router-link>
                 </div>

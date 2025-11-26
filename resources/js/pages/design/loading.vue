@@ -28,15 +28,15 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
 </script>
 
 <template>
-    <div class="w-full flex flex-col transition-colors duration-300">
-        <div class="mb-4">
-            <h2 class="text-gray-900 dark:text-white">Loading States</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                Patterns to manage wait times, reduce perceived latency, and prevent layout shifts.
-            </p>
-        </div>
+    <a-page>
+        <a-page-title
+            title="Loading States"
+            description="Patterns to manage wait times, reduce perceived latency, and prevent layout shifts."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+        <a-card class="border-l-4 border-indigo-500 border-y border-r dark:border-gray-700 p-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h3 class="text-gray-900 dark:text-white">UX Playground</h3>
@@ -52,9 +52,8 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
-                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 min-h-[300px] relative overflow-hidden transition-colors">
-                    
-                    <div v-if="demoState === 'spinner'" class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-900/80 z-10 backdrop-blur-sm transition-colors">
+                <a-card class="p-8 min-h-[300px] relative overflow-hidden">
+                    <div v-if="demoState === 'spinner'" class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-900/80 z-10 backdrop-blur-sm">
                         <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="4" />
                         <span class="text-xs font-bold uppercase text-gray-400 mt-4 animate-pulse">Fetching User...</span>
                     </div>
@@ -72,7 +71,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                             <Skeleton width="90%" height="1rem" />
                             <Skeleton width="95%" height="1rem" />
                         </div>
-                        <div class="flex gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div class="flex gap-4 pt-4 border-t border-gray-300 dark:border-gray-700">
                             <Skeleton width="5rem" height="2rem" borderRadius="2rem" />
                             <Skeleton width="5rem" height="2rem" borderRadius="2rem" />
                         </div>
@@ -91,7 +90,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                             {{ demoUser.bio }}
                         </p>
 
-                        <div class="flex gap-4 pt-4 border-t border-gray-100 dark:border-gray-700 transition-colors">
+                        <div class="flex gap-4 pt-4 border-t border-gray-300 dark:border-gray-700">
                             <div class="text-center">
                                 <span class="block font-bold text-xl text-gray-900 dark:text-white">{{ demoUser.projects }}</span>
                                 <span class="text-xs text-gray-500 dark:text-gray-400 uppercase">Projects</span>
@@ -103,11 +102,11 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                             </div>
                         </div>
                     </div>
-                </div>
+                </a-card>
 
                 <div class="flex flex-col justify-center space-y-6">
                     <div class="flex gap-4">
-                        <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg h-fit transition-colors">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg h-fit">
                             <i class="pi pi-table text-xl text-gray-500 dark:text-gray-400"></i>
                         </div>
                         <div>
@@ -118,7 +117,7 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                         </div>
                     </div>
                     <div class="flex gap-4">
-                        <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg h-fit transition-colors">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg h-fit">
                             <i class="pi pi-spinner text-xl text-gray-500 dark:text-gray-400"></i>
                         </div>
                         <div>
@@ -130,11 +129,11 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                     </div>
                 </div>
             </div>
-        </div>
+        </a-card>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Primitives</h3>
+            <a-card class="p-8 h-full">
+                <h3>Primitives</h3>
                 <div class="space-y-6 mt-4">
                     <div class="space-y-2">
                         <span class="text-xs font-bold uppercase text-gray-400">Text Lines</span>
@@ -150,10 +149,10 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                         </div>
                     </div>
                 </div>
-            </div>
+            </a-card>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Data Lists</h3>
+            <a-card class="p-8 h-full">
+                <h3>Data Lists</h3>
                 <div class="mt-4">
                     <p class="text-xs font-bold uppercase text-gray-400 mb-2">Table Rows</p>
                     <div class="border dark:border-gray-700 rounded-lg overflow-hidden">
@@ -170,11 +169,11 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                         </DataTable>
                     </div>
                 </div>
-            </div>
+            </a-card>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
-            <h3 class="text-gray-900 dark:text-white">Indeterminate Spinners</h3>
+        <a-card class="p-8 mt-8">
+            <h3>Indeterminate Spinners</h3>
             <div class="flex flex-wrap items-center gap-12 mt-4">
                 <div class="text-center">
                     <ProgressSpinner style="width: 30px; height: 30px" strokeWidth="5" />
@@ -202,6 +201,6 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
                     <p class="text-xs text-gray-400 mt-2">Dark Mode</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>

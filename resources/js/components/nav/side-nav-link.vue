@@ -24,7 +24,7 @@ const currentRoute = useRoute();
     >
         <i
             :class="[
-                item.icon, 'mr-3 text-lg transition-colors',
+                item.icon, 'mr-3 text-lg',
                 currentRoute.name === item.route
                     ? 'text-indigo-600 dark:text-indigo-400'
                     : 'text-gray-500 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300',

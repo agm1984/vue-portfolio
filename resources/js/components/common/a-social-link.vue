@@ -29,7 +29,7 @@ const profileUrl = computed(() => {
 
 <template>
     <a
-        class="inline-flex items-center gap-2 self-start transition-colors duration-300 text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400"
+        class="inline-flex items-center gap-2 self-start text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400"
         :href="profileUrl"
         rel="noopener noreferrer"
         target="_blank"

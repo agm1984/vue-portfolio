@@ -88,22 +88,19 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col md:flex-row transition-colors duration-300">
+    <div class="flex-1 flex flex-col md:flex-row">
         <side-nav-pane
             :nav-items="navItems"
         ></side-nav-pane>
 
-        <main class="flex-1 md:ml-64 p-8 max-w-7xl mx-auto w-full">
+        <main class="flex-1 md:ml-64 p-4 md:p-8 max-w-7xl mx-auto w-full">
             <template v-if="isDashboard">
-                <div>
-                    <h1 class="text-gray-900 dark:text-white">Dashboard</h1>
+                <a-page-title
+                    title="Dashboard"
+                    description="A centralized registry of UI components, design tokens, and usage guidelines."
+                ></a-page-title>
 
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">
-                        A centralized registry of UI components, design tokens, and usage guidelines.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <router-link
                         v-for="item in gridItems"
                         :key="`design-system-section-${item.route}`"
@@ -111,19 +108,19 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
                         class="block group"
                     >
                         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 cursor-pointer group-hover:-translate-y-1 transform transition-all duration-300">
-                            <div class="flex items-start gap-5 p-2">
-                                <div :class="['min-w-16 w-16 min-h-16 h-16 rounded-full flex items-center justify-center border border-transparent dark:border-gray-700 transition-colors', item.colour]">
+                            <div class="flex flex-col sm:flex-row items-center md:items-start gap-5 p-2">
+                                <div :class="['min-w-16 w-16 min-h-16 h-16 rounded-full flex items-center justify-center border border-transparent dark:border-gray-700', item.colour]">
                                     <i
                                         :class="['', item.icon]"
                                         style="font-size: 24px;"
                                     ></i>
                                 </div>
 
-                                <div>
-                                    <h3 class="text-gray-900 dark:text-white font-bold group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
+                                <div class="text-center sm:text-left">
+                                    <h3 class="text-gray-900 dark:text-white font-bold group-hover:text-pink-600 dark:group-hover:text-pink-400">
                                         {{ item.label }}
                                     </h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed transition-colors">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">
                                         {{ item.description }}
                                     </p>
                                 </div>
@@ -133,10 +130,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
                 </div>
             </template>
 
-            <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 min-h-[80vh] transition-colors duration-300">
-                <router-view></router-view>
-            </div>
-
+            <router-view v-else></router-view>
         </main>
     </div>
 </template>

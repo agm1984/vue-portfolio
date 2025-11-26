@@ -12,6 +12,12 @@ const props = defineProps({
         type: [String, Number],
         default: '',
     },
+
+    placeholder: {
+        type: String,
+        required: false,
+        default: () => 'Search...',
+    },
 });
 
 const emit = defineEmits([
@@ -50,8 +56,7 @@ const handleModelValueChanged = (newVal) => {
 
             <InputText
                 :model-value="modelValue"
-                class="w-full"
-                placeholder="Search..."
+                :placeholder="placeholder"
                 @update:model-value="handleModelValueChanged"
             />
 

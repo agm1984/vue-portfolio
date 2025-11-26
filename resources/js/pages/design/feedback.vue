@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
@@ -12,6 +13,7 @@ useHead({
     title: 'Design System Feedback',
 });
 
+const router = useRouter();
 const toast = useToast();
 
 const customDetail = ref('Operation completed successfully.');
@@ -40,18 +42,21 @@ const messageExamples = [
     { severity: 'warn', content: 'Your session will expire in 5 minutes.' },
     { severity: 'error', content: 'Failed to connect to the database.' },
 ];
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
-    <div class="w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-gray-900 dark:text-white">Feedback & Alerts</h2>
+    <a-page>
+        <a-page-title
+            title="Feedback & Alerts"
+            description="Components used to communicate status, errors, and successful actions to the user."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <p class="text-gray-600 dark:text-gray-400 mt-2">
-            Components used to communicate status, errors, and successful actions to the user.
-        </p>
-
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
-            <h3 class="text-gray-900 dark:text-white">Toast Notifications</h3>
+        <a-card class="p-8">
+            <h3>Toast Notifications</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Ephemeral messages that appear in the top-right corner. Managed via <code>useToast()</code>.
             </p>
@@ -59,12 +64,12 @@ const messageExamples = [
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="space-y-2">
-                        <h6 class="text-gray-900 dark:text-white">Message Content</h6>
+                        <h6>Message Content</h6>
                         <InputText v-model="customDetail" class="w-full" placeholder="Type a message..." />
                     </div>
 
                     <div class="space-y-2">
-                        <h6 class="text-gray-900 dark:text-white">Trigger Severity</h6>
+                        <h6>Trigger Severity</h6>
                         <div class="grid grid-cols-2 gap-3">
                             <Button
                                 v-for="sev in severities"
@@ -91,11 +96,11 @@ const messageExamples = [
                     />
                 </div>
             </div>
-        </div>
+        </a-card>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Inline Alerts</h3>
+            <a-card class="p-8 h-full">
+                <h3>Inline Alerts</h3>
 
                 <div class="space-y-4 mt-2">
                     <Message
@@ -107,10 +112,10 @@ const messageExamples = [
                         {{ msg.content }}
                     </Message>
                 </div>
-            </div>
+            </a-card>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Field Feedback</h3>
+            <a-card class="p-8 h-full">
+                <h3>Field Feedback</h3>
                 <div class="space-y-6 mt-2">
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         Use <code>variant="simple"</code> for validation text below inputs.
@@ -144,7 +149,7 @@ const messageExamples = [
                         </Message>
                     </div>
                 </div>
-            </div>
+            </a-card>
         </div>
-    </div>
+    </a-page>
 </template>

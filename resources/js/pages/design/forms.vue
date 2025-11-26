@@ -3,6 +3,7 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, minLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
+import { useRouter } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -19,6 +20,8 @@ import Tag from 'primevue/tag';
 useHead({
     title: 'Design System Forms',
 });
+
+const router = useRouter();
 
 const playground = reactive({
     text: '',
@@ -97,21 +100,25 @@ const technologies = [
     { name: 'Tailwind', type: 'CSS', icon: 'pi pi-palette' },
     { name: 'Docker', type: 'DevOps', icon: 'pi pi-box' },
 ];
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-gray-900 dark:text-white">Forms</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-2">
-            A comprehensive guide to input fields, selection controls, and validation patterns.
-        </p>
+    <a-page>
+        <a-page-title
+            title="Forms"
+            description="A comprehensive guide to input fields, selection controls, and validation patterns."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
-            <h3 class="text-gray-900 dark:text-white">Input Playground</h3>
+        <a-card class="p-8">
+            <h3>Input Playground</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">Configure the state and style of text inputs.</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
-                <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center min-h-[200px] p-8 transition-colors">
+                <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center min-h-[200px] p-8">
                     <div class="w-full max-w-xs">
                         <template v-if="playground.icon !== 'none'">
                             <IconField :iconPosition="playground.icon">
@@ -149,9 +156,9 @@ const technologies = [
                 </div>
             </div>
             <div class="mt-8"><a-code language="html" :code="generatedCode" /></div>
-        </div>
+        </a-card>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r border-gray-200 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
+        <a-card class="border-l-4 border-indigo-500 border-y border-r dark:border-gray-700 p-8 mt-8">
             <h3 class="text-gray-900 dark:text-white">Validation Architecture</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Live demo of <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-input-field</code> + <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-field-errors</code> integration.
@@ -160,7 +167,7 @@ const technologies = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
                 <form @submit.prevent="validateForm" class="space-y-6">
                     <div>
-                        <a-input-field input-id="demo-email" title="Email Address" required />
+                        <a-input-field input-id="demo-email" title="Email" required />
                         <IconField iconPosition="left">
                             <InputIcon class="pi pi-envelope" />
                             <InputText id="demo-email" v-model="v$.email.$model" :class="{'p-invalid': v$.email.$invalid && submitted}" class="w-full" placeholder="Try 'invalid-email'..." />
@@ -174,7 +181,7 @@ const technologies = [
                     </div>
                     <Button type="submit" label="Test Validation" />
                 </form>
-                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-sm space-y-4 transition-colors">
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-sm space-y-4">
                     <h4 class="font-bold text-gray-900 dark:text-white uppercase tracking-wider">How it works</h4>
                     <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
                         <li><strong>State:</strong> Use <code>v$.fieldName.$model</code> for v-model binding.</li>
@@ -185,11 +192,11 @@ const technologies = [
                     <div class="font-mono text-xs text-indigo-600 dark:text-indigo-400">Current Status: {{ v$.$invalid ? 'INVALID' : 'VALID' }}</div>
                 </div>
             </div>
-        </div>
+        </a-card>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Boolean</h3>
+            <a-card class="p-8 h-full">
+                <h3>Boolean</h3>
 
                 <div class="space-y-4 mt-4">
                     <div class="flex items-center gap-4">
@@ -221,19 +228,19 @@ const technologies = [
                         </div>
                     </div>
                 </div>
-            </div>
+            </a-card>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Text Area</h3>
+            <a-card class="p-8 h-full">
+                <h3>Text Area</h3>
 
                 <div class="space-y-4 mt-4">
                     <p class="text-sm text-gray-500 dark:text-gray-400">Supports auto-resize.</p>
                     <Textarea placeholder="Type a long message here..." rows="5" autoResize class="w-full" />
                 </div>
-            </div>
+            </a-card>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Select Menu</h3>
+            <a-card class="p-8 h-full">
+                <h3>Select Menu</h3>
 
                 <div class="space-y-6 mt-4">
                     <div class="flex flex-col gap-2">
@@ -276,9 +283,7 @@ const technologies = [
                         </Select>
                     </div>
                 </div>
-            </div>
-
+            </a-card>
         </div>
-
-    </div>
+    </a-page>
 </template>

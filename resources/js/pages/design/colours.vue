@@ -1,11 +1,13 @@
 <script setup>
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 
 useHead({
     title: 'Design System Colours',
 });
 
+const router = useRouter();
 const toast = useToast();
 
 /**
@@ -57,32 +59,36 @@ const copyClass = async (color, step) => {
         console.error('Copy failed', e);
     }
 };
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
-    <div class="w-full flex-1 flex flex-col transition-colors duration-300">
-        <div class="mb-8">
-            <h2 class="text-gray-900 dark:text-white">Colours</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl">
-                This design system leverages the standard Tailwind CSS color palette. 
-                Click any swatch to copy its utility class to your clipboard.
-            </p>
-        </div>
+    <a-page>
+        <a-page-title
+            title="Colours"
+            description="This design system leverages the standard Tailwind CSS color palette. Click any swatch to copy its utility class to your clipboard."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <a-card class="p-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div
+                    v-for="color in colors"
+                    :key="`design-colour-${color}`"
+                    class="flex flex-col gap-2"
+                >
+                    <h3>{{ color }}</h3>
 
-                <div v-for="color in colors" :key="color" class="flex flex-col gap-2">
-                    <h3 class="capitalize text-gray-700 dark:text-gray-200">{{ color }}</h3>
-
-                    <div class="flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 mt-2 transition-colors">
+                    <div class="flex flex-col rounded-lg overflow-hidden shadow-sm border border-gray-300 dark:border-gray-700 mt-2">
                         <button
                             v-for="step in steps"
                             :key="`${color}-${step}`"
                             class="flex items-center justify-between px-4 py-3 text-sm font-medium transition-transform active:scale-[0.98] focus:outline-none hover:z-10 hover:ring-2 ring-inset ring-white/50 cursor-pointer"
                             :class="[
                                 `bg-${color}-${step}`,
-                                getTextColor(step)
+                                getTextColor(step),
                             ]"
                             @click="copyClass(color, step)"
                             title="Click to copy class"
@@ -93,6 +99,6 @@ const copyClass = async (color, step) => {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>
