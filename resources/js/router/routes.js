@@ -54,6 +54,7 @@ const routes = [
     {
         path: '/design',
         name: 'design',
+        meta: { preloadOnly: true },
         component: () => import('../pages/design/design-dashboard.vue'),
         children: [
             { path: 'buttons', name: 'design.buttons', component: () => import('../pages/design/buttons.vue') },

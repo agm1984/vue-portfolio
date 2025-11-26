@@ -49,11 +49,10 @@ const navItems = computed(() => [
 
         <main class="flex-1 w-full md:ml-64 p-8">
             <template v-if="isDashboard">
-                <div class="mb-4">
-                    <h1 class="text-gray-900 dark:text-white">Dashboard</h1>
-
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Here's what is happening with my portfolio.</p>
-                </div>
+                <a-page-title
+                    title="Dashboard"
+                    description="Overview of site metrics and activity."
+                ></a-page-title>
 
                 <dashboard-counts :metrics="metrics"></dashboard-counts>
 
@@ -78,7 +77,6 @@ const navItems = computed(() => [
 
                     <dashboard-session></dashboard-session>
                 </div>
-
             </template>
 
             <router-view v-else></router-view>

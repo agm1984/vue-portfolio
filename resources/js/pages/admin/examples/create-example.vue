@@ -1,16 +1,26 @@
 <script setup>
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 
 useHead({
     title: 'Admin Create Example',
 });
+
+const router = useRouter();
+
+const goBack = () => router.push({ name: 'admin.examples.list' });
 </script>
 
 <template>
     <div class="flex-1 flex flex-col">
-        <h2>Add Example</h2>
+        <a-page-title
+            title="Add Example"
+            description="Create a new example"
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <a-card class="p-8 mt-4">
+        <a-card class="p-8">
             <edit-example
                 mode="create"
             />

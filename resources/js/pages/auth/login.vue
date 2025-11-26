@@ -73,18 +73,18 @@ const login = async () => {
     <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
         <a-card class="w-full max-w-md p-8">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto transition-colors">
+                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto transition-colors mb-4">
                     <i class="pi pi-user" style="font-size: 24px;"></i>
                 </div>
 
-                <h1 class="mt-4 text-gray-900 dark:text-white">Login</h1>
-
-                <p class="text-gray-600 dark:text-gray-400 mt-2">
-                    Use Oauth or your email and password.
-                </p>
+                <a-page-title
+                    title="Login"
+                    description="Use Oauth or your email and password."
+                    centered
+                ></a-page-title>
             </div>
 
-            <div class="mt-4">
+            <div class="">
                 <div class="flex flex-col gap-2">
                     <login-with-oauth provider="github"></login-with-oauth>
                     <login-with-oauth provider="twitter"></login-with-oauth>
@@ -169,9 +169,9 @@ const login = async () => {
                     />
                 </form>
 
-                <div class="text-center mt-8 text-gray-600 dark:text-gray-400">
+                <div class="text-center text-gray-600 dark:text-gray-400 mt-8 transition-colors">
                     Don't have an account?
-                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-1 transition-colors">
+                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-2 transition-colors">
                         Register
                     </router-link>
                 </div>

@@ -29,14 +29,14 @@ const products = ref(new Array(4).fill({})); // Dummy array for skeleton rows
 
 <template>
     <div class="w-full flex flex-col transition-colors duration-300">
-        <div class="mb-4">
-            <h2 class="text-gray-900 dark:text-white">Loading States</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                Patterns to manage wait times, reduce perceived latency, and prevent layout shifts.
-            </p>
-        </div>
+        <a-page-title
+            title="Loading States"
+            description="Patterns to manage wait times, reduce perceived latency, and prevent layout shifts."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h3 class="text-gray-900 dark:text-white">UX Playground</h3>

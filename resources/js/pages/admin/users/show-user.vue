@@ -51,22 +51,12 @@ onMounted(fetchUser);
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <Button
-                    type="button"
-                    severity="secondary"
-                    icon="pi pi-arrow-left"
-                    aria-label="Go Back"
-                    text
-                    rounded
-                    @click="goBack"
-                />
-
-                <div>
-                    <h1 class="text-gray-900 dark:text-white">User Profile</h1>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Manage account details and permissions.</p>
-                </div>
-            </div>
+            <a-page-title
+                title="User Profile"
+                description="View and manage user account information."
+                has-back
+                @on-back="goBack"
+            ></a-page-title>
 
             <div v-if="isLoaded" class="flex gap-2">
                 <Button
@@ -78,12 +68,12 @@ onMounted(fetchUser);
             </div>
         </div>
 
-        <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
+        <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-1"><Skeleton height="300px" borderRadius="1rem" /></div>
             <div class="lg:col-span-2"><Skeleton height="300px" borderRadius="1rem" /></div>
         </div>
 
-        <div v-else-if="isLoaded" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mt-4">
+        <div v-else-if="isLoaded" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div class="lg:col-span-1">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center p-8 transition-colors duration-300">
                     <div class="mb-6 relative">
@@ -119,7 +109,7 @@ onMounted(fetchUser);
 
             <div class="lg:col-span-2 space-y-8">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
-                    <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 transition-colors">
+                    <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50 transition-colors">
                         <h3 class="text-gray-900 dark:text-white">Account Information</h3>
                     </div>
 
@@ -165,7 +155,7 @@ onMounted(fetchUser);
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
-                     <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 transition-colors">
+                     <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50 transition-colors">
                         <h3 class="text-gray-900 dark:text-white">System Activity</h3>
                     </div>
 
@@ -193,7 +183,7 @@ onMounted(fetchUser);
             </div>
         </div>
 
-        <div v-else class="p-12 text-center mt-4">
+        <div v-else class="p-12 text-center">
             <i class="pi pi-exclamation-triangle text-orange-500 dark:text-orange-400 mb-4" style="font-size: 48px;"></i>
             <h3 class="text-gray-900 dark:text-white">User not found</h3>
             <Button

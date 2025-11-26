@@ -3,6 +3,7 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, email, minLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
+import { useRouter } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -19,6 +20,8 @@ import Tag from 'primevue/tag';
 useHead({
     title: 'Design System Forms',
 });
+
+const router = useRouter();
 
 const playground = reactive({
     text: '',
@@ -97,16 +100,20 @@ const technologies = [
     { name: 'Tailwind', type: 'CSS', icon: 'pi pi-palette' },
     { name: 'Docker', type: 'DevOps', icon: 'pi pi-box' },
 ];
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-gray-900 dark:text-white">Forms</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-2">
-            A comprehensive guide to input fields, selection controls, and validation patterns.
-        </p>
+        <a-page-title
+            title="Forms"
+            description="A comprehensive guide to input fields, selection controls, and validation patterns."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <h3 class="text-gray-900 dark:text-white">Input Playground</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">Configure the state and style of text inputs.</p>
 
@@ -151,7 +158,7 @@ const technologies = [
             <div class="mt-8"><a-code language="html" :code="generatedCode" /></div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r border-gray-200 dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-l-4 border-indigo-500 border-y border-r dark:border-gray-700 p-8 mt-8 transition-colors duration-300">
             <h3 class="text-gray-900 dark:text-white">Validation Architecture</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Live demo of <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-input-field</code> + <code class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-1 rounded">a-field-errors</code> integration.
@@ -160,7 +167,7 @@ const technologies = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
                 <form @submit.prevent="validateForm" class="space-y-6">
                     <div>
-                        <a-input-field input-id="demo-email" title="Email Address" required />
+                        <a-input-field input-id="demo-email" title="Email" required />
                         <IconField iconPosition="left">
                             <InputIcon class="pi pi-envelope" />
                             <InputText id="demo-email" v-model="v$.email.$model" :class="{'p-invalid': v$.email.$invalid && submitted}" class="w-full" placeholder="Try 'invalid-email'..." />

@@ -69,23 +69,13 @@ onMounted(fetchCategory);
 
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <Button
-                    type="button"
-                    icon="pi pi-arrow-left"
-                    severity="secondary"
-                    aria-label="Go Back"
-                    text
-                    rounded
-                    @click="goBack"
-                />
-
-                <div>
-                    <h1 class="text-gray-900 dark:text-white">Category Details</h1>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Manage Example classification.</p>
-                </div>
-            </div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <a-page-title
+                title="Category Details"
+                description="Manage Example classification."
+                has-back
+                @on-back="goBack"
+            ></a-page-title>
 
             <div v-if="!isLoading">
                 <Button

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
@@ -13,6 +14,7 @@ useHead({
     title: 'Design System Cards',
 });
 
+const router = useRouter();
 const toast = useToast();
 
 const shadowLevel = ref(2);
@@ -36,16 +38,18 @@ const copyClass = async (text) => {
         console.error('Copy failed', e);
     }
 };
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="mb-4">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Cards</h2>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">
-                The foundational surfaces of the interface. This system relies on a "Card on Canvas" metaphor.
-            </p>
-        </div>
+        <a-page-title
+            title="Cards"
+            description="The foundational surfaces of the interface. This system relies on a &quot;Card on Canvas&quot; design."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="flex justify-between items-center">
@@ -111,7 +115,6 @@ const copyClass = async (text) => {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            
             <Card class="p-0 overflow-hidden border-0 shadow-lg dark:shadow-none dark:border dark:border-gray-700 bg-white dark:bg-gray-800">
                 <template #header>
                     <div class="bg-indigo-50 dark:bg-indigo-900/30 px-6 py-4 border-b border-indigo-100 dark:border-indigo-800 transition-colors">

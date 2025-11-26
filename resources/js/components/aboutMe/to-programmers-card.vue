@@ -15,14 +15,14 @@
 
             <div class="font-mono text-sm md:text-base text-gray-700 dark:text-gray-300 transition-colors">
                 <p>
-                    I like to use 
+                    I like to use
                     <span class="text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 px-1 rounded transition-colors">finite state machines</span>, 
                     predicates, booleans, and low-arity functions.
                 </p>
 
                 <p class="mt-4">
                     I'm a huge advocate for <strong class="text-gray-900 dark:text-white">immutable functional-reactive programming (FRP)</strong>. 
-                    Give me a 
+                    Give me a
                     <span class="text-indigo-600 dark:text-indigo-400 font-semibold transition-colors">map</span>,
                     <span class="text-indigo-600 dark:text-indigo-400 font-semibold transition-colors">reduce</span>,
                     or

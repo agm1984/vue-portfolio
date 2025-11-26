@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
@@ -12,6 +13,7 @@ useHead({
     title: 'Design System Feedback',
 });
 
+const router = useRouter();
 const toast = useToast();
 
 const customDetail = ref('Operation completed successfully.');
@@ -40,17 +42,20 @@ const messageExamples = [
     { severity: 'warn', content: 'Your session will expire in 5 minutes.' },
     { severity: 'error', content: 'Failed to connect to the database.' },
 ];
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-gray-900 dark:text-white">Feedback & Alerts</h2>
+        <a-page-title
+            title="Feedback & Alerts"
+            description="Components used to communicate status, errors, and successful actions to the user."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <p class="text-gray-600 dark:text-gray-400 mt-2">
-            Components used to communicate status, errors, and successful actions to the user.
-        </p>
-
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <h3 class="text-gray-900 dark:text-white">Toast Notifications</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Ephemeral messages that appear in the top-right corner. Managed via <code>useToast()</code>.

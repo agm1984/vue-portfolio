@@ -34,9 +34,8 @@ onMounted(preloadHotPath);
         <div class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 dark:bg-indigo-900/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-pink-500/10 dark:bg-pink-900/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="w-full max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
+        <div class="w-full max-w-7xl mx-auto p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div class="space-y-8 text-center lg:text-left z-10">
                     <div>
                         <h3 class="text-indigo-600! dark:text-indigo-400! font-bold tracking-wider uppercase text-sm">The Portfolio Of</h3>
@@ -90,7 +89,7 @@ onMounted(preloadHotPath);
 
                 <div class="relative flex justify-center lg:justify-end z-10">
                     <div class="absolute inset-0 bg-linear-to-tr from-indigo-500 to-purple-500 rounded-full blur-xl opacity-20 scale-90 animate-pulse"></div>
-                    
+
                     <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full p-2 bg-white dark:bg-gray-800 shadow-2xl border dark:border-gray-700 transition-colors">
                         <img
                             class="w-full h-full object-cover rounded-full"

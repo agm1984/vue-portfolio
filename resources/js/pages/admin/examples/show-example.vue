@@ -76,32 +76,25 @@ onMounted(fetchExample);
 
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-            <div class="flex items-center gap-4">
-                <Button
-                    type="button"
-                    severity="secondary"
-                    icon="pi pi-arrow-left"
-                    aria-label="Go Back"
-                    text
-                    rounded
-                    @click="goBack"
-                />
-
-                <div>
-                    <h1 class="text-gray-900 dark:text-white">{{ example.name }}</h1>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Slug:</span>
+        <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4 md:mb-0">
+            <a-page-title
+                :title="example.name"
+                has-back
+                @on-back="goBack"
+            >
+                <template #description>
+                    <div class="flex items-center gap-2">
+                        <h6>Slug</h6>
                         <span class="font-mono text-xs text-indigo-600 dark:text-indigo-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded transition-colors">/{{ example.slug }}</span>
                     </div>
-                </div>
-            </div>
+                </template>
+            </a-page-title>
 
             <div v-if="!isLoading">
                 <Button
                     v-if="isShowing"
                     type="button"
+                    class="whitespace-nowrap"
                     icon="pi pi-pencil"
                     label="Edit Example"
                     @click="state = EDITING"
@@ -110,10 +103,11 @@ onMounted(fetchExample);
                 <Button
                     v-if="isEditing"
                     type="button"
+                    class="whitespace-nowrap"
                     severity="secondary"
                     icon="pi pi-times"
                     label="Cancel Editing"
-                    text
+                    outlined
                     @click="state = SHOWING"
                 />
             </div>
@@ -121,12 +115,12 @@ onMounted(fetchExample);
 
         <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-8">
-                <Skeleton height="200px" borderRadius="1rem" />
-                <Skeleton height="400px" borderRadius="1rem" />
+                <Skeleton height="200px" border-radius="1rem" />
+                <Skeleton height="400px" border-radius="1rem" />
             </div>
             <div class="lg:col-span-1 space-y-8">
-                <Skeleton height="300px" borderRadius="1rem" />
-                <Skeleton height="200px" borderRadius="1rem" />
+                <Skeleton height="300px" border-radius="1rem" />
+                <Skeleton height="200px" border-radius="1rem" />
             </div>
         </div>
 
@@ -145,7 +139,6 @@ onMounted(fetchExample);
         </div>
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            
             <div class="lg:col-span-2 space-y-8">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
                     <div class="space-y-8">
@@ -199,7 +192,6 @@ onMounted(fetchExample);
             </div>
 
             <div class="lg:col-span-1 space-y-8">
-                
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
                     <div class="flex items-center justify-between mb-2">
                         <h6 class="text-gray-900 dark:text-white">Status</h6>

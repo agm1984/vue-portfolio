@@ -1,13 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useHead } from '@unhead/vue';
-import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router';
 
 useHead({
     title: 'Design System Sizing',
 });
 
-const toast = useToast();
+const router = useRouter();
 
 const scaleSteps = [64, 48, 32, 16, 8, 4, 2, 1];
 
@@ -26,14 +26,20 @@ const sizingScale = computed(() => {
         };
     });
 });
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-gray-900 dark:text-white">Space & Size</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-2">This section covers the spacing and sizing scale used throughout the design system.</p>
+        <a-page-title
+            title="Space & Size"
+            description="This section covers the spacing and sizing scale used throughout the design system."
+            has-back
+            @on-back="goBack"
+        ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div class="prose dark:prose-invert text-gray-600 dark:text-gray-300">
                     <p>

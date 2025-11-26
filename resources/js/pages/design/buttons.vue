@@ -1,11 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import Button from 'primevue/button';
 
 useHead({
     title: 'Design System Buttons',
 });
+
+const router = useRouter();
 
 const label = ref('Click Me');
 const selectedSeverity = ref(null); // null = primary default
@@ -51,17 +54,19 @@ const generatedCode = computed(() => {
 
     return `<Button ${props.join(' ')} />`;
 });
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="flex-1 flex flex-col gap-8 transition-colors duration-300">
         <div class="">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
-                <div>
-                    <h2 class="text-gray-900 dark:text-white">Buttons</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Configure props to generate your button code.</p>
-                </div>
-            </div>
+            <a-page-title
+                title="Buttons"
+                description="Configure props to generate your button code."
+                has-back
+                @on-back="goBack"
+            ></a-page-title>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-center min-h-[200px] relative overflow-hidden transition-colors duration-300">
@@ -125,7 +130,7 @@ const generatedCode = computed(() => {
                                 class="w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 focus:outline-none"
                                 :class="[
                                     selectedSeverity === sev.value ? 'ring-2 ring-offset-2 ring-gray-400 dark:ring-gray-500 scale-110' : 'border-transparent',
-                                    sev.value === null ? 'bg-indigo-600' : 
+                                    sev.value === null ? 'bg-indigo-600' :
                                     sev.value === 'secondary' ? 'bg-gray-500' :
                                     sev.value === 'success' ? 'bg-green-500' :
                                     sev.value === 'info' ? 'bg-blue-500' :

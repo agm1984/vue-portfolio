@@ -95,15 +95,12 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
 
         <main class="flex-1 md:ml-64 p-8 max-w-7xl mx-auto w-full">
             <template v-if="isDashboard">
-                <div>
-                    <h1 class="text-gray-900 dark:text-white">Dashboard</h1>
+                <a-page-title
+                    title="Dashboard"
+                    description="A centralized registry of UI components, design tokens, and usage guidelines."
+                ></a-page-title>
 
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">
-                        A centralized registry of UI components, design tokens, and usage guidelines.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <router-link
                         v-for="item in gridItems"
                         :key="`design-system-section-${item.route}`"
@@ -133,10 +130,7 @@ const gridItems = computed(() => navItems.filter(item => item.route !== 'design'
                 </div>
             </template>
 
-            <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 min-h-[80vh] transition-colors duration-300">
-                <router-view></router-view>
-            </div>
-
+            <router-view v-else></router-view>
         </main>
     </div>
 </template>

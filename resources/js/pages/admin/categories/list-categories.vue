@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
 import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
@@ -17,6 +18,7 @@ useHead({
     title: 'Admin List Categories',
 });
 
+const router = useRouter();
 const auth = useAuthStore();
 const toast = useToast();
 
@@ -54,15 +56,19 @@ const fetchAllCategories = async () => {
 };
 
 onMounted(fetchAllCategories);
+
+const goBack = () => router.push({ name: 'admin' });
 </script>
 
 <template>
     <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-                <h1 class="text-gray-900 dark:text-white">Categories</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">For organizing portfolio examples.</p>
-            </div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <a-page-title
+                title="Categories"
+                description="Manage and organize categories for portfolio examples."
+                has-back
+                @on-back="goBack"
+            ></a-page-title>
 
             <div v-if="auth.isAdmin">
                 <router-link :to="{ name: 'admin.categories.create' }">
@@ -78,7 +84,6 @@ onMounted(fetchAllCategories);
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
-            
             <div class="flex justify-end pb-4">
                 <IconField iconPosition="left">
                     <InputIcon>

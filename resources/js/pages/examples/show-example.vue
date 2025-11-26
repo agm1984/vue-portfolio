@@ -55,14 +55,11 @@ const fetchExample = async () => {
 
 watch(() => currentRoute.params.example, fetchExample, { immediate: true });
 
-const goBack = () => {
-    router.push({ name: 'public.examples.list' });
-};
+const goBack = () => router.push({ name: 'public.examples.list' });
 </script>
 
 <template>
     <div class="w-full max-w-7xl mx-auto p-6 md:p-12 min-h-screen flex flex-col transition-colors duration-300">
-        
         <div v-if="isLoading" class="animate-pulse space-y-8">
             <Skeleton width="100px" height="2rem" class="mb-4" />
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -78,19 +75,12 @@ const goBack = () => {
         </div>
 
         <div v-else-if="isLoaded" class="flex flex-col">
-            <header>
-                <Button
-                    type="button"
-                    class="text-gray-600! dark:text-gray-400! hover:text-indigo-600! dark:hover:text-indigo-400!"
-                    icon="pi pi-arrow-left"
-                    label="Back to Projects"
-                    text
-                    @click="goBack"
-                />
-
-                <div class="flex flex-col gap-2 mt-4">
-                    <h1 class="text-gray-900 dark:text-white">{{ example.name }}</h1>
-
+            <a-page-title
+                :title="example.name"
+                has-back
+                @on-back="goBack"
+            >
+                <template #description>
                     <div class="flex items-center gap-4">
                         <Tag
                             class="uppercase tracking-widest text-xs! font-semibold bg-indigo-50! dark:bg-indigo-900/30! text-indigo-600! dark:text-indigo-300! border border-indigo-100 dark:border-indigo-800"
@@ -98,16 +88,16 @@ const goBack = () => {
                             :value="example.category.name"
                         />
                     </div>
+                </template>
+            </a-page-title>
 
-                    <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
-                        <span class="text-sm">Added: {{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
-                        <span
-                            v-if="example.created_at_nice !== example.updated_at_nice"
-                            class="text-sm">Last updated: {{ example.updated_at_nice }} ({{ example.updated_at_diff }})
-                        </span>
-                    </div>
-                </div>
-            </header>
+            <div class="flex flex-col gap-2 text-gray-600 dark:text-gray-400">
+                <span class="text-sm">Added: {{ example.created_at_nice }} ({{ example.created_at_diff }})</span>
+                <span
+                    v-if="example.created_at_nice !== example.updated_at_nice"
+                    class="text-sm">Last updated: {{ example.updated_at_nice }} ({{ example.updated_at_diff }})
+                </span>
+            </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
                 

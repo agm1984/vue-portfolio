@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import InputText from 'primevue/inputtext';
 import Divider from 'primevue/divider';
@@ -10,6 +11,7 @@ useHead({
     title: 'Design System Typography',
 });
 
+const router = useRouter();
 const toast = useToast();
 const previewText = ref('The quick brown fox jumps over the lazy dog');
 
@@ -35,15 +37,25 @@ const copyClass = async (text) => {
         console.error('Copy failed', e);
     }
 };
+
+const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
     <div class="w-full flex flex-col transition-colors duration-300">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Typography</h2>
+        <a-page-title
+            title="Typography"
+            has-back
+            @on-back="goBack"
+        >
+            <template #description>
+                <p class="text-gray-600 dark:text-gray-400">
+                    The system uses <a href="https://fonts.google.com/specimen/Lato" target="_blank" class="text-indigo-500 dark:text-indigo-400 hover:underline font-bold transition-colors">Lato</a> as the primary typeface for optimal readability and modern aesthetics.
+                </p>
+            </template>
+        </a-page-title>
 
-        <p class="text-gray-600 dark:text-gray-400 mt-2">
-            The system uses <a href="https://fonts.google.com/specimen/Lato" target="_blank" class="text-indigo-500 dark:text-indigo-400 hover:underline font-bold transition-colors">Lato</a> as the primary typeface for optimal readability and modern aesthetics.
-        </p>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Typography</h2>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 mt-4 transition-colors duration-300">
             <div class="flex flex-col">
