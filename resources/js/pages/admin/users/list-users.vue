@@ -8,9 +8,6 @@ import axios from 'axios';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
-import InputText from 'primevue/inputtext';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
 
 useHead({
@@ -26,7 +23,6 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-// --- PURE HELPERS ---
 const statusMap = {
     0: { label: 'Inactive', severity: 'danger', icon: 'pi pi-times-circle' },
     1: { label: 'Active', severity: 'success', icon: 'pi pi-check-circle' },
@@ -42,7 +38,6 @@ const getRoleSeverity = (role) => {
     return map[role.toLowerCase()] || 'secondary';
 };
 
-// --- ACTIONS ---
 const fetchAllUsers = async () => {
     try {
         loading.value = true;
@@ -94,16 +89,10 @@ const goBack = () => router.push({ name: 'admin' });
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="flex justify-end pb-4">
-                <IconField iconPosition="left">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search users..."
-                        class="w-full md:w-64"
-                    />
-                </IconField>
+                <a-input-search
+                    v-model="filters['global'].value"
+                    placeholder="Search users..."
+                />
             </div>
 
             <DataTable

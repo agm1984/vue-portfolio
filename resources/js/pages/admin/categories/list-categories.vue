@@ -8,9 +8,6 @@ import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
-import InputText from 'primevue/inputtext';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
 
@@ -85,16 +82,10 @@ const goBack = () => router.push({ name: 'admin' });
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
             <div class="flex justify-end pb-4">
-                <IconField iconPosition="left">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search categories..."
-                        class="w-full md:w-64"
-                    />
-                </IconField>
+                <a-input-search
+                    v-model="filters['global'].value"
+                    placeholder="Search categories..."
+                />
             </div>
 
             <DataTable
