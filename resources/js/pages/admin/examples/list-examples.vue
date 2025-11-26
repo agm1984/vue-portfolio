@@ -58,8 +58,8 @@ const goBack = () => router.push({ name: 'admin' });
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <a-page>
+        <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4 md:mb-0">
             <a-page-title
                 title="Examples"
                 description="Manage portfolio experience examples."
@@ -80,7 +80,7 @@ const goBack = () => router.push({ name: 'admin' });
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+        <a-card class="p-8">
             <div class="flex justify-end pb-4">
                 <a-input-search
                     v-model="filters['global'].value"
@@ -101,7 +101,7 @@ const goBack = () => router.push({ name: 'admin' });
             >
                 <template #empty>
                     <div class="text-center py-8">
-                        <i class="pi pi-briefcase text-4xl text-gray-300 dark:text-gray-600 mb-3 transition-colors"></i>
+                        <i class="pi pi-briefcase text-4xl text-gray-300 dark:text-gray-600 mb-3"></i>
                         <p class="text-gray-600 dark:text-gray-400">No examples found.</p>
                     </div>
                 </template>
@@ -109,7 +109,7 @@ const goBack = () => router.push({ name: 'admin' });
                 <Column field="name" header="Name" sortable>
                     <template #body="{ data }">
                         <router-link
-                            class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-base"
+                            class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 text-base"
                             :to="{ name: 'admin.examples.show', params: { example: data.slug } }"
                         >
                             {{ data.name }}
@@ -119,7 +119,7 @@ const goBack = () => router.push({ name: 'admin' });
 
                 <Column field="slug" header="Slug" sortable>
                     <template #body="{ data }">
-                         <span class="font-mono text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded transition-colors">
+                         <span class="font-mono text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded">
                             {{ data.slug }}
                         </span>
                     </template>
@@ -128,7 +128,7 @@ const goBack = () => router.push({ name: 'admin' });
                 <Column field="category.name" header="Category" sortable>
                     <template #body="{ data }">
                         <Tag
-                            class="!bg-gray-100 dark:!bg-gray-700 !text-gray-600 dark:!text-gray-300 border border-gray-200 dark:border-gray-600 transition-colors"
+                            class="!bg-gray-100 dark:!bg-gray-700 !text-gray-600 dark:!text-gray-300 border border-gray-200 dark:border-gray-600"
                             severity="info"
                             :value="data.category?.name || 'Uncategorized'"
                             rounded
@@ -150,13 +150,13 @@ const goBack = () => router.push({ name: 'admin' });
 
                 <Column field="created_at_diff" header="Created" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap transition-colors">{{ data.created_at_diff }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{{ data.created_at_diff }}</span>
                     </template>
                 </Column>
 
                 <Column field="updated_at_diff" header="Updated" sortable>
                     <template #body="{ data }">
-                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap transition-colors">{{ data.updated_at_diff }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{{ data.updated_at_diff }}</span>
                     </template>
                 </Column>
 
@@ -168,6 +168,6 @@ const goBack = () => router.push({ name: 'admin' });
                     </template>
                 </Column>
             </DataTable>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>

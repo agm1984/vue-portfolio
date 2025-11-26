@@ -12,7 +12,7 @@ const goBack = () => router.push({ name: 'admin.examples.list' });
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col">
+    <a-page>
         <a-page-title
             title="Add Example"
             description="Create a new example"
@@ -25,5 +25,5 @@ const goBack = () => router.push({ name: 'admin.examples.list' });
                 mode="create"
             />
         </a-card>
-    </div>
+    </a-page>
 </template>

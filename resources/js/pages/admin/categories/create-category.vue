@@ -12,7 +12,7 @@ const goBack = () => router.push({ name: 'admin.categories.list' });
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col">
+    <a-page>
         <a-page-title
             title="Add Category"
             description="Create a new category for organizing portfolio examples."
@@ -25,5 +25,5 @@ const goBack = () => router.push({ name: 'admin.categories.list' });
                 mode="create"
             />
         </a-card>
-    </div>
+    </a-page>
 </template>

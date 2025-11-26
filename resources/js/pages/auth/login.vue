@@ -70,10 +70,10 @@ const login = async () => {
 </script>
 
 <template>
-    <div class="flex-1 flex items-center justify-center p-8 transition-colors duration-300">
+    <div class="flex-1 flex items-center justify-center p-8">
         <a-card class="w-full max-w-md p-8">
             <div class="text-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto transition-colors mb-4">
+                <div class="w-16 h-16 flex items-center justify-center bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto mb-4">
                     <i class="pi pi-user" style="font-size: 24px;"></i>
                 </div>
 
@@ -95,7 +95,7 @@ const login = async () => {
                         <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-4 transition-colors">or</span>
+                        <span class="bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 px-4">or</span>
                     </div>
                 </div>
 
@@ -153,7 +153,7 @@ const login = async () => {
                         </div>
 
                         <router-link
-                            class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 hover:underline transition-colors"
+                            class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 hover:underline"
                             :to="{ name: 'password.request' }"
                         >
                             Forgot password?
@@ -169,9 +169,9 @@ const login = async () => {
                     />
                 </form>
 
-                <div class="text-center text-gray-600 dark:text-gray-400 mt-8 transition-colors">
+                <div class="text-center text-gray-600 dark:text-gray-400 mt-8">
                     Don't have an account?
-                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-2 transition-colors">
+                    <router-link :to="{ name: 'register' }" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline ml-2">
                         Register
                     </router-link>
                 </div>

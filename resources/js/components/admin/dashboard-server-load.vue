@@ -24,7 +24,7 @@ const loadColor = computed(() => getLoadColor(serverLoadPercentage.value));
 </script>
 
 <template>
-    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col items-center justify-center text-center p-8 transition-colors duration-300">
+    <a-card class="flex flex-col items-center justify-center text-center p-8">
         <h3 class="mb-4 font-bold text-gray-900 dark:text-white">Server Load</h3>
 
         <Knob
@@ -36,8 +36,8 @@ const loadColor = computed(() => getLoadColor(serverLoadPercentage.value));
             :stroke-width="8"
         />
 
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-4 transition-colors">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
             CPU Load Average (1 min)
         </p>
-    </div>
+    </a-card>
 </template>

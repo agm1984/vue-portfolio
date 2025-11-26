@@ -76,9 +76,9 @@ const saveComment = async () => {
 </script>
 
 <template>
-    <div 
-        v-if="auth.isAuthenticated" 
-        class="p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300"
+    <a-card
+        v-if="auth.isAuthenticated"
+        class="p-8"
     >
         <div class="flex gap-4">
             <div class="hidden md:block">
@@ -116,11 +116,11 @@ const saveComment = async () => {
                 </div>
             </form>
         </div>
-    </div>
+    </a-card>
 
-    <div 
-        v-else 
-        class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-xl border border-indigo-100 dark:border-indigo-800 flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors duration-300"
+    <div
+        v-else
+        class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-xl border border-indigo-100 dark:border-indigo-800 flex flex-col sm:flex-row items-center justify-between gap-4"
     >
         <div class="flex items-center gap-3">
             <i class="pi pi-lock text-indigo-500 dark:text-indigo-400 text-xl"></i>
@@ -128,12 +128,12 @@ const saveComment = async () => {
         </div>
         <div class="flex gap-4">
             <router-link
-                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300"
                 :to="{ name: 'login' }"
             >Login</router-link>
 
             <router-link
-                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+                class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline hover:text-indigo-700 dark:hover:text-indigo-300"
                 :to="{ name: 'register' }"
             >Register</router-link>
         </div>

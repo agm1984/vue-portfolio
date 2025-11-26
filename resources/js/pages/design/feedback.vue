@@ -47,7 +47,7 @@ const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
-    <div class="w-full flex flex-col transition-colors duration-300">
+    <a-page>
         <a-page-title
             title="Feedback & Alerts"
             description="Components used to communicate status, errors, and successful actions to the user."
@@ -55,8 +55,8 @@ const goBack = () => router.push({ name: 'design' });
             @on-back="goBack"
         ></a-page-title>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
-            <h3 class="text-gray-900 dark:text-white">Toast Notifications</h3>
+        <a-card class="p-8">
+            <h3>Toast Notifications</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 font-normal mt-1">
                 Ephemeral messages that appear in the top-right corner. Managed via <code>useToast()</code>.
             </p>
@@ -64,12 +64,12 @@ const goBack = () => router.push({ name: 'design' });
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="space-y-2">
-                        <h6 class="text-gray-900 dark:text-white">Message Content</h6>
+                        <h6>Message Content</h6>
                         <InputText v-model="customDetail" class="w-full" placeholder="Type a message..." />
                     </div>
 
                     <div class="space-y-2">
-                        <h6 class="text-gray-900 dark:text-white">Trigger Severity</h6>
+                        <h6>Trigger Severity</h6>
                         <div class="grid grid-cols-2 gap-3">
                             <Button
                                 v-for="sev in severities"
@@ -96,11 +96,11 @@ const goBack = () => router.push({ name: 'design' });
                     />
                 </div>
             </div>
-        </div>
+        </a-card>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Inline Alerts</h3>
+            <a-card class="p-8 h-full">
+                <h3>Inline Alerts</h3>
 
                 <div class="space-y-4 mt-2">
                     <Message
@@ -112,10 +112,10 @@ const goBack = () => router.push({ name: 'design' });
                         {{ msg.content }}
                     </Message>
                 </div>
-            </div>
+            </a-card>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 h-full transition-colors duration-300">
-                <h3 class="text-gray-900 dark:text-white">Field Feedback</h3>
+            <a-card class="p-8 h-full">
+                <h3>Field Feedback</h3>
                 <div class="space-y-6 mt-2">
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         Use <code>variant="simple"</code> for validation text below inputs.
@@ -149,7 +149,7 @@ const goBack = () => router.push({ name: 'design' });
                         </Message>
                     </div>
                 </div>
-            </div>
+            </a-card>
         </div>
-    </div>
+    </a-page>
 </template>

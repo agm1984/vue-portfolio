@@ -22,7 +22,6 @@ const containerStyles = computed(() => [
     'flex items-center justify-center rounded-full',
     'bg-gray-200 dark:bg-gray-700',
     'text-gray-600 dark:text-gray-300',
-    'transition-colors duration-300'
 ]);
 </script>
 

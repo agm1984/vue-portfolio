@@ -136,7 +136,7 @@ const handleResendVerificationEmail = async () => {
                     </IconField>
                 </div>
 
-                <div v-if="auth.user.email_verified_at" class="h-[42px] inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-2 text-sm font-medium text-emerald-700 dark:text-emerald-400 whitespace-nowrap transition-colors">
+                <div v-if="auth.user.email_verified_at" class="h-[42px] inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-2 text-sm font-medium text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
                     <i class="pi pi-verified"></i>
                     <span>Verified</span>
                 </div>

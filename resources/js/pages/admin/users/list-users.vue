@@ -66,8 +66,8 @@ const goBack = () => router.push({ name: 'admin' });
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <a-page>
+        <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4 md:mb-0">
             <a-page-title
                 title="Users"
                 description="Manage system access and roles."
@@ -87,7 +87,7 @@ const goBack = () => router.push({ name: 'admin' });
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+        <a-card class="p-8">
             <div class="flex justify-end pb-4">
                 <a-input-search
                     v-model="filters['global'].value"
@@ -119,7 +119,7 @@ const goBack = () => router.push({ name: 'admin' });
                             <div class="flex flex-col">
                                 <router-link
                                     :to="{ name: 'admin.users.show', params: { user: data.id } }"
-                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700 transition-colors"
+                                    class="font-semibold text-gray-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 active:text-indigo-700"
                                 >
                                     {{ data.name }}
                                 </router-link>
@@ -175,6 +175,6 @@ const goBack = () => router.push({ name: 'admin' });
                     </template>
                 </Column>
             </DataTable>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>

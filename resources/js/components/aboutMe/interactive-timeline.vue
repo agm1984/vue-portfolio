@@ -75,7 +75,7 @@ const toggleSort = () => {
 </script>
 
 <template>
-    <div class="mt-8 transition-colors duration-300">
+    <div class="mt-8">
         <div class="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
             <div class="flex flex-wrap gap-2 md:pl-10">
                 <button
@@ -97,7 +97,7 @@ const toggleSort = () => {
             <div class="flex gap-2">
                 <button
                     type="button"
-                    class="cursor-pointer px-4 py-2 rounded-full bg-gray-800 dark:bg-gray-700 text-white text-sm font-semibold flex items-center gap-2 hover:bg-gray-900 dark:hover:bg-gray-600 transition-colors"
+                    class="cursor-pointer px-4 py-2 rounded-full bg-gray-800 dark:bg-gray-700 text-white text-sm font-semibold flex items-center gap-2 hover:bg-gray-900 dark:hover:bg-gray-600"
                     @click="toggleSort"
                 >
                     <span>{{ sortOrder === 'asc' ? 'Oldest First' : 'Newest First' }}</span>
@@ -123,7 +123,7 @@ const toggleSort = () => {
             </div>
         </div>
 
-        <div class="relative border-l-4 border-gray-200 dark:border-gray-700 space-y-8 transition-colors duration-300">
+        <div class="relative border-l-4 border-gray-200 dark:border-gray-700 space-y-8">
             <TransitionGroup name="list">
                 <div
                     v-for="event in filteredEvents"
@@ -131,28 +131,28 @@ const toggleSort = () => {
                     class="relative pl-8"
                 >
                     <span
-                        class="absolute -left-2.5 top-8 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 shadow-sm transition-colors duration-300"
+                        class="absolute -left-2.5 top-8 h-5 w-5 rounded-full border-4 border-white dark:border-gray-900 shadow-sm "
                         :class="event.color"
                     ></span>
 
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+                    <a-card class="p-8 hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-gray-900 dark:text-white group-hover:text-indigo-600! dark:group-hover:text-indigo-400! transition-colors font-bold">
+                            <h3 class="text-gray-900 dark:text-white group-hover:text-indigo-600! dark:group-hover:text-indigo-400! font-semibold">
                                 {{ event.title }}
                             </h3>
-                            <span class="text-sm font-semibold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit transition-colors">
+                            <span class="text-sm font-semibold uppercase px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mt-2 sm:mt-0 w-fit">
                                 {{ event.year }}
                             </span>
                         </div>
 
-                        <p class="text-gray-600 dark:text-gray-300 mb-3 transition-colors">
+                        <p class="text-gray-600 dark:text-gray-300 mb-3">
                             {{ event.description }}
                         </p>
 
-                        <span class="text-xs font-medium text-indigo-500 dark:text-indigo-400 uppercase tracking-wider transition-colors">
+                        <span class="text-xs font-medium text-indigo-500 dark:text-indigo-400 uppercase tracking-wider">
                             #{{ event.category }}
                         </span>
-                    </div>
+                    </a-card>
                 </div>
             </TransitionGroup>
 

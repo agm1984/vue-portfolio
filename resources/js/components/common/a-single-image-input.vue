@@ -41,14 +41,14 @@ function onFileSelect(event) {
             class="flex items-center justify-center"
         >
             <img
-                class="w-32 h-32 bg-cover rounded-full border-4 border-white dark:border-gray-700 shadow-md transition-colors duration-300"
+                class="w-32 h-32 bg-cover rounded-full border-4 border-white dark:border-gray-700 shadow-md"
                 :src="imagePreview"
                 alt="User avatar"
             >
         </div>
 
         <div v-else class="flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 min-w-32 min-h-32 border border-gray-300 dark:border-gray-600 transition-colors duration-300">
+            <div class="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 min-w-32 min-h-32 border border-gray-300 dark:border-gray-600">
                 <span class="text-4xl font-bold text-gray-500 dark:text-gray-300">
                     {{ firstLetterOfName }}
                 </span>

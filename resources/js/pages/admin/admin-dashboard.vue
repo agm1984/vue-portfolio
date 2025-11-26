@@ -42,12 +42,12 @@ const navItems = computed(() => [
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col md:flex-row transition-colors duration-300">
+    <div class="flex-1 flex flex-col md:flex-row">
         <side-nav-pane
             :nav-items="navItems"
         ></side-nav-pane>
 
-        <main class="flex-1 w-full md:ml-64 p-8">
+        <main class="flex-1 w-full md:ml-64 p-4 md:p-8">
             <template v-if="isDashboard">
                 <a-page-title
                     title="Dashboard"

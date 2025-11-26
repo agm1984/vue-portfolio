@@ -59,7 +59,7 @@ const goBack = () => router.push({ name: 'design' });
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col gap-8 transition-colors duration-300">
+    <a-page class="gap-8">
         <div class="">
             <a-page-title
                 title="Buttons"
@@ -69,7 +69,7 @@ const goBack = () => router.push({ name: 'design' });
             ></a-page-title>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div class="lg:col-span-7 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-center min-h-[200px] relative overflow-hidden transition-colors duration-300">
+                <div class="lg:col-span-7 bg-gray-200 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl flex items-center justify-center min-h-[200px] relative overflow-hidden">
                     <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.1]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
                     <div class="absolute inset-0 opacity-[0] dark:opacity-[0.1]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
 
@@ -156,7 +156,7 @@ const goBack = () => router.push({ name: 'design' });
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 transition-colors duration-300">
+        <a-card class="p-8">
             <div class="mb-6">
                 <h2 class="text-gray-900 dark:text-white">Semantic Palette</h2>
                 <p class="text-gray-600 dark:text-gray-400 mt-2">Standard communication colors used across the application.</p>
@@ -195,6 +195,6 @@ const goBack = () => router.push({ name: 'design' });
                 For advanced usage, configuration, and pass-through props, refer to the
                 <a class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline" href="https://primevue.org/button/" target="_blank">PrimeVue Button Documentation</a>.
             </p>
-        </div>
-    </div>
+        </a-card>
+    </a-page>
 </template>

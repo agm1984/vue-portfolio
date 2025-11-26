@@ -49,8 +49,8 @@ onMounted(fetchUser);
 </script>
 
 <template>
-    <div class="flex-1 w-full flex flex-col transition-colors duration-300">
-        <div class="flex items-center justify-between">
+    <a-page>
+        <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 mb-4 md:mb-0">
             <a-page-title
                 title="User Profile"
                 description="View and manage user account information."
@@ -69,17 +69,17 @@ onMounted(fetchUser);
         </div>
 
         <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1"><Skeleton height="300px" borderRadius="1rem" /></div>
-            <div class="lg:col-span-2"><Skeleton height="300px" borderRadius="1rem" /></div>
+            <div class="lg:col-span-1"><Skeleton height="300px" border-radius="1rem" /></div>
+            <div class="lg:col-span-2"><Skeleton height="300px" border-radius="1rem" /></div>
         </div>
 
         <div v-else-if="isLoaded" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div class="lg:col-span-1">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center p-8 transition-colors duration-300">
+                <a-card class="flex flex-col items-center text-center p-8">
                     <div class="mb-6 relative">
                         <a-avatar :size="128" :user="user" class="shadow-lg"></a-avatar>
 
-                        <div class="absolute bottom-0 right-0 w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-700 rounded-full border dark:border-gray-600 transition-colors">
+                        <div class="absolute bottom-0 right-0 w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-700 rounded-full border dark:border-gray-600">
                             <i
                                 v-if="user.email_verified_at"
                                 class="pi pi-verified text-green-500 bg-white dark:bg-gray-700 rounded-full"
@@ -89,7 +89,7 @@ onMounted(fetchUser);
                     </div>
 
                     <h2 class="text-gray-900 dark:text-white">{{ user.name }}</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-1 break-all">{{ user.email }}</p>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1 break-all">{{ user.email }}</p>
 
                     <div class="mt-4 w-full">
                         <Tag
@@ -100,22 +100,22 @@ onMounted(fetchUser);
                         />
                     </div>
 
-                    <div class="mt-6 w-full pt-6 border-t border-gray-100 dark:border-gray-700 flex justify-between text-sm transition-colors">
+                    <div class="mt-6 w-full pt-6 border-t border-gray-300 dark:border-gray-700 flex justify-between text-sm">
                         <span class="text-gray-600 dark:text-gray-400">ID</span>
                         <span class="font-mono font-semibold text-gray-700 dark:text-gray-300">#{{ user.id }}</span>
                     </div>
-                </div>
+                </a-card>
             </div>
 
             <div class="lg:col-span-2 space-y-8">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
-                    <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50 transition-colors">
-                        <h3 class="text-gray-900 dark:text-white">Account Information</h3>
+                <a-card class="overflow-hidden">
+                    <div class="px-8 py-6 border-b border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50">
+                        <h3>Account Information</h3>
                     </div>
 
                     <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-4">
                         <div>
-                            <h6 class="text-gray-900 dark:text-white">Email Address</h6>
+                            <h6>Email Address</h6>
 
                             <div class="flex items-center gap-2 text-gray-800 dark:text-gray-200 font-medium mt-1">
                                 <i class="pi pi-envelope text-indigo-500 dark:text-indigo-400"></i>
@@ -124,7 +124,7 @@ onMounted(fetchUser);
                         </div>
 
                         <div>
-                            <h6 class="text-gray-900 dark:text-white">Verification</h6>
+                            <h6>Verification</h6>
 
                             <div v-if="user.email_verified_at" class="flex items-center gap-2 text-green-600 dark:text-green-400 font-medium mt-1">
                                 <i class="pi pi-verified"></i>
@@ -138,7 +138,7 @@ onMounted(fetchUser);
                         </div>
 
                         <div class="md:col-span-2" v-if="user.roles_list && user.roles_list.length">
-                            <h6 class="text-gray-900 dark:text-white">Assigned Roles</h6>
+                            <h6>Assigned Roles</h6>
 
                             <div class="flex gap-2 mt-1">
                                 <Tag
@@ -150,25 +150,24 @@ onMounted(fetchUser);
                                 />
                             </div>
                         </div>
-
                     </div>
-                </div>
+                </a-card>
 
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-300">
-                     <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50 transition-colors">
-                        <h3 class="text-gray-900 dark:text-white">System Activity</h3>
+                <a-card class="overflow-hidden">
+                     <div class="px-8 py-6 border-b border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-900/50">
+                        <h3>System Activity</h3>
                     </div>
 
                     <div class="p-8">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="flex-1">
-                                <h6 class="text-gray-900 dark:text-white">Member Since</h6>
+                                <h6>Member Since</h6>
 
                                 <p class="text-gray-800 dark:text-white font-medium mt-1">{{ user.created_at_nice }}</p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">{{ user.created_at_diff }}</p>
                             </div>
 
-                            <div class="hidden md:block w-px bg-gray-100 dark:bg-gray-700 transition-colors"></div>
+                            <div class="hidden md:block w-px bg-gray-300 dark:bg-gray-700"></div>
 
                             <div class="flex-1">
                                 <h6 class="text-gray-900 dark:text-white">Last Profile Update</h6>
@@ -178,7 +177,7 @@ onMounted(fetchUser);
                             </div>
                         </div>
                     </div>
-                </div>
+                </a-card>
 
             </div>
         </div>
@@ -194,5 +193,5 @@ onMounted(fetchUser);
                 @click="goBack"
             />
         </div>
-    </div>
+    </a-page>
 </template>

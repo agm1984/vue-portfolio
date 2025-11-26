@@ -30,7 +30,7 @@ onMounted(preloadHotPath);
 </script>
 
 <template>
-    <div class="flex-1 flex flex-col justify-center relative overflow-hidden transition-colors duration-300">
+    <div class="flex-1 flex flex-col justify-center relative overflow-hidden">
         <div class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 dark:bg-indigo-900/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-pink-500/10 dark:bg-pink-900/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -39,13 +39,13 @@ onMounted(preloadHotPath);
                 <div class="space-y-8 text-center lg:text-left z-10">
                     <div>
                         <h3 class="text-indigo-600! dark:text-indigo-400! font-bold tracking-wider uppercase text-sm">The Portfolio Of</h3>
-                        <h1 class="text-5xl md:text-7xl! font-aroly text-gray-900 dark:text-white mt-4 transition-colors">
+                        <h1 class="text-5xl md:text-7xl! font-aroly text-gray-900 dark:text-white mt-4">
                             Adam<br />
                             <span class="text-indigo-600 dark:text-indigo-500">Mackintosh</span>
                         </h1>
                     </div>
 
-                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-colors">
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                         Building scalable, web applications with
                         <span class="font-semibold text-gray-800 dark:text-white">clean code</span> and
                         <span class="font-semibold text-gray-800 dark:text-white">modern architecture</span>.
@@ -56,7 +56,7 @@ onMounted(preloadHotPath);
                         <div
                             v-for="tech in techStack"
                             :key="tech.name"
-                            class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border dark:border-gray-700 transition-colors"
+                            class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border dark:border-gray-700"
                         >
                             <i :class="[tech.icon, tech.color]"></i>
                             <span class="font-semibold text-sm text-gray-700 dark:text-gray-200">{{ tech.name }}</span>
@@ -90,14 +90,14 @@ onMounted(preloadHotPath);
                 <div class="relative flex justify-center lg:justify-end z-10">
                     <div class="absolute inset-0 bg-linear-to-tr from-indigo-500 to-purple-500 rounded-full blur-xl opacity-20 scale-90 animate-pulse"></div>
 
-                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full p-2 bg-white dark:bg-gray-800 shadow-2xl border dark:border-gray-700 transition-colors">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full p-2 bg-white dark:bg-gray-800 shadow-2xl border dark:border-gray-700">
                         <img
                             class="w-full h-full object-cover rounded-full"
                             src="/adam2.png"
                             alt="Adam Mackintosh"
                         />
 
-                        <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white dark:bg-gray-900 p-3 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-3 animate-bounce-slow transition-colors">
+                        <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white dark:bg-gray-900 p-3 rounded-xl shadow-lg border border-gray-300 dark:border-gray-700 flex items-center gap-3 animate-bounce-slow">
                             <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                             <span class="font-semibold text-sm text-gray-800 dark:text-white">Open to opportunities</span>
                         </div>

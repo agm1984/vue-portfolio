@@ -114,7 +114,7 @@ const sendMessage = async () => {
 </script>
 
 <template>
-    <div class="flex-1 w-full max-w-5xl mx-auto flex items-center p-8 transition-colors duration-300">
+    <div class="flex-1 w-full max-w-5xl mx-auto flex items-center p-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
             <div class="lg:col-span-1 flex flex-col">
                 <a-page-title
@@ -130,7 +130,7 @@ const sendMessage = async () => {
 
                     <a
                         :href="`mailto:${myEmail}`"
-                        class="text-lg text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors block break-all mt-2"
+                        class="text-lg text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 block break-all mt-2"
                     >
                         {{ myEmail }}
                     </a>
@@ -148,7 +148,7 @@ const sendMessage = async () => {
                 </a-card>
 
                 <div class="mt-8">
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Connect</h3>
+                    <h3>Connect</h3>
                     <div class="flex gap-4 mt-4">
                         <a-social-link network="twitter" class="hover:translate-x-1 transition-transform" />
                         <a-social-link network="github" class="hover:translate-x-1 transition-transform" />

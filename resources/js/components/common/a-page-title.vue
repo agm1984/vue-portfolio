@@ -54,11 +54,11 @@ const onBack = () => {
         </div>
 
         <div
-            :class="['flex flex-col items-center gap-2', {
-                'md:items-start': !centered,
+            :class="['flex flex-col items-center gap-2 text-center', {
+                'md:items-start md:text-left': !centered,
             }]"
         >
-            <h1 class="text-gray-900 dark:text-white">{{ title }}</h1>
+            <h1>{{ title }}</h1>
 
             <p v-if="description" class="text-gray-600 dark:text-gray-400">{{ description }}</p>
             <slot v-else name="description"></slot>
