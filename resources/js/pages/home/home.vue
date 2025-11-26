@@ -46,7 +46,7 @@ onMounted(preloadHotPath);
                     </div>
 
                     <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                        Building scalable, web applications with
+                        Building scalable web applications with
                         <span class="font-semibold text-gray-800 dark:text-white">clean code</span> and
                         <span class="font-semibold text-gray-800 dark:text-white">modern architecture</span>.
                         Specializing in the Laravel & Vue ecosystem.
