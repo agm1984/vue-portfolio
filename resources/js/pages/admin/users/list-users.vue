@@ -95,7 +95,9 @@ const goBack = () => router.push({ name: 'admin' });
             >
                 <template #empty>
                     <div class="text-center py-8">
-                        <p class="text-gray-600 dark:text-gray-400">No users found matching your criteria.</p>
+                        <i class="pi pi-folder-open text-gray-300 dark:text-gray-600 mb-4" style="font-size: 64px;"></i>
+                        <p v-if="loading" class="text-gray-600 dark:text-gray-400">Loading...</p>
+                        <p v-if="!loading" class="text-gray-600 dark:text-gray-400">No users found matching your criteria.</p>
                     </div>
                 </template>
 
@@ -156,7 +158,15 @@ const goBack = () => router.push({ name: 'admin' });
 
                 <Column style="width: 3rem; text-align: center">
                     <template #body="{ data }">
-                        <router-link :to="{ name: 'admin.users.show', params: { user: data.id } }">
+                        <router-link
+                            v-tooltip.bottom="'View'"
+                            :to="{
+                                name: 'admin.users.show',
+                                params: {
+                                    user: data.id,
+                                },
+                            }"
+                        >
                             <Button icon="pi pi-chevron-right" text rounded severity="secondary" />
                         </router-link>
                     </template>

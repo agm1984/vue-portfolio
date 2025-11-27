@@ -43,6 +43,7 @@ const onBack = () => {
     >
         <div v-if="hasBack" class="min-w-10 min-h-10">
             <Button
+                v-tooltip.bottom="'Go Back'"
                 type="button"
                 severity="secondary"
                 icon="pi pi-arrow-left"
