@@ -21,7 +21,8 @@ export const useAdminUsersStore = defineStore('adminUsers', {
                 this.isError = false;
             } catch (error) {
                 this.isError = true;
-                throw new Error(`adminUsers/getUsers# Problem fetching admin users: ${error}.`);
+                const errorMsg = error?.response?.data?.message || error?.message || JSON.stringify(error);
+                throw new Error(`adminUsers/getUsers# Problem fetching admin users: ${errorMsg}`);
             } finally {
                 this.isFetchingUsers = false;
             }
