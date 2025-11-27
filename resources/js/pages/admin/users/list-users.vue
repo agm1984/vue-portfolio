@@ -59,7 +59,6 @@ const goBack = () => router.push({ name: 'admin' });
                 @on-back="goBack"
             ></a-page-title>
 
-            <div class="flex gap-2"></div>
         </div>
 
         <a-card class="p-8">
