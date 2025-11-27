@@ -6,6 +6,7 @@ import axios from 'axios';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
+import { useAuthStore } from '~/store/auth';
 
 useHead({
     title: 'Admin: User Details',
@@ -13,6 +14,7 @@ useHead({
 
 const route = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
 
 const LOADING = 'LOADING';
 const LOADED = 'LOADED';
