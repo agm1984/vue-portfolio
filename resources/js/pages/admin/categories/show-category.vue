@@ -6,6 +6,7 @@ import axios from 'axios';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
 import Skeleton from 'primevue/skeleton';
+import { useAuthStore } from '~/store/auth';
 
 useHead({
     title: 'Admin: Category Details',
@@ -13,6 +14,7 @@ useHead({
 
 const route = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
 
 const LOADING = 'LOADING';
 const SHOWING = 'SHOWING';
@@ -79,7 +81,7 @@ onMounted(fetchCategory);
 
             <div v-if="!isLoading">
                 <Button
-                    v-if="isShowing"
+                    v-if="isShowing && auth.isAdmin"
                     type="button"
                     icon="pi pi-pencil"
                     label="Edit Category"
@@ -114,7 +116,7 @@ onMounted(fetchCategory);
                         <h2 class="mt-1 text-gray-900 dark:text-white">{{ category.name }}</h2>
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-4">
                         <h6 class="text-gray-900 dark:text-white">URL Slug</h6>
 
                         <div class="bg-gray-100 dark:bg-gray-900 rounded font-mono text-sm text-indigo-600 dark:text-indigo-400 break-all p-2 mt-1">
@@ -122,7 +124,7 @@ onMounted(fetchCategory);
                         </div>
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-4 mb-4">
                          <h6 class="text-gray-900 dark:text-white">Status</h6>
 
                          <Tag
@@ -133,7 +135,7 @@ onMounted(fetchCategory);
                         />
                     </div>
 
-                    <div class="mt-auto border-t border-gray-300 dark:border-gray-700 flex justify-between items-center text-sm pt-6">
+                    <div class="border-t border-gray-300 dark:border-gray-700 flex justify-between items-center text-sm pt-4">
                         <span class="text-gray-600 dark:text-gray-400">ID</span>
                         <span class="font-mono font-semibold text-gray-700 dark:text-gray-300">#{{ category.id }}</span>
                     </div>

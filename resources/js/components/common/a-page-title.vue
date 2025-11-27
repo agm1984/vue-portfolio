@@ -37,12 +37,13 @@ const onBack = () => {
 
 <template>
     <div
-        :class="['flex items-center justify-center gap-4 mb-8', {
+        :class="['flex items-center justify-center gap-4 mb-4', {
             'md:justify-start': !centered,
         }]"
     >
         <div v-if="hasBack" class="min-w-10 min-h-10">
             <Button
+                v-tooltip.bottom="'Go Back'"
                 type="button"
                 severity="secondary"
                 icon="pi pi-arrow-left"

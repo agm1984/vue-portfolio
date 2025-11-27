@@ -6,6 +6,7 @@ import axios from 'axios';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
+import { useAuthStore } from '~/store/auth';
 
 useHead({
     title: 'Admin: User Details',
@@ -13,6 +14,7 @@ useHead({
 
 const route = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
 
 const LOADING = 'LOADING';
 const LOADED = 'LOADED';
@@ -58,8 +60,9 @@ onMounted(fetchUser);
                 @on-back="goBack"
             ></a-page-title>
 
-            <div v-if="isLoaded" class="flex gap-2">
+            <div class="flex gap-2">
                 <Button
+                    v-if="auth.isAdmin"
                     type="button"
                     icon="pi pi-pencil"
                     label="Edit User"

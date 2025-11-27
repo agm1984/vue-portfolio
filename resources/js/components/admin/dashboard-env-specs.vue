@@ -1,7 +1,13 @@
 <script setup>
 import Tag from 'primevue/tag';
+import Skeleton from 'primevue/skeleton';
 
 defineProps({
+    isLoading: {
+        type: Boolean,
+        required: true,
+    },
+
     metrics: {
         type: Object,
         required: true,
@@ -22,10 +28,13 @@ defineProps({
                     <i class="pi pi-desktop text-red-500 dark:text-red-400 text-xl"></i>
                     <span class="font-semibold text-gray-700 dark:text-gray-300">Laravel</span>
                 </div>
+
+                <Skeleton v-if="isLoading" width="60px" height="24px" />
                 <Tag
+                    v-else
                     class="px-3"
                     severity="danger"
-                    :value="metrics.system.laravel_version"
+                    :value="metrics.system?.laravel_version"
                     rounded
                 />
             </div>
@@ -35,10 +44,13 @@ defineProps({
                     <i class="pi pi-code text-blue-500 dark:text-blue-400 text-xl"></i>
                     <span class="font-semibold text-gray-700 dark:text-gray-300">PHP</span>
                 </div>
+
+                <Skeleton v-if="isLoading" width="60px" height="24px" />
                 <Tag
+                    v-else
                     class="px-3"
                     severity="info"
-                    :value="metrics.system.php_version"
+                    :value="metrics.system?.php_version"
                     rounded
                 />
             </div>
