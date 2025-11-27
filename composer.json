@@ -18,6 +18,8 @@
         "laravel/ui": "^4.2",
         "spatie/laravel-permission": "^6.0",
         "spatie/laravel-query-builder": "^6.0",
+        "symfony/brevo-mailer": "^7.3",
+        "symfony/http-client": "^7.3",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
