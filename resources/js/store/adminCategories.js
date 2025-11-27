@@ -21,7 +21,8 @@ export const useAdminCategoriesStore = defineStore('adminCategories', {
                 this.isError = false;
             } catch (error) {
                 this.isError = true;
-                throw new Error(`adminCategories/getCategories# Problem fetching admin categories: ${error}.`);
+                const errorMsg = error?.response?.data?.message || error?.message || JSON.stringify(error);
+                throw new Error(`adminCategories/getCategories# Problem fetching admin categories: ${errorMsg}`);
             } finally {
                 this.isFetchingCategories = false;
             }
