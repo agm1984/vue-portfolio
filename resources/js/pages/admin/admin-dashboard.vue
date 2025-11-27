@@ -48,7 +48,7 @@ onMounted(preloadHotPaths);
 const navItems = computed(() => [
     { label: 'Dashboard', route: 'admin', icon: 'pi pi-home', visible: true },
     { label: 'Users', route: 'admin.users.list', icon: 'pi pi-users', visible: true },
-    { label: 'Categories', route: 'admin.categories.list', icon: 'pi pi-tags', visible: true },
+    { label: 'Categories', route: 'admin.categories.list', icon: 'pi pi-folder', visible: true },
     { label: 'Add Category', route: 'admin.categories.create', icon: 'pi pi-plus', visible: auth.isAdmin },
     { label: 'Examples', route: 'admin.examples.list', icon: 'pi pi-briefcase', visible: true },
     { label: 'Add Example', route: 'admin.examples.create', icon: 'pi pi-plus-circle', visible: auth.isAdmin },
