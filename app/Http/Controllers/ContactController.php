@@ -16,25 +16,50 @@ class ContactController extends Controller
     public function send(Request $request)
     {
         \Log::debug($request->all());
-        $submission = [
+
+        // 1. Validation (Optional but recommended to prevent crashing the view)
+        $validated = $request->validate([
+            'sender_email' => 'required|email',
+            'sender_name'  => 'required|string',
+            'subject'      => 'required|string',
+            'content'      => 'required|string',
+        ]);
+
+        $data = [
             'to' => 'adam@adammackintosh.net',
-            'sender_email' => $request->input('sender_email'),
-            'sender_name' => $request->input('sender_name'),
-            'subject' => $request->input('subject'),
-            'content' => $request->input('content')
+            // Pass validated data to avoid accessing nulls
+            'sender_email' => $validated['sender_email'],
+            'sender_name'  => $validated['sender_name'],
+            'subject'      => $validated['subject'],
+            'content'      => $validated['content']
         ];
 
-        Mail::send('contact.mail', $submission, function($message) use ($submission) {
-            $message->to($submission['to'])
-                ->subject('Contact form submission');
+        try {
+            // 2. Wrap in Try/Catch to see the real error
+            Mail::send('contact.mail', $data, function($message) use ($data) {
+                $message->to($data['to'])
+                        ->subject('Contact form submission: ' . $data['subject']);
 
-            $message->from('adam@adammackintosh.net','Adam Mackintosh');
-        });
+                // FROM: Must be your verified Brevo/Domain email
+                $message->from('no-reply@adammackintosh.net', 'Website Robot');
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Your message has been sent successfully.',
-        ]);
+                // REPLY-TO: Crucial! Allows you to hit "Reply" and email the user.
+                $message->replyTo($data['sender_email'], $data['sender_name']);
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your message has been sent successfully.',
+            ]);
+
+        } catch (\Exception $e) {
+            // 3. Log the actual error so you can read it in storage/logs/laravel.log
+            \Log::error('Mail Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send email. Error: ' . $e->getMessage(),
+            ], 500);
+        }
     }
-
 }

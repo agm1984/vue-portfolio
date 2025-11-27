@@ -44,6 +44,10 @@ return [
             'timeout' => null,
         ],
 
+        'brevo' => [
+            'transport' => 'brevo',
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

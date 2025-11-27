@@ -1213,7 +1213,7 @@ namespace PHPSTORM_META {
             'services.stripe.webhook.tolerance' => 'string',
             'services.github.client_id' => 'string',
             'services.github.client_secret' => 'string',
-            'services.github.callback_url' => 'NULL',
+            'services.github.callback_url' => 'string',
             'services.github.provider_name' => 'string',
             'services.twitter.client_id' => 'string',
             'services.twitter.client_secret' => 'string',
@@ -1687,7 +1687,7 @@ namespace PHPSTORM_META {
             'services.stripe.webhook.tolerance' => 'string',
             'services.github.client_id' => 'string',
             'services.github.client_secret' => 'string',
-            'services.github.callback_url' => 'NULL',
+            'services.github.callback_url' => 'string',
             'services.github.provider_name' => 'string',
             'services.twitter.client_id' => 'string',
             'services.twitter.client_secret' => 'string',
@@ -2161,7 +2161,7 @@ namespace PHPSTORM_META {
             'services.stripe.webhook.tolerance' => 'string',
             'services.github.client_id' => 'string',
             'services.github.client_secret' => 'string',
-            'services.github.callback_url' => 'NULL',
+            'services.github.callback_url' => 'string',
             'services.github.provider_name' => 'string',
             'services.twitter.client_id' => 'string',
             'services.twitter.client_secret' => 'string',
@@ -2395,13 +2395,15 @@ namespace PHPSTORM_META {
 'bindings','cache.headers','can','guest','password.confirm',
 'role','signed','throttle','transformTypes','verified',);
         registerArgumentsSet('routes', 
-'sanctum.csrf-cookie','ignition.healthCheck','ignition.executeSolution','ignition.updateConfig','me','user.profile.edit','user.password.edit','user.comments.create',
-'user.comments.edit','user.comments.delete','admin.categories.list','admin.categories.getAll','admin.categories.show',
-'admin.categories.edit','admin.categories.create','admin.examples.list','admin.examples.show','admin.examples.create',
-'admin.examples.edit','admin.examples.appendImages','admin.examples.removeImage','admin.users.list','admin.users.show',
-'admin.tags.getAll','public.categories.list','public.categories.show','public.examples.list','public.examples.show',
-'public.examples.image','public.examples.listComments','public.contact.send','register','login','verification.verify','verification.resend','oauth.redirect',
-'oauth.callback','password.email','password.reset','logout',);
+'sanctum.csrf-cookie','ignition.healthCheck','ignition.executeSolution','ignition.updateConfig','me',
+'user.profile.edit','user.password.edit','user.comments.create','user.comments.edit','user.comments.delete',
+'user.comments.vote.store','user.comments.vote.destroy','admin.dashboard.metrics','admin.categories.list','admin.categories.getAll',
+'admin.categories.show','admin.categories.edit','admin.categories.create','admin.examples.list','admin.examples.show',
+'admin.examples.create','admin.examples.edit','admin.examples.appendImages','admin.examples.removeImage','admin.users.list',
+'admin.users.show','admin.tags.getAll','public.categories.list','public.categories.show','public.examples.list',
+'public.examples.show','public.examples.image','public.examples.listComments','public.contact.send','register',
+'login','verification.verify','verification.resend',
+'oauth.redirect','oauth.callback','password.email','password.reset','logout',);
         registerArgumentsSet('views', 
 'contact.mail','errors.layout','oauth.callback','oauth.emailTaken','spa',
 'laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source','laravel-exceptions-renderer::components.frame',
@@ -2459,8 +2461,7 @@ namespace PHPSTORM_META {
 'AWS_DEFAULT_REGION','AWS_BUCKET','PUSHER_APP_ID','PUSHER_APP_KEY','PUSHER_APP_SECRET',
 'PUSHER_APP_CLUSTER','VITE_PUSHER_APP_KEY','VITE_PUSHER_APP_CLUSTER','JWT_SECRET','STRIPE_KEY',
 'STRIPE_SECRET','STRIPE_WEBHOOK_SECRET','STRIPE_WEBHOOK_TOLERANCE','GITHUB_CLIENT_ID','GITHUB_CLIENT_SECRET',
-'GITHUB_CLIENT_ID','TWITTER_CLIENT_ID','TWITTER_CLIENT_SECRET','TWITTER_CALLBACK_URL','GITHUB_CLIENT_ID',
-'GITHUB_CLIENT_SECRET','GITHUB_CLIENT_ID','TWITTER_CLIENT_ID','TWITTER_CLIENT_SECRET','TWITTER_CALLBACK_URL',);
+'GITHUB_CALLBACK_URL','TWITTER_CLIENT_ID','TWITTER_CLIENT_SECRET','TWITTER_CALLBACK_URL',);
         
                 expectedArguments(\Illuminate\Support\Facades\Gate::has(), 0, argumentsSet('auth'));
     expectedArguments(\Illuminate\Support\Facades\Gate::allows(), 0, argumentsSet('auth'));
