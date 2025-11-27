@@ -37,7 +37,7 @@ const onBack = () => {
 
 <template>
     <div
-        :class="['flex items-center justify-center gap-4 mb-8', {
+        :class="['flex items-center justify-center gap-4 mb-4', {
             'md:justify-start': !centered,
         }]"
     >

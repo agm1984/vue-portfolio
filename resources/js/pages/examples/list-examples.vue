@@ -94,7 +94,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             </div>
         </div>
 
-        <div v-if="publicExamples.isFetchingExamples" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div v-if="publicExamples.isFetchingExamples" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
             <div
                 v-for="loader in 6"
                 :key="`example-skeleton-${loader}`"
@@ -108,7 +108,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
             </div>
         </div>
 
-        <div v-else-if="hasError" class="w-full flex flex-col items-center justify-center text-center">
+        <div v-else-if="hasError" class="w-full flex flex-col items-center justify-center text-center mt-4">
             <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 text-red-500 dark:text-red-400 rounded-full flex items-center justify-center">
                 <i class="pi pi-exclamation-circle" style="font-size: 24px;"></i>
             </div>
@@ -125,7 +125,7 @@ watch(() => publicExamples.activeCategory, setUrlParams);
         </div>
 
         <div v-else-if="hasExamples" class="mt-4">
-            <TransitionGroup name="list" tag="div" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <TransitionGroup name="list" tag="div" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 <router-link
                     v-for="example in publicExamples.filteredExamples"
                     :key="example.slug"

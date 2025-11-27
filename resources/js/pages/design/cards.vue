@@ -18,16 +18,16 @@ const router = useRouter();
 const toast = useToast();
 
 const shadowLevel = ref(2);
-const shadowClasses = ['shadow-none', 'shadow-sm', 'shadow-md', 'shadow-lg', 'shadow-xl', 'shadow-2xl'];
+const shadowClasses = ['shadow-none', 'shadow-sm', 'shadow-md', 'shadow-lg', 'shadow-xl'];
 const currentShadow = computed(() => shadowClasses[shadowLevel.value]);
 
 const shadows = [
-    { name: 'None', class: 'shadow-none', use: 'Flat surfaces / Inner panels' },
-    { name: 'Small', class: 'shadow-sm', use: 'Lists, Tables, Subtle cards' },
-    { name: 'Medium', class: 'shadow-md', use: 'Standard Cards, Dropdowns' },
-    { name: 'Large', class: 'shadow-lg', use: 'Hover states, Sticky headers' },
-    { name: 'X-Large', class: 'shadow-xl', use: 'Modals, Dialogs' },
-    { name: '2X-Large', class: 'shadow-2xl', use: 'Major alerts, Popovers' },
+    { name: 'None', class: 'shadow-none', use: 'Flat surfaces / Inner panels' }, // shadow-none
+    { name: 'Small', class: 'shadow-sm', use: 'Lists, Tables, Subtle cards' }, // shadow-sm
+    { name: 'Medium', class: 'shadow-md', use: 'Standard Cards, Dropdowns' }, // shadow-md
+    { name: 'Large', class: 'shadow-lg', use: 'Hover states, Sticky headers' }, // shadow-lg
+    { name: 'X-Large', class: 'shadow-xl', use: 'Modals, Dialogs' }, // shadow-xl
+    { name: '2X-Large', class: 'shadow-2xl', use: 'Major alerts, Popovers' }, // shadow-2xl
 ];
 
 const copyClass = async (text) => {
