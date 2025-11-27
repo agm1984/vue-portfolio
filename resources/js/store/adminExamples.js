@@ -20,7 +20,8 @@ export const useAdminExamplesStore = defineStore('adminExamples', {
                 this.isError = false;
             } catch (error) {
                 this.isError = true;
-                throw new Error(`adminExamples/getExamples# Problem fetching admin examples: ${error}.`);
+                const errorMsg = error?.response?.data?.message || error?.message || JSON.stringify(error);
+                throw new Error(`adminExamples/getExamples# Problem fetching admin examples: ${errorMsg}`);
             } finally {
                 this.isFetchingExamples = false;
             }
