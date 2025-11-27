@@ -4,6 +4,9 @@ import { useHead } from '@unhead/vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '~/store/auth';
 import { useAdminDashboardStore } from '~/store/adminDashboard';
+import { useAdminUsersStore } from '~/store/adminUsers';
+import { useAdminCategoriesStore } from '~/store/adminCategories';
+import { useAdminExamplesStore } from '~/store/adminExamples';
 
 useHead({
     title: 'Admin Dashboard',
@@ -12,6 +15,9 @@ useHead({
 const currentRoute = useRoute();
 const auth = useAuthStore();
 const adminDashboard = useAdminDashboardStore();
+const adminUsers = useAdminUsersStore();
+const adminCategories = useAdminCategoriesStore();
+const adminExamples = useAdminExamplesStore();
 
 const isDashboard = computed(() => currentRoute.name === 'admin');
 
@@ -22,6 +28,22 @@ const fetchMetrics = () => {
 };
 
 onMounted(fetchMetrics);
+
+const preloadHotPaths = () => {
+    if (adminUsers.allUsers.length === 0) {
+        adminUsers.getAllUsers();
+    }
+
+    if (adminCategories.allCategories.length === 0) {
+        adminCategories.getAllCategories();
+    }
+
+    if (adminExamples.allExamples.length === 0) {
+        adminExamples.getAllExamples();
+    }
+};
+
+onMounted(preloadHotPaths);
 
 const navItems = computed(() => [
     { label: 'Dashboard', route: 'admin', icon: 'pi pi-home', visible: true },
