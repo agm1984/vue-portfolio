@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
@@ -21,6 +21,7 @@ const toast = useToast();
 
 const loading = ref(true);
 const categories = ref([]);
+
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -93,7 +94,7 @@ const goBack = () => router.push({ name: 'admin' });
                 :value="categories"
                 :loading="loading"
                 paginator
-                :rows="10"
+                :rows="50"
                 :rowsPerPageOptions="[5, 10, 25, 50]"
                 :globalFilterFields="['name', 'slug']"
                 removableSort

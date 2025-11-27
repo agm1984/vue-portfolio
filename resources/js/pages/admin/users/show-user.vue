@@ -58,8 +58,9 @@ onMounted(fetchUser);
                 @on-back="goBack"
             ></a-page-title>
 
-            <div v-if="isLoaded" class="flex gap-2">
+            <div class="flex gap-2">
                 <Button
+                    v-if="auth.isAdmin"
                     type="button"
                     icon="pi pi-pencil"
                     label="Edit User"

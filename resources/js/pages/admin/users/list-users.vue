@@ -56,10 +56,6 @@ const fetchAllUsers = async () => {
     }
 };
 
-const exportCSV = () => {
-    console.log('Exporting data...');
-};
-
 onMounted(fetchAllUsers);
 
 const goBack = () => router.push({ name: 'admin' });
@@ -75,16 +71,7 @@ const goBack = () => router.push({ name: 'admin' });
                 @on-back="goBack"
             ></a-page-title>
 
-            <div class="flex gap-2">
-                <Button
-                    type="button"
-                    icon="pi pi-download"
-                    label="Export"
-                    outlined
-                    severity="secondary"
-                    @click="exportCSV"
-                />
-            </div>
+            <div class="flex gap-2"></div>
         </div>
 
         <a-card class="p-8">

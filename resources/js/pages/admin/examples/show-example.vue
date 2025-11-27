@@ -6,13 +6,15 @@ import axios from 'axios';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
 import Skeleton from 'primevue/skeleton';
+import { useAuthStore } from '~/store/auth';
 
 useHead({
     title: 'Admin: Example Details',
 });
 
-const route = useRoute();
+const currentRoute = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
 
 const LOADING = 'LOADING';
 const SHOWING = 'SHOWING';
@@ -49,7 +51,7 @@ const getStatusConfig = (status) => {
 
 const fetchExample = async () => {
     try {
-        const { data } = await axios.get(window.route('admin.examples.show', route.params.example));
+        const { data } = await axios.get(route('admin.examples.show', { example: currentRoute.params.example }));
 
         example.value = data.example;
 
@@ -92,7 +94,7 @@ onMounted(fetchExample);
 
             <div v-if="!isLoading">
                 <Button
-                    v-if="isShowing"
+                    v-if="isShowing && auth.isAdmin"
                     type="button"
                     class="whitespace-nowrap"
                     icon="pi pi-pencil"
@@ -169,7 +171,6 @@ onMounted(fetchExample);
                             :to="{
                                 name: 'admin.examples.image',
                                 params: {
-                                    category: example.category.slug,
                                     example: example.slug,
                                     filename: image.filename,
                                 },
@@ -195,7 +196,7 @@ onMounted(fetchExample);
                 <a-card class="p-8">
                     <div class="flex items-center justify-between mb-2">
                         <h6>Status</h6>
-                        <span class="font-mono text-xs text-gray-300 dark:text-gray-600">#{{ example.id }}</span>
+                        <span class="font-mono text-xs text-gray-600 dark:text-gray-400">#{{ example.id }}</span>
                     </div>
                     <div class="mb-6">
                         <Tag
@@ -228,7 +229,7 @@ onMounted(fetchExample);
 
                 <a-card class="p-8">
                     <h3 class="flex items-center gap-2 text-gray-900 dark:text-white">
-                        <i class="pi pi-link"></i> Resources
+                        <i class="pi pi-link text-indigo-500 dark:text-indigo-400"></i> Resources
                     </h3>
                     <div v-if="example.links.length" class="flex flex-col gap-2 mt-4">
                         <a
@@ -247,7 +248,7 @@ onMounted(fetchExample);
 
                 <a-card class="p-8">
                     <h3 class="text-sm font-semibold uppercase text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                        <i class="pi pi-tags"></i> Tags
+                        <i class="pi pi-tags text-indigo-500 dark:text-indigo-400"></i> Tags
                     </h3>
 
                     <div v-if="example.tags.length" class="flex flex-wrap gap-2 mt-4">
