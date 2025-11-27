@@ -3,24 +3,23 @@ import { ref, onMounted } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
-import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+import { useAdminExamplesStore } from '~/store/adminExamples';
 
 useHead({
     title: 'Admin List Examples',
 });
 
 const router = useRouter();
-const auth = useAuthStore();
 const toast = useToast();
+const auth = useAuthStore();
+const adminExamples = useAdminExamplesStore();
 
-const loading = ref(true);
-const examples = ref([]);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -32,23 +31,9 @@ const statusMap = {
 
 const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', severity: 'info', icon: 'pi pi-question' };
 
-const fetchAllExamples = async () => {
-    try {
-        loading.value = true;
-
-        const { data } = await axios.get(route('admin.examples.list'));
-
-        examples.value = data.examples;
-    } catch (error) {
-        console.error(error);
-        toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load examples',
-            life: 5000,
-        });
-    } finally {
-        loading.value = false;
+const fetchAllExamples = () => {
+    if (!adminExamples.allExamples.length) {
+        adminExamples.getAllExamples();
     }
 };
 
@@ -90,8 +75,8 @@ const goBack = () => router.push({ name: 'admin' });
 
             <DataTable
                 v-model:filters="filters"
-                :value="examples"
-                :loading="loading"
+                :value="adminExamples.allExamples"
+                :loading="adminExamples.isFetchingExamples"
                 paginator
                 :rows="10"
                 :rowsPerPageOptions="[5, 10, 25, 50]"
@@ -102,8 +87,8 @@ const goBack = () => router.push({ name: 'admin' });
                 <template #empty>
                     <div class="text-center py-8">
                         <i class="pi pi-folder-open text-gray-300 dark:text-gray-600 mb-4" style="font-size: 64px;"></i>
-                        <p v-if="loading" class="text-gray-600 dark:text-gray-400">Loading...</p>
-                        <p v-if="!loading" class="text-gray-600 dark:text-gray-400">No examples found matching your criteria.</p>
+                        <p v-if="adminExamples.isFetchingExamples" class="text-gray-600 dark:text-gray-400">Loading...</p>
+                        <p v-if="!adminExamples.isFetchingExamples" class="text-gray-600 dark:text-gray-400">No examples found matching your criteria.</p>
                     </div>
                 </template>
 
@@ -172,7 +157,7 @@ const goBack = () => router.push({ name: 'admin' });
                                 }
                             }"
                         >
-                            <Button icon="pi pi-chevron-right" text rounded severity="secondary" />
+                            <Button type="button" icon="pi pi-chevron-right" text rounded severity="secondary" />
                         </router-link>
                     </template>
                 </Column>

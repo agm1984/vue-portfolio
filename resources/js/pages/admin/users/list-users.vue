@@ -4,11 +4,11 @@ import { useHead } from '@unhead/vue';
 import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
-import axios from 'axios';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
+import { useAdminUsersStore } from '~/store/adminUsers';
 
 useHead({
     title: 'Admin List Users',
@@ -16,9 +16,8 @@ useHead({
 
 const router = useRouter();
 const toast = useToast();
+const adminUsers = useAdminUsersStore();
 
-const loading = ref(true);
-const users = ref([]);
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -32,27 +31,16 @@ const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', sev
 
 const getRoleSeverity = (role) => {
     const map = {
-        'admin': 'contrast',
-        'standard': 'secondary',
+        admin: 'contrast',
+        standard: 'secondary',
     };
+
     return map[role.toLowerCase()] || 'secondary';
 };
 
-const fetchAllUsers = async () => {
-    try {
-        loading.value = true;
-        const { data } = await axios.get(route('admin.users.list'));
-        users.value = data.users;
-    } catch (error) {
-        console.error(error);
-        toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load users',
-            life: 5000,
-        });
-    } finally {
-        loading.value = false;
+const fetchAllUsers = () => {
+    if (!adminUsers.allUsers.length) {
+        adminUsers.getAllUsers();
     }
 };
 
@@ -84,8 +72,8 @@ const goBack = () => router.push({ name: 'admin' });
 
             <DataTable
                 v-model:filters="filters"
-                :value="users"
-                :loading="loading"
+                :value="adminUsers.allUsers"
+                :loading="adminUsers.isFetchingUsers"
                 paginator
                 :rows="10"
                 :rowsPerPageOptions="[5, 10, 25, 50]"
@@ -96,8 +84,8 @@ const goBack = () => router.push({ name: 'admin' });
                 <template #empty>
                     <div class="text-center py-8">
                         <i class="pi pi-folder-open text-gray-300 dark:text-gray-600 mb-4" style="font-size: 64px;"></i>
-                        <p v-if="loading" class="text-gray-600 dark:text-gray-400">Loading...</p>
-                        <p v-if="!loading" class="text-gray-600 dark:text-gray-400">No users found matching your criteria.</p>
+                        <p v-if="adminUsers.isFetchingUsers" class="text-gray-600 dark:text-gray-400">Loading...</p>
+                        <p v-if="!adminUsers.isFetchingUsers" class="text-gray-600 dark:text-gray-400">No users found matching your criteria.</p>
                     </div>
                 </template>
 

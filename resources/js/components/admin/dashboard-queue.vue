@@ -1,8 +1,14 @@
 <script setup>
 import { computed } from 'vue';
 import Message from 'primevue/message';
+import Skeleton from 'primevue/skeleton';
 
 const props = defineProps({
+    isLoading: {
+        type: Boolean,
+        required: true,
+    },
+
     metrics: {
         type: Object,
         required: true,
@@ -19,7 +25,7 @@ const getSystemStatus = (failedJobs) => {
     return { severity: 'error', icon: 'pi pi-times-circle', text: 'Critical: Queue Failures Detected' };
 };
 
-const systemStatus = computed(() => getSystemStatus(props.metrics.activity.failed_jobs));
+const systemStatus = computed(() => getSystemStatus(props.metrics.activity?.failed_jobs || 0));
 </script>
 
 <template>
@@ -32,8 +38,8 @@ const systemStatus = computed(() => getSystemStatus(props.metrics.activity.faile
         <div class="flex flex-col sm:flex-row sm:items-center gap-2">
             <span class="font-semibold text-lg">{{ systemStatus.text }}</span>
 
-            <span v-if="metrics.activity.failed_jobs > 0" class="text-sm opacity-90">
-                ({{ metrics.activity.failed_jobs }} failed jobs pending retry)
+            <span v-if="metrics.activity?.failed_jobs > 0" class="text-sm opacity-90">
+                ({{ metrics.activity?.failed_jobs }} failed jobs pending retry)
             </span>
 
             <span v-else class="text-sm opacity-90 ml-2">

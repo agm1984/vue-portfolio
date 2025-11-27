@@ -1,14 +1,20 @@
 <script setup>
 import { computed } from 'vue';
+import Skeleton from 'primevue/skeleton';
 
 const props = defineProps({
+    isLoading: {
+        type: Boolean,
+        required: true,
+    },
+
     metrics: {
         type: Object,
         required: true,
     },
 });
 
-const growthRate = computed(() => props.metrics.activity.growth_rate || 0);
+const growthRate = computed(() => props.metrics.activity?.growth_rate || 0);
 const isGrowthPositive = computed(() => growthRate.value >= 0);
 </script>
 
@@ -16,7 +22,9 @@ const isGrowthPositive = computed(() => growthRate.value >= 0);
     <a-card class="p-8">
         <h6 class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Monthly Growth</h6>
 
-        <div class="flex items-center gap-4 mt-4">
+        <Skeleton v-if="isLoading" class="mt-4" width="40%" height="2rem"></Skeleton>
+
+        <div v-else class="flex items-center gap-4 mt-4">
             <span
                 class="text-4xl font-semibold"
                 :class="isGrowthPositive ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'"

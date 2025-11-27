@@ -1,0 +1,29 @@
+import { defineStore } from 'pinia';
+import axios from 'axios';
+
+export const useAdminExamplesStore = defineStore('adminExamples', {
+    state: () => ({
+        isFetchingExamples: false,
+        allExamples: [],
+        isError: false,
+    }),
+
+    getters: {},
+
+    actions: {
+        async getAllExamples() {
+            try {
+                this.isFetchingExamples = true;
+
+                const { data } = await axios.get(route('admin.examples.list'));
+                this.allExamples = data.examples;
+                this.isError = false;
+            } catch (error) {
+                this.isError = true;
+                throw new Error(`adminExamples/getExamples# Problem fetching admin examples: ${error}.`);
+            } finally {
+                this.isFetchingExamples = false;
+            }
+        },
+    },
+});

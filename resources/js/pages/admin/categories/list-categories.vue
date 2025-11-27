@@ -3,24 +3,22 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRouter } from 'vue-router';
 import { FilterMatchMode } from '@primevue/core/api';
-import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+import { useAdminCategoriesStore } from '~/store/adminCategories';
 
 useHead({
     title: 'Admin List Categories',
 });
 
 const router = useRouter();
-const auth = useAuthStore();
 const toast = useToast();
-
-const loading = ref(true);
-const categories = ref([]);
+const auth = useAuthStore();
+const adminCategories = useAdminCategoriesStore();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -33,23 +31,9 @@ const statusMap = {
 
 const getStatusConfig = (status) => statusMap[status] || { label: 'Unknown', severity: 'info', icon: 'pi pi-question' };
 
-const fetchAllCategories = async () => {
-    try {
-        loading.value = true;
-
-        const { data } = await axios.get(route('admin.categories.list'));
-
-        categories.value = data.categories;
-    } catch (error) {
-        console.error(error);
-        toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to load categories',
-            life: 5000,
-        });
-    } finally {
-        loading.value = false;
+const fetchAllCategories = () => {
+    if (!adminCategories.allCategories.length) {
+        adminCategories.getAllCategories();
     }
 };
 
@@ -91,10 +75,10 @@ const goBack = () => router.push({ name: 'admin' });
 
             <DataTable
                 v-model:filters="filters"
-                :value="categories"
-                :loading="loading"
+                :value="adminCategories.allCategories"
+                :loading="adminCategories.isFetchingCategories"
                 paginator
-                :rows="50"
+                :rows="10"
                 :rowsPerPageOptions="[5, 10, 25, 50]"
                 :globalFilterFields="['name', 'slug']"
                 removableSort
@@ -102,10 +86,10 @@ const goBack = () => router.push({ name: 'admin' });
             >
                 <template #empty>
                     <div class="text-center py-8">
-                            <i class="pi pi-folder-open text-gray-300 dark:text-gray-600 mb-4" style="font-size: 64px;"></i>
-                            <p v-if="loading" class="text-gray-600 dark:text-gray-400">Loading...</p>
-                            <p v-if="!loading" class="text-gray-600 dark:text-gray-400">No categories found matching your criteria.</p>
-                        </div>
+                        <i class="pi pi-folder-open text-gray-300 dark:text-gray-600 mb-4" style="font-size: 64px;"></i>
+                        <p v-if="adminCategories.isFetchingCategories" class="text-gray-600 dark:text-gray-400">Loading...</p>
+                        <p v-if="!adminCategories.isFetchingCategories" class="text-gray-600 dark:text-gray-400">No categories found matching your criteria.</p>
+                    </div>
                 </template>
 
                 <Column field="name" header="Name" sortable>
