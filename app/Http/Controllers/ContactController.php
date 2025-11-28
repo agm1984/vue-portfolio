@@ -17,7 +17,6 @@ class ContactController extends Controller
     {
         \Log::debug($request->all());
 
-        // 1. Validation (Optional but recommended to prevent crashing the view)
         $validated = $request->validate([
             'sender_email' => 'required|email',
             'sender_name'  => 'required|string',
@@ -26,8 +25,7 @@ class ContactController extends Controller
         ]);
 
         $data = [
-            'to' => 'adam@adammackintosh.net',
-            // Pass validated data to avoid accessing nulls
+            'to'           => 'agm1984@gmail.com',
             'sender_email' => $validated['sender_email'],
             'sender_name'  => $validated['sender_name'],
             'subject'      => $validated['subject'],
@@ -35,15 +33,12 @@ class ContactController extends Controller
         ];
 
         try {
-            // 2. Wrap in Try/Catch to see the real error
             Mail::send('contact.mail', $data, function($message) use ($data) {
                 $message->to($data['to'])
                         ->subject('Contact form submission: ' . $data['subject']);
 
-                // FROM: Must be your verified Brevo/Domain email
-                $message->from('no-reply@adammackintosh.net', 'Website Robot');
+                $message->from('no-reply@adammackintosh.net', 'Adam Mackintosh');
 
-                // REPLY-TO: Crucial! Allows you to hit "Reply" and email the user.
                 $message->replyTo($data['sender_email'], $data['sender_name']);
             });
 
@@ -53,7 +48,6 @@ class ContactController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            // 3. Log the actual error so you can read it in storage/logs/laravel.log
             \Log::error('Mail Error: ' . $e->getMessage());
 
             return response()->json([
