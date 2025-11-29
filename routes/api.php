@@ -15,7 +15,6 @@ use App\Http\Controllers\Admin\ExampleController as AdminExampleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
 
-
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\ContactController;
