@@ -40,7 +40,7 @@ class OAuthController extends Controller
      * Socialite::driver($provider)->stateless(), so library `abraham/twitteroauth` is used to handle that case.
      *
      * @param string $provider
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
     public function redirectToProvider($provider)
     {
@@ -61,7 +61,7 @@ class OAuthController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param string $driver
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function handleProviderCallback(Request $request, $provider)
     {
@@ -93,6 +93,7 @@ class OAuthController extends Controller
      */
     protected function findOrCreateUser($provider, $sUser): User
     {
+        /** @var \Laravel\Socialite\Two\User|object $sUser */
         $oauthProvider = OAuthProvider::where('provider', $provider)
             ->where('provider_user_id', $sUser->id)
             ->first();
@@ -132,6 +133,7 @@ class OAuthController extends Controller
      */
     protected function addProvider($provider, $sUser, User $user): User
     {
+        /** @var \Laravel\Socialite\Two\User|object $sUser */
         // TODO: function should update if entry already exists
         $user->oauthProviders()->updateOrCreate(['user_id' => $user->id], [
             'provider' => $provider,
@@ -171,7 +173,7 @@ class OAuthController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param string $provider
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function handleLinkCallback(Request $request, $provider)
     {
