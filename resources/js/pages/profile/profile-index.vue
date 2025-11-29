@@ -10,6 +10,10 @@ const links = computed(() => [
         name: 'Password',
         to: 'settings.password',
     },
+    {
+        name: 'Connections',
+        to: 'settings.connections',
+    },
 ]);
 </script>
 

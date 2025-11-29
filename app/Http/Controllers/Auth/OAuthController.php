@@ -17,6 +17,18 @@ class OAuthController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * @var TwitterClient
+     */
+    protected $twitterApi;
+
+    /**
+     * Supported OAuth providers
+     *
+     * @var array
+     */
+    protected $supportedProviders = ['github', 'twitter'];
+
+    /**
      * Create a new OAuth controller instance.
      *
      * @return void
@@ -35,10 +47,17 @@ class OAuthController extends Controller
      * Socialite::driver($provider)->stateless(), so library `abraham/twitteroauth` is used to handle that case.
      *
      * @param string $provider
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
     public function redirectToProvider($provider)
     {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return [
+                'error' => 'Unsupported OAuth provider.',
+            ];
+        }
+
         if ($provider === 'twitter') {
             $url = $this->twitterApi->getUrl();
         } else {
@@ -56,12 +75,23 @@ class OAuthController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param string $driver
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function handleProviderCallback(Request $request, $provider)
     {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return view('oauth/callback', [
+                'error' => 'Unsupported OAuth provider.',
+            ]);
+        }
+
+        if (Auth::check()) {
+            return $this->handleLinkCallback($request, $provider);
+        }
+
         if ($provider === 'twitter') {
-            $socialIdentity = (object)$this->twitterApi->getUser($request);
+            $socialIdentity = (object) $this->twitterApi->getUser($request);
         } else {
             $socialIdentity = Socialite::driver($provider)->stateless()->user();
         }
@@ -82,8 +112,9 @@ class OAuthController extends Controller
      * @param \Laravel\Socialite\Contracts\User|object $sUser
      * @return \App\Models\User|false
      */
-    protected function findOrCreateUser($provider, $sUser) : User
+    protected function findOrCreateUser($provider, $sUser): User
     {
+        /** @var \Laravel\Socialite\Two\User|object $sUser */
         $oauthProvider = OAuthProvider::where('provider', $provider)
             ->where('provider_user_id', $sUser->id)
             ->first();
@@ -121,8 +152,9 @@ class OAuthController extends Controller
      * @param \App\Models\User $user
      * @return \App\Models\User
      */
-    protected function addProvider($provider, $sUser, User $user) : User
+    protected function addProvider($provider, $sUser, User $user): User
     {
+        /** @var \Laravel\Socialite\Two\User|object $sUser */
         // TODO: function should update if entry already exists
         $user->oauthProviders()->updateOrCreate(['user_id' => $user->id], [
             'provider' => $provider,
@@ -134,4 +166,180 @@ class OAuthController extends Controller
         return $user;
     }
 
+    /**
+     * Validate if the provider is supported.
+     *
+     * @param string $provider
+     * @return bool
+     */
+    protected function isValidProvider($provider)
+    {
+        return in_array($provider, $this->supportedProviders, true);
+    }
+
+    /**
+     * Redirect the authenticated user to the provider authentication page for linking.
+     *
+     * @param string $provider
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function linkProvider($provider)
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return response()->json(['error' => 'Unsupported OAuth provider.'], 400);
+        }
+
+        // Generate a random state token for CSRF protection
+        $state = Str::random(40);
+        session(['oauth_link_state' => $state]);
+
+        if ($provider === 'twitter') {
+            $url = $this->twitterApi->getUrl();
+        } else {
+            // Add state parameter to OAuth URL
+            $url = Socialite::driver($provider)
+                ->stateless()
+                ->with(['state' => $state])
+                ->redirect()
+                ->getTargetUrl();
+        }
+
+        return response()->json([
+            'url' => $url,
+        ]);
+    }
+
+    /**
+     * Handle the OAuth callback for linking a provider to an authenticated user.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $provider
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function handleLinkCallback(Request $request, $provider)
+    {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return view('oauth/callback', [
+                'error' => 'Unsupported OAuth provider.',
+            ]);
+        }
+
+        if (!Auth::check()) {
+            return view('oauth/callback', [
+                'error' => 'You must be logged in to link a provider.',
+            ]);
+        }
+
+        // Validate state parameter for CSRF protection (except for Twitter OAuth 1.0a)
+        if ($provider !== 'twitter') {
+            $requestState = $request->input('state');
+            $sessionState = session('oauth_link_state');
+
+            // Clear the state from session immediately
+            session()->forget('oauth_link_state');
+
+            if (!$requestState || !$sessionState || $requestState !== $sessionState) {
+                return view('oauth/callback', [
+                    'error' => 'Invalid state parameter. This request may be a CSRF attack.',
+                ]);
+            }
+        }
+
+        try {
+            if ($provider === 'twitter') {
+                $socialIdentity = (object) $this->twitterApi->getUser($request);
+            } else {
+                $socialIdentity = Socialite::driver($provider)->stateless()->user();
+            }
+        } catch (\Exception $e) {
+            return view('oauth/callback', [
+                'error' => 'Failed to retrieve user information from ' . $provider . ': ' . $e->getMessage(),
+            ]);
+        }
+
+        $user = Auth::user();
+
+        // Check if this provider is already linked to a different user
+        $existingProvider = OAuthProvider::where('provider', $provider)
+            ->where('provider_user_id', $socialIdentity->id)
+            ->first();
+
+        if ($existingProvider && $existingProvider->user_id !== $user->id) {
+            return view('oauth/callback', [
+                'error' => 'This ' . $provider . ' account is already linked to another user.',
+            ]);
+        }
+
+        // Link the provider to the current user
+        $this->addProvider($provider, $socialIdentity, $user);
+
+        return view('oauth/callback', [
+            'user' => $user->fresh(),
+            'linked' => true,
+        ]);
+    }
+
+    /**
+     * Get the authenticated user's linked OAuth providers.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLinkedProviders()
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $providers = Auth::user()->oauthProviders()->get(['provider', 'created_at']);
+
+        return response()->json($providers);
+    }
+
+    /**
+     * Unlink an OAuth provider from the authenticated user.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param string $provider
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unlinkProvider(Request $request, $provider)
+    {
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return response()->json(['error' => 'Unsupported OAuth provider.'], 400);
+        }
+
+        $user = Auth::user();
+
+        // Check if the provider is actually linked
+        $linkedProvider = $user->oauthProviders()->where('provider', $provider)->first();
+
+        if (!$linkedProvider) {
+            return response()->json(['error' => 'Provider not linked.'], 404);
+        }
+
+        // Safety check: Ensure user has at least one login method remaining
+        $hasPassword = !empty($user->password);
+        $linkedProvidersCount = $user->oauthProviders()->count();
+
+        if (!$hasPassword && $linkedProvidersCount <= 1) {
+            return response()->json([
+                'error' => 'You cannot unlink your only login method. Please set a password or link another provider first.'
+            ], 400);
+        }
+
+        $linkedProvider->delete();
+
+        return response()->json(['message' => 'Provider unlinked successfully.']);
+    }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\UserController as AuthUserController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\User\CommentController;
@@ -36,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('user/profile', [AuthUserController::class, 'editProfile'])->name('user.profile.edit');
     Route::put('user/password', [AuthUserController::class, 'editPassword'])->name('user.password.edit');
+    Route::get('user/oauth-providers', [OAuthController::class, 'getLinkedProviders'])->name('user.oauth.providers');
 
     Route::post('comments/{example}/new', [CommentController::class, 'create'])->name('user.comments.create');
     Route::put('comments/{comment}', [CommentController::class, 'edit'])->name('user.comments.edit');
