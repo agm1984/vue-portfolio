@@ -30,6 +30,7 @@ const routes = [
             { path: '', redirect: { name: 'settings.profile' } },
             { path: 'profile', name: 'settings.profile', component: () => import('../pages/profile/edit-profile.vue') },
             { path: 'password', name: 'settings.password', component: () => import('../pages/profile/edit-password.vue') },
+            { path: 'connections', name: 'settings.connections', component: () => import('../pages/profile/edit-connections.vue') },
         ],
     },
 
