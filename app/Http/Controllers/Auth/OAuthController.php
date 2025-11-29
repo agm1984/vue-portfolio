@@ -22,6 +22,13 @@ class OAuthController extends Controller
     protected $twitterApi;
 
     /**
+     * Supported OAuth providers
+     *
+     * @var array
+     */
+    protected $supportedProviders = ['github', 'twitter'];
+
+    /**
      * Create a new OAuth controller instance.
      *
      * @return void
@@ -44,6 +51,13 @@ class OAuthController extends Controller
      */
     public function redirectToProvider($provider)
     {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return [
+                'error' => 'Unsupported OAuth provider.',
+            ];
+        }
+
         if ($provider === 'twitter') {
             $url = $this->twitterApi->getUrl();
         } else {
@@ -65,6 +79,13 @@ class OAuthController extends Controller
      */
     public function handleProviderCallback(Request $request, $provider)
     {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return view('oauth/callback', [
+                'error' => 'Unsupported OAuth provider.',
+            ]);
+        }
+
         if (Auth::check()) {
             return $this->handleLinkCallback($request, $provider);
         }
@@ -146,6 +167,17 @@ class OAuthController extends Controller
     }
 
     /**
+     * Validate if the provider is supported.
+     *
+     * @param string $provider
+     * @return bool
+     */
+    protected function isValidProvider($provider)
+    {
+        return in_array($provider, $this->supportedProviders, true);
+    }
+
+    /**
      * Redirect the authenticated user to the provider authentication page for linking.
      *
      * @param string $provider
@@ -155,6 +187,11 @@ class OAuthController extends Controller
     {
         if (!Auth::check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return response()->json(['error' => 'Unsupported OAuth provider.'], 400);
         }
 
         // Generate a random state token for CSRF protection
@@ -186,6 +223,13 @@ class OAuthController extends Controller
      */
     public function handleLinkCallback(Request $request, $provider)
     {
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return view('oauth/callback', [
+                'error' => 'Unsupported OAuth provider.',
+            ]);
+        }
+
         if (!Auth::check()) {
             return view('oauth/callback', [
                 'error' => 'You must be logged in to link a provider.',
@@ -268,6 +312,11 @@ class OAuthController extends Controller
     {
         if (!Auth::check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Validate that the provider is supported
+        if (!$this->isValidProvider($provider)) {
+            return response()->json(['error' => 'Unsupported OAuth provider.'], 400);
         }
 
         $user = Auth::user();
