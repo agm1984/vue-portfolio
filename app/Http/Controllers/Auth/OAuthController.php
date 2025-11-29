@@ -157,10 +157,19 @@ class OAuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        // Generate a random state token for CSRF protection
+        $state = Str::random(40);
+        session(['oauth_link_state' => $state]);
+
         if ($provider === 'twitter') {
             $url = $this->twitterApi->getUrl();
         } else {
-            $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+            // Add state parameter to OAuth URL
+            $url = Socialite::driver($provider)
+                ->stateless()
+                ->with(['state' => $state])
+                ->redirect()
+                ->getTargetUrl();
         }
 
         return response()->json([
@@ -181,6 +190,21 @@ class OAuthController extends Controller
             return view('oauth/callback', [
                 'error' => 'You must be logged in to link a provider.',
             ]);
+        }
+
+        // Validate state parameter for CSRF protection (except for Twitter OAuth 1.0a)
+        if ($provider !== 'twitter') {
+            $requestState = $request->input('state');
+            $sessionState = session('oauth_link_state');
+
+            // Clear the state from session immediately
+            session()->forget('oauth_link_state');
+
+            if (!$requestState || !$sessionState || $requestState !== $sessionState) {
+                return view('oauth/callback', [
+                    'error' => 'Invalid state parameter. This request may be a CSRF attack.',
+                ]);
+            }
         }
 
         try {

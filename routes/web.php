@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('oauth/unlink/{driver}', 'Auth\OAuthController@unlinkProvider')->name('oauth.unlink');
 });
 
-Route::get('oauth/link/{driver}/callback', 'Auth\OAuthController@handleLinkCallback')->middleware('web')->name('oauth.link.callback');
+Route::get('oauth/link/{driver}/callback', 'Auth\\OAuthController@handleLinkCallback')->middleware(['web', 'auth:sanctum'])->name('oauth.link.callback');
 
 Route::post('email/verify/{user}', [VerificationController::class, 'verify'])->name('verification.verify'); // throttle already applied in controller
 Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
