@@ -183,10 +183,16 @@ class OAuthController extends Controller
             ]);
         }
 
-        if ($provider === 'twitter') {
-            $socialIdentity = (object) $this->twitterApi->getUser($request);
-        } else {
-            $socialIdentity = Socialite::driver($provider)->stateless()->user();
+        try {
+            if ($provider === 'twitter') {
+                $socialIdentity = (object) $this->twitterApi->getUser($request);
+            } else {
+                $socialIdentity = Socialite::driver($provider)->stateless()->user();
+            }
+        } catch (\Exception $e) {
+            return view('oauth/callback', [
+                'error' => 'Failed to retrieve user information from ' . $provider . ': ' . $e->getMessage(),
+            ]);
         }
 
         $user = Auth::user();
