@@ -68,7 +68,17 @@ $ php artisan storage:link
 
 2. In the CLI, run:
 ``` bash
-$ npm run watch
+$ npm run dev
+```
+
+3. In a second terminal, run:
+``` bash
+# first run:
+$ php artisan migrate
+$ php artisan db:seed
+
+# then subsequent runs:
+$ php artisan serve
 ```
 
 3. Navigate to `https://vue-portfolio.test/`
@@ -174,7 +184,7 @@ Expected results: a modal should have loaded, but I find that annoying too; most
 
 **Email**: adam@adammackintosh.net
 
-**Twitter**: @agm1984
+**X.com**: @agm1984
 
 ## Contributing
 
