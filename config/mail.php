@@ -77,6 +77,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global Admin Address
+    |--------------------------------------------------------------------------
+    |
+    | This is the address that receives contact form submissions.
+    |
+    */
+
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'agm1984@gmail.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Global "From" Address
     |--------------------------------------------------------------------------
     |
@@ -87,8 +98,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@adammackintosh.net'),
+        'name' => env('MAIL_FROM_NAME', 'Adam Mackintosh'),
     ],
 
     /*
