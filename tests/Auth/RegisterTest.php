@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -15,7 +16,7 @@ class RegisterTest extends TestCase
 
     protected $auth_guard = 'web';
 
-    /** @test */
+    #[Test]
     public function it_can_register()
     {
         $new_user = [
@@ -28,13 +29,13 @@ class RegisterTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'user' => [
-                    'id' ,
+                    'id',
                     'status',
                     'name',
                     'email',
                     'created_at',
                     'updated_at',
-                    'photo_url',
+                    'avatar_url',
                     'roles_list',
                     'roles',
                 ],
@@ -51,7 +52,7 @@ class RegisterTest extends TestCase
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_get_two_cookies()
     {
         $new_user = [
@@ -62,7 +63,7 @@ class RegisterTest extends TestCase
 
         $response = $this->postJson(route('register'), $new_user);
 
-        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_').'_session');
+        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_') . '_session');
         $response->assertCookieNotExpired('XSRF-TOKEN');
         $this->assertEquals(config('session.http_only'), true);
 
@@ -70,55 +71,55 @@ class RegisterTest extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_without_a_name()
     {
         $this->postJson(route('register'), [
-                'name' => '',
-                'email' => 'test@example.com',
-                'password' => 'password',
-            ])
+            'name' => '',
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['name']]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_with_a_name_too_long()
     {
         $this->postJson(route('register'), [
-                'name' => Str::random(256),
-                'email' => 'test@example.com',
-                'password' => 'password',
-            ])
+            'name' => Str::random(256),
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['name']]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_without_an_email()
     {
         $this->postJson(route('register'), [
-                'name' => 'Test Person',
-                'email' => '',
-                'password' => 'password',
-            ])
+            'name' => 'Test Person',
+            'email' => '',
+            'password' => 'password',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['email']]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_with_an_email_too_long()
     {
         $this->postJson(route('register'), [
-                'name' => 'Test Person',
-                'email' => Str::random(256),
-                'password' => 'password',
-            ])
+            'name' => 'Test Person',
+            'email' => Str::random(256),
+            'password' => 'password',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['email']]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_with_an_existing_email()
     {
         $dupe_user = [
@@ -137,36 +138,36 @@ class RegisterTest extends TestCase
         $this->resetAuth();
 
         $this->postJson(route('register'), [
-                'name' => 'Test Person',
-                'email' => 'test@example.com',
-                'password' => 'password',
-            ])
+            'name' => 'Test Person',
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['email']]);
 
         $this->assertGuest($this->auth_guard);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_without_password()
     {
         $this->postJson(route('register'), [
-                'name' => 'Test Person',
-                'email' => 'test@example.com',
-                'password' => '',
-            ])
+            'name' => 'Test Person',
+            'email' => 'test@example.com',
+            'password' => '',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['password']]);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_with_empty_form()
     {
         $this->postJson(route('register'), [
-                'name' => '',
-                'email' => '',
-                'password' => '',
-            ])
+            'name' => '',
+            'email' => '',
+            'password' => '',
+        ])
             ->assertStatus(422)
             ->assertJsonStructure(['message', 'errors' => ['name', 'email', 'password']]);
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Auth;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\OauthProvider;
+use App\Models\OAuthProvider;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
@@ -11,13 +11,14 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Mockery as m;
 use PHPUnit\Framework\Assert as PHPUnit;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class OAuthGitHubTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +35,7 @@ class OAuthGitHubTest extends TestCase
         });
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -65,7 +66,7 @@ class OAuthGitHubTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_to_github()
     {
         $this->mockSocialite('github');
@@ -75,7 +76,23 @@ class OAuthGitHubTest extends TestCase
             ->assertJson(['url' => 'https://url-to-provider']);
     }
 
-    /** @test */
+    #[Test]
+    public function it_rejects_unsupported_provider_on_redirect()
+    {
+        $this->postJson(route('oauth.redirect', 'unsupported-provider'))
+            ->assertStatus(200)
+            ->assertJson(['error' => 'Unsupported OAuth provider.']);
+    }
+
+    #[Test]
+    public function it_rejects_unsupported_provider_on_callback()
+    {
+        $this->get(route('oauth.callback', 'unsupported-provider'))
+            ->assertSuccessful()
+            ->assertSee('Unsupported OAuth provider.');
+    }
+
+    #[Test]
     public function it_can_create_new_user_from_github_identity()
     {
         $github_identity = [
@@ -114,7 +131,7 @@ class OAuthGitHubTest extends TestCase
         $this->assertEquals($providerCount, 1);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_github_identity_for_existing_user()
     {
         $existing_user = $this->user();
@@ -154,7 +171,7 @@ class OAuthGitHubTest extends TestCase
         $this->assertEquals($providerCount, 1);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_github_identity_to_existing_user()
     {
         $existing_user = $this->user();
