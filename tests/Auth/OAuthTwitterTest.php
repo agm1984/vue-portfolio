@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Auth;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\OAuthProvider;
+use App\Models\OAuthProvider;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Http\Controllers\Auth\TwitterClient;
 
@@ -15,7 +16,7 @@ class OAuthTwitterTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +50,7 @@ class OAuthTwitterTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_can_redirect_to_twitter()
     {
         $this->mockTwitterOAuth();
@@ -59,7 +60,28 @@ class OAuthTwitterTest extends TestCase
             ->assertJson(['url' => 'https://url-to-provider']);
     }
 
-    /** @test */
+    #[Test]
+    public function it_redirects_authenticated_user_to_link_callback()
+    {
+        $user = $this->user();
+
+        $twitter_identity = [
+            'id' => '123',
+            'name' => 'Twitter User',
+            'email' => $user->email,
+            'token' => 'access-token',
+            'refreshToken' => null,
+        ];
+
+        $this->mockTwitterOAuth($twitter_identity);
+
+        $this->actingAs($user)
+            ->get(route('oauth.callback', 'twitter'))
+            ->assertSuccessful()
+            ->assertSee('user');
+    }
+
+    #[Test]
     public function it_can_create_new_user_from_twitter_identity()
     {
         $twitter_identity = [
@@ -98,7 +120,7 @@ class OAuthTwitterTest extends TestCase
         $this->assertEquals($providerCount, 1);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_twitter_identity_for_existing_user()
     {
         $existing_user = $this->user();
@@ -137,7 +159,7 @@ class OAuthTwitterTest extends TestCase
         $this->assertEquals($providerCount, 1);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_twitter_identity_to_existing_user()
     {
         $existing_user = $this->user();

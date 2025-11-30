@@ -11,7 +11,7 @@ class AuthTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @test */
+    // #[Test]
     // public function it_can_do_something()
     // {
     //     $token = $this->getTokenForUser($this->user());

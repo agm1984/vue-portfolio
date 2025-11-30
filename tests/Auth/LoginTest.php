@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 // use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Auth;
 
@@ -23,7 +24,7 @@ class LoginTest extends TestCase
 
     protected $auth_guard = 'web';
 
-    /** @test */
+    #[Test]
     public function it_can_login()
     {
         $user = $this->user();
@@ -32,14 +33,14 @@ class LoginTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 'user' => [
-                    'id' ,
+                    'id',
                     'status',
                     'name',
                     'email',
                     'email_verified_at',
                     'created_at',
                     'updated_at',
-                    'photo_url',
+                    'avatar_url',
                     'roles_list',
                     'roles',
                 ],
@@ -53,7 +54,7 @@ class LoginTest extends TestCase
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_logout()
     {
         $this->actingAs($this->user())
@@ -65,7 +66,7 @@ class LoginTest extends TestCase
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_get_two_cookies_without_remember_me()
     {
         $user = $this->user();
@@ -75,14 +76,14 @@ class LoginTest extends TestCase
             'password' => TestCase::AUTH_PASSWORD,
         ]);
 
-        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_').'_session');
+        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_') . '_session');
         $response->assertCookieNotExpired('XSRF-TOKEN');
         $this->assertEquals(config('session.http_only'), true);
 
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_get_three_cookies_with_remember_me()
     {
         $user = $this->user();
@@ -93,14 +94,14 @@ class LoginTest extends TestCase
             'remember' => true,
         ]);
 
-        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_').'_session');
+        $response->assertCookieNotExpired(Str::slug(config('app.name'), '_') . '_session');
         $response->assertCookieNotExpired('XSRF-TOKEN');
         $response->assertCookieNotExpired(Auth::getRecallerName());
 
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_without_email()
     {
         $this->postJson(route('login'), ['email' => '', 'password' => TestCase::AUTH_PASSWORD])
@@ -110,7 +111,7 @@ class LoginTest extends TestCase
         $this->assertGuest($this->auth_guard);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_without_password()
     {
         $this->postJson(route('login'), ['email' => $this->adminUser()->email, 'password' => ''])
@@ -120,7 +121,7 @@ class LoginTest extends TestCase
         $this->assertGuest($this->auth_guard);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_422_with_empty_form()
     {
         $this->postJson(route('login'), ['email' => '', 'password' => ''])
@@ -132,7 +133,7 @@ class LoginTest extends TestCase
         $this->resetAuth();
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_401_as_guest_on_protected_routes()
     {
         $this->assertGuest($this->auth_guard);
@@ -142,12 +143,12 @@ class LoginTest extends TestCase
             ->assertJson(['message' => 'Unauthenticated.']);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_throw_error_429_when_login_attempt_is_throttled()
     {
         $this->resetAuth();
 
-        $throttledUser = factory(User::class, 1)->create()->first();
+        $throttledUser = User::factory()->create();
 
         foreach (range(0, 9) as $attempt) {
             $this->postJson(route('login'), ['email' => $throttledUser->email, 'password' => "{TestCase::AUTH_PASSWORD}_{$attempt}"]);
