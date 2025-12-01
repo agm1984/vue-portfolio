@@ -1,23 +1,28 @@
-# Adam Mackintosh's portfolio
+# Adam Mackintosh - Full Stack Portfolio
 
-> Welcome to Adam Mackintosh's portfolio site. The site seeks to demonstrate both PHP and JavaScript skill with focus on functional-reactive programming techniques.
+> A demonstration of functional-reactive programming techniques using modern PHP and JavaScript.
 
 ## Introduction
 
-Multiple types of users (user personas) browse this portfolio for an array of reasons. The two primary supported user types are:
+Welcome to the repository for adammackintosh.net. This application serves two primary user personas:
 
-1. **business stakeholders and recruiters**: for them this application demonstrates production-grade control over contemporary PHP and JavaScript;
+1. Business Stakeholders & Recruiters: Demonstrates production-grade control over contemporary PHP (Laravel) and JavaScript (Vue.js), highlighting reliability and modern web standards.
 
-1. **other developers**: for them this application illustrates software design patterns, functional-reactive programming ways of thinking, and logic examples.
+2. Developers: Illustrates specific software design patterns, functional-reactive programming logic, and architectural discipline.
 
-### Code formatting
+## Engineering Philosophy & Code Style
 
-This repository **doesn't** use `prettier` for code formatting. Instead, religious formatting-idiology is used to intentionally-place every character and symbol according to patterns that maximally-cater to both code readability and ease of understanding data flow through logic. Additionally, PSR-2 and ES Lint with Airbnb config are used for
-detecting logical anomalies. Lint settings can be ascertained via the `phpcs.xml` and `.eslintrc.json` files in the project root. The main motivation for the repository to exemplify idiomatic best-practices for Object-Oriented Programming and Functional Programming.
+Note on Formatting: This repository intentionally eschews auto-formatters like prettier. Instead, code is formatted manually to strictly follow specific patterns that prioritize code readability and data-flow visibility. The goal is to maximize the ease of understanding logic flow rather than just satisfying a linter.
 
-> This repository aims to foster unidirectional data flow and immutability, function composition, and atomic-design principles.
+### Key Principles:
 
-As a result of considerations such as these, this repository and application aims to supercharge the content of a portfolio site with meta information that services business stakeholders & recruiters and other developers. For example, this repository has inbound links from StackOverflow, blog articles, and other sources of information, so any extra-verbose documentation exists to service the perceived desires of business stakeholders & recruiters and other developers. In this way, hopefully questions that arise while browsing the portfolio can be answered by browsing the portfolio.
+- Unidirectional Data Flow: Promoting predictability in state management.
+
+- Immutability: Reducing side effects.
+
+- Atomic Design: Modular, reusable component architecture.
+
+- Strict Standards: While manual formatting is used, logical anomalies are caught via PSR-2 (PHP) and ESLint (Airbnb config).
 
 ## Localhost installation
 
@@ -45,7 +50,7 @@ CREATE USER 'portfolio'@'localhost' IDENTIFIED BY 'portfolio';
 GRANT ALL PRIVILEGES ON portfolio.* TO 'portfolio'@'localhost';
 ```
 
-2. Copy `./.env.example` to `./env`.
+2. Copy `.env.example` to `.env`.
 
 ``` bash
 DB_CONNECTION=mysql
@@ -56,7 +61,13 @@ DB_USERNAME=portfolio
 DB_PASSWORD=portfolio
 ```
 
-3. Create symbolic link to storage folder:
+3. Generate new encryption key
+
+``` bash
+$ php artisan key:generate
+```
+
+4. Create symbolic link to storage folder:
 
 ``` bash
 $ php artisan storage:link
@@ -122,12 +133,21 @@ This application uses [axios-mock-adapter](https://github.com/ctimmerm/axios-moc
 1. On the first production run, generate encryption keys:
 
 ``` bash
-$ npm install
+# backend
+$ cp .env.example .env
+$ php artisan key:generate # first-run only
+$ composer install --optimize-autoloader
 $ cd public
 $ rm storage
 $ cd ..
 $ php artisan storage:link
-$ npm run production
+$ php artisan config:cache
+$ php artisan migrate
+$ php artisan db:seed # first-run only
+
+# frontend
+$ npm install
+$ npm run build
 ```
 
 ## Static analysis
