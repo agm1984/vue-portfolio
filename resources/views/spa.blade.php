@@ -12,6 +12,11 @@
             'provider_name' => config('services.twitter.provider_name'),
         ],
     ];
+
+    $siteTitle = "Adam Mackintosh's Portfolio";
+    $siteUrl = config('app.url', url('/'));
+    $siteDescription = 'Adam Mackintosh is a Nanaimo-based senior software developer focused on functional programming, TypeScript, and lean delivery. Explore his portfolio and connect for collaboration.';
+    $siteImage = sprintf('%s/adam.png', rtrim($siteUrl, '/'));
 @endphp
 
 <!DOCTYPE html>
@@ -20,6 +25,9 @@
         <title>
             Adam Mackintosh's portfolio @yield('title')
         </title>
+
+        <link rel="canonical" href="{{ $siteUrl }}">
+        <meta name="author" content="Adam Mackintosh">
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -38,28 +46,34 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="theme-color" content="#000000">
-        <meta name="ROBOTS" content="INDEX, FOLLOW">
-        <meta name="description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@agm1984">
-        <meta name="twitter:creator" content="@agm1984">
-        <meta name="twitter:title" content="Adam Mackintosh's Portfolio">
-        <meta name="twitter:description" content="With over 15 years workforce experience, Adam is a web and mobile software developer specialized in node.js and React development.">
-        <meta name="twitter:image" content="https://adammackintosh.net/adam.png">
-        <meta name="twitter:image:alt" content="Adam Mackintosh">
-        <meta property="og:image" content="https://adammackintosh.net/adam.png">
-        <meta property="og:title" content="Adam Mackintosh's Portfolio">
-        <meta property="og:url" content="https://adammackintosh.net">
+        <meta name="robots" content="index, follow">
+        <meta name="description" content="{{ $siteDescription }}">
+        <meta name="keywords" content="Adam Mackintosh, software developer, Vue, Laravel, Nanaimo, TypeScript, functional programming, consulting">
+
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $siteTitle }}">
+        <meta property="og:description" content="{{ $siteDescription }}">
+        <meta property="og:url" content="{{ $siteUrl }}">
         <meta property="og:site_name" content="adammackintosh.net">
-        <meta property="og:description" content="Specialized in Functional Programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him.">
-        <meta property="og:type" content="Website">
-        <meta property="og:determiner" content="the">
+        <meta property="og:image" content="{{ $siteImage }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="{{ $siteTitle }}">
         <meta property="og:locale" content="en_CA">
         <meta property="fb:app_id" content="1160271080719333">
         <meta property="fb:admins" content="568188506708923">
-        <meta itemprop="name" content="Adam Mackintosh's portfolio">
-        <meta itemprop="description" content="Specialized in functional programming and lean agile approaches to business development, Adam Mackintosh is a web and mobile software developer from Nanaimo, BC, Canada ... Check out his portfolio to contact him and stay ahead of your competition.">
-        <meta itemprop="image" url="https://adammackintosh.net/adam.png">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@agm1984">
+        <meta name="twitter:creator" content="@agm1984">
+        <meta name="twitter:title" content="{{ $siteTitle }}">
+        <meta name="twitter:description" content="{{ $siteDescription }}">
+        <meta name="twitter:image" content="{{ $siteImage }}">
+        <meta name="twitter:image:alt" content="{{ $siteTitle }}">
+
+        <meta itemprop="name" content="{{ $siteTitle }}">
+        <meta itemprop="description" content="{{ $siteDescription }}">
+        <meta itemprop="image" content="{{ $siteImage }}">
         <meta itemprop="author" content="Adam Mackintosh">
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -81,11 +95,17 @@
                 "birthPlace": "Nanaimo, BC",
                 "nationality": "Canadian",
                 "additionalName": "agm1984",
-                "url": "https://adammackintosh.net",
+                "url": "{{ $siteUrl }}",
+                "description": "{{ $siteDescription }}",
+                "image": "{{ $siteImage }}",
                 "address": {
                     "@@type": "PostalAddress",
                     "addressLocality": "Nanaimo",
                     "addressRegion": "British Columbia"
+                },
+                "worksFor": {
+                    "@@type": "Organization",
+                    "name": "Adam Mackintosh Consulting"
                 }
             }
         </script>
