@@ -1,78 +1,94 @@
 import axios from 'axios';
-import router from '~/router';
-import { useToast } from '~/composables/useToast';
 
-axios.defaults.withCredentials = true;          // send cookies
-axios.defaults.xsrfCookieName = 'XSRF-TOKEN';   // Laravel's cookie
-axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN'; // header Laravel expects
-
-axios.interceptors.request.use((config) => {
+const logRequest = (config) => {
     console.log(config.method.toUpperCase(), config.url);
     return config;
-}, (error) => {
-    return Promise.reject(error);
-});
+};
 
-/**
- * Response interceptor: for each server error response,
- * check if client-side action is needed.
- */
-axios.interceptors.response.use(response => response, (error) => {
-    const toast = useToast();
+const createApiClient = ({ router, toast }) => {
+    const client = axios.create({
+        withCredentials: true,
+        xsrfCookieName: 'XSRF-TOKEN',
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+    });
 
-    if (!error.config) {
+    const handleAuthError = async (status, config) => {
+        const isLogout = config.url.endsWith('/logout');
+        const isLoginRoute = router.currentRoute.value.name === 'login';
+
+        if (isLogout) {
+            await router.push({ name: 'login' }).catch(() => {});
+            return { data: null, status: 200 };
+        }
+
+        const IGNORED_URLS = ['/api/user', '/sanctum/csrf-cookie'];
+
+        if (IGNORED_URLS.some(path => config.url.endsWith(path))) {
+            return { data: null, status: 401 };
+        }
+
+        if (!isLoginRoute) {
+            toast.add({
+                severity: 'error',
+                summary: 'Session Expired',
+                detail: 'Please sign in again.',
+                life: 5000,
+            });
+            await router.push({ name: 'login' }).catch(() => {});
+        }
+
+        return Promise.reject(new Error('Unauthenticated'));
+    };
+
+    const ERROR_STRATEGIES = {
+        429: () => {
+            toast.add({
+                severity: 'warn',
+                summary: 'Too Many Requests',
+                detail: 'Slow down... You\'ve been throttled.',
+                life: 5000,
+            });
+        },
+        419: (config) => handleAuthError(419, config),
+        401: (config) => handleAuthError(401, config),
+        500: () => {
+            toast.add({
+                severity: 'error',
+                summary: 'Server Error',
+                detail: 'Oops... Something went wrong! Please try again.',
+                life: 5000,
+            });
+        },
+    };
+
+    const handleResponseError = async (error) => {
+        if (!error.response) return Promise.reject(error);
+
+        const { status, config } = error.response;
+        const strategy = ERROR_STRATEGIES[status];
+
+        if (strategy) {
+            const result = await strategy(config);
+
+            if (result) {
+                return result;
+            }
+        }
+
         return Promise.reject(error);
-    }
+    };
 
-    const { config, data, status } = error.response;
+    client.interceptors.request.use(
+        (config) => logRequest(config),
+        (error) => Promise.reject(error),
+    );
 
-    // for debugging:
-    console.log('ERROR RESPONSE', error.response);
-    // toast.add({ severity: 'error', summary: `Error ${status}`, detail: data.message || 'An error occurred.', life: 5000 });
+    client.interceptors.response.use(
+        (response) => response,
+        (error) => handleResponseError(error),
+    );
 
-    if (status >= 500) {
-        toast.add({ severity: 'error', summary: 'Server Error', detail: 'Oops... Something went wrong! Please try again.', life: 5000 });
-    }
+    return client;
+};
 
-    if (status === 429) {
-        // todo: needs more testing
-        toast.add({ severity: 'warn', summary: 'Too Many Requests', detail: 'Slow down... You\'ve been throttled.', life: 5000 });
-    }
-
-    if (status === 422) {
-        // todo: needs more testing
-        // load error display with field names mapped to errors
-    }
-
-    if (status === 419) {
-        if (config.url.name === 'logout') {
-            // if the user tries to log out with a stale-expired session, go to login page
-            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
-        }
-
-        toast.add({ severity: 'error', summary: 'Page Expired', detail: 'Refresh the page and try again.', life: 5000 });
-    }
-
-    if ((status === 401) && (data.message === 'UNAUTHENTICATED')) {
-        if (config.url.name === 'logout') {
-            // if the user tries to log out with a stale-expired session, go to login page
-            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
-        }
-
-        if (config.url.name === 'me') {
-            // if fetching user details fails, do nothing
-            return Promise.resolve();
-        }
-
-        if (router.currentRoute.name !== 'login') {
-            return Promise.resolve(router.push({ name: 'login' }).catch(() => {}));
-        }
-    }
-
-    if ((status === 400) && (data.message === 'Already authenticated.')) {
-        // if the user somehow logs in again, do nothing
-        Promise.resolve();
-    }
-
-    return Promise.reject(error);
-});
+export default createApiClient;

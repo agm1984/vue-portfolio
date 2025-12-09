@@ -3,12 +3,12 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { helpers, required, email, numeric, minLength, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import axios from 'axios';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import InputNumber from 'primevue/inputnumber';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Contact Me',
@@ -101,7 +101,7 @@ const sendMessage = async () => {
             ...form,
         };
 
-        const { data } = await axios.post(route('public.contact.send'), formData);
+        const { data } = await api.post(route('public.contact.send'), formData);
 
         successMessage.value = data.message;
 

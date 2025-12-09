@@ -2,11 +2,11 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
-import axios from 'axios';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
 import Skeleton from 'primevue/skeleton';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Admin: Category Details',
@@ -45,7 +45,7 @@ const fetchCategory = async () => {
     try {
         state.value = LOADING;
 
-        const { data } = await axios.get(window.route('admin.categories.show', route.params.category));
+        const { data } = await api.get(window.route('admin.categories.show', route.params.category));
 
         category.value = data.category;
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const useAdminExamplesStore = defineStore('adminExamples', {
     state: () => ({
@@ -15,7 +15,7 @@ export const useAdminExamplesStore = defineStore('adminExamples', {
             try {
                 this.isFetchingExamples = true;
 
-                const { data } = await axios.get(route('admin.examples.list'));
+                const { data } = await api.get(route('admin.examples.list'));
                 this.allExamples = data.examples;
                 this.isError = false;
             } catch (error) {

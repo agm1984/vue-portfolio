@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import Skeleton from 'primevue/skeleton';
 import { useAuthStore } from '~/store/auth';
 import { pluralize } from '~/utils/text';
+import { api } from '~/services/api';
 
 const currentRoute = useRoute();
 const toast = useToast();
@@ -24,7 +24,7 @@ const fetchComments = async () => {
     try {
         state.value = LOADING;
 
-        const { data } = await axios.get(route('public.examples.listComments', currentRoute.params.example));
+        const { data } = await api.get(route('public.examples.listComments', currentRoute.params.example));
 
         comments.value = data.comments;
 
@@ -47,7 +47,7 @@ const handleCommentAdded = (newComment) => {
 
 const updateComment = async (payload) => {
     try {
-        await axios.put(route('user.comments.edit', payload.id), {
+        await api.put(route('user.comments.edit', payload.id), {
             body: payload.body,
         });
 
@@ -73,7 +73,7 @@ const updateComment = async (payload) => {
 
 const deleteComment = async (payload) => {
     try {
-        await axios.delete(route('user.comments.delete', payload.id));
+        await api.delete(route('user.comments.delete', payload.id));
 
         comments.value = comments.value.filter(c => c.id !== payload.id);
 
@@ -105,7 +105,7 @@ const updateVoteState = (list, commentId, newData, userVote) => {
 
 const voteOnComment = async ({ commentId, value }) => {
     try {
-        const { data } = await axios.post(route('user.comments.vote.store', commentId), { value });
+        const { data } = await api.post(route('user.comments.vote.store', commentId), { value });
 
         comments.value = updateVoteState(comments.value, commentId, data, value);
     } catch (err) {
@@ -115,7 +115,7 @@ const voteOnComment = async ({ commentId, value }) => {
 
 const removeVoteFromComment = async ({ commentId }) => {
     try {
-        const { data } = await axios.delete(route('user.comments.vote.destroy', commentId));
+        const { data } = await api.delete(route('user.comments.vote.destroy', commentId));
 
         comments.value = updateVoteState(comments.value, commentId, data, null);
     } catch (err) {

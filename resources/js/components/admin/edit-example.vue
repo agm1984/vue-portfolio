@@ -8,10 +8,9 @@ import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Autocomplete from 'primevue/autocomplete';
 import Button from 'primevue/button';
-import axios from 'axios';
-import ExampleLinksInput from './example-links-input.vue';
 import { Example } from '~/globalModelTypes';
 import { escapeRegExpChars } from '~/utils/formatting';
+import { api } from '~/services/api';
 
 const props = defineProps({
     mode: {
@@ -85,7 +84,7 @@ const statuses = computed(() => ([
 
 const fetchAllCategories = async () => {
   try {
-    const { data } = await axios.get(route('admin.categories.getAll'))
+    const { data } = await api.get(route('admin.categories.getAll'))
     categories.value = data.categories || []
     // Default to first category if available
     if (!form.category_id && categories.value.length) {
@@ -100,7 +99,7 @@ onMounted(fetchAllCategories);
 
 const fetchAllTags = async () => {
     try {
-        const { data } = await axios.get(route('admin.tags.getAll'));
+        const { data } = await api.get(route('admin.tags.getAll'));
         allTags.value = data.tags || [];
     } catch (err) {
         console.error(`create-example# Problem fetching all tags: ${err}.`);
@@ -168,7 +167,7 @@ const handleSubmit = async () => {
         });
 
         if (isCreateMode.value) {
-            const { data } = await axios.post(route('admin.examples.create'), payload);
+            const { data } = await api.post(route('admin.examples.create'), payload);
 
             await router.replace({
                 name: 'admin.examples.show',
@@ -183,7 +182,7 @@ const handleSubmit = async () => {
                 payload.append(`images_to_remove[${index}]`, imageId);
             });
 
-            const { data } = await axios.post(route('admin.examples.edit', props.initialExample.slug), payload);
+            const { data } = await api.post(route('admin.examples.edit', props.initialExample.slug), payload);
 
             await router.replace({
                 name: 'admin.examples.show',

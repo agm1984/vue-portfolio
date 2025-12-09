@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export default {
     name: 'example-images-editor',
@@ -67,7 +67,7 @@ export default {
             try {
                 console.log('REMOVE', image.filename);
 
-                await axios.put(route('admin.examples.removeImage', [this.example.slug, image.filename]));
+                await api.put(route('admin.examples.removeImage', [this.example.slug, image.filename]));
 
                 this.innerValue.splice(index, 1);
             } catch (err) {

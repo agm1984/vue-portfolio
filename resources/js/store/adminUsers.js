@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const useAdminUsersStore = defineStore('adminUsers', {
     state: () => ({
@@ -15,7 +15,7 @@ export const useAdminUsersStore = defineStore('adminUsers', {
             try {
                 this.isFetchingUsers = true;
 
-                const { data } = await axios.get(route('admin.users.list'));
+                const { data } = await api.get(route('admin.users.list'));
 
                 this.allUsers = data.users;
                 this.isError = false;

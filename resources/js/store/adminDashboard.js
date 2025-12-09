@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const useAdminDashboardStore = defineStore('adminDashboard', {
     state: () => ({
@@ -15,7 +15,7 @@ export const useAdminDashboardStore = defineStore('adminDashboard', {
             try {
                 this.isFetchingMetrics = true;
 
-                const { data } = await axios.get(route('admin.dashboard.metrics'));
+                const { data } = await api.get(route('admin.dashboard.metrics'));
                 this.metrics = data;
                 this.isError = false;
             } catch (error) {

@@ -7,8 +7,9 @@ import ConfirmationService from 'primevue/confirmationservice';
 import Tooltip from 'primevue/tooltip';
 import { definePreset } from '@primevue/themes';
 import Aura from '@primeuix/themes/aura';
-import router from '~/router';
 import App from '~/components/App.vue';
+import router from '~/router';
+import { useToast } from '~/composables/useToast';
 import '~/plugins';
 import 'primeicons/primeicons.css';
 

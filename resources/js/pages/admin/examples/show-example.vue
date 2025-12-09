@@ -2,11 +2,11 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
-import axios from 'axios';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
 import Skeleton from 'primevue/skeleton';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Admin: Example Details',
@@ -51,7 +51,7 @@ const getStatusConfig = (status) => {
 
 const fetchExample = async () => {
     try {
-        const { data } = await axios.get(route('admin.examples.show', { example: currentRoute.params.example }));
+        const { data } = await api.get(route('admin.examples.show', { example: currentRoute.params.example }));
 
         example.value = data.example;
 

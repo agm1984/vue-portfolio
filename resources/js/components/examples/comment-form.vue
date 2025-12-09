@@ -3,11 +3,11 @@ import { ref, reactive, computed, onMounted } from 'vue';
 import { required, minLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 const emit = defineEmits([
     'comment-added',
@@ -49,7 +49,7 @@ const saveComment = async () => {
             ...form,
         };
 
-        const { data } = await axios.post(route('user.comments.create', currentRoute.params.example), formData);
+        const { data } = await api.post(route('user.comments.create', currentRoute.params.example), formData);
 
         emit('comment-added', data.comment);
 

@@ -4,11 +4,11 @@ import { ref, reactive, computed, watch } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
 import Select from 'primevue/select';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { Category } from '~/globalModelTypes';
+import { api } from '~/services/api';
 
 const props = defineProps({
     mode: {
@@ -80,14 +80,14 @@ const handleSubmit = async () => {
         }
 
         if (isCreateMode.value) {
-            const { data } = await axios.post(route('admin.categories.create'), form);
+            const { data } = await api.post(route('admin.categories.create'), form);
 
             await router.replace({
                 name: 'admin.categories.show',
                 params: { category: data.category.slug },
             });
         } else {
-            const { data } = await axios.patch(route('admin.categories.edit', { category: props.initialCategory.slug }), form);
+            const { data } = await api.patch(route('admin.categories.edit', { category: props.initialCategory.slug }), form);
 
             await router.replace({
                 name: 'admin.categories.show',

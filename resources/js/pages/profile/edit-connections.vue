@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useHead } from '@unhead/vue';
-import axios from 'axios';
 import { useConfirm } from 'primevue/useconfirm';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
@@ -47,7 +46,7 @@ const providerInfo = computed(() => {
 const fetchLinkedProviders = async () => {
     try {
         loading.value = true;
-        const { data } = await axios.get(route('user.oauth.providers'));
+        const { data } = await api.get(route('user.oauth.providers'));
         linkedProviders.value = data;
     } catch (error) {
         console.error('Error fetching linked providers:', error);
@@ -72,7 +71,7 @@ const unlinkProvider = async (provider) => {
         accept: async () => {
              try {
                 loading.value = true;
-                await axios.delete(route('oauth.unlink', { driver: provider }));
+                await api.delete(route('oauth.unlink', { driver: provider }));
                 await fetchLinkedProviders();
             } catch (error) {
                 console.error('Error unlinking provider:', error);
