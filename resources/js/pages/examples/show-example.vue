@@ -2,10 +2,10 @@
 import { ref, computed, watch } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Example Details',
@@ -42,7 +42,7 @@ const fetchExample = async () => {
     try {
         state.value = IS_LOADING;
 
-        const res = await axios.get(route('public.examples.show', currentRoute.params.example));
+        const res = await api.get(route('public.examples.show', currentRoute.params.example));
 
         example.value = res.data.example;
 

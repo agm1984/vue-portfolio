@@ -2,11 +2,9 @@
 import { ref, onMounted, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
-
-// PrimeVue Imports
 import Button from 'primevue/button';
 import ProgressSpinner from 'primevue/progressspinner';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Viewing Image',
@@ -35,7 +33,7 @@ const fetchExample = async () => {
 
         if (!example || !filename) throw new Error("Missing route parameters");
 
-        const response = await axios.get(route('public.examples.image', {
+        const response = await api.get(route('public.examples.image', {
             example: example,
             exampleImage: filename,
         }));

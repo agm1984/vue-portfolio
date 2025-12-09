@@ -1,9 +1,9 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from 'vue';
 import Button from 'primevue/button';
-import axios from 'axios';
 import { useAuthStore } from '~/store/auth';
 import { openWindow } from '~/utils/oauth';
+import { api } from '~/services/api';
 
 const props = defineProps({
     provider: {
@@ -71,7 +71,7 @@ const linkProvider = async () => {
     try {
         const newWindow = openWindow('', `Link ${providerName.value}`);
 
-        const { data } = await axios.post(route('oauth.link', { driver: props.provider }));
+        const { data } = await api.post(route('oauth.link', { driver: props.provider }));
 
         newWindow.location.href = data.url;
     } catch (err) {

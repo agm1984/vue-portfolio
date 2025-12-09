@@ -3,11 +3,13 @@ import { createHead } from '@unhead/vue/client';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 import Tooltip from 'primevue/tooltip';
 import { definePreset } from '@primevue/themes';
 import Aura from '@primeuix/themes/aura';
-import router from '~/router';
 import App from '~/components/App.vue';
+import router from '~/router';
+import { useToast } from '~/composables/useToast';
 import '~/plugins';
 import 'primeicons/primeicons.css';
 
@@ -79,6 +81,7 @@ app.use(PrimeVue, {
     },
 });
 app.use(ToastService);
+app.use(ConfirmationService);
 
 app.directive('tooltip', Tooltip);
 

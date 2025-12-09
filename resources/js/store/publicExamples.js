@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const usePublicExamplesStore = defineStore('publicExamples', {
     state: () => ({
@@ -59,7 +59,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
             try {
                 this.isFetchingExamples = true;
 
-                const { data } = await axios.get(route('public.examples.list'));
+                const { data } = await api.get(route('public.examples.list'));
 
                 this.allExamples = data.examples;
             } catch (error) {
@@ -74,7 +74,7 @@ export const usePublicExamplesStore = defineStore('publicExamples', {
             try {
                 this.isFetchingCategories = true;
 
-                const { data } = await axios.get(route('public.categories.list'));
+                const { data } = await api.get(route('public.categories.list'));
 
                 this.allCategories = [{ slug: 'all', name: 'All' }, ...data.categories];
             } catch (error) {

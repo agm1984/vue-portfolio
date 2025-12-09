@@ -4,13 +4,13 @@ import { useHead } from '@unhead/vue';
 import { required, email, maxLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
 import Message from 'primevue/message';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Edit Profile',
@@ -57,7 +57,7 @@ const handleSubmit = async () => {
         payload.append('name', form.name);
         payload.append('email', form.email);
 
-        const { data } = await axios.post(route('user.profile.edit'), payload);
+        const { data } = await api.post(route('user.profile.edit'), payload);
 
         auth.updateUser(data);
     } catch (error) {

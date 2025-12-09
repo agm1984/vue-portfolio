@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useConfirm } from 'primevue/useconfirm';
 import Button from 'primevue/button';
 import Textarea from 'primevue/textarea';
 
@@ -22,6 +23,8 @@ const emit = defineEmits([
     'comment-voted',
     'comment-unvoted',
 ]);
+
+const confirm = useConfirm();
 
 const isEditing = ref(false);
 const body = ref(props.comment.body);
@@ -60,11 +63,25 @@ const save = () => {
     });
 };
 
-const deleteComment = () => {
-    // todo: use primevue confirm dialog
-    if(confirm("Delete this comment?")) {
-        emit('comment-deleted', { id: props.comment.id });
-    }
+const onDeleteComment = () => {
+    console.log('test');
+    confirm.require({
+        message: 'Are you sure you want to delete this comment?',
+        header: 'Delete Comment',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Delete'
+        },
+        accept: () => {
+            emit('comment-deleted', { id: props.comment.id });
+        },
+        reject: () => {}
+    });
 };
 
 const toggleUpvote = () => {
@@ -182,7 +199,7 @@ const toggleDownvote = () => {
                         label="Delete"
                         size="small"
                         text
-                        @click="deleteComment"
+                        @click="onDeleteComment"
                     />
 
                     <div class="flex gap-2">

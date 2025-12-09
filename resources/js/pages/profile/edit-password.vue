@@ -3,10 +3,10 @@ import { ref, reactive, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import { required, minLength, sameAs } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
-import axios from 'axios';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Edit Password',
@@ -48,7 +48,7 @@ const handleSubmit = async () => {
             return;
         }
 
-        const { data } = await axios.put(route('user.password.edit'), form);
+        const { data } = await api.put(route('user.password.edit'), form);
 
         auth.updateUser(data);
     } catch (error) {

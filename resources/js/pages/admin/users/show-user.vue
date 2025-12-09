@@ -2,11 +2,11 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useHead } from '@unhead/vue';
-import axios from 'axios';
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
 import { useAuthStore } from '~/store/auth';
+import { api } from '~/services/api';
 
 useHead({
     title: 'Admin: User Details',
@@ -34,7 +34,7 @@ const fetchUser = async () => {
     try {
         state.value = LOADING;
 
-        const { data } = await axios.get(window.route('admin.users.show', route.params.user));
+        const { data } = await api.get(window.route('admin.users.show', route.params.user));
 
         user.value = data.user;
 

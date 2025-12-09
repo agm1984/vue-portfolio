@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const useAdminCategoriesStore = defineStore('adminCategories', {
     state: () => ({
@@ -15,7 +15,7 @@ export const useAdminCategoriesStore = defineStore('adminCategories', {
             try {
                 this.isFetchingCategories = true;
 
-                const { data } = await axios.get(route('admin.categories.list'));
+                const { data } = await api.get(route('admin.categories.list'));
 
                 this.allCategories = data.categories;
                 this.isError = false;

@@ -1,14 +1,17 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import { api } from '~/services/api';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         isInitialized: false,
-        isAuthenticated: false,
-        user: {},
+        user: null,
     }),
 
     getters: {
+        isAuthenticated() {
+            return !!this.user;
+        },
+
         isAdmin() {
             return this.user.roles_list?.includes('admin');
         },
@@ -21,32 +24,34 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         setUser(user) {
             this.user = user;
-            this.isAuthenticated = true;
         },
 
         async register(payload) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
-                const { data } = await axios.post(route('register'), payload);
+                await api.get('/sanctum/csrf-cookie');
+                const { data } = await api.post(route('register'), payload);
 
                 this.setUser(data.user);
-                this.isAuthenticated = true;
             } catch (err) {
-                this.isAuthenticated = false;
-                this.user = {};
+                this.user = null;
                 throw new Error(`auth/register# Problem registering new user: ${err}.`);
             }
         },
 
         async fetchUser() {
             try {
-                const { data } = await axios.get(route('me'));
+                const response = await api.get(route('me'));
 
-                this.setUser(data);
-                this.isAuthenticated = true;
-            } catch {
-                this.isAuthenticated = false;
-                this.user = {};
+                const { data, status } = response || {};
+
+                if (status === 200 && data) {
+                    this.setUser(data);
+                } else {
+                    this.user = null;
+                }
+
+            } catch (error) {
+                this.user = null;
             } finally {
                 this.isInitialized = true;
             }
@@ -60,37 +65,34 @@ export const useAuthStore = defineStore('auth', {
 
         async login(payload) {
             try {
-                await axios.get('/sanctum/csrf-cookie')
-                const { data } = await axios.post(route('login'), {
+                await api.get('/sanctum/csrf-cookie')
+                const { data } = await api.post(route('login'), {
                   ...payload,
                   remember: payload.remember || undefined,
                 });
 
                 this.setUser(data.user);
-                this.isAuthenticated = true;
                 this.isInitialized = true;
             } catch (err) {
-                this.isAuthenticated = false;
-                this.user = {};
+                this.user = null;
                 throw new Error(`auth/login# Problem logging user in: ${err}.`);
             }
         },
 
         async logout() {
             try {
-                await axios.post(route('logout'));
+                await api.post(route('logout'));
             } catch (error) {
                 console.error(error);
             } finally {
-                this.isAuthenticated = false;
-                this.user = {};
+                this.user = null;
                 this.isInitialized = false;
             }
         },
 
         async fetchOauthUrl({ provider }) {
             try {
-                const { data } = await axios.post(route('oauth.redirect', provider));
+                const { data } = await api.post(route('oauth.redirect', provider));
 
                 return data.url;
             } catch (err) {
@@ -102,8 +104,8 @@ export const useAuthStore = defineStore('auth', {
 
         async forgotPassword(payload) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
-                const response = await axios.post(route('password.email'), payload);
+                await api.get('/sanctum/csrf-cookie');
+                const response = await api.post(route('password.email'), payload);
 
                 return response;
             } catch (err) {
@@ -113,8 +115,8 @@ export const useAuthStore = defineStore('auth', {
 
         async resetPassword(payload) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
-                const response = await axios.post(route('password.reset'), payload);
+                await api.get('/sanctum/csrf-cookie');
+                const response = await api.post(route('password.reset'), payload);
 
                 return response;
             } catch (err) {
@@ -124,8 +126,8 @@ export const useAuthStore = defineStore('auth', {
 
         async resendVerificationEmail(email) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
-                const { data } = await axios.post(route('verification.resend'), {
+                await api.get('/sanctum/csrf-cookie');
+                const { data } = await api.post(route('verification.resend'), {
                     email,
                 });
 
@@ -137,10 +139,10 @@ export const useAuthStore = defineStore('auth', {
 
         async verifyEmailFromLink(userId, search) {
             try {
-                await axios.get('/sanctum/csrf-cookie');
+                await api.get('/sanctum/csrf-cookie');
                 const url = `/email/verify/${userId}${search}`;
 
-                const { data } = await axios.post(url);
+                const { data } = await api.post(url);
 
                 return data;
             } catch (err) {
