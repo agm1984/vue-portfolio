@@ -1,6 +1,7 @@
 <script setup>
 import { useHead } from '@unhead/vue';
 import Toast from 'primevue/toast';
+import ConfirmDialog from 'primevue/confirmdialog';
 
 useHead({
     titleTemplate: title => `${title} | Adam Mackintosh's Portfolio`,
@@ -19,4 +20,5 @@ useHead({
     </div>
 
     <Toast />
+    <ConfirmDialog />
 </template>

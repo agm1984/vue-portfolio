@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useHead } from '@unhead/vue';
 import axios from 'axios';
+import { useConfirm } from 'primevue/useconfirm';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
@@ -9,6 +10,8 @@ import Skeleton from 'primevue/skeleton';
 useHead({
     title: 'OAuth Connections',
 });
+
+const confirm = useConfirm();
 
 const linkedProviders = ref([]);
 const loading = ref(true);
@@ -54,21 +57,32 @@ const fetchLinkedProviders = async () => {
 };
 
 const unlinkProvider = async (provider) => {
-    // todo: use primevue confirm dialog
-    if (!confirm(`Are you sure you want to unlink your ${window.config[provider]?.provider_name || provider} account?`)) {
-        return;
-    }
-
-    try {
-        loading.value = true;
-        await axios.delete(route('oauth.unlink', { driver: provider }));
-        await fetchLinkedProviders();
-    } catch (error) {
-        console.error('Error unlinking provider:', error);
-        alert(error.response?.data?.error || 'An error occurred while unlinking the provider.');
-    } finally {
-        loading.value = false;
-    }
+    confirm.require({
+        message: `Are you sure you want to unlink your ${window.config[provider]?.provider_name || provider} account?`,
+        header: 'Unlink Account',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Delete'
+        },
+        accept: async () => {
+             try {
+                loading.value = true;
+                await axios.delete(route('oauth.unlink', { driver: provider }));
+                await fetchLinkedProviders();
+            } catch (error) {
+                console.error('Error unlinking provider:', error);
+                alert(error.response?.data?.error || 'An error occurred while unlinking the provider.');
+            } finally {
+                loading.value = false;
+            }
+        },
+        reject: () => {}
+    });
 };
 
 const formatDate = (dateString) => {
