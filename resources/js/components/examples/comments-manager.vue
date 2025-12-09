@@ -1,12 +1,11 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
-import { required, minLength } from '@vuelidate/validators';
-import { useVuelidate } from '@vuelidate/core';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
 import Skeleton from 'primevue/skeleton';
 import { useAuthStore } from '~/store/auth';
+import { pluralize } from '~/utils/text';
 
 const currentRoute = useRoute();
 const toast = useToast();
@@ -16,13 +15,10 @@ const LOADING = 'is-loading';
 const LOADED = 'is-loaded';
 const state = ref(LOADING);
 const isLoading = computed(() => state.value === LOADING);
-const isLoaded = computed(() => state.value === LOADED);
+// const isLoaded = computed(() => state.value === LOADED);
 const comments = ref([]);
 
 const commentCount = computed(() => comments.value.length);
-
-// todo: extract this to utils
-const pluralize = (count, noun) => (count === 1 ? noun : `${noun}s`);
 
 const fetchComments = async () => {
     try {
