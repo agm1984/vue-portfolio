@@ -33,8 +33,8 @@ Route::group(['middleware' => ['guest', 'throttle:10,5']], function () {
     Route::post('register', 'Auth\RegisterController@register')->name('register');
     Route::post('login', 'Auth\LoginController@login')->name('login');
 
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 
     Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');

@@ -56,12 +56,7 @@ const resetPassword = async () => {
 
     await auth.resetPassword(formData);
 
-    await router.replace({
-        name: 'login',
-        query: {
-            email: route.query.email,
-        },
-    });
+    await router.replace({ name: 'home' });
   } catch (error) {
     console.error('Error resetting password:', error)
     state.value = INITIAL;
