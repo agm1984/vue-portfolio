@@ -49,6 +49,7 @@ class ExampleController extends Controller
             'slug'        => ['required', 'string', 'max:255', 'unique:examples,slug'],
             'summary'     => ['required', 'string', 'max:2000'],
             'conclusion'  => ['required', 'string', 'max:2000'],
+            'is_featured' => ['sometimes', 'boolean'],
 
             'links'         => ['sometimes', 'array'],
             'links.*.name'  => ['required_with:links', 'string', 'max:255'],
@@ -69,6 +70,7 @@ class ExampleController extends Controller
                 $data['slug'],
                 $data['summary'],
                 $data['conclusion'],
+                $data['is_featured'] ?? false,
                 $request->file('images', [])
             );
 
@@ -120,6 +122,7 @@ class ExampleController extends Controller
             'summary'     => ['sometimes', 'string', 'max:2000'],
             'conclusion'  => ['sometimes', 'string', 'max:2000'],
             'status'      => ['sometimes', 'integer', Rule::in([Example::STATUS_INACTIVE, Example::STATUS_ACTIVE])],
+            'is_featured' => ['sometimes', 'boolean'],
 
             // links array (optional)
             'links'           => ['sometimes', 'array'],
@@ -144,7 +147,7 @@ class ExampleController extends Controller
         $updated = DB::transaction(function () use ($request, $example, $data) {
             // 1) Update simple fields
             $example->fill(Arr::only($data, [
-                'status', 'category_id', 'name', 'slug', 'summary', 'conclusion',
+                'status', 'category_id', 'name', 'slug', 'summary', 'conclusion', 'is_featured',
             ]));
 
             if ($example->isDirty()) {

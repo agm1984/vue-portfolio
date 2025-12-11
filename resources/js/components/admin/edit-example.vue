@@ -8,6 +8,7 @@ import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Autocomplete from 'primevue/autocomplete';
 import Button from 'primevue/button';
+import ToggleSwitch from 'primevue/toggleswitch';
 import { Example } from '~/globalModelTypes';
 import { escapeRegExpChars } from '~/utils/formatting';
 import { api } from '~/services/api';
@@ -31,6 +32,7 @@ const props = defineProps({
             links: [],
             tags: [],
             images: [],
+            is_featured: false,
         }),
     },
 });
@@ -61,6 +63,7 @@ const form = reactive({
     links: props.initialExample.links,
     tags: props.initialExample.tags,
     images: props.initialExample.images,
+    is_featured: props.initialExample.is_featured,
 });
 
 const editExampleRules = {
@@ -73,26 +76,28 @@ const editExampleRules = {
     links: {},
     tags: {},
     images: {},
+    is_featured: {},
 };
 
 const v$ = useVuelidate(editExampleRules, form);
 
 const statuses = computed(() => ([
-  { status: Example.STATUS_INACTIVE, label: 'Inactive' },
-  { status: Example.STATUS_ACTIVE, label: 'Active' },
+    { status: Example.STATUS_INACTIVE, label: 'Inactive' },
+    { status: Example.STATUS_ACTIVE, label: 'Active' },
 ]));
 
 const fetchAllCategories = async () => {
-  try {
-    const { data } = await api.get(route('admin.categories.getAll'))
-    categories.value = data.categories || []
-    // Default to first category if available
-    if (!form.category_id && categories.value.length) {
-      form.category_id = categories.value[0].id
+    try {
+        const { data } = await api.get(route('admin.categories.getAll'))
+        categories.value = data.categories || []
+
+        // Default to first category if available
+        if (!form.category_id && categories.value.length) {
+            form.category_id = categories.value[0].id
+        }
+    } catch (err) {
+        console.error(`create-example# Problem fetching all active categories: ${err}.`)
     }
-  } catch (err) {
-    console.error(`create-example# Problem fetching all active categories: ${err}.`)
-  }
 }
 
 onMounted(fetchAllCategories);
@@ -136,7 +141,7 @@ const handleSubmit = async () => {
         const payload = new FormData();
 
         // scalar fields
-        ['status', 'category_id', 'name', 'slug', 'summary', 'conclusion'].forEach((field) => {
+        ['status', 'category_id', 'name', 'slug', 'summary', 'conclusion', 'is_featured'].forEach((field) => {
             payload.append(field, form[field] ?? '');
         });
 
@@ -161,7 +166,6 @@ const handleSubmit = async () => {
         });
 
         // images
-        console.log('form.images', form.images);
         form.images.forEach((image, i) => {
             if (!image.id) payload.append(`images[${i}]`, image); // only include new images
         });
@@ -238,6 +242,20 @@ const handleSubmit = async () => {
                 v-if="v$.category_id.$error && submitted"
                 :errors="v$.category_id.$errors"
                 name="Category"
+            />
+        </div>
+
+        <a-input-field class="mt-2" input-id="edit-example-is-featured" title="Is Featured?"></a-input-field>
+        <div class="mt-2">
+            <ToggleSwitch
+                v-model="v$.is_featured.$model"
+                input-id="edit-example-is-featured"
+            />
+
+            <a-field-errors
+                v-if="v$.is_featured.$error && submitted"
+                :errors="v$.is_featured.$errors"
+                name="Featured"
             />
         </div>
 
