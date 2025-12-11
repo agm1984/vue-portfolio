@@ -117,6 +117,8 @@ export const useAuthStore = defineStore('auth', {
                 await api.get('/sanctum/csrf-cookie');
                 const response = await api.post(route('password.reset'), payload);
 
+                await this.fetchUser();
+
                 return response;
             } catch (err) {
                 throw new Error(`auth/resetPassword# Problem during reset password: ${err}.`);
