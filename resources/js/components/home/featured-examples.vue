@@ -21,11 +21,13 @@ const featuredExamples = computed(() => publicExamples.allExamples.filter(isFeat
             </router-link>
         </div>
 
+        {{ featuredExamples[0] }}
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <router-link
                 v-for="example in featuredExamples"
                 :key="example.id"
-                :to="{ name: 'public.examples.show', params: { category: example.category_id, example: example.id } }"
+                :to="{ name: 'public.examples.show', params: { category: example.category.slug, example: example.slug } }"
                 class="group relative flex flex-col h-full"
             >
                 <div class="h-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-500/30 hover:-translate-y-1">
