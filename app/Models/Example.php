@@ -26,6 +26,11 @@ class Example extends Model
         'conclusion',
         'created_at',
         'updated_at',
+        'is_featured',
+    ];
+
+    protected $casts = [
+        'is_featured' => 'boolean',
     ];
 
     protected $guarded = [];
@@ -129,11 +134,15 @@ class Example extends Model
         return $query->where('status', '=', self::STATUS_ACTIVE);
     }
 
+    public function scopeFeatured(Builder $query): void
+    {
+        $query->where('is_featured', true);
+    }
+
     public function toArray()
     {
         $array = parent::toArray();
 
-        // If tags relation is loaded, use it; otherwise pluck via query.
         $array['tags'] = $this->relationLoaded('tags')
             ? $this->tags->pluck('name')->values()->all()
             : $this->tags()->pluck('name')->values()->all();

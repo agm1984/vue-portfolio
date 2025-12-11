@@ -58,7 +58,6 @@ export const useAuthStore = defineStore('auth', {
         },
 
         updateUser(payload) {
-            // accepts { user } like before, or the user object directly
             const user = payload?.user ?? payload;
             this.setUser(user);
         },

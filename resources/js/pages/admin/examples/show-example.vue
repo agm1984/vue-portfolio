@@ -198,13 +198,21 @@ onMounted(fetchExample);
                         <h6>Status</h6>
                         <span class="font-mono text-xs text-gray-600 dark:text-gray-400">#{{ example.id }}</span>
                     </div>
-                    <div class="mb-6">
+                    <div class="mb-4">
                         <Tag
                             :severity="getStatusConfig(example.status).severity"
                             :icon="getStatusConfig(example.status).icon"
                             :value="getStatusConfig(example.status).label"
                         />
                     </div>
+
+                    <span
+                        v-if="example.is_featured"
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 mb-6"
+                    >
+                        <i class="pi pi-star-fill"></i>
+                        Featured
+                    </span>
 
                     <div class="mb-4">
                          <h6>Category</h6>
